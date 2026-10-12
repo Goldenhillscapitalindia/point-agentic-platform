@@ -183,31 +183,7 @@
 
       <!-- Critical card at top -->
       <div class="section-row">
-        <div class="card critical clickable" data-card="AC-20261007-003">
-          <div class="card-head">
-            <span class="chip crit">CRITICAL</span>
-            <span class="chip-meta">Action Card · Risk & Guideline Agent · 2 min ago</span>
-            <span class="spacer"></span>
-            <span class="chip ghost">#AC-20261007-003</span>
-          </div>
-          <h3 class="card-title">Beta-adjusted net projected at <b>63.1%</b> vs. <b>60%</b> IMA limit at Monday's open</h3>
-          <div class="metrics">
-            <div class="metric"><div class="m-val red">71%</div><div class="m-lab">Breach probability · 1d</div></div>
-            <div class="metric"><div class="m-val good">9%</div><div class="m-lab">After recommended trades</div></div>
-            <div class="metric"><div class="m-val">6 bps</div><div class="m-lab">Estimated alpha cost</div></div>
-            <div class="metric"><div class="m-val">$ 1.42 M</div><div class="m-lab">Dollars at risk</div></div>
-          </div>
-          <div class="card-body">
-            <div><b>Drivers:</b> semis beta drift · tokenized-equity weekend move −2.8% · hot CPI risk <span class="tag">Macro Agent</span></div>
-            <div><b>Recommended:</b> Trim NVDA 12% (~$8.4M); buy SMH Nov 215/205 put spread for $0.42M premium</div>
-          </div>
-          <div class="card-foot">
-            <button class="btn primary">Approve</button>
-            <button class="btn dark">Modify in What-If</button>
-            <button class="btn ghost">Dismiss</button>
-            <span class="meta right">Signed by R&G Agent v2.3 · Audit #a3f21</span>
-          </div>
-        </div>
+        <div class="card critical clickable" id="top-card" data-card="AC-20261007-003"><!-- rendered by JS --></div>
       </div>
 
       <!-- 10 agent tiles -->
@@ -292,26 +268,18 @@
       <!-- Three-up panels -->
       <div class="grid-3">
         <div class="card">
-          <div class="card-head"><h3 class="card-title">PnL Attribution · Day</h3><span class="chip ghost">YTD +18.4%</span></div>
+          <div class="card-head"><h3 class="card-title">PnL Attribution · Day</h3><span class="chip ghost" id="pnl-ytd">YTD +18.4%</span></div>
           <div class="pnl-bars" id="pnl-bars"></div>
           <div class="legend-inline">
             <span><i class="sq good"></i>Winners</span>
             <span><i class="sq bad"></i>Losers</span>
-            <span class="right muted">Hit rate 62% · W/L 1.84</span>
+            <span class="right muted" id="pnl-hit">Hit rate 62% · W/L 1.84</span>
           </div>
         </div>
 
         <div class="card">
-          <div class="card-head"><h3 class="card-title">Exposure · Beta-adjusted</h3><span class="chip warn">Net 62% · lim 60</span></div>
-          <div class="exposure">
-            <div class="bar-row"><span class="bar-lab">Gross</span><div class="bar"><div class="fill" style="width:92%"></div></div><span class="bar-val">184%</span></div>
-            <div class="bar-row"><span class="bar-lab">Net β</span><div class="bar"><div class="fill warn" style="width:62%"></div></div><span class="bar-val warn">62%</span></div>
-            <div class="bar-row"><span class="bar-lab">Top 10</span><div class="bar"><div class="fill" style="width:38%"></div></div><span class="bar-val">38%</span></div>
-            <div class="bar-row"><span class="bar-lab">Semis</span><div class="bar"><div class="fill" style="width:28%"></div></div><span class="bar-val">28%</span></div>
-            <div class="bar-row"><span class="bar-lab">Software</span><div class="bar"><div class="fill" style="width:22%"></div></div><span class="bar-val">22%</span></div>
-            <div class="bar-row"><span class="bar-lab">Energy</span><div class="bar"><div class="fill" style="width:9%"></div></div><span class="bar-val">9%</span></div>
-            <div class="bar-row"><span class="bar-lab">Crypto β</span><div class="bar"><div class="fill gold" style="width:17%"></div></div><span class="bar-val">17%</span></div>
-          </div>
+          <div class="card-head"><h3 class="card-title">Exposure · Beta-adjusted</h3><span class="chip warn" id="exposure-chip">Net 62% · lim 60</span></div>
+          <div class="exposure" id="exposure-bars"></div>
         </div>
 
         <div class="card">
@@ -336,64 +304,7 @@
       <div class="grid-2">
         <div class="card">
           <div class="card-head"><h3 class="card-title">Live Action Feed</h3><span class="chip ghost">Point Conductor · ranked by $ at risk</span></div>
-          <ul class="feed">
-            <li class="f-row clickable" data-card="AC-20261007-003">
-              <span class="pill red">CRIT</span>
-              <div>
-                <div class="f-title">Beta-net 63.1% vs 60% IMA limit at open</div>
-                <div class="f-sub">Risk & Guideline · trim NVDA 12% + SMH put spread · $1.42M at risk</div>
-              </div>
-              <span class="f-time">2m</span>
-            </li>
-            <li class="f-row clickable" data-card="AC-20261007-004">
-              <span class="pill red">CRIT</span>
-              <div>
-                <div class="f-title">CPI print tomorrow 08:30 ET · hot-print scenario = −38 bps NAV</div>
-                <div class="f-sub">Macro & Regime · hedge ladder suggested · 10Y +12bp intraday risk</div>
-              </div>
-              <span class="f-time">14m</span>
-            </li>
-            <li class="f-row clickable" data-card="AC-20261007-006">
-              <span class="pill orange">WARN</span>
-              <div>
-                <div class="f-title">META crowding score 92 — top-decile hedge-fund ownership</div>
-                <div class="f-sub">Fund Flows · de-grossing risk if VIX &gt; 22 · consider halving</div>
-              </div>
-              <span class="f-time">26m</span>
-            </li>
-            <li class="f-row clickable" data-card="AC-20261007-009">
-              <span class="pill orange">WARN</span>
-              <div>
-                <div class="f-title">TSLA stop proximity 0.3 ATR · RSI divergence 5d</div>
-                <div class="f-sub">Technical Signals · $422M position · trail stop 243.10</div>
-              </div>
-              <span class="f-time">41m</span>
-            </li>
-            <li class="f-row clickable" data-card="AC-20261007-014">
-              <span class="pill gold">IDEA</span>
-              <div>
-                <div class="f-title">NEW IPO · Lumen Robotics (LMRX) initiates coverage Thu</div>
-                <div class="f-sub">Research & Alpha · ranked #4 of 38 new issues · 5d range $19.4–23.8</div>
-              </div>
-              <span class="f-time">1h</span>
-            </li>
-            <li class="f-row clickable" data-card="AC-20261007-002">
-              <span class="pill gold">IDEA</span>
-              <div>
-                <div class="f-title">BTC funding +0.082% · OI +18% · crowded longs</div>
-                <div class="f-sub">Digital Assets · COIN/MSTR put-spread queued · size $0.6M premium</div>
-              </div>
-              <span class="f-time">Sat 2:14a</span>
-            </li>
-            <li class="f-row">
-              <span class="pill ghost">INFO</span>
-              <div>
-                <div class="f-title">IR draft ready · October LP letter · 3 citations pending</div>
-                <div class="f-sub">IR & Reporting · marketing-rule pre-check: 2 soft flags</div>
-              </div>
-              <span class="f-time">2h</span>
-            </li>
-          </ul>
+          <ul class="feed" id="live-feed"><!-- rendered by JS --></ul>
         </div>
 
         <div class="card dark-card">
