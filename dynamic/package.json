@@ -1,0 +1,12 @@
+{
+  "name": "point-dynamic",
+  "version": "1.0.0",
+  "description": "Point — multi-tenant fund intelligence terminal driven by Excel portfolio uploads",
+  "type": "commonjs",
+  "scripts": { "start": "node server.js", "seed": "node seed.js" },
+  "dependencies": {
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1",
+    "xlsx": "^0.18.5"
+  }
+}

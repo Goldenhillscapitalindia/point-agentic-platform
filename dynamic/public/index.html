@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Point — Fund Intelligence Terminal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><div class="logo">P</div><div><b>Point</b><small>FUND INTELLIGENCE</small></div></div>
+    <nav class="nav" id="nav">
+      <div class="nav-lab">Company</div>
+      <div id="company-list"></div>
+      <div class="nav-lab">Analyze</div>
+      <a data-v="command" class="on">Command Center</a>
+      <a data-v="portfolio">Portfolio</a>
+      <a data-v="risk">Risk &amp; Concentration</a>
+      <a data-v="upload">Upload Portfolio</a>
+    </nav>
+    <div class="side-foot"><div class="rp-av" id="co-badge">··</div><div><div class="rp-name" id="co-name">No company</div><div class="rp-role" id="co-role">select a tenant</div></div></div>
+  </aside>
+
+  <main class="main">
+    <header class="top">
+      <div class="asof" id="asof"><b>Point multi-tenant terminal</b><br/><span class="mut">Excel-driven · dynamic</span></div>
+      <div class="top-sp"></div>
+      <span class="freshdot" id="fresh"><span class="fd"></span>No data loaded</span>
+      <button class="btn gh sm" id="btn-upload-top">Upload Excel</button>
+    </header>
+
+    <section class="view on" id="view-command"></section>
+    <section class="view" id="view-portfolio"></section>
+    <section class="view" id="view-risk"></section>
+    <section class="view" id="view-upload"></section>
+  </main>
+</div>
+<div id="toast" class="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
