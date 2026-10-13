@@ -434,7 +434,7 @@
       </div>`;
   }
 
-  /* ---- Decision briefs: recommendation, evidence, and a question for the desk ---- */
+  /* ---- Analyst recommendations: suggested action, supporting evidence, and next step ---- */
   const agentMeta = {
     risk:{n:'Risk & Guideline Agent',i:'🛡',sq:'red'},
     tech:{n:'Technical Signals Agent',i:'📈',sq:'red'},
@@ -447,218 +447,218 @@
     macro:{n:'Macro & Regime Agent',i:'🌍',sq:'gold'},
     digital:{n:'Digital Assets & Tokenization Agent',i:'◉',sq:'gold'}
   };
-  // Each entry is [recommendation, why it matters, decision to discuss].
+  // Each entry is [recommendation, supporting evidence, suggested next step].
   // Copy describes the illustrative fund snapshot, not live analysis or human approval.
   const decisionBriefs = {
-    alpha:{
-      risk:[
-        'Make room under the investment mandate before adding risk.',
-        'The projected opening exposure is <b>63.1% against a 60% limit</b>. That makes restoring headroom the first discussion for the desk. A partial NVDA reduction with a semiconductor hedge is worth comparing with a larger outright trim.',
-        'Ask Risk to compare both options in the scenario view. Which restores enough headroom while retaining the positions you still have conviction in? Confirm the effect before approving a trade.'
-      ],
-      tech:[
-        'Review the vulnerable positions before changing the whole book.',
-        'NVDA is stretched and its momentum is weakening; TSLA is close to its trailing stop. These signals suggest reviewing position size and exit levels, while leaving the stronger trends alone. They do not, by themselves, invalidate the investment theses.',
-        'Recheck the NVDA trim alongside the risk brief, and agree how to handle TSLA if its stop is reached. Would a smaller position serve the thesis better than a tighter stop?'
-      ],
-      pnl:[
-        'Put MSFT through a fresh conviction review before committing more risk.',
-        'The fund is up <b>18.4% year to date</b>, but MSFT has detracted while using 18% of the risk budget. The question is whether the expected return still justifies that allocation, rather than whether a recent loser should automatically be sold.',
-        'Ask the covering analyst what could change the earnings outlook and over what horizon. Compare holding the position with a partial trim; keep the allocation only if the forward case supports it.'
-      ],
-      ir:[
-        'Finish the evidence and disclosure checks before circulating the LP letter.',
-        'The October draft has a clear performance story, but <b>two review flags remain</b>. Investors should understand both what drove the gains and the risks still in the portfolio, rather than receive a list of returns without context.',
-        'Have the reporting owner resolve the flags and reconcile the performance exhibits. Ask whether the letter explains the current risk decisions plainly enough for an investor to challenge them.'
-      ],
-      pos:[
-        'Bring MSFT back to the investment discussion; keep NVDA and UNH under review.',
-        'Slower Azure growth challenges the MSFT thesis. NVDA insider sales and the activist filing also warrant a closer look, but those headlines alone do not establish that the business case has changed.',
-        'Ask each covering analyst to separate new evidence from market noise. What would change the valuation, position size, or exit condition? Record that answer before deciding whether to reduce exposure.'
-      ],
-      research:[
-        'Take PLTR into diligence as the lead research candidate.',
-        'On the 12 Oct close, <b>PLTR scores 0.85</b> and leads 650 names, ahead of FRO (0.83), ASC (0.83), and MSFT (0.81). Thirty-one names printed at least 0.72 with positive 5-day momentum. MOS (0.17) and GPRO (0.15) are the weak end. A high score is a starting point, not a reason to buy.',
-        'Compare the upside, the downside, and the overlap with the book for PLTR. Would a small starter improve the book after the exposure issue is resolved?'
-      ],
-      flows:[
-        'Review whether ADSK is sized for a crowded exit, and whether the research shorts are already crowded.',
-        'ADSK is the most crowded research long at <b>90</b>, with institutions at 100% and short interest of 5.0%. Seventeen of the bottom-20 research shorts already have short interest of at least 8%. GPRO is at <b>18.4%</b>, and Blackrock added 4.3 points of the company in the 30 Jun 13F.',
-        'Compare a modest ADSK reduction with the cost of protection. On the short side, treat GPRO as already crowded rather than as fresh capacity.'
-      ],
-      earnings:[
-        'Use the next bank results to challenge the consumer assumptions in the book.',
-        'The JPM tone estimate points to a more cautious outlook, which could matter for the payments holdings. It is a model signal ahead of the release, not confirmed guidance.',
-        'Ask the analyst covering V and MA which comments on spending and credit would change the thesis. Verify the reporting calendar and revisit the positions after the actual results.'
-      ],
-      macro:[
-        'Price protection around CPI before choosing how much risk to carry through it.',
-        'The hot-inflation scenario implies a <b>38 basis point portfolio loss</b>. A partial interest-rate hedge may soften that outcome, but it will cost carry and can also reduce gains if the release is benign.',
-        'Compare the unhedged and hedged outcomes, including the cost if nothing happens. Agree the downside the fund is willing to accept before selecting the hedge size.'
-      ],
-      digital:[
-        'Treat the crypto-linked equities as a shared risk when reviewing protection.',
-        'COIN, MSTR, and HOOD connect the equity book to crypto sentiment. Elevated funding suggests leveraged investors could unwind together, while tokenized share prices offer an early, imperfect warning of a cash-market gap.',
-        'Review the combined exposure before assessing the proposed put spread. Confirm prices and liquidity in the underlying market; a thin weekend quote is not enough reason to trade.'
-      ]
-    },
-    global:{
-      risk:[
-        'Focus the risk discussion on interest rates ahead of CPI.',
-        'The book has room under its exposure limits, but a <b>50 basis point rise in the 10-year yield implies a $9.4M loss</b> in the stress scenario. Being inside a limit does not make this concentration comfortable.',
-        'Compare a partial rate hedge with reducing the underlying positions. Agree how much event risk to retain, and review the yen short separately for intervention risk.'
-      ],
-      tech:[
-        'Consider taking some profit in gold while retaining the core thesis.',
-        'Gold has gained <b>6.2% this month</b> and looks stretched on the technical measures. That supports a sizing discussion, rather than an automatic exit; the longer-term case may still hold.',
-        'Compare a partial reduction with holding through CPI. Set the conditions for rebuilding the position, and check whether the move in Treasury futures reinforces the rate-risk concern.'
-      ],
-      pnl:[
-        'Review whether the rate position still earns its place in the book.',
-        'Gold and equity-index exposure are supporting the month while rates and FX detract. The fund remains up <b>11.2% year to date</b>, but that aggregate result can hide how much the next outcome depends on duration.',
-        'Ask the rates analyst to restate the thesis and the evidence that would disprove it. Separate a deliberate event position from an exposure the team has simply carried forward.'
-      ],
-      ir:[
-        'Explain the portfolio choices behind the return in the next investor letter.',
-        'The <b>11.2% year-to-date gain</b> needs context: what gold contributed, why rates detracted, and how the team is managing the next inflation release. The scenario exhibit can make those trade-offs easier to understand.',
-        'Reconcile the attribution and derivatives disclosures before sign-off. Does the letter explain both why the positions remain and what would cause the team to change them?'
-      ],
-      pos:[
-        'Assign a clear response plan to the macro catalysts that can change the book.',
-        'CPI, central-bank communication, and intervention headlines can affect several positions at once. China stimulus and OPEC commentary also need to be assessed against the specific EM and commodity theses.',
-        'Have each analyst name the release or policy change that would alter their view. Prioritize the rate and yen exposures, and distinguish confirmed policy from headline speculation.'
-      ],
-      research:[
-        'Test nat gas and the metals against the existing macro exposures before adding.',
-        'The 12 Oct cross-asset rank is led by <b>nat gas (0.82)</b>, then copper (0.79) and Brent (0.76, 105.0–106.3). Russell 2000 is the laggard at 0.21. These futures ranks are momentum and fit versus SPY.',
-        'Compare an addition with the current book under both inflation outcomes. What new source of return would it add, and at what entry?'
-      ],
-      flows:[
-        'Read positioning from option skew and the five-day tape. These contracts have no 13F file.',
-        'Brent skew is steep. Over the five sessions to 12 Oct, USO rose <b>4.9%</b>, UNG rose 3.5%, and EEM fell 3.8%. TLT was +1.2% and GLD +0.7%. Crowding scores stay blank where the only input would be skew.',
-        'Check liquidity before adding to a name whose skew is already steep. Use the tape as the price move, not as official creation dollars.'
-      ],
-      earnings:[
-        'Use company results to test the macro view where they offer direct evidence.',
-        'Bank commentary can inform the credit outlook, while producers and retailers can shed light on demand. These are supporting inputs for this fund; the inflation and policy releases remain the more direct catalysts.',
-        'Ask analysts to bring only findings that challenge a portfolio assumption. Would weaker consumer demand or producer guidance change the rate or commodity positions?'
-      ],
-      macro:[
-        'Decide the acceptable CPI loss before settling on a hedge.',
-        'The curve and dollar positions express a view on the policy path. Their outcome depends on the inflation surprise, so one forecast is less useful than comparing the hot and cold scenarios already shown below.',
-        'Review the rate hedge across both outcomes, including its carry. Agree what part of the macro conviction to retain and what result would prompt a reassessment.'
-      ],
-      digital:[
-        'Use crypto liquidity as a supporting signal for the macro discussion.',
-        'Stablecoin issuance and Bitcoin flows may help interpret risk appetite, but this fund has minimal direct crypto exposure. These observations alone do not justify adding a new asset class to the book.',
-        'Look for confirmation in the dollar, rates, and broader flows. Does the crypto signal strengthen the existing thesis, or is it moving for reasons specific to that market?'
-      ]
-    },
-    neutral:{
-      risk:[
-        'Keep the low market exposure, but review the cost of maintaining the pairs.',
-        'Net exposure is <b>4%, within the ±10% band</b>. That leaves directional headroom, but gross exposure and rising NVO borrow costs still matter: a balanced pair can lose money through financing or a change in the relationship.',
-        'Review borrow, liquidity, and pair concentration before adding size. If the NVO short is reduced, check the long leg too so the adjustment does not introduce an unintended market bet.'
-      ],
-      tech:[
-        'Investigate the wider PG/CL spread before treating it as an entry.',
-        'The pair is <b>2.1 standard deviations from its recent average</b>. That may offer a convergence opportunity, but a statistical gap is only useful if the economic relationship remains intact.',
-        'Check for fresh news and changes in relative earnings expectations. Consider an addition only after confirming the thesis, borrow availability, and balance between the two legs.'
-      ],
-      pnl:[
-        'Review the lagging technology pair while preserving the sources of convergence gains.',
-        'Pharma and staples are contributing while the technology pair detracts. The <b>7.8% year-to-date return</b> supports the strategy so far, but does not establish that every pair still has a sound convergence case.',
-        'Ask the pair owner what should close the gap and when. Compare the expected gain after financing with the cost of waiting before retaining or reallocating the risk.'
-      ],
-      ir:[
-        'Explain how the fund makes money without implying that neutral means risk-free.',
-        'The investor story is steady pair convergence with limited market exposure. Borrow costs, liquidity, and a breakdown in a pair relationship still deserve explanation alongside the <b>7.8% year-to-date gain</b>.',
-        'Have the reporting owner check the neutrality and risk exhibits against the book. Can an investor understand both the source of returns and the circumstances in which the strategy could lose?'
-      ],
-      pos:[
-        'Revisit the economics of LLY/NVO as the short becomes more expensive.',
-        'NVO borrow has risen to <b>180 basis points</b>, which reduces the return available from convergence. The same review should consider both companies and their event calendars; holding two legs does not remove company-specific risk.',
-        'Compare holding, resizing both legs, and exiting the pair after financing costs. Confirm the earnings and dividend dates before deciding that the event exposure is balanced.'
-      ],
-      research:[
-        'Start pair work with AMD/AVGO, then check borrow on both legs.',
-        'On 12 Oct, <b>AMD/AVGO scores 0.72</b> and leads the nine pairs. KO/PEP is second and GOOGL/META third. COST/WMT is near fair. The spread is a 21-day relative-return proxy, not a completed convergence case.',
-        'Ask for a concrete catalyst and the reason the gap exists. Reject a pair that depends on an unintended market bet.'
-      ],
-      flows:[
-        'Review crowding on GOOGL/META before adding to that pair.',
-        'GOOGL/META is the crowded pair at <b>74</b>, with institutions near 80% and short interest of 1.4%. Five pairs are on watch and four are OK. FMR cut 0.9 points across the pair in the 30 Jun 13F. Over five sessions, staples rose 4.2% and energy 4.0%, while tech fell 2.3%.',
-        'Confirm borrow and liquidity on both legs. A watch flag is a sizing question, not a reason to exit.'
-      ],
-      earnings:[
-        'Prepare a joint earnings review for both sides of each pair.',
-        'Relative guidance from LLY/NVO and V/MA can change the convergence case. Similar reporting dates help organize the review, but do not guarantee that the two earnings reactions will offset each other.',
-        'Agree which difference in guidance would justify a tilt or an exit. Check the actual release timing and review the residual exposure if only one leg moves sharply.'
-      ],
-      macro:[
-        'Retain the neutral stance while checking what a macro shock could still disturb.',
-        'The illustrated CPI scenarios have a small direct portfolio impact. Financing, borrow costs, and changing relationships between the legs can still matter even when the market sensitivity is close to zero.',
-        'Review those indirect risks before paying for a broad market hedge. Use an overlay only if the residual exposure warrants it, and recheck neutrality after any pair adjustment.'
-      ],
-      digital:[
-        'Keep digital assets as a monitoring input for this mandate.',
-        'Direct crypto exposure is near zero. Tokenized share prices may provide a reference, but differences in liquidity and trading hours can make an apparent discount difficult to capture.',
-        'Check whether any existing leg has material crypto sensitivity. Investigate a basis opportunity only if settlement, costs, and the mandate support it; there is no need to create a directional position.'
-      ]
-    },
-    digital:{
-      risk:[
-        'Create more room below the crypto exposure limit before adding to winners.',
-        'Crypto sensitivity is <b>71% against a 75% cap</b>, with concentration in MSTR and COIN. The proposed protection deserves review, but it should not be assumed to solve the exposure limit or exchange-liquidity risks.',
-        'Compare reducing a position with buying the put spread under the downside scenarios. Confirm the remaining exposure and available liquidity before considering another addition.'
-      ],
-      tech:[
-        'Review the CLSK stop before considering a new SOL allocation.',
-        'CLSK has broken its 200-day trend, while SOL remains a strong performer. The immediate question is whether to reduce the weaker position; chasing the winner first could add risk while the fund is close to its cap.',
-        'Confirm the stop policy and executable market prices, then assess the effect of a reduction. Revisit a SOL entry only after checking the remaining risk budget and funding conditions.'
-      ],
-      pnl:[
-        'Separate the gains in the major coins from the losses in the equity-linked positions.',
-        'SOL and BTC are contributing, while miners, exchanges, and tokenized assets detract. The <b>34.1% year-to-date gain</b> should not obscure how much risk the weaker holdings consume during a drawdown.',
-        'Review whether the miners still offer a better forward return than the alternatives. Compare a CLSK reduction with retaining it, using the thesis and risk budget as well as its recent loss.'
-      ],
-      ir:[
-        'Lead the investor discussion with how the fund manages its volatility.',
-        'The <b>34.1% year-to-date return</b> is only part of the story. Investors also need to understand custody, round-the-clock trading, and what happens if an exchange or tokenized market becomes difficult to access.',
-        'Reconcile the return and risk exhibits, and verify the custody disclosures. Make sure the letter explains current protections and their limits before it is circulated.'
-      ],
-      pos:[
-        'Give the desk a response plan for the events that can change holdings outside cash-market hours.',
-        'COIN communication, MSTR financing, token unlocks, and exchange incidents can affect different parts of the book. A large wallet movement is a reason to investigate, not proof of an impending sale.',
-        'Confirm the source and affected holdings for each material alert. Assign a review owner and agree what evidence would justify a position change, including when the desk is unstaffed.'
-      ],
-      research:[
-        'Keep IBIT and BTC at the front of the work, and treat CLSK as the exit review.',
-        'On 12 Oct, <b>IBIT scores 0.76</b> and BTC 0.75, with the cash session at 81.2k–83.7k. MSTR is 0.75. CLSK is the laggard at 0.34 (10.3–10.6) and is flagged exit.',
-        'Resolve the existing risk pressure before adding. Define the entry and the downside before another allocation.'
-      ],
-      flows:[
-        'Balance miner short interest against the five-day tape before adding.',
-        '<b>WULF short interest is 28.1%</b>, a squeeze on a research long. Seven miner and exchange longs already have short interest of at least 8%. Coatue added 3.9 points of HUT and Jane Street added 2.5 points of RIOT in the 30 Jun 13F. Over five sessions, WGMI fell <b>12.0%</b>, ETHA 7.1%, and IBIT 3.5%.',
-        'Do not add leverage to a research long when the short interest is already this high. Agree what would show an unwind.'
-      ],
-      earnings:[
-        'Use the equity-linked results to test whether business performance supports the crypto exposure.',
-        'COIN trading-volume commentary, MSTR financing, and miner cost guidance matter in different ways. A rising coin price does not necessarily improve the economics of every company held.',
-        'Confirm the release times and ask the covering analysts what would change earnings or dilution assumptions. Reassess the relevant position after the evidence arrives, rather than trading on tone alone.'
-      ],
-      macro:[
-        'Review crypto and growth-equity exposure together ahead of CPI.',
-        'The elevated Bitcoin–Nasdaq relationship suggests that a macro sell-off could hit both parts of the book. Rising stablecoin liquidity is supportive, but may not offset a rate or dollar shock.',
-        'Compare the combined downside scenario with the proposed protection. Decide how much shared market risk to carry and what change in the relationship would alter that decision.'
-      ],
-      digital:[
-        'Prepare for a leverage unwind before acting on apparent weekend discounts.',
-        'Elevated funding and open interest suggest crowded longs. Discounts in tokenized shares may flag a difficult cash open, but thin trading and differences in market access can also explain part of the gap.',
-        'Review protection on MSTR and COIN, check exchange liquidity, and confirm underlying prices before acting on the tokenized basis. Keep the position-size decision separate from the monitoring signal.'
-      ]
-    }
-  };
+  "alpha": {
+    "risk": [
+      "We suggest trimming NVDA by 12% and protecting the remaining semiconductor exposure.",
+      "Projected opening exposure is <b>63.1% against the 60% mandate limit</b>. NVDA is also overbought, so reducing this holding addresses both concentration and the risk of giving back recent gains.",
+      "Use the existing NVDA trim and SMH put-spread proposal as the starting point. Check the combined post-trade exposure against the mandate before releasing orders; pause new risk additions until headroom is restored."
+    ],
+    "tech": [
+      "Take some profit in NVDA; keep the core position and respect the TSLA stop.",
+      "NVDA is up <b>6.1% this month</b>, with <b>RSI 72</b> and bearish momentum divergence. We suggest the proposed 12% trim to bank part of that gain. TSLA is close to its 243.10 trailing stop and offers less room for a further decline.",
+      "Trim NVDA into strength rather than exit the whole holding. Keep the TSLA stop at 243.10 and reduce the position if it triggers; avoid adding while momentum is rolling over."
+    ],
+    "pnl": [
+      "Reduce MSFT by 25% and cover half the PEP short ahead of earnings.",
+      "MSFT has detracted while using <b>18% of the risk budget</b>, and its review window has expired. The attribution table already flags a 25% trim. PEP is also detracting, with earnings close enough to add avoidable event risk.",
+      "Retain the smaller MSFT holding while the earnings case rebuilds. Keep CRM through its nearby catalyst and hold NFLX; their current evidence does not support the same reduction."
+    ],
+    "ir": [
+      "Hold the October LP letter until the two review flags and missing citations are resolved.",
+      "The fund is up <b>18.4% year to date</b>. The letter should connect that return to its contributors and explain the proposed NVDA and MSFT reductions, so investors see how gains and downside risk are being managed.",
+      "Reconcile the performance exhibits, add the supporting citations, and close both review flags before circulation. Describe trims and hedges as proposals until they have actually been approved and executed."
+    ],
+    "pos": [
+      "Trim MSFT by 25%; hold CRM through its catalyst and keep NVDA at a reduced size.",
+      "Two quarters of slower Azure growth and the Copilot pricing cut weaken the MSFT case. CRM has a nearby catalyst with limited thesis drift. NVDA filings add caution alongside its stretched technicals.",
+      "Apply the MSFT reduction already shown in attribution. Use the same 12% NVDA trim recommended in Risk and Technical Signals, rather than a second cut. Keep the remaining positions under their existing thesis and stop conditions."
+    ],
+    "research": [
+      "Prioritize PLTR for the next research-led addition after restoring mandate headroom.",
+      "On the 12 Oct close, <b>PLTR scores 0.85</b> and leads 650 names, ahead of FRO (0.83), ASC (0.83), and MSFT (0.81). Thirty-one names printed at least 0.72 with positive 5-day momentum. MOS (0.17) and GPRO (0.15) are the weak end. A high score is a starting point, not a reason to buy.",
+      "Keep PLTR on the candidate list ahead of FRO and ASC. Use the displayed entry range and a verified downside case before a starter allocation; do not treat the research ranking as evidence that it is already held."
+    ],
+    "flows": [
+      "Avoid adding to crowded ADSK exposure or initiating an already-crowded GPRO short.",
+      "ADSK is the most crowded research long at <b>90</b>, with institutions at 100% and short interest of 5.0%. Seventeen of the bottom-20 research shorts already have short interest of at least 8%. GPRO is at <b>18.4%</b>, and Blackrock added 4.3 points of the company in the 30 Jun 13F.",
+      "If ADSK is held, reduce its size or protect it before increasing that exposure. Keep GPRO off the fresh-short list until borrow and squeeze risk support the trade; these research-universe signals do not establish current holdings."
+    ],
+    "earnings": [
+      "Hold V and MA exposure steady until bank results clarify the consumer outlook.",
+      "The JPM tone estimate points to caution on spending and credit. It is an advance signal rather than reported guidance, so it supports pausing additions rather than selling on the forecast alone.",
+      "Wait for the actual spending and credit commentary before increasing payments exposure. Reduce the affected holding if reported guidance confirms a weaker earnings case; otherwise retain the current allocation."
+    ],
+    "macro": [
+      "Add partial rate protection before CPI while retaining the core equity holdings.",
+      "The displayed hot-inflation scenario implies a <b>38 basis point portfolio loss</b>. A partial hedge can cushion that event without requiring a broad sale of positions whose company outlook remains intact.",
+      "Use the proposed rate-hedge ladder after checking its direction, premium and carry against the current exposures. Keep this separate from the semiconductor trim so the combined protection is not oversized."
+    ],
+    "digital": [
+      "Protect MSTR and COIN against a leverage unwind; pause new crypto-linked exposure.",
+      "Elevated funding and rising open interest make a sharp unwind more costly for these holdings. Their strong monthly gains create a reason to protect part of the upside already earned.",
+      "Use the proposed MSTR/COIN put spread, subject to executable pricing and its premium budget. Keep HOOD at its current size, and treat thin tokenized-share quotes as alerts until the underlying market confirms them."
+    ]
+  },
+  "global": {
+    "risk": [
+      "Reduce rate sensitivity before CPI and cover 25% of the yen short.",
+      "Portfolio DV01 is <b>0.9× against a 1.0× cap</b>, leaving little room for a rates shock. The yen short adds separate intervention risk near the displayed USD/JPY 158 level.",
+      "Target lower net DV01 using the existing partial-hedge proposal, with trade direction checked against the actual positions. Cover a quarter of the yen short to reduce squeeze risk while retaining most of the yield-differential position."
+    ],
+    "tech": [
+      "Take profit on 20% of the gold position and retain the remaining core.",
+      "Gold is up <b>6.2% this month</b>, with <b>RSI 74</b> and an overbought flag in the signal matrix. The position is profitable but stretched, making a partial sale preferable to adding at these levels.",
+      "Scale out of 20% into strength, as proposed in the gold action card. Keep the remaining 80% for the real-rate thesis and wait for a pullback before rebuilding the position."
+    ],
+    "pnl": [
+      "Bank part of the gold gain and cut the losing yen short by a quarter.",
+      "Gold is a positive contributor and its attribution row flags a <b>20% trim</b>. The yen short is detracting and faces intervention risk. These are specific sizing changes that protect the month without abandoning the whole macro view.",
+      "Trim gold by 20%, cover 25% of the yen short, and retain crude. Keep the existing Treasury short distinct from whole-book rate risk; reconcile net DV01 before changing that hedge."
+    ],
+    "ir": [
+      "Explain the gold profit-taking and yen reduction in the investor letter.",
+      "The <b>11.2% year-to-date return</b> is more useful with a clear account of what earned it and how the fund is protecting it. Gold gains, rate and FX detractors, and the CPI hedge belong in the same narrative.",
+      "Reconcile attribution and derivatives disclosures, then describe the proposed sizing changes in plain language. Separate completed trades from pending recommendations and keep scenario losses clearly labeled as estimates."
+    ],
+    "pos": [
+      "Cover 25% of the yen short; retain the Treasury short and core gold holding.",
+      "Intervention risk weakens the near-term case for a full yen short. Sticky-inflation evidence still supports the existing Treasury-short thesis, while gold remains supported by central-bank buying despite its overbought signal.",
+      "Reduce the yen short first and take the proposed 20% gold profit. Keep FXI additions conditional on a pullback rather than buying immediately after the stimulus-driven rise."
+    ],
+    "research": [
+      "Prioritize natural gas and copper for research; keep new allocations conditional on portfolio fit.",
+      "The 12 Oct cross-asset rank is led by <b>nat gas (0.82)</b>, then copper (0.79) and Brent (0.76, 105.0–106.3). Russell 2000 is the laggard at 0.21. These futures ranks are momentum and fit versus SPY.",
+      "Use the displayed entry ranges to stage any addition after rate-risk reductions. Keep Brent additions small while skew is steep, and leave the existing allocation unchanged if the new trade duplicates rate or dollar sensitivity."
+    ],
+    "flows": [
+      "Keep commodity additions measured and avoid chasing the strongest five-day moves.",
+      "Brent skew is steep. Over the five sessions to 12 Oct, USO rose <b>4.9%</b>, UNG rose 3.5%, and EEM fell 3.8%. TLT was +1.2% and GLD +0.7%. Crowding scores stay blank where the only input would be skew.",
+      "Check executable liquidity before increasing Brent exposure. Treat ETF price moves as market context, not fund-flow dollars, and wait for a better entry where skew already prices strong demand."
+    ],
+    "earnings": [
+      "Keep the current commodity and equity-index allocations until reported guidance supports a change.",
+      "Bank, producer and retailer results can confirm demand trends, but this fund is more directly exposed to inflation and policy releases. The earnings estimates alone do not support another trade ahead of CPI.",
+      "Pause fresh additions through the releases. Reduce the relevant commodity or consumer-sensitive exposure only if actual guidance weakens its demand case; retain it if the evidence remains supportive."
+    ],
+    "macro": [
+      "Lower net rate sensitivity ahead of CPI rather than carry the full event exposure.",
+      "The rate and dollar positions are sensitive to the inflation outcome. The demo contains different aggregate stress estimates, so a precise expected loss should not be used to justify an unchecked trade size.",
+      "Use the proposed 0.6× hedge ratio as a sizing candidate, then reconcile current DV01 and test both hot and cold CPI outcomes. Confirm the hedge direction before placing it and retain only the intended residual macro exposure."
+    ],
+    "digital": [
+      "Keep direct crypto exposure minimal and leave the macro allocation unchanged on these signals.",
+      "Stablecoin issuance and Bitcoin flows offer a useful read on liquidity, but they do not establish a new investment case for this mandate.",
+      "Use crypto flows as supporting context for dollar and rates positions. Wait for confirmation in those markets before changing the book; no new crypto allocation is suggested."
+    ]
+  },
+  "neutral": {
+    "risk": [
+      "Keep the book market-neutral and reduce the cost of the NVO short.",
+      "Net exposure is <b>4%, within the ±10% band</b>, but NVO borrow at 180 basis points is eroding pair returns. Low directional exposure does not offset that financing drag.",
+      "Cover the proposed 20% of NVO and resize the LLY long as needed to preserve pair beta. Keep new additions matched across both legs and recheck gross exposure before increasing risk."
+    ],
+    "tech": [
+      "Add 15% to PG/CL with matched legs, provided the convergence case remains intact.",
+      "The spread is <b>2.1 standard deviations from its recent average</b>. The action card reports stable borrow and no new fundamental catalyst behind the widening, supporting a measured convergence trade.",
+      "Increase the long PG and short CL legs together using the existing pair proposal. Skip the addition if fresh news or unavailable borrow invalidates those conditions."
+    ],
+    "pnl": [
+      "Reduce GOOGL/META and direct available pair risk toward PG/CL.",
+      "The technology pair has detracted while consuming risk budget; the attribution view already marks it for reduction. PG/CL is contributing and has a separately supported convergence opportunity.",
+      "Reduce both legs of GOOGL/META together. Use the proposed 15% PG/CL addition only within gross limits, and retain COST/WMT and V/MA at their existing allocations."
+    ],
+    "ir": [
+      "Lead with pair-convergence returns and explain the steps taken to protect them.",
+      "The fund is up <b>7.8% year to date</b>. Investors should see how matched positions contribute, why the technology pair is being reduced, and how higher borrow costs affect LLY/NVO.",
+      "Reconcile the neutrality and attribution exhibits before circulation. Describe borrow, liquidity and pair-breakdown risks alongside the proposed adjustments, without presenting market neutrality as a guarantee against losses."
+    ],
+    "pos": [
+      "Reduce the expensive NVO short and keep the LLY/NVO thesis at a smaller balanced size.",
+      "NVO borrow has risen to <b>180 basis points</b>. The convergence thesis remains supported in the snapshot, but the higher financing cost argues for less capital tied up in the pair.",
+      "Cover 20% of NVO as proposed, with a corresponding LLY adjustment where required to preserve neutrality. Retain the remaining pair through the scheduled evidence update; reduce GOOGL/META as its relative case weakens."
+    ],
+    "research": [
+      "Prioritize AMD/AVGO for the next pair review; hold off on adding size until the economics are confirmed.",
+      "On 12 Oct, <b>AMD/AVGO scores 0.72</b> and leads the nine pairs. KO/PEP is second and GOOGL/META third. COST/WMT is near fair. The spread is a 21-day relative-return proxy, not a completed convergence case.",
+      "Use the relative-return spread as a research lead. Add matched legs only after confirming a convergence catalyst, borrow and factor balance; keep COST/WMT unchanged near fair value."
+    ],
+    "flows": [
+      "Avoid adding to GOOGL/META while crowding is elevated.",
+      "GOOGL/META is the crowded pair at <b>74</b>, with institutions near 80% and short interest of 1.4%. Five pairs are on watch and four are OK. FMR cut 0.9 points across the pair in the 30 Jun 13F. Over five sessions, staples rose 4.2% and energy 4.0%, while tech fell 2.3%.",
+      "Keep any adjustment matched across both legs and confirm borrow before increasing risk. Combine the watch flag with the existing attribution and thesis evidence rather than treating historical ownership as a new trade signal."
+    ],
+    "earnings": [
+      "Favor V/MA over GOOGL/META on the relative earnings evidence.",
+      "The displayed revisions and tone favor Visa within the payments pair. In the technology pair, stronger META tone works against the long-GOOGL/short-META setup.",
+      "Reduce GOOGL/META before adding risk to that thesis. Retain V/MA, with any increase matched across the legs, and revisit sizing when actual guidance replaces the current estimates."
+    ],
+    "macro": [
+      "Retain the neutral stance and avoid paying for a broad market hedge at present.",
+      "The illustrated CPI scenarios have a small direct impact on this book. Borrow costs and changes in the relationships between the legs are more immediate sources of risk.",
+      "Use the risk budget for well-supported pair trades and keep the long and short adjustments balanced. Add an index overlay only if measured residual market exposure rises after those changes."
+    ],
+    "digital": [
+      "Keep direct crypto exposure near zero and make no tokenized-asset addition.",
+      "This mandate has little direct crypto sensitivity. A tokenized-share discount alone does not establish a tradable pair after differences in liquidity, settlement and trading hours.",
+      "Keep the existing equity pairs as the focus. Pursue a basis trade only after both legs, borrow and settlement costs support a neutral return; otherwise leave the allocation unchanged."
+    ]
+  },
+  "digital": {
+    "risk": [
+      "Exit CLSK and protect MSTR/COIN before adding more crypto risk.",
+      "Crypto sensitivity is <b>71% against a 75% cap</b>, while CLSK has triggered its stop. Removing that weak holding creates room more directly than relying on an options hedge to solve the exposure constraint.",
+      "Close CLSK under the existing stop proposal and recheck the remaining exposure. Use the MSTR/COIN put spread for residual downside protection, and defer new additions until the reductions have settled."
+    ],
+    "tech": [
+      "Sell CLSK after its stop trigger; wait for a pullback before adding SOL.",
+      "CLSK has broken its <b>200-day trend</b>, with bearish momentum and a stop-hit flag. SOL is stronger, but its substantial monthly gain makes chasing it less attractive while the fund is near its cap.",
+      "Exit CLSK at executable market prices in line with the recorded stop. Retain the current SOL holding; only add near the displayed entry range after capacity is available."
+    ],
+    "pnl": [
+      "Exit the losing CLSK position and retain the core BTC and SOL holdings.",
+      "Miners have detracted, and CLSK combines a negative contribution with a broken trend and an expired review window. BTC and SOL are contributing, so the evidence favors removing the weak holding rather than cutting every exposure equally.",
+      "Follow the CLSK exit already shown in attribution. Keep the proceeds available for liquidity and protection before reallocating them, and avoid increasing the remaining holdings solely to recover the loss."
+    ],
+    "ir": [
+      "Explain the CLSK exit proposal and downside protection alongside the strong return.",
+      "The <b>34.1% year-to-date gain</b> needs context around drawdowns, custody and round-the-clock liquidity. The response to weak miners and crowded leverage is more useful than a return figure alone.",
+      "Reconcile performance and custody disclosures before circulation. Distinguish proposed protection from executed trades, and state what the put spread does and does not cover during an exchange disruption."
+    ],
+    "pos": [
+      "Exit CLSK as its mining thesis weakens; keep MSTR and COIN protected through their catalysts.",
+      "Falling hashprice and the trend break reinforce the CLSK exit flag. MSTR financing and COIN operating updates can move the remaining equity-linked exposure independently of coin prices.",
+      "Apply the existing CLSK exit rather than average down. Hold MSTR and COIN at their reduced-risk allocation with the proposed protection, and avoid adding through unconfirmed financing or exchange headlines."
+    ],
+    "research": [
+      "Favor IBIT and BTC for the next allocation after exiting CLSK and restoring headroom.",
+      "On 12 Oct, <b>IBIT scores 0.76</b> and BTC 0.75, with the cash session at 81.2k–83.7k. MSTR is 0.75. CLSK is the laggard at 0.34 (10.3–10.6) and is flagged exit.",
+      "Keep IBIT and BTC at the front of the buy list, using the displayed entry ranges only after risk reductions. Retain cash if the entry does not arrive; the weak CLSK score reinforces its existing exit proposal."
+    ],
+    "flows": [
+      "Avoid new miner leverage and keep WULF additions on hold while squeeze risk is high.",
+      "<b>WULF short interest is 28.1%</b>, a squeeze on a research long. Seven miner and exchange longs already have short interest of at least 8%. Coatue added 3.9 points of HUT and Jane Street added 2.5 points of RIOT in the 30 Jun 13F. Over five sessions, WGMI fell <b>12.0%</b>, ETHA 7.1%, and IBIT 3.5%.",
+      "Prioritize the existing CLSK exit and protection on the crypto-linked equities. Treat historical HUT and RIOT ownership changes as context, not proof of current buying, and require improving price and liquidity evidence before adding."
+    ],
+    "earnings": [
+      "Avoid adding to miners; keep COIN and MSTR protected until their updates clarify the outlook.",
+      "Miner cost pressure undermines the case for more exposure, while COIN volume commentary and MSTR financing can change earnings and dilution assumptions. A stronger coin price alone does not resolve those business risks.",
+      "Proceed with the CLSK exit supported by its thesis and stop flags. Retain the protected COIN and MSTR positions, reducing further if reported margins, volumes or financing terms materially weaken their cases."
+    ],
+    "macro": [
+      "Reduce shared crypto and growth-equity risk ahead of CPI.",
+      "The elevated Bitcoin–Nasdaq relationship means a rates or dollar shock can hurt both parts of the book. Rising stablecoin liquidity is supportive, but does not remove that common downside.",
+      "Use the CLSK exit and proposed MSTR/COIN protection as the first steps. Recalculate the combined exposure before adding another hedge so the same risk is not covered twice."
+    ],
+    "digital": [
+      "Protect MSTR and COIN now; do not buy the tokenized-share discount on its own.",
+      "Elevated funding and open interest indicate crowded longs. A tokenized NVDA discount may signal a weak cash open, but thin trading can exaggerate that gap.",
+      "Use the existing put-spread proposal after confirming price and liquidity. Retain a liquid cash buffer and wait for the underlying market to confirm the tokenized basis before changing that holding."
+    ]
+  }
+};
   Object.keys(agentMeta).forEach(k=>{
     const view=document.getElementById('view-'+k); if(!view) return;
     const head=view.querySelector('.view-head'); if(!head) return;
@@ -670,7 +670,7 @@
       <div class="db-head">
         <div class="db-icon" aria-hidden="true">${m.i}</div>
         <div>
-          <h2 class="db-title" id="decision-title-${k}">Decision brief</h2>
+          <h2 class="db-title" id="decision-title-${k}">Analyst recommendation</h2>
           <div class="db-sub" id="decision-context-${k}"></div>
         </div>
         <span class="db-badge">Demo data</span>
@@ -683,11 +683,11 @@
     const selected=funds.find(f=>f.id===fund)||funds[0];
     Object.keys(agentMeta).forEach(k=>{
       const box=document.getElementById('decision-body-'+k); if(!box) return;
-      document.getElementById('decision-context-'+k).textContent=selected.name+' · For the investment discussion';
-      const [recommendation, rationale, discussion]=set[k];
+      document.getElementById('decision-context-'+k).textContent=selected.name+' · Suggested action based on the demo snapshot';
+      const [recommendation, rationale, nextStep]=set[k];
       box.innerHTML=`<h3 class="db-recommendation">${recommendation}</h3>
         <p class="db-rationale">${rationale}</p>
-        <div class="db-discussion"><h4>For the desk</h4><p>${discussion}</p></div>`;
+        <div class="db-discussion"><h4>Suggested next step</h4><p>${nextStep}</p></div>`;
     });
   }
 
@@ -1546,36 +1546,41 @@
 
   const briefs = {
   "alpha": {
-    "eyebrow": "Morning Brief · Alpha Fund · Demo data · For the investment discussion",
-    "title": "Start with mandate headroom. <span class=\"orange\">Then decide which risks are worth retaining.</span>",
+    "eyebrow": "Morning Brief · Alpha Fund · Demo data · Analyst recommendations",
+    "title": "Take profit in NVDA and reduce MSFT. <span class=\"orange\">Restore headroom before adding risk.</span>",
     "approve": "Approve all 2 critical",
-    "overnight": "The weaker semiconductor indications and crowded crypto positioning deserve attention because both affect exposures already in the fund. The first priority is to review the projected mandate breach; the next is to decide how much inflation-event risk to retain. Treat the weekend prices as signals to confirm at the cash open.",
+    "overnight": "We suggest a 12% NVDA trim to protect recent gains and reduce semiconductor exposure, alongside the proposed SMH protection. Reduce MSFT by 25% as its earnings case weakens. Keep new additions on hold until the combined changes restore mandate headroom.",
     "findings": [
       [
         "red",
         "Risk",
-        "Projected opening exposure is <b>63.1% against the 60% limit</b>. Compare a partial NVDA reduction with a semiconductor hedge, and confirm which combination restores adequate headroom."
+        "Trim <b>12% of NVDA</b> and use the proposed SMH put spread. Projected opening exposure is <b>63.1% against a 60% limit</b>; verify the resulting exposure before releasing orders."
       ],
       [
         "red",
-        "Macro",
-        "The hot-CPI scenario implies a loss of <b>38 basis points</b>. Price the rate hedge against that downside and the upside it would give away if the release is benign."
+        "Technical",
+        "NVDA is up <b>6.1% this month with RSI 72</b> and weakening momentum. Take a partial profit while retaining the core holding. Keep TSLA subject to its <b>243.10</b> trailing stop."
       ],
       [
         "gold",
         "Flows",
-        "On the research universe, <b>ADSK crowding is 90</b> (institutions 100%, short interest 5.0%). Seventeen of the bottom-20 shorts already have short interest of at least 8%. GPRO is 18.4%, and Blackrock added 4.3 points of it in the 30 Jun 13F."
+        "Avoid adding to <b>ADSK</b> if held while research-universe crowding is <b>90</b>. Keep <b>GPRO</b> off the fresh-short list while short interest is <b>18.4%</b>; these signals do not establish that either name is in the portfolio."
       ],
       [
         "red",
+        "Position",
+        "Reduce <b>MSFT by 25%</b>. Slower Azure growth and the Copilot pricing cut weaken the case for its current risk allocation; keep CRM through its nearby catalyst."
+      ],
+      [
+        "gold",
         "Research",
-        "Ask the MSFT analyst to refresh the forward return case and the NVDA analyst to assess the new filings. On the market sleeve, the 12 Oct research rank is led by <b>PLTR at 0.85</b>, with FRO and ASC next. Recent losses and headlines are reasons to review conviction, not conclusions on their own."
+        "Prioritize <b>PLTR</b> for diligence after restoring exposure headroom. It leads the 12 Oct research ranking at <b>0.85</b>, with FRO and ASC next; keep any starter conditional on entry price and portfolio fit."
       ]
     ],
     "decisions": [
-      "Ask Risk to compare the proposed NVDA trim and semiconductor protection. Choose a response only after checking the resulting mandate headroom.",
-      "Agree the portfolio loss the desk is willing to accept through CPI, then decide whether the proposed rate hedge offers value at the quoted cost.",
-      "Review ADSK on the market sleeve (crowding 90). Compare retaining it with buying protection, and treat GPRO short interest of 18.4% as an already-crowded research short."
+      "Trim NVDA by 12% and check the combined effect of the SMH protection on mandate headroom. This is one reduction shared by the risk and technical recommendations.",
+      "Reduce MSFT by 25% and cover 50% of the PEP short ahead of earnings, as proposed in attribution.",
+      "Add the proposed partial rate protection before CPI after confirming direction and cost. Keep new research additions on hold until headroom is restored, with PLTR first in the diligence queue."
     ],
     "pnl": [
       "−$ 2.14 M",
@@ -1600,36 +1605,36 @@
     ]
   },
   "global": {
-    "eyebrow": "Morning Brief · Global Macro Fund · Demo data · For the investment discussion",
-    "title": "Make the CPI risk a deliberate choice. <span class=\"orange\">Review duration, then the yen and gold.</span>",
+    "eyebrow": "Morning Brief · Global Macro Fund · Demo data · Analyst recommendations",
+    "title": "Take 20% off gold and cover 25% of the yen short. <span class=\"orange\">Lower rate sensitivity before CPI.</span>",
     "approve": "Approve the 1 critical",
-    "overnight": "Higher yields put the existing rate exposure under pressure, while the yen short faces intervention risk and gold has extended its gains. These call for separate sizing decisions. The CPI discussion should establish how much downside the desk is prepared to carry before choosing a hedge.",
+    "overnight": "Gold has delivered a strong monthly gain and is now overbought, making a partial sale a practical way to protect profits. We also suggest covering a quarter of the yen short to reduce intervention risk, while retaining the core macro positions at a lower overall risk level.",
     "findings": [
       [
         "red",
         "Rates",
-        "A <b>50 basis point rise in the 10-year yield implies a $9.4M loss</b> in the stress case. Compare reducing duration with the proposed partial Treasury hedge."
+        "Lower net rate sensitivity: DV01 is <b>0.9× against a 1.0× cap</b>. Use the partial-hedge proposal only after reconciling current positions and the direction of protection."
       ],
       [
         "gold",
         "FX",
-        "USD/JPY around 158 raises intervention concerns for the yen short. Consider a partial reduction if the potential squeeze outweighs the remaining upside."
+        "Cover <b>25% of the yen short</b> near the displayed USD/JPY 158 intervention-risk level. Keep the remaining position for the yield-differential thesis."
       ],
       [
         "gold",
         "Gold",
-        "Gold has risen <b>6.2% this month</b> and looks stretched. Taking some profit may preserve flexibility while retaining the core real-rate view."
+        "Sell <b>20% of gold</b> into strength. The holding is up <b>6.2% this month with RSI 74</b>; retain the core rather than exit the thesis."
       ],
       [
         "gold",
         "Research",
-        "China stimulus makes EM worth revisiting. Check whether an addition would diversify the book or increase the same dollar and rate sensitivities."
+        "Add to FXI only on the proposed <b>1% dip</b>, with the existing $2M sizing subject to exposure limits. Positive flows support a staged entry rather than chasing the rise."
       ]
     ],
     "decisions": [
-      "Compare the proposed rate hedge with a smaller underlying position across both CPI outcomes. Confirm carry and acceptable loss before choosing the size.",
-      "Review a partial reduction of the yen short and agree what intervention evidence would prompt a further change.",
-      "Discuss taking some profit in gold. Keep an EM addition conditional on valuation and portfolio fit rather than reacting to the stimulus headline."
+      "Take 20% off the gold long and cover 25% of the yen short; retain crude at its current size.",
+      "Use the proposed 0.6× rate hedge as a sizing candidate after verifying net DV01, trade direction and both CPI outcomes.",
+      "Keep the FXI addition conditional on a pullback and available risk budget. Retain cash if the entry does not arrive."
     ],
     "pnl": [
       "−$ 1.01 M",
@@ -1654,36 +1659,36 @@
     ]
   },
   "neutral": {
-    "eyebrow": "Morning Brief · Market Neutral Fund · Demo data · For the investment discussion",
-    "title": "Keep the book balanced. <span class=\"orange\">Test the pair opportunity and the cost of waiting.</span>",
+    "eyebrow": "Morning Brief · Market Neutral Fund · Demo data · Analyst recommendations",
+    "title": "Add selectively to PG/CL and reduce the technology pair. <span class=\"orange\">Keep both legs balanced.</span>",
     "approve": "No critical cards",
-    "overnight": "The wider PG/CL spread may offer an opportunity, but it needs a fresh check of the relationship before adding size. Higher NVO borrow costs make the LLY/NVO review more immediate. Any adjustment should preserve the intended balance of the two legs.",
+    "overnight": "We suggest the proposed 15% PG/CL addition while the spread is wide and its fundamental relationship remains intact. Reduce GOOGL/META as its relative case weakens. Cover part of the increasingly expensive NVO short and adjust LLY alongside it to preserve neutrality.",
     "findings": [
       [
         "gold",
         "Pairs",
-        "PG/CL is <b>2.1 standard deviations from its recent average</b>. Check for changes in the companies or relative earnings expectations before assuming the gap will close."
+        "Add <b>15% to PG/CL</b> with matched legs. The spread is <b>2.1 standard deviations wide</b>, with stable borrow and no new fundamental catalyst in the action card; skip the add if those conditions change."
       ],
       [
         "gold",
         "Borrow",
-        "NVO borrow has risen to <b>180 basis points</b>. Recalculate the expected pair return after financing and compare it with resizing or exiting."
+        "Cover <b>20% of NVO</b> to reduce the drag from <b>180 basis point borrow</b>. Resize LLY as needed so the change does not create an unintended directional position."
       ],
       [
         "gold",
-        "Research",
-        "Revisions favor Visa over Mastercard. Ask whether the difference is already reflected in prices before tilting the pair."
+        "Position",
+        "Reduce both legs of GOOGL/META. The pair is detracting, and stronger META earnings tone weakens the long-GOOGL/short-META case."
       ],
       [
         "red",
         "Risk",
-        "Net exposure is <b>4%, within the ±10% band</b>. Preserve that balance, while checking gross exposure and the liquidity of each leg."
+        "Preserve net exposure within the <b>±10% band</b>. Current net is 4%; check gross and factor exposure after combining the proposed pair changes."
       ]
     ],
     "decisions": [
-      "Ask the staples analyst to validate the PG/CL convergence case. Consider a matched addition only if the relationship and available borrow still support it.",
-      "Review LLY/NVO after financing costs. If reducing the short, reassess the long at the same time to avoid an unintended directional position.",
-      "Compare the proposed Visa tilt with keeping V/MA unchanged. Require a clear earnings argument and check the resulting factor exposure."
+      "Add 15% to PG/CL with both legs matched, subject to confirmed borrow and the unchanged convergence case.",
+      "Cover 20% of NVO and resize LLY as needed to keep the pair balanced. Retain the smaller pair while the thesis remains supported.",
+      "Reduce GOOGL/META and retain V/MA. Any further Visa-led addition should use matched legs and fit the remaining gross risk budget."
     ],
     "pnl": [
       "+$ 1.40 M",
@@ -1708,36 +1713,36 @@
     ]
   },
   "digital": {
-    "eyebrow": "Morning Brief · Digital Assets Fund · Demo data · For the investment discussion",
-    "title": "Make room for uncertainty. <span class=\"orange\">Review the stop and protection before adding risk.</span>",
+    "eyebrow": "Morning Brief · Digital Assets Fund · Demo data · Analyst recommendations",
+    "title": "Exit CLSK and protect MSTR/COIN. <span class=\"orange\">Keep SOL additions for a pullback.</span>",
     "approve": "Approve all 2 critical",
-    "overnight": "The funding spike suggests crowded leveraged positions, while the CLSK trend break calls for a stop-policy review. Strength in SOL is worth following, but the fund should settle those existing risks before considering another addition. Confirm weekend indications against executable prices.",
+    "overnight": "We suggest selling CLSK under its recorded stop: the broken 200-day trend and weaker mining economics both support the exit. Protect the remaining MSTR and COIN exposure against crowded leverage, retain core BTC and SOL, and keep proceeds available until the fund has confirmed headroom.",
     "findings": [
       [
         "red",
         "Protection",
-        "MSTR and COIN share exposure to a crypto unwind. Compare the proposed put spread with reducing the positions; check both the premium and remaining portfolio sensitivity."
+        "Use the proposed <b>MSTR/COIN put spread</b> after confirming price and liquidity. Elevated funding and open interest make the shared downside more important than adding to recent winners."
       ],
       [
         "red",
         "Technical",
-        "CLSK has broken its 200-day trend. Confirm the stop policy and trading conditions before deciding how to reduce the position."
+        "Exit <b>CLSK</b>. Its stop has triggered, the 200-day trend has broken, and the position is detracting; do not average down through that combination."
       ],
       [
         "gold",
         "Digital",
-        "The tokenized NVDA discount may warn of a weak cash open. Wait for confirmation in the underlying market before treating it as a position-sizing signal."
+        "Keep the tokenized NVDA holding unchanged on the discount alone. Wait for the underlying market to confirm the gap before changing its size."
       ],
       [
         "gold",
         "Research",
-        "SOL remains a research candidate, and spot flows are supportive. Neither removes the risk from crowded leverage or creates room below the exposure cap."
+        "Retain SOL and add only on a pullback into the displayed entry range, after the CLSK exit creates verified capacity below the <b>75% crypto-sensitivity cap</b>."
       ]
     ],
     "decisions": [
-      "Review the proposed MSTR/COIN protection against a direct reduction. Agree the downside to accept and verify the exposure left after either choice.",
-      "Resolve the CLSK stop with the position owner, using executable prices and the existing policy. Check the effect on mandate headroom.",
-      "Revisit SOL only after the risk review. Set entry conditions and a downside case rather than adding solely because it has outperformed."
+      "Exit CLSK at executable market prices under the existing stop proposal, then recalculate remaining exposure.",
+      "Put the proposed MSTR/COIN protection in place within its premium budget; retain liquid cash for trading and redemption needs.",
+      "Keep BTC and SOL as core holdings. Stage any SOL addition on a pullback after the risk reductions; leave the cash unallocated if the entry does not arrive."
     ],
     "pnl": [
       "−$ 6.80 M",
@@ -2577,7 +2582,7 @@
   const pointChat=window.PointChat.mount({surface:'platform',accountScope:()=>activeAccount,
     getSnapshot:()=>chatSnapshot(activeFund),getAllSnapshots:()=>allowedFunds().map(f=>chatSnapshot(f.id))});
   document.querySelectorAll('.btn').forEach(button=>{
-    if(/ask point/i.test(button.textContent)) button.addEventListener('click',event=>{event.preventDefault();pointChat.open();});
+    if(/ask portfolio intelligence/i.test(button.textContent)) button.addEventListener('click',event=>{event.preventDefault();pointChat.open();});
   });
   const chatSearch=document.querySelector('.search input');
   if(chatSearch) chatSearch.addEventListener('keydown',event=>{

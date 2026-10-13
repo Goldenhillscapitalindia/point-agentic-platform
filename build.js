@@ -20,6 +20,7 @@ const path = require('path');
 
 const root = __dirname;
 const r = p => path.join(root, p);
+require('./build-data').generate();
 
 // 1. Inline styles.css + app.js into the app markup -> self-contained app
 let app = fs.readFileSync(r('index.html'), 'utf8');
@@ -33,10 +34,10 @@ let inst = fs.readFileSync(r('institutional.html'), 'utf8');
 const instJs = fs.readFileSync(r('institutional.js'), 'utf8');
 inst = inst.replace('<script src="institutional.js"></script>', () => '<script>\n' + instJs + '\n</script>');
 
-// The private chatbot is bundled into both pages. Never read credentials at build time.
+// The chat interface is bundled into both pages. Never read credentials at build time.
 function inlineChat(html) {
   html = html.replace('<link rel="stylesheet" href="chat.css">', () => '<style>\n' + fs.readFileSync(r('chat.css'), 'utf8') + '\n</style>');
-  for (const file of ['chat-config.js', 'chat-core.js', 'chat-ui.js']) {
+  for (const file of ['chat-core.js', 'chat-ui.js']) {
     html = html.replace('<script src="' + file + '"></script>', () => '<script>\n' + fs.readFileSync(r(file), 'utf8') + '\n</script>');
   }
   return html;

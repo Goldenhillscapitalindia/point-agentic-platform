@@ -287,29 +287,68 @@ function renderCommand(){
 
   // Briefs follow the selected mandate; detailed positions currently cover Alpha only.
   const deskBriefs={
-    alpha:[
-      ['The view for the desk','Review semiconductor concentration before adding risk. The scenario projects exposure above the internal cap, so compare a measured reduction with protection and verify the resulting headroom.'],
-      ['Why it matters','The sample book shows semiconductor exposure at <b>24.8% against a 27% cap</b>. CPI could compound that concentration risk. The projected breach is a scenario to discuss, not a confirmed market outcome.'],
-      ['Conviction to revisit','Ask the AMD analyst whether the margin and pricing evidence changes the investment case. Review UNH and CRM on their own evidence rather than treating every thesis alert as a sell instruction.'],
-      ['For the desk','Agree the downside the fund is willing to carry through CPI. Review a META addition only after checking portfolio fit and resolving the concentration concern.']
+  "alpha": [
+    [
+      "Our recommendation",
+      "Trim NVDA by the $8.4M proposed in the action card and reduce AMD. This lowers semiconductor concentration while retaining the core holdings."
     ],
-    global:[
-      ['The view for the desk','Start with the macro positions that depend most on the next policy or inflation release. Ask the desk to compare retaining that conviction with reducing event exposure.'],
-      ['Evidence to request','The selected fund has headline figures, but the detailed position dataset in this demo covers Alpha. Obtain a Global Macro position and sensitivity breakdown before proposing a specific hedge.'],
-      ['For the desk','Agree which rate or currency move would challenge the thesis, then compare the available responses using fund-specific scenarios.']
+    [
+      "Why now",
+      "Semiconductor exposure is <b>24.8% against a 27% cap</b>, with a projected rise to 28.3%. AMD is using <b>98% of its risk budget for a −4% return</b>, with weaker margin and pricing evidence."
     ],
-    neutral:[
-      ['The view for the desk','Focus the discussion on pair economics, financing, and balance between the legs. Low net exposure alone is not enough to conclude that the risks offset.'],
-      ['Evidence to request','The selected fund has headline figures, but the detailed position dataset in this demo covers Alpha. Request the Market Neutral pair and borrow breakdown before recommending a resize.'],
-      ['For the desk','Ask each pair owner what should close the spread and what it costs to wait. Review both legs together before changing the allocation.']
+    [
+      "Other holdings",
+      "Reduce UNH, which is also flagged for a trim with high risk usage and a negative return. Hold CRM without adding through its nearby catalyst."
     ],
-    digital:[
-      ['The view for the desk','Review the ability to reduce exposure during a fast crypto move before considering new positions. Discuss liquidity and custody alongside the expected return.'],
-      ['Evidence to request','The selected fund has headline figures, but the detailed position dataset in this demo covers Alpha. Obtain Digital Assets holdings, venue balances, and sensitivities before selecting protection.'],
-      ['For the desk','Agree the acceptable downside and the response to an exchange disruption. Size any proposed hedge against the verified Digital Assets exposures.']
+    [
+      "Suggested next step",
+      "Check the combined concentration after the reductions. Defer a META addition until headroom is restored, then use its existing opportunity case and portfolio-fit assessment to size it."
     ]
-  };
-  const brief=`<div class="card"><div class="card-h"><h3>Point Morning Brief</h3><span class="sp"></span><span class="tag">Demo data · for discussion</span><button class="btn gh sm" data-action="export-brief">Export</button></div><div class="card-b">
+  ],
+  "global": [
+    [
+      "Our recommendation",
+      "Pause new directional additions and retain the liquidity buffer until fund-specific exposures are available."
+    ],
+    [
+      "Why now",
+      "Global Macro shows <b>1.16% VaR and 22% cash</b>, but this terminal has no detailed Global Macro holdings or sensitivities. The available evidence supports holding off on new risk, rather than naming an unsupported position to sell."
+    ],
+    [
+      "Suggested next step",
+      "Keep new risk orders on hold pending the Global Macro position and DV01 breakdown. Use that breakdown to size any rate or currency reduction; the Alpha trade proposals do not apply to this fund."
+    ]
+  ],
+  "neutral": [
+    [
+      "Our recommendation",
+      "Maintain the neutral allocation and keep new positions matched across both legs."
+    ],
+    [
+      "Why now",
+      "Market Neutral shows <b>4% net and 210% gross exposure</b>. Low net exposure supports retaining the neutral stance, while the substantial gross book warrants care with additional pair size."
+    ],
+    [
+      "Suggested next step",
+      "Hold off on increasing gross exposure until the Market Neutral pair and borrow breakdown is available. Preserve beta balance in any adjustment; there is no fund-specific evidence here for a named pair trade."
+    ]
+  ],
+  "digital": [
+    [
+      "Our recommendation",
+      "Pause fresh risk additions and preserve the cash buffer while the portfolio is under pressure."
+    ],
+    [
+      "Why now",
+      "Digital Assets shows a <b>−2.10% day, 3.52% VaR and 4% cash</b>. Those headline figures favor maintaining liquidity, but the detailed holdings needed to select a sale or hedge are missing."
+    ],
+    [
+      "Suggested next step",
+      "Keep new buys on hold and obtain the Digital Assets holdings and venue balances before sizing reductions. Protect the existing cash buffer; do not reuse Alpha holdings to construct a Digital Assets hedge."
+    ]
+  ]
+};
+  const brief=`<div class="card"><div class="card-h"><h3>Point Morning Brief</h3><span class="sp"></span><span class="tag">Demo data · suggested actions</span><button class="btn gh sm" data-action="export-brief">Export</button></div><div class="card-b">
     <div class="brief">
       ${deskBriefs[FUND].map(([heading,copy])=>`<p style="margin:0 0 12px"><b>${heading}.</b> ${copy}</p>`).join('')}
     </div></div></div>`;
@@ -590,7 +629,7 @@ function markAllRead(){
 
 /* ---- ASK ---- */
 function renderAsk(){
-  Q('#view-ask').innerHTML='<div class="pg-head"><div><div class="pg-title">Ask Point</div><div class="pg-sub">Discuss the selected fund using the data available in this demo.</div></div></div><div class="card"><div class="card-b"><p>Connect your own OpenAI key in the private chat. Answers use this fund’s snapshot and, optionally, a fund-specific vector search.</p><p>Detailed positions are available for Alpha only. Ask Point will explain missing data for the other institutional funds.</p><div class="ask-bar"><input id="ask-in" placeholder="Ask about risk, exposure or a holding…"/><button class="btn pri" id="ask-send">Open chat</button></div></div></div>';
+  Q('#view-ask').innerHTML='<div class="pg-head"><div><div class="pg-title">Ask Portfolio Intelligence</div><div class="pg-sub">Discuss the selected fund using the data available in this demo.</div></div></div><div class="card"><div class="card-b"><p>Ask about holdings, performance, or the next suggested portfolio action. Answers use the selected fund’s website data.</p><p>Detailed positions are available for Alpha only. Ask Portfolio Intelligence will explain missing data for the other institutional funds.</p><div class="ask-bar"><input id="ask-in" placeholder="Ask about risk, exposure or a holding…"/><button class="btn pri" id="ask-send">Open chat</button></div></div></div>';
 }
 
 /* ---- REPORTS ---- */
@@ -803,8 +842,8 @@ document.addEventListener('click',e=>{
   if(e.target.id==='ask-send'){const inp=Q('#ask-in');if(inp&&inp.value.trim()){askQ(inp.value.trim());inp.value='';}}
 });
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='ask-in'&&e.target.value.trim()){askQ(e.target.value.trim());e.target.value='';}});
-Q('#ask-mini-in')?.addEventListener('keydown',e=>{if(e.key==='Enter'){go('ask');}});
-Q('#ask-mini')?.addEventListener('click',()=>go('ask'));
+Q('#ask-mini-in')?.addEventListener('keydown',e=>{if(e.key==='Enter'){const q=e.target.value.trim();e.target.value='';pointChat.open(q||undefined);}});
+Q('#ask-mini')?.addEventListener('click',()=>pointChat.open());
 
 /* role picker */
 const ROLES=[['PM · Alpha Fund','command'],['Head of Risk','risk'],['CIO','portfolio'],['Compliance','guidelines'],['Investor Relations','reports']];

@@ -34,7 +34,7 @@ test('no matching indexed version explicitly falls back to current snapshot',asy
   const client=core.createClient(async url=>ok(url.endsWith('/search')?{data:[]}:response('Snapshot answer')));
   client.connect('sk-test-only-not-a-real-key');
   const result=await client.ask({snapshot,question:'Risk?',vectorStoreId:'vs_demo'});
-  assert.match(result.note,/No matching indexed version/);
+  assert.match(result.note,/no matching indexed version/i);
 });
 test('API errors never repeat a server body containing a credential',async()=>{
   const client=core.createClient(async()=>new Response(JSON.stringify({error:{message:'key sk-do-not-print'}}),{status:401}));
