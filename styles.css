@@ -721,3 +721,52 @@ a.brand:hover{background:var(--panel)}
 .tbl th.th-sort:after{content:"⇅";position:absolute;right:5px;opacity:.32;font-size:10px}
 .tbl th.sorted-asc:after{content:"↑";opacity:1;color:var(--orange)}
 .tbl th.sorted-desc:after{content:"↓";opacity:1;color:var(--orange)}
+
+/* ============ Ask Point chatbot ============ */
+.askp-fab{position:fixed;right:22px;bottom:22px;z-index:95;display:flex;align-items:center;gap:9px;
+  background:linear-gradient(140deg,var(--orange),#c7421f);color:#fff;border:none;border-radius:30px;
+  padding:13px 20px;font-family:var(--sans);font-weight:600;font-size:14px;cursor:pointer;
+  box-shadow:0 14px 34px -12px rgba(232,96,59,.6);transition:.18s}
+.askp-fab:hover{transform:translateY(-2px);box-shadow:0 18px 40px -12px rgba(232,96,59,.7)}
+.askp-fab .fab-i{font-size:17px}
+.askp-fab.hide{display:none}
+.askp{position:fixed;right:22px;bottom:22px;z-index:100;width:min(400px,94vw);height:min(600px,82vh);
+  background:var(--panel);border:1px solid var(--line-2);border-radius:18px;display:flex;flex-direction:column;
+  overflow:hidden;box-shadow:0 30px 70px -24px rgba(0,0,0,.85);transform:translateY(16px) scale(.98);
+  opacity:0;pointer-events:none;transition:.22s cubic-bezier(.3,.8,.3,1)}
+.askp.open{transform:none;opacity:1;pointer-events:auto}
+.askp-head{display:flex;align-items:center;gap:11px;padding:15px 16px;border-bottom:1px solid var(--line);
+  background:linear-gradient(140deg,rgba(232,96,59,.12),transparent)}
+.askp-logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(140deg,var(--orange),#c7421f);
+  display:grid;place-items:center;flex:none}
+.askp-logo svg{width:20px;height:20px}
+.askp-ht{font-family:var(--serif);font-weight:600;font-size:15px}
+.askp-hs{font-size:11px;color:var(--txt-3);margin-top:1px}
+.askp-fundtag{margin-left:auto;font-size:10.5px;font-weight:600;color:var(--orange-2);
+  background:rgba(232,96,59,.12);border:1px solid rgba(232,96,59,.3);border-radius:20px;padding:3px 9px}
+.askp-x{width:30px;height:30px;border-radius:8px;border:1px solid var(--line-2);background:var(--panel-2);
+  color:var(--txt-2);cursor:pointer;display:grid;place-items:center;font-size:15px;flex:none}
+.askp-x:hover{color:var(--txt)}
+.askp-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.askp-body::-webkit-scrollbar{width:7px}.askp-body::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:4px}
+.am{max-width:84%;font-size:13px;line-height:1.55;padding:10px 13px;border-radius:13px}
+.am.user{align-self:flex-end;background:var(--orange);color:#fff;border-bottom-right-radius:4px}
+.am.bot{align-self:flex-start;background:var(--panel-2);border:1px solid var(--line);color:var(--txt);border-bottom-left-radius:4px}
+.am.bot b{color:var(--txt)}
+.am.bot ul{margin:7px 0 0;padding-left:16px}.am.bot li{margin-bottom:3px}
+.am.bot .amv{color:var(--orange-2);font-weight:600}
+.am-typing{align-self:flex-start;display:flex;gap:4px;padding:12px 14px;background:var(--panel-2);border:1px solid var(--line);border-radius:13px}
+.am-typing span{width:6px;height:6px;border-radius:50%;background:var(--txt-3);animation:amb 1.2s infinite}
+.am-typing span:nth-child(2){animation-delay:.2s}.am-typing span:nth-child(3){animation-delay:.4s}
+@keyframes amb{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+.askp-sugg{display:flex;flex-wrap:wrap;gap:7px;padding:0 16px 10px}
+.askp-chip{font-size:11.5px;font-weight:500;padding:6px 11px;border-radius:16px;border:1px solid var(--line-2);
+  background:var(--panel-2);color:var(--txt-2);cursor:pointer;transition:.12s}
+.askp-chip:hover{border-color:var(--orange);color:var(--txt)}
+.askp-input{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--line);background:var(--panel)}
+.askp-input input{flex:1;background:var(--bg-2);border:1px solid var(--line-2);border-radius:10px;
+  padding:10px 13px;color:var(--txt);font-family:var(--sans);font-size:13px;outline:none}
+.askp-input input:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(232,96,59,.14)}
+.askp-input button{width:40px;border-radius:10px;border:none;background:var(--orange);color:#fff;cursor:pointer;font-size:16px}
+.askp-input button:hover{background:var(--orange-2)}
+@media(max-width:560px){.askp{right:3vw;bottom:12px;height:84vh}}

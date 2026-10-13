@@ -1454,6 +1454,161 @@
 
   if(window.__tagRows) window.__tagRows();
 
+  /* ============ Ask Point chatbot ============ */
+  (function setupAskPoint(){
+    const fab=document.createElement('button');
+    fab.className='askp-fab'; fab.id='askp-fab';
+    fab.innerHTML='<span class="fab-i">◑</span> Ask Point';
+    const panel=document.createElement('aside');
+    panel.className='askp'; panel.id='askp';
+    panel.innerHTML=`
+      <div class="askp-head">
+        <span class="askp-logo"><svg viewBox="0 0 32 32"><path fill="#fff" d="M16 3C10 3 6 8 6 14c0 4 2 7 5 9v3c0 1 .5 2 2 2h6c1.5 0 2-1 2-2v-3c3-2 5-5 5-9 0-6-5-11-10-11Zm-1 3h2v18h-2V6Z"/></svg></span>
+        <div><div class="askp-ht">Ask Point</div><div class="askp-hs">Agentic intelligence · reads your live book</div></div>
+        <span class="askp-fundtag" id="askp-fundtag">Alpha Fund</span>
+        <button class="askp-x" id="askp-x" aria-label="Close">✕</button>
+      </div>
+      <div class="askp-body" id="askp-body"></div>
+      <div class="askp-sugg" id="askp-sugg"></div>
+      <div class="askp-input">
+        <input id="askp-text" placeholder="Ask about the book…" autocomplete="off"/>
+        <button id="askp-send" aria-label="Send">↑</button>
+      </div>`;
+    document.body.appendChild(fab);
+    document.body.appendChild(panel);
+    const body=panel.querySelector('#askp-body');
+    const sugg=panel.querySelector('#askp-sugg');
+    const input=panel.querySelector('#askp-text');
+    const fundtag=panel.querySelector('#askp-fundtag');
+    let greeted=false;
+
+    const curFund=()=>funds.find(x=>x.id===activeFund)||funds[0];
+    const fD=()=>fundDetail[activeFund]||fundDetail.alpha;
+    const vT=()=>viewTables[activeFund]||viewTables.alpha;
+    const mD=()=>marketData[activeFund]||marketData.alpha;
+    const pD=()=>panelData[activeFund]||panelData.alpha;
+    const topCard=()=>cardIndex[(fundExtra[activeFund]||fundExtra.alpha).topCardId];
+    const strip=s=>(Array.isArray(s)?(s[1]||''):(s||'')).toString().replace(/<[^>]+>/g,'');
+
+    function addMsg(html, who){
+      const el=document.createElement('div');
+      el.className='am '+who; el.innerHTML=html;
+      body.appendChild(el); body.scrollTop=body.scrollHeight;
+      return el;
+    }
+    function typing(){
+      const t=document.createElement('div');
+      t.className='am-typing'; t.innerHTML='<span></span><span></span><span></span>';
+      body.appendChild(t); body.scrollTop=body.scrollHeight; return t;
+    }
+    const SUGG=['How are we doing?','Any limit breaches?','Biggest positions','What should I trim?','What\'s crowded?','Macro outlook'];
+    function renderSugg(){ sugg.innerHTML=SUGG.map(s=>`<span class="askp-chip">${s}</span>`).join(''); }
+    renderSugg();
+    sugg.addEventListener('click',e=>{ const c=e.target.closest('.askp-chip'); if(c){ send(c.textContent); } });
+
+    function answer(qRaw){
+      const q=(qRaw||'').toLowerCase();
+      const f=curFund(), d=fD(), vt=vT(), md=mD(), pd=pD();
+      const has=(...ks)=>ks.some(k=>q.includes(k));
+      const money=v=>`<span class="amv">${v}</span>`;
+      // switch fund
+      for(const fu of funds){
+        const nm=fu.name.toLowerCase().replace(' fund','');
+        if((q.includes('switch')||q.includes('go to')||q.includes('open'))&&(q.includes(nm)||q.includes(fu.id))){
+          selectFund(fu.id);
+          return `Switched to the <b>${fu.name}</b>. The whole workspace now reflects it — AUM ${money(fu.aum)}, day PnL ${money(fu.pnl)}. Ask me anything about this book.`;
+        }
+      }
+      // ticker lookup
+      const tkMatch=(q.toUpperCase().match(/\b[A-Z]{2,5}\b/g)||[]);
+      for(const tk of tkMatch){
+        const p=d.positions.find(x=>x[0].toUpperCase()===tk);
+        if(p){
+          return `<b>${p[0]}</b> — ${p[1]}: ${p[2]==='L'?'long':'short'} ${p[3]}, market value ${money(p[4])} (${p[5]} of book). Day ${money(p[6])}, MTD ${money(p[7])}, beta ${p[8]}. Agent flag: <b>${p[10]}</b>.`;
+        }
+      }
+      if(has('hello','hi ','hey','hi','hola')) return `Hi — I'm <b>Ask Point</b>, watching the <b>${f.name}</b>. I can tell you performance, risk & limits, positions, crowding, macro, or details on any holding. What would you like?`;
+      if(has('help','what can you','what do you do','capab')) return `I read the <b>${f.name}</b>'s live book. Try:<ul><li>"How are we doing?" — performance</li><li>"Any limit breaches?" — risk</li><li>"Biggest positions" / "What should I trim?"</li><li>"What's crowded?" — positioning</li><li>"Macro outlook" — regime & CPI</li><li>Or a ticker, e.g. "${d.positions[0][0]}"</li></ul>`;
+      if(has('which fund','current fund','what fund','where am i')) return `You're viewing the <b>${f.name}</b> (${f.sub}) — AUM ${money(f.aum)}. Switch with the header fund picker, or ask me to "switch to Digital Assets".`;
+      if(has('list fund','what fund','all fund','funds')) return `There are four books:<ul><li><b>Alpha Fund</b> — equity L/S</li><li><b>Global Macro</b> — futures, rates, FX</li><li><b>Market Neutral</b> — paired, beta ≈ 0</li><li><b>Digital Assets</b> — crypto + tokenized</li></ul>Say "switch to <i>name</i>" and everything updates.`;
+      if(has('aum','how big','size of','how much money','assets under')) return `<b>${f.name}</b> runs ${money(f.aum)} in AUM (${f.aumD}).`;
+      if(has('how are we','performance','return','pnl','p&l','doing','profit','up or down')){
+        const k=vt.pnlKpis;
+        return `<b>${f.name}</b> performance — Day ${money(k[0][1])} (${k[0][2]}), MTD ${money(k[1][1])}, QTD ${money(k[2][1])}, YTD ${money(k[3][1])}. Hit rate ${pd.pnlStats[0][1]}, W/L ${pd.pnlStats[1][1]}.`;
+      }
+      if(has('breach','limit','ima','guideline','headroom','over the limit')){
+        const br=vt.riskLimits.find(r=>/BREACH|near/.test(strip(r[5])+strip(r[r.length-1])));
+        if(br){ const tc=topCard();
+          return `⚠️ <b>${strip(br[0])}</b> is at <b>${strip(br[1])}</b> vs. a ${strip(br[2])} limit — breach path ${strip(br[4])}. Recommended: ${tc?tc.body:'see the Risk agent card'}`;
+        }
+        return `All limits are currently within range for the <b>${f.name}</b> — no projected breaches.`;
+      }
+      if(has('var','value at risk','how risky','risk level','downside')){
+        const mag=v=>Math.abs(parseFloat((v||'').replace(/[^\d.]/g,''))||0);
+        const worst=[...pd.stress].sort((a,b)=>mag(b[1])-mag(a[1]))[0];
+        return `<b>${f.name}</b> 1-day 99% VaR is ${money(f.var)} (${f.varD}). Worst stress scenario: <b>${strip(worst[0])}</b> → ${money(strip(worst[1]))}.`;
+      }
+      if(has('net','gross','exposure','leverage','how long')) return `<b>${f.name}</b> exposure: gross/net ${money(f.exp)}. ${f.expD}.`;
+      if(has('biggest','largest','top position','top holding','concentrat','main position')){
+        const ps=d.positions.slice(0,3).map(p=>`<li><b>${p[0]}</b> ${p[4]} (${p[5]})</li>`).join('');
+        return `Top positions in the <b>${f.name}</b>:<ul>${ps}</ul>`;
+      }
+      if(has('trim','sell','reduce','cut','what should i','recommend','action','do now','next best')){
+        const tc=topCard();
+        return tc?`Top action for the <b>${f.name}</b> — <b>${tc.title}</b>. ${tc.body} <br><span class="amv">Open the dashboard card for the full what-if & approval.</span>`:`No critical action right now.`;
+      }
+      if(has('crowd','de-gross','degross','positioning','consensus')){
+        const c=vt.crowding[0];
+        return `Most crowded in the <b>${f.name}</b>: <b>${strip(c[0])}</b> — crowding ${strip(c[1])}${c[2]&&c[2]!=='—'?', ownership '+c[2]:''}. Flag: ${strip(c[c.length-1])}.`;
+      }
+      if(has('macro','cpi','inflation','fed','rate','regime','interest')){
+        const sc=pd.scenario.find(r=>/hot cpi/i.test(r[0]));
+        return `Macro: CPI 3.1% YoY, Fed funds 4.75% (2 cuts priced by March). Book stance: <b>${md.macroKpis[3][1]}</b>. ${sc?'Hot-CPI scenario for this book: '+money(strip(sc[1])):''}.`;
+      }
+      if(has('crypto','bitcoin','btc','ethereum','eth','token','digital asset')){
+        return `Digital read: BTC $101,842 (−2.1%), ETH $3,842 (−3.4%). Perp funding +0.082%, OI +18% — crowded longs. Tokenized tNVDA basis −2.81% vs NYSE. ${activeFund==='digital'?'This book is the Digital Assets fund.':'Your crypto-β here is '+(f.exp)+'.'}`;
+      }
+      if(has('brief','overnight','summary','catch me up','what happened','what\'s new','whats new')){
+        const fe=fundExtra[activeFund]||fundExtra.alpha;
+        const items=fe.feed.slice(0,3).map(x=>`<li>${x[1]}</li>`).join('');
+        return `Overnight for the <b>${f.name}</b> — ${f.cards}, ${f.crit}:<ul>${items}</ul>`;
+      }
+      if(has('thank','thanks','cheers','great','nice','cool')) return `Anytime. Ask me anything else about the book.`;
+      if(has('who are you','what is point','about point')) return `Point is an agentic decision layer — ten specialist agents watch the portfolio and the market, predict what matters, and recommend the next best action. I'm the chat front-end to that team.`;
+      return `I can help with <b>performance</b>, <b>risk & limits</b>, <b>positions</b>, <b>crowding</b>, <b>macro</b>, or a specific <b>ticker</b> for the <b>${f.name}</b>. Try one of the suggestions below, or rephrase.`;
+    }
+
+    function send(text){
+      const t=(text||input.value).trim(); if(!t) return;
+      input.value='';
+      addMsg(strip(t), 'user');
+      const tp=typing();
+      setTimeout(()=>{ tp.remove(); let a; try{ a=answer(t); }catch(e){ a='Sorry — I hit a snag on that one. Try rephrasing, or ask about performance, risk & limits, positions, crowding, macro, or a ticker.'; } addMsg(a, 'bot'); }, 420+Math.random()*320);
+    }
+    function openPanel(prefill){
+      fundtag.textContent=curFund().name;
+      fab.classList.add('hide'); panel.classList.add('open');
+      if(!greeted){ greeted=true;
+        addMsg(`Hi — I'm <b>Ask Point</b>. I'm watching the <b>${curFund().name}</b> and can answer questions about performance, risk, positions, crowding and macro. What would you like to know?`, 'bot');
+      }
+      if(prefill){ send(prefill); } else { setTimeout(()=>input.focus(),120); }
+    }
+    function closePanel(){ panel.classList.remove('open'); fab.classList.remove('hide'); }
+
+    fab.addEventListener('click',()=>openPanel());
+    panel.querySelector('#askp-x').addEventListener('click',closePanel);
+    panel.querySelector('#askp-send').addEventListener('click',()=>send());
+    input.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); send(); } });
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape') closePanel(); });
+
+    // wire existing "Ask Point" buttons + the top search
+    document.querySelectorAll('.btn').forEach(b=>{
+      if(/ask point/i.test(b.textContent)) b.addEventListener('click',ev=>{ ev.preventDefault(); openPanel(); });
+    });
+    const topSearch=document.querySelector('.search input');
+    if(topSearch) topSearch.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); const v=topSearch.value.trim(); topSearch.value=''; openPanel(v||undefined); } });
+  })();
+
   /* open from hash */
   const h = (location.hash||'').replace('#','');
   if(h && titles[h]) go(h);
