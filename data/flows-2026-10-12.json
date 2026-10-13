@@ -1,0 +1,1103 @@
+{
+  "asOf": "2026-10-12",
+  "siDate": "2026-09-30",
+  "reportDate": "2026-06-30",
+  "books": {
+    "alpha": {
+      "rows": [
+        [
+          "PLTR",
+          "36",
+          "64.7%",
+          "+1.1 pts",
+          "2.6%",
+          "flat",
+          "<span class=\"pill good\">OK</span>"
+        ],
+        [
+          "FRO",
+          "35",
+          "39.2%",
+          "+4.0 pts",
+          "6.3%",
+          "steep",
+          "<span class=\"pill good\">OK</span>"
+        ],
+        [
+          "ASC",
+          "41",
+          "85.7%",
+          "+0.5 pts",
+          "6.3%",
+          "call-skew",
+          "<span class=\"pill good\">OK</span>"
+        ],
+        [
+          "MSFT",
+          "41",
+          "75.8%",
+          "+0.5 pts",
+          "0.8%",
+          "flat",
+          "<span class=\"pill good\">OK</span>"
+        ],
+        [
+          "INTR",
+          "36",
+          "41.3%",
+          "+5.9 pts",
+          "3.2%",
+          "flat",
+          "<span class=\"pill good\">OK</span>"
+        ],
+        [
+          "ANET",
+          "28",
+          "73.3%",
+          "−0.9 pts",
+          "1.1%",
+          "call-skew",
+          "<span class=\"pill good\">OK</span>"
+        ],
+        [
+          "CVX",
+          "34",
+          "71.2%",
+          "+0.3 pts",
+          "1.2%",
+          "flat",
+          "<span class=\"pill good\">OK</span>"
+        ],
+        [
+          "V",
+          "50",
+          "90.1%",
+          "−0.2 pts",
+          "1.2%",
+          "flat",
+          "<span class=\"pill good\">OK</span>"
+        ],
+        [
+          "ISRG",
+          "59",
+          "89.4%",
+          "−0.1 pts",
+          "2.1%",
+          "steep",
+          "<span class=\"pill orange\">watch</span>"
+        ],
+        [
+          "GOOGL",
+          "51",
+          "81.0%",
+          "+1.5 pts",
+          "1.4%",
+          "mild",
+          "<span class=\"pill good\">OK</span>"
+        ],
+        [
+          "MPC",
+          "38",
+          "79.5%",
+          "−0.1 pts",
+          "2.9%",
+          "flat",
+          "<span class=\"pill good\">OK</span>"
+        ],
+        [
+          "COP",
+          "56",
+          "87.0%",
+          "+0.2 pts",
+          "1.3%",
+          "steep",
+          "<span class=\"pill orange\">watch</span>"
+        ],
+        [
+          "HIPO",
+          "37",
+          "48.7%",
+          "+2.9 pts",
+          "4.1%",
+          "steep",
+          "<span class=\"pill good\">OK</span>"
+        ],
+        [
+          "VLO",
+          "36",
+          "87.1%",
+          "−1.3 pts",
+          "3.6%",
+          "call-skew",
+          "<span class=\"pill good\">OK</span>"
+        ],
+        [
+          "MA",
+          "59",
+          "91.1%",
+          "−1.2 pts",
+          "0.7%",
+          "steep",
+          "<span class=\"pill orange\">watch</span>"
+        ],
+        [
+          "NAT",
+          "43",
+          "58.0%",
+          "+6.3 pts",
+          "7.7%",
+          "flat",
+          "<span class=\"pill good\">OK</span>"
+        ],
+        [
+          "GOOG",
+          "28",
+          "62.1%",
+          "+1.3 pts",
+          "—",
+          "flat",
+          "<span class=\"pill good\">OK</span>"
+        ],
+        [
+          "DDOG",
+          "64",
+          "92.9%",
+          "+4.2 pts",
+          "3.3%",
+          "call-skew",
+          "<span class=\"pill orange\">watch</span>"
+        ],
+        [
+          "ADSK",
+          [
+            "warn",
+            "90"
+          ],
+          "100.0%",
+          "+3.8 pts",
+          "5.0%",
+          "steep",
+          "<span class=\"pill red\">de-gross risk</span>"
+        ],
+        [
+          "CDNS",
+          "65",
+          "91.6%",
+          "+1.8 pts",
+          "2.1%",
+          "—",
+          "<span class=\"pill orange\">watch</span>"
+        ],
+        [
+          "…",
+          "…",
+          "…",
+          "…",
+          "…",
+          "…",
+          "…"
+        ],
+        [
+          "PMT",
+          [
+            "warn",
+            "73"
+          ],
+          "77.7%",
+          "+4.3 pts",
+          "15.8%",
+          "—",
+          "<span class=\"pill red\">crowded short</span>"
+        ],
+        [
+          "NVR",
+          "47",
+          "92.4%",
+          "+2.0 pts",
+          "8.2%",
+          "—",
+          "<span class=\"pill red\">crowded short</span>"
+        ],
+        [
+          "CABO",
+          [
+            "warn",
+            "71"
+          ],
+          "96.3%",
+          "−0.6 pts",
+          "29.9%",
+          "—",
+          "<span class=\"pill red\">crowded short</span>"
+        ],
+        [
+          "IREN",
+          [
+            "warn",
+            "75"
+          ],
+          "63.5%",
+          "+10.2 pts",
+          "21.3%",
+          "call-skew",
+          "<span class=\"pill red\">crowded short</span>"
+        ],
+        [
+          "SMR",
+          [
+            "warn",
+            "84"
+          ],
+          "59.1%",
+          "+12.2 pts",
+          "20.7%",
+          "mild",
+          "<span class=\"pill red\">crowded short</span>"
+        ],
+        [
+          "FISV",
+          "—",
+          "—",
+          "+3.3 pts",
+          "—",
+          "call-skew",
+          "<span class=\"pill ghost\">call-skew</span>"
+        ],
+        [
+          "METCB",
+          "47",
+          "60.0%",
+          "+4.4 pts",
+          "3.3%",
+          "—",
+          "<span class=\"pill red\">counter</span>"
+        ],
+        [
+          "CIFR",
+          "62",
+          "94.9%",
+          "+3.0 pts",
+          "22.0%",
+          "call-skew",
+          "<span class=\"pill red\">crowded short</span>"
+        ],
+        [
+          "RC",
+          [
+            "warn",
+            "71"
+          ],
+          "59.4%",
+          "+3.3 pts",
+          "11.9%",
+          "—",
+          "<span class=\"pill red\">crowded short</span>"
+        ],
+        [
+          "FLNC",
+          [
+            "warn",
+            "75"
+          ],
+          "84.6%",
+          "−4.6 pts",
+          "44.3%",
+          "call-skew",
+          "<span class=\"pill red\">crowded short</span>"
+        ],
+        [
+          "LEN",
+          "39",
+          "99.2%",
+          "+2.1 pts",
+          "10.8%",
+          "call-skew",
+          "<span class=\"pill red\">crowded short</span>"
+        ],
+        [
+          "TROX",
+          [
+            "warn",
+            "70"
+          ],
+          "80.8%",
+          "+1.3 pts",
+          "15.6%",
+          "—",
+          "<span class=\"pill red\">crowded short</span>"
+        ],
+        [
+          "JBLU",
+          "68",
+          "87.7%",
+          "+4.5 pts",
+          "30.1%",
+          "call-skew",
+          "<span class=\"pill red\">crowded short</span>"
+        ],
+        [
+          "JELD",
+          "53",
+          "90.3%",
+          "+1.7 pts",
+          "11.4%",
+          "—",
+          "<span class=\"pill red\">crowded short</span>"
+        ],
+        [
+          "OI",
+          "43",
+          "100.0%",
+          "+2.4 pts",
+          "14.3%",
+          "call-skew",
+          "<span class=\"pill red\">crowded short</span>"
+        ],
+        [
+          "OLN",
+          "50",
+          "100.0%",
+          "+4.6 pts",
+          "14.4%",
+          "flat",
+          "<span class=\"pill red\">crowded short</span>"
+        ],
+        [
+          "PLUG",
+          [
+            "warn",
+            "85"
+          ],
+          "73.2%",
+          "+2.0 pts",
+          "23.0%",
+          "—",
+          "<span class=\"pill red\">crowded short</span>"
+        ],
+        [
+          "ARE",
+          "38",
+          "100.0%",
+          "+4.4 pts",
+          "6.4%",
+          "flat",
+          "<span class=\"pill red\">counter</span>"
+        ],
+        [
+          "MOS",
+          "51",
+          "98.5%",
+          "+0.3 pts",
+          "12.5%",
+          "flat",
+          "<span class=\"pill red\">crowded short</span>"
+        ],
+        [
+          "GPRO",
+          [
+            "warn",
+            "85"
+          ],
+          "44.3%",
+          "+9.1 pts",
+          "18.4%",
+          "—",
+          "<span class=\"pill red\">crowded short</span>"
+        ]
+      ],
+      "divergence": [
+        [
+          "<b>FLNC</b> — research short · Siemens Pension Trust E.V. cut 7.0 pts of the co.",
+          "pill good",
+          "aligned"
+        ],
+        [
+          "<b>MOS</b> — research short · FMR cut 5.0 pts of the co.",
+          "pill good",
+          "aligned"
+        ],
+        [
+          "<b>CABO</b> — research short · Blackrock cut 4.8 pts of the co.",
+          "pill good",
+          "aligned"
+        ],
+        [
+          "<b>GPRO</b> — research short · Blackrock added 4.3 pts of the co.",
+          "pill red",
+          "counter"
+        ],
+        [
+          "<b>OLN</b> — research short · AQR Capital Management added 3.8 pts of the co.",
+          "pill red",
+          "counter"
+        ],
+        [
+          "<b>METCB</b> — research short · Blackrock added 3.5 pts of the co.",
+          "pill red",
+          "counter"
+        ]
+      ],
+      "etf": [
+        [
+          "SPY",
+          8,
+          "",
+          "+0.4%"
+        ],
+        [
+          "QQQ",
+          19,
+          "bad",
+          "−1.3%"
+        ],
+        [
+          "SMH",
+          96,
+          "bad",
+          "−6.8%"
+        ],
+        [
+          "IWM",
+          27,
+          "bad",
+          "−1.9%"
+        ],
+        [
+          "XLE",
+          57,
+          "",
+          "+4.0%"
+        ],
+        [
+          "XLK",
+          32,
+          "bad",
+          "−2.3%"
+        ],
+        [
+          "IBIT (BTC)",
+          49,
+          "bad",
+          "−3.5%"
+        ],
+        [
+          "ETHA (ETH)",
+          100,
+          "bad",
+          "−7.1%"
+        ]
+      ],
+      "mostCrowded": {
+        "label": "ADSK",
+        "crowd": 90,
+        "inst": 1,
+        "si": 0.050100002
+      }
+    },
+    "global": {
+      "rows": [
+        [
+          "Nat gas (NG)",
+          "—",
+          "—",
+          "—",
+          "—",
+          "flat",
+          "<span class=\"pill ghost\">skew only</span>"
+        ],
+        [
+          "Copper (HG)",
+          "—",
+          "—",
+          "—",
+          "—",
+          "flat",
+          "<span class=\"pill ghost\">skew only</span>"
+        ],
+        [
+          "Brent (BZ)",
+          "—",
+          "—",
+          "—",
+          "—",
+          "steep",
+          "<span class=\"pill orange\">steep skew</span>"
+        ],
+        [
+          "Oil ETF",
+          "—",
+          "—",
+          "—",
+          "—",
+          "call-skew",
+          "<span class=\"pill ghost\">call-skew</span>"
+        ],
+        [
+          "USD ETF",
+          "—",
+          "—",
+          "—",
+          "—",
+          "—",
+          "<span class=\"pill ghost\">n/a</span>"
+        ],
+        [
+          "S&P (ES)",
+          "—",
+          "—",
+          "—",
+          "—",
+          "flat",
+          "<span class=\"pill ghost\">skew only</span>"
+        ],
+        [
+          "Nasdaq (NQ)",
+          "—",
+          "—",
+          "—",
+          "—",
+          "flat",
+          "<span class=\"pill ghost\">skew only</span>"
+        ],
+        [
+          "China (FXI)",
+          "—",
+          "—",
+          "—",
+          "—",
+          "steep",
+          "<span class=\"pill orange\">steep skew</span>"
+        ],
+        [
+          "JPY (6J)",
+          "—",
+          "—",
+          "—",
+          "—",
+          "—",
+          "<span class=\"pill ghost\">n/a</span>"
+        ],
+        [
+          "10Y (ZN)",
+          "—",
+          "—",
+          "—",
+          "—",
+          "—",
+          "<span class=\"pill ghost\">n/a</span>"
+        ],
+        [
+          "Crude (CL)",
+          "—",
+          "—",
+          "—",
+          "—",
+          "call-skew",
+          "<span class=\"pill ghost\">call-skew</span>"
+        ],
+        [
+          "Gold (GC)",
+          "—",
+          "—",
+          "—",
+          "—",
+          "flat",
+          "<span class=\"pill ghost\">skew only</span>"
+        ],
+        [
+          "Gold miners",
+          "—",
+          "—",
+          "—",
+          "—",
+          "flat",
+          "<span class=\"pill ghost\">skew only</span>"
+        ],
+        [
+          "HY credit",
+          "—",
+          "—",
+          "—",
+          "—",
+          "—",
+          "<span class=\"pill ghost\">n/a</span>"
+        ],
+        [
+          "Gold ETF",
+          "—",
+          "—",
+          "—",
+          "—",
+          "flat",
+          "<span class=\"pill ghost\">skew only</span>"
+        ],
+        [
+          "EM (EEM)",
+          "—",
+          "—",
+          "—",
+          "—",
+          "call-skew",
+          "<span class=\"pill ghost\">call-skew</span>"
+        ],
+        [
+          "Silver (SI)",
+          "—",
+          "—",
+          "—",
+          "—",
+          "flat",
+          "<span class=\"pill ghost\">skew only</span>"
+        ],
+        [
+          "EUR (6E)",
+          "—",
+          "—",
+          "—",
+          "—",
+          "—",
+          "<span class=\"pill ghost\">n/a</span>"
+        ],
+        [
+          "TLT",
+          "—",
+          "—",
+          "—",
+          "—",
+          "mild",
+          "<span class=\"pill ghost\">skew only</span>"
+        ],
+        [
+          "Russell 2k",
+          "—",
+          "—",
+          "—",
+          "—",
+          "flat",
+          "<span class=\"pill ghost\">skew only</span>"
+        ]
+      ],
+      "divergence": [],
+      "etf": [
+        [
+          "USO",
+          100,
+          "",
+          "+4.9%"
+        ],
+        [
+          "GLD",
+          14,
+          "gold",
+          "+0.7%"
+        ],
+        [
+          "TLT",
+          25,
+          "",
+          "+1.2%"
+        ],
+        [
+          "UUP",
+          10,
+          "",
+          "+0.5%"
+        ],
+        [
+          "FXI",
+          18,
+          "",
+          "+0.9%"
+        ],
+        [
+          "EEM",
+          77,
+          "bad",
+          "−3.8%"
+        ],
+        [
+          "UNG",
+          72,
+          "",
+          "+3.5%"
+        ],
+        [
+          "HYG",
+          8,
+          "",
+          "+0.4%"
+        ]
+      ],
+      "mostCrowded": null
+    },
+    "neutral": {
+      "rows": [
+        [
+          "AMD/AVGO",
+          "58",
+          "77.6%",
+          "+1.7 pts",
+          "1.8%",
+          "flat",
+          "<span class=\"pill orange\">watch</span>"
+        ],
+        [
+          "KO/PEP",
+          "46",
+          "74.9%",
+          "+0.2 pts",
+          "1.6%",
+          "flat",
+          "<span class=\"pill good\">OK</span>"
+        ],
+        [
+          "GOOGL/META",
+          [
+            "warn",
+            "74"
+          ],
+          "80.0%",
+          "+0.7 pts",
+          "1.4%",
+          "flat",
+          "<span class=\"pill orange\">watch</span>"
+        ],
+        [
+          "JPM/BAC",
+          "23",
+          "73.4%",
+          "−0.3 pts",
+          "1.1%",
+          "flat",
+          "<span class=\"pill good\">OK</span>"
+        ],
+        [
+          "COST/WMT",
+          "34",
+          "56.4%",
+          "−0.1 pts",
+          "1.7%",
+          "steep",
+          "<span class=\"pill good\">OK</span>"
+        ],
+        [
+          "PG/CL",
+          "64",
+          "79.1%",
+          "−0.4 pts",
+          "2.2%",
+          "steep",
+          "<span class=\"pill orange\">watch</span>"
+        ],
+        [
+          "V/MA",
+          [
+            "warn",
+            "70"
+          ],
+          "90.6%",
+          "−0.7 pts",
+          "1.0%",
+          "steep",
+          "<span class=\"pill orange\">watch</span>"
+        ],
+        [
+          "HD/LOW",
+          "56",
+          "79.0%",
+          "+1.2 pts",
+          "1.7%",
+          "flat",
+          "<span class=\"pill orange\">watch</span>"
+        ],
+        [
+          "AMZN/WMT",
+          "25",
+          "53.5%",
+          "+0.1 pts",
+          "1.4%",
+          "steep",
+          "<span class=\"pill good\">OK</span>"
+        ]
+      ],
+      "divergence": [
+        [
+          "<b>AMD/AVGO</b> — research long · JPMORGAN CHASE & CO added 1.0 pts of the co.",
+          "pill good",
+          "aligned"
+        ],
+        [
+          "<b>HD/LOW</b> — research long · FMR added 1.0 pts of the co.",
+          "pill good",
+          "aligned"
+        ],
+        [
+          "<b>GOOGL/META</b> — research long · FMR cut 0.9 pts of the co.",
+          "pill orange",
+          "divergent"
+        ],
+        [
+          "<b>PG/CL</b> — research long · Price (T.Rowe) Associates cut 0.7 pts of the co.",
+          "pill orange",
+          "divergent"
+        ],
+        [
+          "<b>V/MA</b> — research long · Mastercard Foundation Asset Management Corp cut 0.6 pts of the co.",
+          "pill orange",
+          "divergent"
+        ],
+        [
+          "<b>KO/PEP</b> — research long · Charles Schwab Investment Management added 0.4 pts of the co.",
+          "pill good",
+          "aligned"
+        ]
+      ],
+      "etf": [
+        [
+          "XLV health",
+          66,
+          "",
+          "+2.8%"
+        ],
+        [
+          "XLF fins",
+          52,
+          "",
+          "+2.2%"
+        ],
+        [
+          "XLK tech",
+          55,
+          "bad",
+          "−2.3%"
+        ],
+        [
+          "XLE energy",
+          97,
+          "",
+          "+4.0%"
+        ],
+        [
+          "XLP staples",
+          100,
+          "",
+          "+4.2%"
+        ],
+        [
+          "XLY discr",
+          40,
+          "",
+          "+1.7%"
+        ],
+        [
+          "SPY",
+          10,
+          "",
+          "+0.4%"
+        ]
+      ],
+      "mostCrowded": {
+        "label": "GOOGL/META",
+        "crowd": 74,
+        "inst": 0.80026,
+        "si": 0.014450000000000001
+      }
+    },
+    "digital": {
+      "rows": [
+        [
+          "IBIT",
+          "—",
+          "—",
+          "—",
+          "—",
+          "flat",
+          "<span class=\"pill ghost\">skew only</span>"
+        ],
+        [
+          "BTC",
+          "—",
+          "—",
+          "—",
+          "—",
+          "flat",
+          "<span class=\"pill ghost\">skew only</span>"
+        ],
+        [
+          "MSTR",
+          "28",
+          "55.0%",
+          "+2.6 pts",
+          "7.8%",
+          "mild",
+          "<span class=\"pill good\">OK</span>"
+        ],
+        [
+          "ETH",
+          "—",
+          "—",
+          "—",
+          "—",
+          "—",
+          "<span class=\"pill ghost\">n/a</span>"
+        ],
+        [
+          "ETHA",
+          "—",
+          "—",
+          "—",
+          "—",
+          "—",
+          "<span class=\"pill ghost\">n/a</span>"
+        ],
+        [
+          "HOOD",
+          "50",
+          "79.5%",
+          "+2.5 pts",
+          "5.1%",
+          "mild",
+          "<span class=\"pill good\">OK</span>"
+        ],
+        [
+          "SOL",
+          "—",
+          "—",
+          "—",
+          "—",
+          "call-skew",
+          "<span class=\"pill ghost\">call-skew</span>"
+        ],
+        [
+          "COIN",
+          "34",
+          "68.7%",
+          "−0.0 pts",
+          "11.1%",
+          "steep",
+          "<span class=\"pill orange\">squeeze</span>"
+        ],
+        [
+          "HUT",
+          "62",
+          "82.0%",
+          "+6.5 pts",
+          "16.9%",
+          "call-skew",
+          "<span class=\"pill orange\">squeeze</span>"
+        ],
+        [
+          "WULF",
+          "69",
+          "90.3%",
+          "+5.0 pts",
+          "28.1%",
+          "call-skew",
+          "<span class=\"pill orange\">squeeze</span>"
+        ],
+        [
+          "RIOT",
+          "64",
+          "87.4%",
+          "+4.6 pts",
+          "13.9%",
+          "call-skew",
+          "<span class=\"pill orange\">squeeze</span>"
+        ],
+        [
+          "IREN",
+          "36",
+          "63.5%",
+          "+10.2 pts",
+          "21.3%",
+          "call-skew",
+          "<span class=\"pill orange\">squeeze</span>"
+        ],
+        [
+          "MARA",
+          "44",
+          "76.0%",
+          "+4.1 pts",
+          "29.8%",
+          "flat",
+          "<span class=\"pill orange\">squeeze</span>"
+        ],
+        [
+          "CLSK",
+          "67",
+          "100.0%",
+          "+0.0 pts",
+          "41.6%",
+          "flat",
+          "<span class=\"pill orange\">squeeze</span>"
+        ]
+      ],
+      "divergence": [
+        [
+          "<b>HUT</b> — research long · Coatue Management added 3.9 pts of the co.",
+          "pill good",
+          "aligned"
+        ],
+        [
+          "<b>IREN</b> — research long · Bank of America added 3.1 pts of the co.",
+          "pill good",
+          "aligned"
+        ],
+        [
+          "<b>RIOT</b> — research long · Jane Street Group added 2.5 pts of the co.",
+          "pill good",
+          "aligned"
+        ],
+        [
+          "<b>COIN</b> — research long · Paradigm Operations cut 0.2 pts of the co.",
+          "pill orange",
+          "divergent"
+        ]
+      ],
+      "etf": [
+        [
+          "IBIT (BTC)",
+          29,
+          "bad",
+          "−3.5%"
+        ],
+        [
+          "ETHA (ETH)",
+          59,
+          "bad",
+          "−7.1%"
+        ],
+        [
+          "BITO",
+          28,
+          "bad",
+          "−3.3%"
+        ],
+        [
+          "WGMI miners",
+          100,
+          "bad",
+          "−12.0%"
+        ],
+        [
+          "BLOK",
+          40,
+          "bad",
+          "−4.8%"
+        ],
+        [
+          "QQQ",
+          11,
+          "bad",
+          "−1.3%"
+        ]
+      ],
+      "mostCrowded": {
+        "label": "WULF",
+        "crowd": 69,
+        "inst": 0.90319,
+        "si": 0.28129998
+      }
+    }
+  }
+}

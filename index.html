@@ -241,13 +241,13 @@
           <div class="a-icon">🔍</div>
           <div class="a-name">Research & Alpha</div>
           <div class="a-sub">AI + quant ranking, ranges</div>
-          <div class="a-meta"><span class="pill ghost">12 new ideas</span></div>
+          <div class="a-meta"><span class="pill ghost">31 new ideas</span></div>
         </a>
         <a href="#flows" class="agent-tile gold" data-view="flows">
           <div class="a-icon">≋</div>
           <div class="a-name">Fund Flows</div>
-          <div class="a-sub">13F, 13D, N-PORT, crowding</div>
-          <div class="a-meta"><span class="pill orange">crowding ↑ semis</span></div>
+          <div class="a-sub">13F, short interest, options skew</div>
+          <div class="a-meta"><span class="pill orange">ADSK crowding 90</span></div>
         </a>
         <a href="#earnings" class="agent-tile gold" data-view="earnings">
           <div class="a-icon">💬</div>
@@ -378,15 +378,15 @@
           <ul class="brief-list" id="brief-findings">
 <li><span class="tag red">Risk</span> Projected opening exposure is <b>63.1% against the 60% limit</b>. Compare a partial NVDA reduction with a semiconductor hedge, and confirm which combination restores adequate headroom.</li>
 <li><span class="tag red">Macro</span> The hot-CPI scenario implies a loss of <b>38 basis points</b>. Price the rate hedge against that downside and the upside it would give away if the release is benign.</li>
-<li><span class="tag gold">Flows</span> META crowding could make an exit harder if investors sell together. Review the position size and cost of protection while liquidity is available.</li>
-<li><span class="tag red">Research</span> Ask the MSFT analyst to refresh the forward return case and the NVDA analyst to assess the new filings. Recent losses and headlines are reasons to review conviction, not conclusions on their own.</li>
+<li><span class="tag gold">Flows</span> On the research universe, <b>ADSK crowding is 90</b> (institutions 100%, short interest 5.0%). Seventeen of the bottom-20 shorts already have short interest of at least 8%. GPRO is 18.4%, and Blackrock added 4.3 points of it in the 30 Jun 13F.</li>
+<li><span class="tag red">Research</span> Ask the MSFT analyst to refresh the forward return case and the NVDA analyst to assess the new filings. On the market sleeve, the 12 Oct research rank is led by <b>PLTR at 0.85</b>, with FRO and ASC next. Recent losses and headlines are reasons to review conviction, not conclusions on their own.</li>
 </ul>
 
           <h3 class="h3">Decisions to discuss</h3>
           <ol class="brief-ol" id="brief-decisions">
 <li>Ask Risk to compare the proposed NVDA trim and semiconductor protection. Choose a response only after checking the resulting mandate headroom.</li>
 <li>Agree the portfolio loss the desk is willing to accept through CPI, then decide whether the proposed rate hedge offers value at the quoted cost.</li>
-<li>Review META sizing with the covering analyst. Compare retaining the position, reducing it, and buying protection against the strength of the thesis.</li>
+<li>Review ADSK on the market sleeve (crowding 90). Compare retaining it with buying protection, and treat GPRO short interest of 18.4% as an already-crowded research short.</li>
 </ol>
         </article>
 
@@ -811,38 +811,73 @@
     <section class="view" id="view-research">
       <div class="view-head">
         <div><div class="eyebrow">Market squad · Agent</div><h1 class="h2">🔍  Research & Alpha Agent</h1></div>
-        <div class="chip gold">AI + quant · 12 new ideas today</div>
+        <div class="chip gold" id="research-chip">AI + quant · 31 names ≥ 0.72 · 12 Oct</div>
       </div>
       <div class="card">
-        <div class="card-head"><h3 class="card-title">Ranked universe · S&P 500 + Russell 2000 + IPOs</h3>
+        <div class="card-head"><h3 class="card-title" id="research-title">Ranked universe · top 20 / bottom 20 of 650 · 12 Oct close</h3>
           <div class="seg">
             <button class="seg-btn active">All</button><button class="seg-btn">Long ideas</button><button class="seg-btn">Short ideas</button><button class="seg-btn">IPO/lock-ups</button>
           </div>
         </div>
+        <div class="tbl-wrap tbl-scroll">
         <table class="tbl">
           <thead><tr><th>Rank</th><th>Ticker</th><th>Score</th><th>Quality</th><th>Momentum</th><th>Revisions</th><th>Sentiment</th><th>1d range</th><th>5d range</th><th>Thesis fit</th></tr></thead>
           <tbody id="research-universe">
-            <tr><td>1</td><td>UBER</td><td class="good">0.89</td><td>84</td><td>↑↑</td><td>+2</td><td>pos</td><td>82.4–85.1</td><td>80.0–89.2</td><td>strong</td></tr>
-            <tr><td>2</td><td>SPOT</td><td class="good">0.86</td><td>72</td><td>↑</td><td>+1</td><td>pos</td><td>441–452</td><td>432–466</td><td>fit</td></tr>
-            <tr><td>3</td><td>ANET</td><td class="good">0.82</td><td>88</td><td>↑</td><td>+3</td><td>pos</td><td>412–421</td><td>402–432</td><td>fit</td></tr>
-            <tr><td>4</td><td>LMRX (IPO)</td><td>0.80</td><td>n/a</td><td>new</td><td>init +3</td><td>pos</td><td>19.4–21.0</td><td>19.4–23.8</td><td>strong</td></tr>
-            <tr><td>5</td><td>CLSK</td><td>0.78</td><td>61</td><td>↑↑</td><td>+1</td><td>pos</td><td>15.1–15.9</td><td>14.6–17.2</td><td>fit · crypto β</td></tr>
-            <tr><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
-            <tr><td>496</td><td>WBA</td><td class="bad">0.14</td><td>42</td><td>↓↓</td><td>−4</td><td>neg</td><td>8.1–8.4</td><td>7.8–8.7</td><td>short</td></tr>
-            <tr><td>497</td><td>HOG</td><td class="bad">0.13</td><td>44</td><td>↓</td><td>−3</td><td>neg</td><td>22.1–23.0</td><td>21.4–23.8</td><td>short</td></tr>
+            <tr><td>1</td><td>PLTR</td><td class="good">0.85</td><td>93</td><td>↑↑</td><td>0</td><td>pos</td><td>206.1–212.9</td><td>190.1–212.9</td><td>strong</td></tr>
+            <tr><td>2</td><td>FRO</td><td class="good">0.83</td><td>86</td><td>↑↑</td><td>+2</td><td>pos</td><td>58.0–59.5</td><td>51.9–59.5</td><td>strong</td></tr>
+            <tr><td>3</td><td>ASC</td><td class="good">0.83</td><td>85</td><td>↑</td><td>+5</td><td>pos</td><td>19.6–20.1</td><td>18.4–20.1</td><td>strong</td></tr>
+            <tr><td>4</td><td>MSFT</td><td class="good">0.81</td><td>77</td><td>↑↑</td><td>0</td><td>pos</td><td>535.7–542.7</td><td>518.8–542.7</td><td>strong</td></tr>
+            <tr><td>5</td><td>INTR</td><td class="good">0.80</td><td>68</td><td>↑↑</td><td>0</td><td>pos</td><td>7.58–7.81</td><td>6.68–7.81</td><td>strong</td></tr>
+            <tr><td>6</td><td>ANET</td><td class="good">0.79</td><td>82</td><td>↑</td><td>0</td><td>pos</td><td>210.2–216.5</td><td>207.2–217.4</td><td>strong</td></tr>
+            <tr><td>7</td><td>CVX</td><td class="good">0.79</td><td>71</td><td>↑</td><td>+1</td><td>pos</td><td>213.8–216.7</td><td>204.9–216.7</td><td>fit</td></tr>
+            <tr><td>8</td><td>V</td><td class="good">0.78</td><td>69</td><td>↑↑</td><td>0</td><td>pos</td><td>384.6–391.8</td><td>368.1–391.8</td><td>fit</td></tr>
+            <tr><td>9</td><td>ISRG</td><td class="good">0.78</td><td>69</td><td>↑↑</td><td>+1</td><td>pos</td><td>421.0–429.3</td><td>402.0–429.3</td><td>fit</td></tr>
+            <tr><td>10</td><td>GOOGL</td><td class="good">0.78</td><td>89</td><td>↑</td><td>0</td><td>pos</td><td>350.5–356.5</td><td>343.1–356.8</td><td>strong</td></tr>
+            <tr><td>11</td><td>MPC</td><td class="good">0.78</td><td>66</td><td>↑↑</td><td>+3</td><td>neutral</td><td>454.5–468.4</td><td>427.2–470.0</td><td>fit</td></tr>
+            <tr><td>12</td><td>COP</td><td class="good">0.78</td><td>70</td><td>↑</td><td>+1</td><td>pos</td><td>135.8–137.6</td><td>127.8–137.6</td><td>fit</td></tr>
+            <tr><td>13</td><td>HIPO</td><td class="good">0.78</td><td>84</td><td>↑↑</td><td>0</td><td>pos</td><td>33.8–34.4</td><td>32.0–34.6</td><td>fit</td></tr>
+            <tr><td>14</td><td>VLO</td><td class="good">0.77</td><td>73</td><td>↑↑</td><td>+3</td><td>neutral</td><td>431.9–447.5</td><td>413.4–449.8</td><td>fit</td></tr>
+            <tr><td>15</td><td>MA</td><td class="good">0.77</td><td>64</td><td>↑</td><td>0</td><td>pos</td><td>590.2–599.0</td><td>562.1–599.0</td><td>fit</td></tr>
+            <tr><td>16</td><td>NAT</td><td class="good">0.77</td><td>77</td><td>↑↑</td><td>+2</td><td>neg</td><td>8.59–8.84</td><td>8.13–8.84</td><td>fit</td></tr>
+            <tr><td>17</td><td>GOOG</td><td class="good">0.76</td><td>89</td><td>↑</td><td>0</td><td>pos</td><td>347.2–352.7</td><td>340.3–353.5</td><td>fit</td></tr>
+            <tr><td>18</td><td>DDOG</td><td class="good">0.76</td><td>62</td><td>↑↑</td><td>+1</td><td>pos</td><td>286.5–300.7</td><td>269.4–300.7</td><td>fit</td></tr>
+            <tr><td>19</td><td>ADSK</td><td class="good">0.76</td><td>69</td><td>↑↑</td><td>0</td><td>pos</td><td>229.3–237.3</td><td>221.7–238.6</td><td>fit</td></tr>
+            <tr><td>20</td><td>CDNS</td><td class="good">0.75</td><td>77</td><td>↑</td><td>0</td><td>pos</td><td>346.8–354.6</td><td>346.8–361.9</td><td>fit</td></tr>
+            <tr class="tbl-sep"><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+            <tr><td>631</td><td>PMT</td><td class="bad">0.27</td><td>38</td><td>↓↓</td><td>0</td><td>neutral</td><td>7.04–7.35</td><td>7.04–8.03</td><td>short</td></tr>
+            <tr><td>632</td><td>NVR</td><td class="bad">0.27</td><td>44</td><td>↓↓</td><td>−1</td><td>neg</td><td>5726–5934</td><td>5726–6062</td><td>short</td></tr>
+            <tr><td>633</td><td>CABO</td><td class="bad">0.27</td><td>3</td><td>↑</td><td>0</td><td>neg</td><td>10.5–11.8</td><td>9.84–16.3</td><td>short</td></tr>
+            <tr><td>634</td><td>IREN</td><td class="bad">0.27</td><td>8</td><td>↓↓</td><td>−9</td><td>pos</td><td>34.7–36.7</td><td>34.6–42.2</td><td>short</td></tr>
+            <tr><td>635</td><td>SMR</td><td class="bad">0.26</td><td>30</td><td>↓↓</td><td>0</td><td>neutral</td><td>6.61–7.07</td><td>6.61–8.37</td><td>short</td></tr>
+            <tr><td>636</td><td>FISV</td><td class="bad">0.26</td><td>n/a</td><td>↓</td><td>−1</td><td>neutral</td><td>45.3–46.7</td><td>44.7–46.7</td><td>short</td></tr>
+            <tr><td>637</td><td>METCB</td><td class="bad">0.25</td><td>14</td><td>↓</td><td>0</td><td>neg</td><td>4.15–4.51</td><td>4.15–4.70</td><td>short</td></tr>
+            <tr><td>638</td><td>CIFR</td><td class="bad">0.24</td><td>5</td><td>↓↓</td><td>−3</td><td>pos</td><td>12.9–13.6</td><td>12.9–15.8</td><td>short</td></tr>
+            <tr><td>639</td><td>RC</td><td class="bad">0.24</td><td>11</td><td>↑</td><td>−2</td><td>neg</td><td>1.17–1.29</td><td>1.08–1.35</td><td>short</td></tr>
+            <tr><td>640</td><td>FLNC</td><td class="bad">0.24</td><td>26</td><td>↓↓</td><td>−9</td><td>neg</td><td>7.05–7.33</td><td>7.05–8.16</td><td>short</td></tr>
+            <tr><td>641</td><td>LEN</td><td class="bad">0.22</td><td>28</td><td>↓</td><td>−2</td><td>neg</td><td>74.4–76.8</td><td>74.4–77.8</td><td>short</td></tr>
+            <tr><td>642</td><td>TROX</td><td class="bad">0.22</td><td>24</td><td>↓↓</td><td>−1</td><td>neg</td><td>3.35–3.57</td><td>3.35–3.96</td><td>short</td></tr>
+            <tr><td>643</td><td>JBLU</td><td class="bad">0.21</td><td>21</td><td>↓↓</td><td>−3</td><td>neg</td><td>3.62–3.81</td><td>3.62–4.17</td><td>short</td></tr>
+            <tr><td>644</td><td>JELD</td><td class="bad">0.21</td><td>7</td><td>↓↓</td><td>−1</td><td>neg</td><td>1.23–1.52</td><td>1.23–1.87</td><td>short</td></tr>
+            <tr><td>645</td><td>OI</td><td class="bad">0.21</td><td>5</td><td>↑</td><td>−2</td><td>neutral</td><td>5.91–6.10</td><td>5.57–6.23</td><td>short</td></tr>
+            <tr><td>646</td><td>OLN</td><td class="bad">0.20</td><td>13</td><td>↓↓</td><td>−3</td><td>neutral</td><td>14.6–15.0</td><td>14.6–16.3</td><td>short</td></tr>
+            <tr><td>647</td><td>PLUG</td><td class="bad">0.19</td><td>12</td><td>↓↓</td><td>0</td><td>neutral</td><td>1.58–1.68</td><td>1.58–1.93</td><td>short</td></tr>
+            <tr><td>648</td><td>ARE</td><td class="bad">0.19</td><td>19</td><td>↓↓</td><td>−1</td><td>neg</td><td>43.5–44.9</td><td>43.5–47.1</td><td>short</td></tr>
+            <tr><td>649</td><td>MOS</td><td class="bad">0.17</td><td>24</td><td>↓↓</td><td>−1</td><td>neutral</td><td>18.4–19.0</td><td>18.4–21.5</td><td>short</td></tr>
+            <tr><td>650</td><td>GPRO</td><td class="bad">0.15</td><td>2</td><td>↓↓</td><td>−9</td><td>neg</td><td>1.15–1.19</td><td>1.15–1.38</td><td>short</td></tr>
           </tbody>
         </table>
+        </div>
       </div>
 
       <div class="card">
-        <div class="card-head"><h3 class="card-title">AI explanation · <span id="research-explain-name">UBER (long)</span></h3><span class="chip ghost">explainable</span></div>
+        <div class="card-head"><h3 class="card-title">AI explanation · <span id="research-explain-name">PLTR (long)</span></h3><span class="chip ghost">explainable · 12 Oct close</span></div>
         <div class="explain" id="research-explain">
-          <div class="ex-row"><div class="ex-k">Quality</div><div class="ex-bar"><div class="ex-fill" style="width:84%"></div></div><div class="ex-v">0.84</div></div>
-          <div class="ex-row"><div class="ex-k">Momentum</div><div class="ex-bar"><div class="ex-fill" style="width:78%"></div></div><div class="ex-v">0.78</div></div>
-          <div class="ex-row"><div class="ex-k">Revisions</div><div class="ex-bar"><div class="ex-fill" style="width:71%"></div></div><div class="ex-v">0.71</div></div>
-          <div class="ex-row"><div class="ex-k">Sentiment</div><div class="ex-bar"><div class="ex-fill" style="width:68%"></div></div><div class="ex-v">0.68</div></div>
-          <div class="ex-row"><div class="ex-k">Macro fit</div><div class="ex-bar"><div class="ex-fill" style="width:62%"></div></div><div class="ex-v">0.62</div></div>
-          <div class="ex-txt">Model attributes <b>0.89</b> composite score to: free-cash-flow inflection, autonomous optionality now partially priced, insider buying by CFO ($2.1M on 09/22), and positive revisions on EBITDA. Risk: delivery margin compression if GLP-1 demand drag persists.</div>
+          <div class="ex-row"><div class="ex-k">Quality</div><div class="ex-bar"><div class="ex-fill" style="width:93%"></div></div><div class="ex-v">0.93</div></div>
+          <div class="ex-row"><div class="ex-k">Momentum</div><div class="ex-bar"><div class="ex-fill" style="width:98%"></div></div><div class="ex-v">0.98</div></div>
+          <div class="ex-row"><div class="ex-k">Revisions</div><div class="ex-bar"><div class="ex-fill" style="width:85%"></div></div><div class="ex-v">0.85</div></div>
+          <div class="ex-row"><div class="ex-k">Sentiment</div><div class="ex-bar"><div class="ex-fill" style="width:61%"></div></div><div class="ex-v">0.61</div></div>
+          <div class="ex-row"><div class="ex-k">Macro fit</div><div class="ex-bar"><div class="ex-fill" style="width:74%"></div></div><div class="ex-v">0.74</div></div>
+          <div class="ex-txt">Model attributes <b>0.85</b> to Palantir at the 12 Oct close ($209): 49% profit margin, 38% ROE, 93% revenue growth, and +25% 21-day price momentum (session range 206.1–212.9). Analyst sentiment is only mid-pack — the score is quality + trend, not a crowded buy-rating pile-up. Risk: beta 1.60 into Monday’s AI-infra/optics selloff.</div>
         </div>
       </div>
     </section>
@@ -851,44 +886,83 @@
     <section class="view" id="view-flows">
       <div class="view-head">
         <div><div class="eyebrow">Market squad · Agent</div><h1 class="h2">≋  Fund Flows & Positioning Agent</h1></div>
-        <div class="chip orange">crowding ↑ semis + mega-cap</div>
+        <div class="chip orange" id="flows-chip">ADSK crowding 90 · 12 Oct</div>
       </div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-head"><h3 class="card-title">Crowding scores · your top names</h3></div>
+      <div class="card">
+        <div class="card-head"><h3 class="card-title" id="flows-title">Same names as Research & Alpha · top 20 / bottom 20</h3><span class="chip ghost">13F 30 Jun · short interest 30 Sep · skew 12 Oct</span></div>
+        <div class="tbl-wrap tbl-scroll">
           <table class="tbl">
-            <thead><tr><th>Ticker</th><th>Crowding</th><th>HF ownership %</th><th>13F QoQ Δ</th><th>Short interest</th><th>Options skew</th><th>Flag</th></tr></thead>
+            <thead><tr><th>Ticker</th><th>Crowding</th><th>Inst. %</th><th>13F Δ · 30 Jun</th><th>Short % · 30 Sep</th><th>Put−call skew</th><th>Flag</th></tr></thead>
             <tbody id="flows-crowding">
-              <tr><td>META</td><td class="warn">92</td><td>14.1%</td><td>+7 pts</td><td>1.1%</td><td>steep</td><td><span class="pill red">de-gross risk</span></td></tr>
-              <tr><td>NVDA</td><td class="warn">88</td><td>18.4%</td><td>+3 pts</td><td>1.4%</td><td>steep</td><td><span class="pill orange">watch</span></td></tr>
-              <tr><td>GOOGL</td><td>71</td><td>11.0%</td><td>+1</td><td>0.8%</td><td>mild</td><td><span class="pill ghost">neutral</span></td></tr>
-              <tr><td>UBER</td><td>52</td><td>8.7%</td><td>+2</td><td>1.0%</td><td>mild</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>COIN</td><td>66</td><td>9.4%</td><td>+1</td><td>3.6%</td><td>steep</td><td><span class="pill orange">watch</span></td></tr>
-              <tr><td>WBA (short)</td><td>24</td><td>3.1%</td><td>−1</td><td>12.4%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>PLTR</td><td>36</td><td>64.7%</td><td>+1.1 pts</td><td>2.6%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>FRO</td><td>35</td><td>39.2%</td><td>+4.0 pts</td><td>6.3%</td><td>steep</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>ASC</td><td>41</td><td>85.7%</td><td>+0.5 pts</td><td>6.3%</td><td>call-skew</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>MSFT</td><td>41</td><td>75.8%</td><td>+0.5 pts</td><td>0.8%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>INTR</td><td>36</td><td>41.3%</td><td>+5.9 pts</td><td>3.2%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>ANET</td><td>28</td><td>73.3%</td><td>−0.9 pts</td><td>1.1%</td><td>call-skew</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>CVX</td><td>34</td><td>71.2%</td><td>+0.3 pts</td><td>1.2%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>V</td><td>50</td><td>90.1%</td><td>−0.2 pts</td><td>1.2%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>ISRG</td><td>59</td><td>89.4%</td><td>−0.1 pts</td><td>2.1%</td><td>steep</td><td><span class="pill orange">watch</span></td></tr>
+              <tr><td>GOOGL</td><td>51</td><td>81.0%</td><td>+1.5 pts</td><td>1.4%</td><td>mild</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>MPC</td><td>38</td><td>79.5%</td><td>−0.1 pts</td><td>2.9%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>COP</td><td>56</td><td>87.0%</td><td>+0.2 pts</td><td>1.3%</td><td>steep</td><td><span class="pill orange">watch</span></td></tr>
+              <tr><td>HIPO</td><td>37</td><td>48.7%</td><td>+2.9 pts</td><td>4.1%</td><td>steep</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>VLO</td><td>36</td><td>87.1%</td><td>−1.3 pts</td><td>3.6%</td><td>call-skew</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>MA</td><td>59</td><td>91.1%</td><td>−1.2 pts</td><td>0.7%</td><td>steep</td><td><span class="pill orange">watch</span></td></tr>
+              <tr><td>NAT</td><td>43</td><td>58.0%</td><td>+6.3 pts</td><td>7.7%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>GOOG</td><td>28</td><td>62.1%</td><td>+1.3 pts</td><td>—</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>DDOG</td><td>64</td><td>92.9%</td><td>+4.2 pts</td><td>3.3%</td><td>call-skew</td><td><span class="pill orange">watch</span></td></tr>
+              <tr><td>ADSK</td><td class="warn">90</td><td>100.0%</td><td>+3.8 pts</td><td>5.0%</td><td>steep</td><td><span class="pill red">de-gross risk</span></td></tr>
+              <tr><td>CDNS</td><td>65</td><td>91.6%</td><td>+1.8 pts</td><td>2.1%</td><td>—</td><td><span class="pill orange">watch</span></td></tr>
+              <tr class="tbl-sep"><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+              <tr><td>PMT</td><td class="warn">73</td><td>77.7%</td><td>+4.3 pts</td><td>15.8%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
+              <tr><td>NVR</td><td>47</td><td>92.4%</td><td>+2.0 pts</td><td>8.2%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
+              <tr><td>CABO</td><td class="warn">71</td><td>96.3%</td><td>−0.6 pts</td><td>29.9%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
+              <tr><td>IREN</td><td class="warn">75</td><td>63.5%</td><td>+10.2 pts</td><td>21.3%</td><td>call-skew</td><td><span class="pill red">crowded short</span></td></tr>
+              <tr><td>SMR</td><td class="warn">84</td><td>59.1%</td><td>+12.2 pts</td><td>20.7%</td><td>mild</td><td><span class="pill red">crowded short</span></td></tr>
+              <tr><td>FISV</td><td>—</td><td>—</td><td>+3.3 pts</td><td>—</td><td>call-skew</td><td><span class="pill ghost">call-skew</span></td></tr>
+              <tr><td>METCB</td><td>47</td><td>60.0%</td><td>+4.4 pts</td><td>3.3%</td><td>—</td><td><span class="pill red">counter</span></td></tr>
+              <tr><td>CIFR</td><td>62</td><td>94.9%</td><td>+3.0 pts</td><td>22.0%</td><td>call-skew</td><td><span class="pill red">crowded short</span></td></tr>
+              <tr><td>RC</td><td class="warn">71</td><td>59.4%</td><td>+3.3 pts</td><td>11.9%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
+              <tr><td>FLNC</td><td class="warn">75</td><td>84.6%</td><td>−4.6 pts</td><td>44.3%</td><td>call-skew</td><td><span class="pill red">crowded short</span></td></tr>
+              <tr><td>LEN</td><td>39</td><td>99.2%</td><td>+2.1 pts</td><td>10.8%</td><td>call-skew</td><td><span class="pill red">crowded short</span></td></tr>
+              <tr><td>TROX</td><td class="warn">70</td><td>80.8%</td><td>+1.3 pts</td><td>15.6%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
+              <tr><td>JBLU</td><td>68</td><td>87.7%</td><td>+4.5 pts</td><td>30.1%</td><td>call-skew</td><td><span class="pill red">crowded short</span></td></tr>
+              <tr><td>JELD</td><td>53</td><td>90.3%</td><td>+1.7 pts</td><td>11.4%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
+              <tr><td>OI</td><td>43</td><td>100.0%</td><td>+2.4 pts</td><td>14.3%</td><td>call-skew</td><td><span class="pill red">crowded short</span></td></tr>
+              <tr><td>OLN</td><td>50</td><td>100.0%</td><td>+4.6 pts</td><td>14.4%</td><td>flat</td><td><span class="pill red">crowded short</span></td></tr>
+              <tr><td>PLUG</td><td class="warn">85</td><td>73.2%</td><td>+2.0 pts</td><td>23.0%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
+              <tr><td>ARE</td><td>38</td><td>100.0%</td><td>+4.4 pts</td><td>6.4%</td><td>flat</td><td><span class="pill red">counter</span></td></tr>
+              <tr><td>MOS</td><td>51</td><td>98.5%</td><td>+0.3 pts</td><td>12.5%</td><td>flat</td><td><span class="pill red">crowded short</span></td></tr>
+              <tr><td>GPRO</td><td class="warn">85</td><td>44.3%</td><td>+9.1 pts</td><td>18.4%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
             </tbody>
           </table>
         </div>
+      </div>
+      <div class="grid-2">
         <div class="card">
-          <div class="card-head"><h3 class="card-title">Smart-money divergence</h3><span class="chip ghost">top-tier funds vs. you</span></div>
+          <div class="card-head"><h3 class="card-title">13F divergence vs research</h3><span class="chip ghost">largest holder move · 30 Jun</span></div>
           <ul class="div-list" id="flows-divergence">
-            <li><div><b>META</b> — Point long · 4 of top-10 funds trimming</div><span class="pill orange">divergent</span></li>
-            <li><div><b>UBER</b> — Point long · Lone Pine, Tiger Cub initiations</div><span class="pill good">aligned</span></li>
-            <li><div><b>MSFT</b> — Point long · Viking cut 40% QoQ</div><span class="pill orange">divergent</span></li>
-            <li><div><b>UNH</b> — Point short · Berkshire added</div><span class="pill red">counter</span></li>
-            <li><div><b>CRM</b> — Point long · Valueact topped up</div><span class="pill good">aligned</span></li>
+            <li><div><b>FLNC</b> — research short · Siemens Pension Trust E.V. cut 7.0 pts of the co.</div><span class="pill good">aligned</span></li>
+            <li><div><b>MOS</b> — research short · FMR cut 5.0 pts of the co.</div><span class="pill good">aligned</span></li>
+            <li><div><b>CABO</b> — research short · Blackrock cut 4.8 pts of the co.</div><span class="pill good">aligned</span></li>
+            <li><div><b>GPRO</b> — research short · Blackrock added 4.3 pts of the co.</div><span class="pill red">counter</span></li>
+            <li><div><b>OLN</b> — research short · AQR Capital Management added 3.8 pts of the co.</div><span class="pill red">counter</span></li>
+            <li><div><b>METCB</b> — research short · Blackrock added 3.5 pts of the co.</div><span class="pill red">counter</span></li>
           </ul>
         </div>
-      </div>
-      <div class="card">
-        <div class="card-head"><h3 class="card-title">ETF flows · 5-day</h3></div>
-        <div class="etf" id="flows-etf">
-          <div class="etf-row"><span>SPY</span><div class="bar"><div class="fill" style="width:70%"></div></div><b>+$ 3.1 B</b></div>
-          <div class="etf-row"><span>QQQ</span><div class="bar"><div class="fill" style="width:52%"></div></div><b>+$ 1.8 B</b></div>
-          <div class="etf-row"><span>SMH</span><div class="bar"><div class="fill" style="width:28%"></div></div><b>+$ 0.7 B</b></div>
-          <div class="etf-row"><span>IWM</span><div class="bar"><div class="fill bad" style="width:34%"></div></div><b class="dn">−$ 0.9 B</b></div>
-          <div class="etf-row"><span>XLE</span><div class="bar"><div class="fill" style="width:14%"></div></div><b>+$ 0.3 B</b></div>
-          <div class="etf-row"><span>IBIT (BTC)</span><div class="bar"><div class="fill gold" style="width:46%"></div></div><b>+$ 1.4 B</b></div>
-          <div class="etf-row"><span>ETHA (ETH)</span><div class="bar"><div class="fill gold" style="width:12%"></div></div><b>+$ 0.2 B</b></div>
+        <div class="card">
+          <div class="card-head"><h3 class="card-title">Sector tape · 5 sessions to 12 Oct</h3><span class="chip ghost">price change, not creations</span></div>
+          <div class="etf" id="flows-etf">
+            <div class="etf-row"><span>SPY</span><div class="bar"><div class="fill" style="width:8%"></div></div><b>+0.4%</b></div>
+            <div class="etf-row"><span>QQQ</span><div class="bar"><div class="fill bad" style="width:19%"></div></div><b class="dn">−1.3%</b></div>
+            <div class="etf-row"><span>SMH</span><div class="bar"><div class="fill bad" style="width:96%"></div></div><b class="dn">−6.8%</b></div>
+            <div class="etf-row"><span>IWM</span><div class="bar"><div class="fill bad" style="width:27%"></div></div><b class="dn">−1.9%</b></div>
+            <div class="etf-row"><span>XLE</span><div class="bar"><div class="fill" style="width:57%"></div></div><b>+4.0%</b></div>
+            <div class="etf-row"><span>XLK</span><div class="bar"><div class="fill bad" style="width:32%"></div></div><b class="dn">−2.3%</b></div>
+            <div class="etf-row"><span>IBIT (BTC)</span><div class="bar"><div class="fill bad" style="width:49%"></div></div><b class="dn">−3.5%</b></div>
+            <div class="etf-row"><span>ETHA (ETH)</span><div class="bar"><div class="fill bad" style="width:100%"></div></div><b class="dn">−7.1%</b></div>
+          </div>
         </div>
       </div>
     </section>
