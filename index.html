@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="chat.css">
 </head>
 <body data-theme="dark">
 
@@ -31,7 +32,7 @@
       <nav class="side-nav">
         <a href="#dashboard" class="side-item active" data-view="dashboard"><span class="dot"></span>Dashboard</a>
         <a href="#brief" class="side-item" data-view="brief"><span class="dot"></span>Morning Brief</a>
-        <a href="#cards" class="side-item" data-view="cards"><span class="dot"></span>Action Cards<span class="badge">7</span></a>
+        <a href="#cards" class="side-item" data-view="cards"><span class="dot"></span>Action Cards<span class="badge" id="cards-badge">7</span></a>
         <a href="#conductor" class="side-item" data-view="conductor"><span class="dot"></span>Point Conductor</a>
       </nav>
     </div>
@@ -122,25 +123,28 @@
         <!-- Profile menu -->
         <div class="profile" id="profile">
           <button class="profile-btn" id="profile-btn">
-            <span class="avatar sm">AD</span>
-            <span class="profile-name">Admin</span>
+            <span class="avatar sm" id="header-av">AD</span>
+            <span class="profile-name" id="profile-label">Admin</span>
             <svg viewBox="0 0 24 24" width="13" height="13"><path fill="currentColor" d="m7 10 5 5 5-5z"/></svg>
           </button>
           <div class="profile-menu" id="profile-menu">
             <div class="pm-head">
-              <span class="avatar">AD</span>
+              <span class="avatar" id="pm-av">AD</span>
               <div>
-                <div class="pm-name">Admin</div>
-                <div class="pm-mail">admin@goldenhillsindia.com</div>
+                <div class="pm-name" id="pm-name">Admin</div>
+                <div class="pm-mail" id="pm-mail">admin@goldenhillsindia.com</div>
               </div>
             </div>
-            <div class="pm-role"><span>Role</span><b>CIO · Full access</b></div>
+            <div class="pm-role"><span>Role</span><b id="pm-role">CIO · Full access</b></div>
             <div class="pm-sep"></div>
-            <a class="pm-item"><svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-5 0-9 2.5-9 6v2h18v-2c0-3.5-4-6-9-6Z"/></svg>My profile</a>
-            <a class="pm-item"><svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm9 4-2 .4-.5 1.3 1.1 1.7-1.5 1.5-1.7-1.1-1.3.5L14 20h-4l-.4-2-1.3-.5-1.7 1.1-1.5-1.5 1.1-1.7-.5-1.3L4 12l2-.4.5-1.3L5.4 8.6 6.9 7l1.7 1.1 1.3-.5L10 4h4l.4 2 1.3.5L17.4 5.4 18.9 7l-1.1 1.7.5 1.3L21 12Z"/></svg>Account settings</a>
-            <a class="pm-item"><svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M4 4h16v4H4V4Zm0 6h16v4H4v-4Zm0 6h16v4H4v-4Z"/></svg>Manage funds</a>
+            <a class="pm-item" href="#profile" data-go="profile"><svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-5 0-9 2.5-9 6v2h18v-2c0-3.5-4-6-9-6Z"/></svg>My profile</a>
+            <a class="pm-item" href="#settings" data-go="settings"><svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm9 4-2 .4-.5 1.3 1.1 1.7-1.5 1.5-1.7-1.1-1.3.5L14 20h-4l-.4-2-1.3-.5-1.7 1.1-1.5-1.5 1.1-1.7-.5-1.3L4 12l2-.4.5-1.3L5.4 8.6 6.9 7l1.7 1.1 1.3-.5L10 4h4l.4 2 1.3.5L17.4 5.4 18.9 7l-1.1 1.7.5 1.3L21 12Z"/></svg>Account settings</a>
+            <a class="pm-item" href="#funds" data-go="funds"><svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M4 4h16v4H4V4Zm0 6h16v4H4v-4Zm0 6h16v4H4v-4Z"/></svg>Manage funds</a>
             <div class="pm-sep"></div>
-            <a class="pm-item danger"><svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M10 2h4v10h-4V2Zm2 20a9 9 0 0 1-5-16.5l1.2 1.6a7 7 0 1 0 7.6 0l1.2-1.6A9 9 0 0 1 12 22Z"/></svg>Sign out</a>
+            <div class="pm-lab">Switch account</div>
+            <div id="pm-accounts"></div>
+            <div class="pm-sep"></div>
+            <a class="pm-item danger" href="#signout" data-go="signout"><svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M10 2h4v10h-4V2Zm2 20a9 9 0 0 1-5-16.5l1.2 1.6a7 7 0 1 0 7.6 0l1.2-1.6A9 9 0 0 1 12 22Z"/></svg>Sign out</a>
           </div>
         </div>
       </div>
@@ -151,7 +155,7 @@
       <div class="hero">
         <div>
           <div class="eyebrow">Monday · October 7, 2026 · 06:12 ET</div>
-          <h1 class="h1">Good morning, Admin.<br/><span class="muted">You have <b class="orange" id="hero-cards">7 action cards</b>, <b class="orange" id="hero-crit">2 critical</b>, overnight on the <b id="hero-fund">Alpha</b> fund.</span></h1>
+          <h1 class="h1">Good morning, <span id="hero-name">Admin</span>.<br/><span class="muted">You have <b class="orange" id="hero-cards">7 action cards</b>, <b class="orange" id="hero-crit">2 critical</b>, overnight on the <b id="hero-fund">Alpha</b> fund.</span></h1>
           <div class="hero-actions">
             <button class="btn primary">Open Morning Brief</button>
             <button class="btn ghost">Ask Point ↗</button>
@@ -355,54 +359,51 @@
     <section class="view" id="view-brief">
       <div class="brief-head">
         <div>
-          <div class="eyebrow">Morning Brief · Monday, Oct 7, 2026 · composed by Point Conductor at 05:58 ET</div>
-          <h1 class="h1">Overnight: tokenized semis gapped down. CPI tomorrow. <span class="orange">Trim semis before open.</span></h1>
+          <div class="eyebrow" id="brief-eyebrow">Morning Brief · Alpha Fund · Demo data · For the investment discussion</div>
+          <h1 class="h1" id="brief-title">Start with mandate headroom. <span class="orange">Then decide which risks are worth retaining.</span></h1>
         </div>
         <div class="brief-actions">
           <button class="btn ghost">Export PDF</button>
           <button class="btn ghost">Send to Teams</button>
-          <button class="btn primary">Approve all 2 critical</button>
+          <button class="btn primary" id="brief-approve">Approve all 2 critical</button>
         </div>
       </div>
 
       <div class="brief-wrap">
         <article class="brief-main">
-          <h3 class="h3">What changed overnight</h3>
-          <p>Tokenized NVDA, AMD and SMH traded <b>−2.3% to −2.9%</b> on weekend venues (xStocks, Ondo). Options skew on SMH is now the steepest in 60 days. BTC funding spiked to +0.082%, open interest +18%, consistent with crowded longs — COIN and MSTR exposure at risk Monday.</p>
+          <h3 class="h3">The view for the desk</h3>
+          <p id="brief-overnight">The weaker semiconductor indications and crowded crypto positioning deserve attention because both affect exposures already in the fund. The first priority is to review the projected mandate breach; the next is to decide how much inflation-event risk to retain. Treat the weekend prices as signals to confirm at the cash open.</p>
 
-          <h3 class="h3">Agent findings</h3>
-          <ul class="brief-list">
-            <li><span class="tag red">Risk</span> Beta-net projected <b>63.1%</b> at open vs. IMA cap 60%. Trim <b>NVDA 12%</b> + <b>SMH Nov 215/205 put spread</b>.</li>
-            <li><span class="tag red">Macro</span> CPI tomorrow 08:30 ET. Hot-print scenario (+0.4% MoM core) = <b>−38 bps</b> NAV. Suggest ladder: 10Y DV01 hedge 0.6× book.</li>
-            <li><span class="tag gold">Flows</span> META crowding score <b>92</b> (top decile). HF ownership +7pts QoQ. De-grossing risk if VIX breaks 22.</li>
-            <li><span class="tag gold">Earnings</span> JPM reports Thu — supplier read-across for V, MA. Tone model suggests cautious guidance (confidence 71%).</li>
-            <li><span class="tag gold">Digital</span> Tokenized AAPL basis −1.9%; arb desk could add; depth thin on Securitize.</li>
-            <li><span class="tag red">PnL</span> MSFT contributing <b>−24 bps</b> MTD · alpha half-life expired, flagged for trim.</li>
-            <li><span class="tag red">Pos Intel</span> NVDA thesis drift <b>↑</b>: insider sales $220M + activist 13D (Elliot).</li>
-          </ul>
+          <h3 class="h3">What deserves a closer look</h3>
+          <ul class="brief-list" id="brief-findings">
+<li><span class="tag red">Risk</span> Projected opening exposure is <b>63.1% against the 60% limit</b>. Compare a partial NVDA reduction with a semiconductor hedge, and confirm which combination restores adequate headroom.</li>
+<li><span class="tag red">Macro</span> The hot-CPI scenario implies a loss of <b>38 basis points</b>. Price the rate hedge against that downside and the upside it would give away if the release is benign.</li>
+<li><span class="tag gold">Flows</span> META crowding could make an exit harder if investors sell together. Review the position size and cost of protection while liquidity is available.</li>
+<li><span class="tag red">Research</span> Ask the MSFT analyst to refresh the forward return case and the NVDA analyst to assess the new filings. Recent losses and headlines are reasons to review conviction, not conclusions on their own.</li>
+</ul>
 
-          <h3 class="h3">The three decisions for today</h3>
-          <ol class="brief-ol">
-            <li>Approve the <b>Risk & Guideline</b> card trimming NVDA 12%. Alpha cost 6bps, headroom restored, IMA clean.</li>
-            <li>Layer CPI hedge via <b>Macro agent</b> ladder. Pre-trade what-if shows &lt;2bps carry.</li>
-            <li>Halve <b>META</b> or buy OTM Dec put spread to pre-empt de-grossing.</li>
-          </ol>
+          <h3 class="h3">Decisions to discuss</h3>
+          <ol class="brief-ol" id="brief-decisions">
+<li>Ask Risk to compare the proposed NVDA trim and semiconductor protection. Choose a response only after checking the resulting mandate headroom.</li>
+<li>Agree the portfolio loss the desk is willing to accept through CPI, then decide whether the proposed rate hedge offers value at the quoted cost.</li>
+<li>Review META sizing with the covering analyst. Compare retaining the position, reducing it, and buying protection against the strength of the thesis.</li>
+</ol>
         </article>
 
         <aside class="brief-side">
           <div class="side-card">
             <div class="sc-lab">Overnight PnL (est.)</div>
-            <div class="sc-val dn">−$ 2.14 M</div>
-            <div class="sc-sub">tokenized semis + BTC drag</div>
+            <div class="sc-val dn" id="brief-pnl">−$ 2.14 M</div>
+            <div class="sc-sub" id="brief-pnl-sub">tokenized semis + BTC drag</div>
           </div>
           <div class="side-card">
             <div class="sc-lab">Headroom to limits</div>
-            <div class="sc-val warn">0.4 pts</div>
-            <div class="sc-sub">Beta-net vs. IMA 60%</div>
+            <div class="sc-val warn" id="brief-head">0.4 pts</div>
+            <div class="sc-sub" id="brief-head-sub">Beta-net vs. IMA 60%</div>
           </div>
           <div class="side-card">
             <div class="sc-lab">Today's calendar</div>
-            <ul class="cal">
+            <ul class="cal" id="brief-cal">
               <li><b>08:30</b> Chicago Fed index</li>
               <li><b>10:00</b> Consumer credit</li>
               <li><b>13:00</b> 3Y auction</li>
@@ -413,8 +414,8 @@
           <div class="side-card dark">
             <div class="sc-lab white">Ask Point</div>
             <div class="chat">
-              <div class="cb user">What's my worst-case NAV if CPI prints 0.5% MoM core?</div>
-              <div class="cb bot"><b>−72 bps</b> NAV under the hot-print scenario; drivers: 10Y +18bp, semis −3.4%, growth multiple compression. Macro agent has a hedge ladder queued (cost 1.8bps). <a>Open what-if →</a></div>
+              <div class="cb user" id="brief-ask-q">What's my worst-case NAV if CPI prints 0.5% MoM core?</div>
+              <div class="cb bot" id="brief-ask-a"><b>−72 bps</b> NAV under the hot-print scenario; drivers: 10Y +18bp, semis −3.4%, growth multiple compression. Macro agent has a hedge ladder queued (cost 1.8bps). <a>Open what-if →</a></div>
             </div>
           </div>
         </aside>
@@ -429,10 +430,10 @@
           <h1 class="h2">Decide. Don't just read.</h1>
         </div>
         <div class="filters">
-          <button class="chip-btn active">All <span>14</span></button>
-          <button class="chip-btn">Critical <span class="red">2</span></button>
-          <button class="chip-btn">Warning <span class="orange">5</span></button>
-          <button class="chip-btn">Ideas <span class="gold">7</span></button>
+          <button class="chip-btn active">All <span id="cards-n-all">8</span></button>
+          <button class="chip-btn">Critical <span class="red" id="cards-n-crit">2</span></button>
+          <button class="chip-btn">Warning <span class="orange" id="cards-n-warn">3</span></button>
+          <button class="chip-btn">Ideas <span class="gold" id="cards-n-idea">3</span></button>
         </div>
       </div>
       <div class="cards-grid" id="cards-grid"></div>
@@ -442,10 +443,10 @@
     <section class="view" id="view-conductor">
       <div class="view-head">
         <div>
-          <div class="eyebrow">Point Conductor · event bus</div>
-          <h1 class="h2">Ten agents sharing one view of the book.</h1>
+          <div class="eyebrow" id="conductor-eyebrow">Point Conductor · event bus</div>
+          <h1 class="h2" id="conductor-title">Ten agents sharing one view of the book.</h1>
         </div>
-        <div class="chip gold">24/7 · running on Portfolio Knowledge Graph</div>
+        <div class="chip gold" id="conductor-chip">24/7 · running on Portfolio Knowledge Graph</div>
       </div>
 
       <div class="conductor">
@@ -500,6 +501,11 @@
         </div>
       </div>
 
+      <div class="card" id="conductor-focus">
+        <div class="card-head"><h3 class="card-title" id="conductor-focus-title">Today's composition</h3><span class="chip ghost" id="conductor-focus-meta">Alpha Fund</span></div>
+        <div id="conductor-focus-body" style="font-size:13.5px;line-height:1.55;color:var(--txt-2)"></div>
+      </div>
+
       <div class="grid-2">
         <div class="card">
           <div class="card-head"><h3 class="card-title">Event bus · last 60s</h3><span class="chip ghost">live</span></div>
@@ -507,7 +513,7 @@
         </div>
         <div class="card">
           <div class="card-head"><h3 class="card-title">Agent handoffs today</h3><span class="chip ghost">cross-agent triggers</span></div>
-          <div class="matrix">
+          <div class="matrix" id="handoff-matrix">
             <div class="mx-head"><span></span><span>Risk</span><span>Tech</span><span>PnL</span><span>Pos</span><span>Macro</span><span>Flows</span></div>
             <div class="mx-row"><span class="mx-lab">Macro</span><span class="c on">8</span><span class="c">1</span><span class="c on">4</span><span class="c">2</span><span class="c self">—</span><span class="c on">3</span></div>
             <div class="mx-row"><span class="mx-lab">Flows</span><span class="c on">5</span><span class="c">0</span><span class="c">2</span><span class="c on">3</span><span class="c">1</span><span class="c self">—</span></div>
@@ -1139,7 +1145,8 @@
           <table class="tbl">
             <thead><tr><th>User</th><th>Role</th><th>Agents</th><th>Funds</th><th>Autonomy</th><th>Last active</th></tr></thead>
             <tbody>
-              <tr><td>Admin</td><td>CIO</td><td>all</td><td>Alpha, Global</td><td>Confirm</td><td>now</td></tr>
+              <tr><td>Admin</td><td>CIO</td><td>all</td><td>All four funds</td><td>Confirm</td><td>now</td></tr>
+              <tr><td>User</td><td>Analyst</td><td>Research · Earnings · Pos Intel</td><td>Alpha, Neutral</td><td>Alert</td><td>now</td></tr>
               <tr><td>Suresh Raju</td><td>Founder</td><td>all</td><td>all</td><td>Confirm</td><td>2m</td></tr>
               <tr><td>Priya Shah</td><td>Analyst · tech</td><td>Research · Earnings</td><td>Alpha</td><td>Alert</td><td>19m</td></tr>
               <tr><td>Kiran Lee</td><td>Risk</td><td>Risk · Macro · Flows</td><td>Alpha, Global</td><td>Alert</td><td>31m</td></tr>
@@ -1178,7 +1185,33 @@
       </div>
     </section>
 
+    <!-- ======== VIEW: MY PROFILE ======== -->
+    <section class="view" id="view-profile"></section>
+    <!-- ======== VIEW: ACCOUNT SETTINGS ======== -->
+    <section class="view" id="view-settings"></section>
+    <!-- ======== VIEW: MANAGE FUNDS ======== -->
+    <section class="view" id="view-funds"></section>
+    <!-- ======== VIEW: SIGN OUT ======== -->
+    <section class="view" id="view-signout"></section>
+
   </main>
+</div>
+
+<div class="login-gate" id="login-gate" hidden>
+  <div class="login-card">
+    <div class="login-brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true"><path fill="#fff" d="M16 2C9 2 4 7 4 14c0 5 3 9 7 11v3c0 1 1 2 2 2h6c1 0 2-1 2-2v-3c4-2 7-6 7-11 0-7-5-12-12-12Zm-1 4h2v16h-2V6Z"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">Point</div>
+        <div class="brand-sub">Agentic Solutions</div>
+      </div>
+    </div>
+    <h1 class="h2" style="margin:18px 0 6px">Sign in</h1>
+    <p class="login-lead">Two desks share this workspace. Pick the login that matches the access you want.</p>
+    <div class="acct-pick" id="login-picks"></div>
+  </div>
 </div>
 
 <!-- =============== CARD DETAIL DRAWER =============== -->
@@ -1198,6 +1231,9 @@
   <div class="drawer-inner" id="drawer-inner"><!-- populated by JS --></div>
 </aside>
 
+<script src="chat-config.js"></script>
+<script src="chat-core.js"></script>
+<script src="chat-ui.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

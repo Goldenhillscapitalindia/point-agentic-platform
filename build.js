@@ -25,13 +25,24 @@ const r = p => path.join(root, p);
 let app = fs.readFileSync(r('index.html'), 'utf8');
 const css = fs.readFileSync(r('styles.css'), 'utf8');
 const js  = fs.readFileSync(r('app.js'), 'utf8');
-app = app.replace('<link rel="stylesheet" href="styles.css">', '<style>\n' + css + '\n</style>');
-app = app.replace('<script src="app.js"></script>', '<script>\n' + js + '\n</script>');
+app = app.replace('<link rel="stylesheet" href="styles.css">', () => '<style>\n' + css + '\n</style>');
+app = app.replace('<script src="app.js"></script>', () => '<script>\n' + js + '\n</script>');
 
 // 2. Inline institutional.js into institutional.html -> self-contained terminal
 let inst = fs.readFileSync(r('institutional.html'), 'utf8');
 const instJs = fs.readFileSync(r('institutional.js'), 'utf8');
-inst = inst.replace('<script src="institutional.js"></script>', '<script>\n' + instJs + '\n</script>');
+inst = inst.replace('<script src="institutional.js"></script>', () => '<script>\n' + instJs + '\n</script>');
+
+// The private chatbot is bundled into both pages. Never read credentials at build time.
+function inlineChat(html) {
+  html = html.replace('<link rel="stylesheet" href="chat.css">', () => '<style>\n' + fs.readFileSync(r('chat.css'), 'utf8') + '\n</style>');
+  for (const file of ['chat-config.js', 'chat-core.js', 'chat-ui.js']) {
+    html = html.replace('<script src="' + file + '"></script>', () => '<script>\n' + fs.readFileSync(r(file), 'utf8') + '\n</script>');
+  }
+  return html;
+}
+app = inlineChat(app);
+inst = inlineChat(inst);
 
 // 3. Load the self-contained landing page
 const landing = fs.readFileSync(r('landing.html'), 'utf8');
