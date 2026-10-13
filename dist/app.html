@@ -2158,9 +2158,102 @@ a.brand:hover{background:var(--panel)}
       </div>`;
   }
 
+  /* ---- AI summaries (per fund × per agent) ---- */
+  const agentMeta = {
+    risk:{n:'Risk & Guideline Agent',i:'🛡',sq:'red'},
+    tech:{n:'Technical Signals Agent',i:'📈',sq:'red'},
+    pnl:{n:'PnL Attribution Agent',i:'⚖︎',sq:'red'},
+    ir:{n:'IR & Reporting Agent',i:'📝',sq:'red'},
+    pos:{n:'Position Intelligence Agent',i:'📰',sq:'red'},
+    research:{n:'Research & Alpha Agent',i:'🔍',sq:'gold'},
+    flows:{n:'Fund Flows & Positioning Agent',i:'≋',sq:'gold'},
+    earnings:{n:'Earnings & Sentiment Agent',i:'💬',sq:'gold'},
+    macro:{n:'Macro & Regime Agent',i:'🌍',sq:'gold'},
+    digital:{n:'Digital Assets & Tokenization Agent',i:'◉',sq:'gold'}
+  };
+  const aiSummaries = {
+    alpha:{
+      risk:['Beta-adjusted net <b>63.1%</b> vs. <b>60% IMA cap</b> — breach probability <b>71%</b> at open.','Restoring set: trim <b>NVDA 12%</b> + SMH put spread; alpha cost just 6 bps.','VaR 99% <b>$14.3M</b> (1.15% NAV); semis 28% vs 30% cap.','Stress −5% equities / +50bp 10Y = <b>−$23.4M</b>.','Days-to-liquidate 2.4 at 20% ADV — inside the 5-day limit.','9 IMA rules: 1 breach, 3 on watch, 5 clear.'],
+      tech:['1 critical, 4 warnings; NVDA RSI <b>72</b> with bearish MACD divergence.','TSLA <b>0.3 ATR</b> from trailing stop; RSI divergence 5d.','MSFT 50-DMA fading below 200 — bearish cross forming.','MSTR volume z-score <b>+2.9σ</b>, extended.','AAPL, GOOGL, AMZN trends intact — no action.','Alerts tiered Critical/Warning to PM and CIO.'],
+      pnl:['Day +34 bps; YTD <b>+18.4%</b> vs. bench +9.7%.','60% stock-specific; top NVDA/META/UBER, drags MSTR/COIN.','Hit rate 62%, W/L 1.84, alpha half-life 14d.','MSFT half-life expired (−24 bps) — trim candidate.','Momentum & quality factors positive.','MSFT at 18% risk-budget flagged for reallocation.'],
+      ir:['October LP letter v3 (92% ready) — +18.4% YTD narrative.','Marketing-Rule pre-check: 2 soft flags remaining.','DDQ library 142 Q&A; 3 refreshed this week.','Q3 risk-transparency report scheduled Oct 15.','September tear sheets sent to 142 LPs.','Castle Peak prospect DDQ (68 Q) approved.'],
+      pos:['<b>3 thesis-drift alerts</b>: NVDA (med), MSFT (high), UNH (med).','NVDA: Elliott 13D + <b>$220M insider sales</b>.','MSFT: Azure deceleration contradicts the thesis.','Catalysts: CPI (Tue), JPM (Wed), LMRX (Thu).','24h news: META positive (EU ruling), NVDA negative.','Revisions: UBER/ANET positive, WBA negative.'],
+      research:['503 names scored; top long <b>UBER (0.89)</b>.','SPOT #2, ANET #3; new IPO LMRX #4 of 38.','Lowest shorts: WBA 0.14, HOG 0.13.','Ranges: UBER 1d 82.4–85.1, 5d 80.0–89.2.','Explainable quality/momentum/revisions scoring.','CLSK (0.78) — crypto-β long with momentum.'],
+      flows:['META crowding <b>92</b>; NVDA 88 (top decile).','Viking cut MSFT 40%; Berkshire added UNH.','ETF flows: SPY +$3.1B, IWM −$0.9B.','IBIT (BTC) +$1.4B — crypto inflows rising.','Aligned with you: UBER, CRM.','De-gross risk if VIX breaks 22.'],
+      earnings:['JPM Thu tone <b>−0.21</b> — read-across V/MA/AXP.','NFLX +0.34 (raised); MSFT −0.42 (hedging up).','META social sentiment <b>68/14</b> positive.','6 prints this week; 112 transcripts parsed.','Guidance-change detector active.','QoQ tone shift tracked per name.'],
+      macro:['Late-cycle, tightening; CPI 3.1%, core PCE 2.8%.','Hot CPI (+0.4% core) = <b>−38 bps NAV</b>.','Fed funds 4.75%; 2 cuts priced by March.','Position betas across 10Y, DXY, WTI, VIX.','Scenario: 10Y +50bp = −$9.4M.','Hedge ladder (0.6× DV01) queued for 1.8 bps.'],
+      digital:['Crypto exposure via <b>COIN/MSTR/HOOD</b> (equity β).','BTC funding +0.082% — hedge the equity-crypto β.','Tokenized basis signals weekend gap for semis.','Crypto-β 17% of book vs 20% cap.','MSTR/COIN put-spread queued, checked by Risk.','24/7 coverage ahead of the Monday open.']
+    },
+    global:{
+      risk:['Book DV01 <b>long</b> — 10Y +50bp = <b>−$9.4M</b>; CPI is the key risk.','Net 38% vs 50% cap; gross 142% — ample headroom.','VaR 99% <b>$9.8M</b> (1.16% NAV); rate-vol dominates.','Hedge ladder (0.6× DV01) restores neutrality for 1.8 bps.','FX gap risk: USD/JPY intervention above 158.','Commodity tail: crude −10% = −$3.1M.'],
+      tech:['Gold RSI <b>74</b> after +6.2% MTD — overbought, take partial.','10Y future momentum breaking down — trend short confirmed.','DXY coiling at range highs; breakout watch.','Crude backwardation steepening — roll yield positive.','Copper MACD turning up.','Signals on futures/ETF proxies, ranked by $ at risk.'],
+      pnl:['Day −12 bps; YTD <b>+11.2%</b>.','Gold +88 and equity-index lead; rates −54 the drag.','Attribution dominated by <b>macro factor</b>, not single names.','FX detracting (−28); commodities +36.','Hit rate 57%, W/L 1.41.','Duration positioning the main swing into CPI.'],
+      ir:['October letter frames <b>+11.2% YTD</b> macro positioning.','Emphasis on rate/FX risk management into the print.','DDQ: duration & leverage questions refreshed.','Derivatives-use disclosure updated for the futures book.','Monthly tear sheet in review.','Scenario-PnL exhibit added for LPs.'],
+      pos:['Catalyst watch is <b>macro-driven</b>: CPI, ECB minutes, BOJ.','China stimulus headline lifting FXI/EM.','OPEC+ commentary a crude swing factor.','Fed-speak calendar mapped to the rate book.','Treasury auction schedule tracked (3Y today).','FX-intervention headlines monitored.'],
+      research:['Cross-asset ranking: <b>gold & EM</b> screen top.','Rate regime favors value/short-duration equities.','Commodity momentum: crude and copper positive.','DXY model signals USD fade into cuts.','Scenario ranges on futures (ES, GC, CL).','Ideas tuned to the macro thesis.'],
+      flows:['CFTC <b>CoT</b>: spec longs crowded in gold & crude.','Rate-vol sellers positioned short — unwind risk.','EM inflows turning positive on China stimulus.','USD net-short building.','Bond-fund flows into duration.','Positioning-squeeze alerts on commodities.'],
+      earnings:['Earnings are <b>second-order</b>; macro prints dominate.','Bank earnings read-through to the rate/credit view.','Commodity-producer guidance informs crude/copper.','Central-bank communications parsed like transcripts.','Consumer-health signals from retailer prints.','Tone model applied to Fed/ECB speeches.'],
+      macro:['Macro is the <b>core book</b> — regime drives everything.','CPI tomorrow: hot = −$4.78M; cold = +$6.1M.','Curve steepener + USD-short the primary expression.','Fed-funds-future path: 2 cuts by March.','Commodity-rate correlation regime elevated.','DV01 ladder centrally managed here.'],
+      digital:['Crypto as a <b>macro-liquidity</b> gauge for the book.','Stablecoin supply +$1.4B — risk-on signal.','BTC–DXY and BTC–rates correlations tracked.','Minimal direct crypto exposure; monitoring only.','Gold vs BTC store-of-value rotation watched.','On-chain flows as a sentiment input.']
+    },
+    neutral:{
+      risk:['Net exposure <b>4%</b> — beta-neutral, inside the ±10% band.','Gross 210% across <b>44 pairs</b>; single-pair cap 6%.','VaR 99% <b>$6.1M</b> (0.39% NAV) — lowest of the complex.','Factor exposures style-neutral; low momentum/size tilt.','Short-leg borrow watch: NVO at 180bp.','Market shock −5% = −$1.8M (largely hedged).'],
+      tech:['Pair spreads tracked vs 60-day z — PG/CL at <b>+2.1σ</b>.','LLY/NVO pair mean-reverting toward fair value.','V/MA spread tightening — momentum favoring V.','No single-name stop triggers (hedged legs).','Volume anomalies clean across pairs.','Technicals used for pair timing, not direction.'],
+      pnl:['Day +9 bps; YTD <b>+7.8%</b> — low vol, steady.','PnL is <b>pair convergence</b>: pharma +52, staples +41.','Tech pair −18 the main drag.','Hit rate 64%, W/L 1.22 — high consistency.','Factor PnL ≈ 0 by design (beta-neutral).','Staples pair add flagged on a 2.1σ spread.'],
+      ir:['October letter: <b>+7.8% YTD</b>, low-beta consistency story.','Marketing-Rule clean; Sharpe/pair-hit-rate exhibits added.','DDQ: market-neutral construction & borrow questions.','Factor-neutrality attestation included.','Tear sheet highlights the 0.39% VaR.','Investor-call deck drafted.'],
+      pos:['Pair-level catalysts: both legs’ earnings dates aligned.','NVO borrow-fee spike flagged on the short leg.','No single-name thesis drift (hedged construction).','Dividend/ex-dates checked for pair carry.','Index-rebalance flow watch for pairs.','Event-neutrality maintained across pairs.'],
+      research:['Ranking drives <b>pair selection</b>, not direction.','Top pairs: LLY/NVO, V/MA by score spread.','Factor-balanced candidates only.','Borrow-availability screen on short legs.','Reversion ranges modeled per pair.','New pair idea: COST/WMT spread widening.'],
+      flows:['Pair-level crowding: both legs’ HF ownership tracked.','NVO short interest rising — borrow pressure.','Smart-money aligned on the V/MA tilt.','13F pair-overlap screen is clean.','ETF-rebalance flows mapped to pairs.','De-gross risk low (market-neutral).'],
+      earnings:['<b>Pair-aligned</b> earnings dates keep the book event-neutral.','LLY vs NVO guidance comparison drives the tilt.','V vs MA tone spread informs pair weight.','Hedging-language delta between legs flagged.','Post-earnings drift modeled per pair.','No naked single-name event risk.'],
+      macro:['Macro impact is <b>minimized by design</b> (net 4%).','CPI-scenario NAV impact < ±8 bps.','Rate sensitivity near zero across pairs.','Regime shifts affect borrow/financing, not direction.','Factor-neutrality holds through the print.','Hedge overlay only for residual beta.'],
+      digital:['Near-zero crypto exposure — <b>monitoring only</b>.','Tokenized-equity basis used as an arb reference.','Crypto-β of any hedge leg is checked.','24/7 risk alerts for residual exposure.','No directional digital-asset bets.','Stablecoin-depeg watch for cash management.']
+    },
+    digital:{
+      risk:['Crypto-β <b>71%</b> vs 75% cap — nearing the limit.','24/7 VaR <b>$11.2M</b> (3.52% NAV) — highest of the funds.','BTC −15% + funding spike = <b>−$6.1M</b>.','Exchange & stablecoin-depeg alerts active round the clock.','MSTR/COIN beta concentrated; put-spread queued.','Weekend gap-risk mapped before the Monday open.'],
+      tech:['CLSK <b>−4.2%</b> breaking 200-day — stop hit, miners leading lower.','BTC momentum rolling over with funding +0.082%.','SOL +22% MTD — momentum accelerating, add on pullback.','MSTR volume z <b>+2.9σ</b>; squeeze risk both ways.','tNVDA/tAAPL basis signals a weekend gap.','24/7 signal engine — nights and weekends covered.'],
+      pnl:['Day −2.1%; YTD <b>+34.1%</b> — highest return, highest vol.','SOL +74 and BTC +44 lead; miners −62 the drag.','Tokenized −31, exchanges −38 detracting today.','Hit rate 51%, W/L 1.96 — fat-tailed winners.','Stablecoin carry +3.','CLSK flagged for exit after the 200-day break.'],
+      ir:['October letter: <b>+34.1% YTD</b>, 24/7 digital-assets mandate.','Custody, tokenized-asset & crypto-risk disclosures front-loaded.','DDQ: digital-asset governance Q&A expanded.','On-chain transparency exhibit for LPs.','Volatility/risk framing emphasized.','Tear sheet notes the 3.52% VaR.'],
+      pos:['24/7 catalyst radar: token unlocks, ETF flows, exploits.','SEC/CFTC action calendar monitored.','COIN pre-announce 16:30; MSTR capital-raise watch.','On-chain whale-wallet & exchange-flow alerts.','Stablecoin mint/burn as a liquidity gauge.','Weekend headline coverage (desk unstaffed).'],
+      research:['Top-10 coin ranking: <b>SOL</b> leads on momentum.','Tokenized-equity basis opportunities screened.','Miners (CLSK) ranked low on the breakdown.','BTC/ETH ETF-flow momentum positive.','Defined-risk structures sized to budget.','24/7 ranking refresh.'],
+      flows:['Spot <b>BTC ETF +$1.4B</b>, ETH +$0.2B.','Stablecoin mint +$1.4B — liquidity rising.','Exchange net-flows: outflows (bullish).','OI +18% — leverage crowding.','Whale wallets accumulating.','De-gross trigger on funding + VIX.'],
+      earnings:['COIN & MSTR prints are the key equity-crypto reads.','COIN pre-announce 16:30 today.','Miner (CLSK) cost-guidance watched.','Exchange-volume commentary a demand signal.','Crypto-treasury updates (MSTR BTC/share).','Social sentiment bot-filtered on top coins.'],
+      macro:['<b>BTC–Nasdaq correlation</b> regime elevated.','Macro risk-off = crypto-β drawdown; CPI watched.','Real-rate moves drive BTC as a duration proxy.','USD liquidity & stablecoin supply tracked.','Fed path feeds crypto risk appetite.','24/7 macro-event monitor (weekends included).'],
+      digital:['Core mandate: BTC <b>$101,842</b>, ETH $3,842, SOL top mover.','Funding +0.082%, OI +18% — crowded longs.','Tokenized tNVDA −2.81%, tAAPL −1.86% basis.','MSTR 1.42× / COIN 0.86× BTC-β bridge.','Liquidation clusters 98–99k; stablecoin mint +$1.4B.','24/7 VaR, exchange & depeg alerts live.']
+    }
+  };
+  // inject the summary card shell into each agent view once
+  Object.keys(agentMeta).forEach(k=>{
+    const view=document.getElementById('view-'+k); if(!view) return;
+    const head=view.querySelector('.view-head'); if(!head) return;
+    const m=agentMeta[k]; const gold=m.sq==='gold';
+    const el=document.createElement('div');
+    el.className='ai-summary'+(gold?' gold':'');
+    el.innerHTML=`
+      <div class="ais-head">
+        <div class="ais-icon${gold?' gold':''}">${m.i}</div>
+        <div>
+          <div class="ais-title"><span class="ais-spark">✦</span> AI Summary</div>
+          <div class="ais-sub">Synthesized by the ${m.n} · updated just now</div>
+        </div>
+        <div class="ais-badge"><span class="ais-dot"></span>live</div>
+      </div>
+      <div class="ais-points" id="ais-points-${k}"></div>`;
+    head.insertAdjacentElement('afterend', el);
+  });
+  function renderAISummary(fund){
+    const set=aiSummaries[fund]||aiSummaries.alpha;
+    Object.keys(agentMeta).forEach(k=>{
+      const box=document.getElementById('ais-points-'+k); if(!box) return;
+      const gold=agentMeta[k].sq==='gold';
+      const pts=set[k]||aiSummaries.alpha[k]||[];
+      box.innerHTML=pts.map(p=>`<div class="ais-pt${gold?' gold':''}"><span class="pm">▸</span><span>${p}</span></div>`).join('');
+    });
+  }
+
   function renderDetail(id){
     renderPositions(id); renderPnl(id);
     renderExposure(id); renderFeed(id); renderPnlMeta(id); renderTopCard(id);
+    renderAISummary(id);
   }
 
   /* ---- line chart (reusable) ---- */
@@ -2709,140 +2802,6 @@ a.brand:hover{background:var(--panel)}
     try{ localStorage.setItem('point-theme', next); }catch(e){}
   });
 
-  /* ---- AI summary at the top of each agent view ---- */
-  const agentMeta = {
-    risk:{n:'Risk & Guideline Agent',i:'🛡',sq:'red'},
-    tech:{n:'Technical Signals Agent',i:'📈',sq:'red'},
-    pnl:{n:'PnL Attribution Agent',i:'⚖︎',sq:'red'},
-    ir:{n:'IR & Reporting Agent',i:'📝',sq:'red'},
-    pos:{n:'Position Intelligence Agent',i:'📰',sq:'red'},
-    research:{n:'Research & Alpha Agent',i:'🔍',sq:'gold'},
-    flows:{n:'Fund Flows & Positioning Agent',i:'≋',sq:'gold'},
-    earnings:{n:'Earnings & Sentiment Agent',i:'💬',sq:'gold'},
-    macro:{n:'Macro & Regime Agent',i:'🌍',sq:'gold'},
-    digital:{n:'Digital Assets & Tokenization Agent',i:'◉',sq:'gold'}
-  };
-  const aiSummaries = {
-    risk:[
-      'Beta-adjusted net projected <b>63.1%</b> vs. the <b>60% IMA cap</b> — breach probability <b>71%</b> at Monday open.',
-      'Smallest restoring trade set: trim <b>NVDA 12%</b> + SMH put spread; alpha cost just <b>6 bps</b>.',
-      'VaR 99% <b>$14.3M</b> (1.15% NAV), CVaR $21.8M — comfortably inside the 1.75% limit.',
-      'Semis sector <b>28% vs 30% cap</b> (watch); crypto-β 17% vs 20% cap.',
-      'Stress: −5% equities / +50bp 10Y = <b>−$23.4M</b>; a VIX>30 shock = −$18.0M.',
-      'Days-to-liquidate <b>2.4</b> at 20% ADV — well within the 5-day limit.',
-      '9 IMA rules monitored: <b>1 projected breach</b>, 3 on watch, 5 clear.',
-      'Recommended action is queued with a full timestamped audit trail for compliance.'
-    ],
-    tech:[
-      '<b>1 critical, 4 warnings</b> across the book — ranked by $ at risk and de-duplicated.',
-      'NVDA RSI <b>72</b> with bearish MACD divergence — trim signal, ATR stop 175.4 (−5%).',
-      'TSLA sits <b>0.3 ATR</b> from its trailing stop with a 5-day RSI divergence.',
-      'MSFT 50-DMA fading below the 200 — a bearish cross is forming (trim flag).',
-      'MSTR volume z-score <b>+2.9σ</b>; momentum extended, divergence building.',
-      'COIN and MSTR carry elevated short-squeeze risk on crypto-β names.',
-      'AAPL, GOOGL and AMZN trends remain intact — no action required.',
-      'Alerts are tiered Critical/Warning and routed to both PM and CIO.'
-    ],
-    pnl:[
-      'Day <b>+34 bps</b> ($4.24M); MTD +1.82%; YTD <b>+18.4%</b> vs. benchmark +9.7%.',
-      'Return is <b>60% stock-specific</b>, 24% factor, 16% residual.',
-      'Top contributors NVDA, META, UBER; main drags MSTR, COIN, TSLA.',
-      'Hit rate <b>62%</b>, win/loss 1.84, alpha half-life 14 days.',
-      'MSFT alpha half-life <b>expired</b> (−24 bps MTD) — flagged as a trim candidate.',
-      'PEP short underperforming — cover 50% ahead of its earnings.',
-      'Factor tilt: positive momentum & quality, low value exposure.',
-      'Risk-budget check: MSFT at <b>18% usage</b> flagged for reallocation.'
-    ],
-    ir:[
-      'October LP letter drafted (v3, <b>92% ready</b>) — 2 citations pending.',
-      'SEC Marketing-Rule pre-check: 4 soft flags resolved, <b>2 remaining</b>.',
-      'Performance narrative: +1.82% MTD, +18.4% YTD — ahead of benchmark.',
-      'DDQ library holds <b>142 Q&A</b>; 3 answers refreshed this week.',
-      'Q3 risk-transparency report scheduled for <b>Oct 15</b>.',
-      'Tear sheets: September sent to 142 LPs; October draft in review.',
-      'Castle Peak prospect DDQ (68 questions) approved.',
-      'Every output carries an approval trail for compliance and LPs.'
-    ],
-    pos:[
-      '<b>3 thesis-drift alerts</b>: NVDA (medium), MSFT (high), UNH (medium).',
-      'NVDA: Elliott 13D + <b>$220M insider sales</b> — thesis drift rising.',
-      'MSFT: Azure deceleration contradicts the original growth thesis (high drift).',
-      'Catalyst calendar: CPI (Tue), JPM (Wed), LMRX coverage (Thu).',
-      '24h news sentiment: META positive (EU ruling), NVDA negative (insiders).',
-      'Short-report & litigation scan: no new material items.',
-      'Analyst revisions: UBER and ANET positive; WBA negative.',
-      'Sentiment is tracked per holding vs. the analyst’s original thesis.'
-    ],
-    research:[
-      'Universe re-ranked — <b>503 names scored</b>, 12 new ideas today.',
-      'Top long <b>UBER (0.89)</b>: FCF inflection, CFO insider buy, positive revisions.',
-      '#2 SPOT, #3 ANET; new IPO <b>LMRX ranked #4</b> of 38 new issues.',
-      'Lowest-ranked shorts: WBA (0.14), HOG (0.13).',
-      'Scoring is explainable: quality, momentum, revisions, sentiment, macro-fit.',
-      'Trading ranges modeled — UBER 1d 82.4–85.1, 5d <b>80.0–89.2</b>.',
-      'Ideas are tuned to the fund’s thesis and risk budget.',
-      'CLSK (0.78) flagged — a crypto-β long with accelerating momentum.'
-    ],
-    flows:[
-      'META crowding <b>92</b> (top decile) — de-grossing risk if VIX breaks 22.',
-      'NVDA crowding 88; HF ownership 18.4%, <b>+3 pts QoQ</b>.',
-      'Smart-money divergence: Viking cut MSFT 40%; Berkshire added UNH.',
-      '5-day ETF flows: SPY +$3.1B, QQQ +$1.8B, <b>IWM −$0.9B</b>.',
-      'IBIT (BTC ETF) <b>+$1.4B</b> — crypto inflows accelerating.',
-      'Short interest: WBA 12.4%, COIN 3.6%.',
-      'Aligned with you: UBER (Lone Pine/Tiger) and CRM (ValueAct).',
-      'Crowding and smart-money divergence are scored per holding.'
-    ],
-    earnings:[
-      '<b>6 prints this week</b>; 112 transcripts parsed with bot-filtered social.',
-      'JPM Thursday: tone <b>−0.21</b> forecast (71% conf) — cautious consumer guide.',
-      'Read-across chain: JPM → <b>V, MA, AXP</b>.',
-      'NFLX tone +0.34 (guidance raised); MSFT tone −0.42 (hedging up).',
-      'Social sentiment: META <b>68/14</b> positive; TSLA mixed 42/38.',
-      'Guidance-change detector flags demand, pricing and capex mentions.',
-      'Supplier/customer read-across is summarized for fast consumption.',
-      'Quarter-over-quarter tone shift is tracked per name.'
-    ],
-    macro:[
-      'Regime: <b>late-cycle, tightening</b> bias; CPI 3.1%, core PCE 2.8%.',
-      'CPI tomorrow 08:30 — a hot print (+0.4% core) maps to <b>−38 bps NAV</b>.',
-      'Fed funds 4.75%; market pricing <b>2 cuts by March</b>.',
-      '10Y 4.38% (+6bp); DXY 101.6; WTI $78.2.',
-      'Position-level macro betas computed across 10Y, DXY, WTI and VIX.',
-      'Scenario PnL: 10Y +50bp = <b>−$9.4M</b>; risk-off (VIX>30) = −$18.0M.',
-      'Hedge ladder (0.6× DV01) queued ahead of CPI for 1.8 bps carry.',
-      'A regime shift auto-reruns Risk, PnL and Flows on the live book.'
-    ],
-    digital:[
-      '24/7/365 monitor: BTC <b>$101,842</b> (−2.1%), ETH $3,842 (−3.4%).',
-      'BTC perp funding <b>+0.082%</b>, OI +18% — crowded longs.',
-      'Tokenized basis: tNVDA −2.81%, tAAPL −1.86% vs. NYSE close.',
-      'Weekend gap-risk mapped to the book <b>before Monday open</b>.',
-      'Crypto-β bridge: COIN 0.86, MSTR 1.42, HOOD 0.44 (to BTC).',
-      'MSTR/COIN put-spread queued, sized to budget, checked by Risk.',
-      'Liquidation clusters 98–99k; stablecoin mint +$1.4B (risk-on).',
-      'Defined-risk structures on top-10 coins; 24/7 VaR within limit.'
-    ]
-  };
-  Object.keys(aiSummaries).forEach(k=>{
-    const view=document.getElementById('view-'+k); if(!view) return;
-    const head=view.querySelector('.view-head'); if(!head) return;
-    const m=agentMeta[k]||{n:'Point Agent',i:'✦',sq:'red'};
-    const gold=m.sq==='gold';
-    const el=document.createElement('div');
-    el.className='ai-summary'+(gold?' gold':'');
-    el.innerHTML=`
-      <div class="ais-head">
-        <div class="ais-icon${gold?' gold':''}">${m.i}</div>
-        <div>
-          <div class="ais-title"><span class="ais-spark">✦</span> AI Summary</div>
-          <div class="ais-sub">Synthesized by the ${m.n} · 8 key points · updated just now</div>
-        </div>
-        <div class="ais-badge"><span class="ais-dot"></span>live</div>
-      </div>
-      <div class="ais-points">${aiSummaries[k].map(p=>`<div class="ais-pt${gold?' gold':''}"><span class="pm">▸</span><span>${p}</span></div>`).join('')}</div>`;
-    head.insertAdjacentElement('afterend', el);
-  });
 
   /* open from hash */
   const h = (location.hash||'').replace('#','');
