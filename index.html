@@ -183,31 +183,7 @@
 
       <!-- Critical card at top -->
       <div class="section-row">
-        <div class="card critical clickable" data-card="AC-20261007-003">
-          <div class="card-head">
-            <span class="chip crit">CRITICAL</span>
-            <span class="chip-meta">Action Card · Risk & Guideline Agent · 2 min ago</span>
-            <span class="spacer"></span>
-            <span class="chip ghost">#AC-20261007-003</span>
-          </div>
-          <h3 class="card-title">Beta-adjusted net projected at <b>63.1%</b> vs. <b>60%</b> IMA limit at Monday's open</h3>
-          <div class="metrics">
-            <div class="metric"><div class="m-val red">71%</div><div class="m-lab">Breach probability · 1d</div></div>
-            <div class="metric"><div class="m-val good">9%</div><div class="m-lab">After recommended trades</div></div>
-            <div class="metric"><div class="m-val">6 bps</div><div class="m-lab">Estimated alpha cost</div></div>
-            <div class="metric"><div class="m-val">$ 1.42 M</div><div class="m-lab">Dollars at risk</div></div>
-          </div>
-          <div class="card-body">
-            <div><b>Drivers:</b> semis beta drift · tokenized-equity weekend move −2.8% · hot CPI risk <span class="tag">Macro Agent</span></div>
-            <div><b>Recommended:</b> Trim NVDA 12% (~$8.4M); buy SMH Nov 215/205 put spread for $0.42M premium</div>
-          </div>
-          <div class="card-foot">
-            <button class="btn primary">Approve</button>
-            <button class="btn dark">Modify in What-If</button>
-            <button class="btn ghost">Dismiss</button>
-            <span class="meta right">Signed by R&G Agent v2.3 · Audit #a3f21</span>
-          </div>
-        </div>
+        <div class="card critical clickable" id="top-card" data-card="AC-20261007-003"><!-- rendered by JS --></div>
       </div>
 
       <!-- 10 agent tiles -->
@@ -292,26 +268,18 @@
       <!-- Three-up panels -->
       <div class="grid-3">
         <div class="card">
-          <div class="card-head"><h3 class="card-title">PnL Attribution · Day</h3><span class="chip ghost">YTD +18.4%</span></div>
+          <div class="card-head"><h3 class="card-title">PnL Attribution · Day</h3><span class="chip ghost" id="pnl-ytd">YTD +18.4%</span></div>
           <div class="pnl-bars" id="pnl-bars"></div>
           <div class="legend-inline">
             <span><i class="sq good"></i>Winners</span>
             <span><i class="sq bad"></i>Losers</span>
-            <span class="right muted">Hit rate 62% · W/L 1.84</span>
+            <span class="right muted" id="pnl-hit">Hit rate 62% · W/L 1.84</span>
           </div>
         </div>
 
         <div class="card">
-          <div class="card-head"><h3 class="card-title">Exposure · Beta-adjusted</h3><span class="chip warn">Net 62% · lim 60</span></div>
-          <div class="exposure">
-            <div class="bar-row"><span class="bar-lab">Gross</span><div class="bar"><div class="fill" style="width:92%"></div></div><span class="bar-val">184%</span></div>
-            <div class="bar-row"><span class="bar-lab">Net β</span><div class="bar"><div class="fill warn" style="width:62%"></div></div><span class="bar-val warn">62%</span></div>
-            <div class="bar-row"><span class="bar-lab">Top 10</span><div class="bar"><div class="fill" style="width:38%"></div></div><span class="bar-val">38%</span></div>
-            <div class="bar-row"><span class="bar-lab">Semis</span><div class="bar"><div class="fill" style="width:28%"></div></div><span class="bar-val">28%</span></div>
-            <div class="bar-row"><span class="bar-lab">Software</span><div class="bar"><div class="fill" style="width:22%"></div></div><span class="bar-val">22%</span></div>
-            <div class="bar-row"><span class="bar-lab">Energy</span><div class="bar"><div class="fill" style="width:9%"></div></div><span class="bar-val">9%</span></div>
-            <div class="bar-row"><span class="bar-lab">Crypto β</span><div class="bar"><div class="fill gold" style="width:17%"></div></div><span class="bar-val">17%</span></div>
-          </div>
+          <div class="card-head"><h3 class="card-title">Exposure · Beta-adjusted</h3><span class="chip warn" id="exposure-chip">Net 62% · lim 60</span></div>
+          <div class="exposure" id="exposure-bars"></div>
         </div>
 
         <div class="card">
@@ -336,64 +304,7 @@
       <div class="grid-2">
         <div class="card">
           <div class="card-head"><h3 class="card-title">Live Action Feed</h3><span class="chip ghost">Point Conductor · ranked by $ at risk</span></div>
-          <ul class="feed">
-            <li class="f-row clickable" data-card="AC-20261007-003">
-              <span class="pill red">CRIT</span>
-              <div>
-                <div class="f-title">Beta-net 63.1% vs 60% IMA limit at open</div>
-                <div class="f-sub">Risk & Guideline · trim NVDA 12% + SMH put spread · $1.42M at risk</div>
-              </div>
-              <span class="f-time">2m</span>
-            </li>
-            <li class="f-row clickable" data-card="AC-20261007-004">
-              <span class="pill red">CRIT</span>
-              <div>
-                <div class="f-title">CPI print tomorrow 08:30 ET · hot-print scenario = −38 bps NAV</div>
-                <div class="f-sub">Macro & Regime · hedge ladder suggested · 10Y +12bp intraday risk</div>
-              </div>
-              <span class="f-time">14m</span>
-            </li>
-            <li class="f-row clickable" data-card="AC-20261007-006">
-              <span class="pill orange">WARN</span>
-              <div>
-                <div class="f-title">META crowding score 92 — top-decile hedge-fund ownership</div>
-                <div class="f-sub">Fund Flows · de-grossing risk if VIX &gt; 22 · consider halving</div>
-              </div>
-              <span class="f-time">26m</span>
-            </li>
-            <li class="f-row clickable" data-card="AC-20261007-009">
-              <span class="pill orange">WARN</span>
-              <div>
-                <div class="f-title">TSLA stop proximity 0.3 ATR · RSI divergence 5d</div>
-                <div class="f-sub">Technical Signals · $422M position · trail stop 243.10</div>
-              </div>
-              <span class="f-time">41m</span>
-            </li>
-            <li class="f-row clickable" data-card="AC-20261007-014">
-              <span class="pill gold">IDEA</span>
-              <div>
-                <div class="f-title">NEW IPO · Lumen Robotics (LMRX) initiates coverage Thu</div>
-                <div class="f-sub">Research & Alpha · ranked #4 of 38 new issues · 5d range $19.4–23.8</div>
-              </div>
-              <span class="f-time">1h</span>
-            </li>
-            <li class="f-row clickable" data-card="AC-20261007-002">
-              <span class="pill gold">IDEA</span>
-              <div>
-                <div class="f-title">BTC funding +0.082% · OI +18% · crowded longs</div>
-                <div class="f-sub">Digital Assets · COIN/MSTR put-spread queued · size $0.6M premium</div>
-              </div>
-              <span class="f-time">Sat 2:14a</span>
-            </li>
-            <li class="f-row">
-              <span class="pill ghost">INFO</span>
-              <div>
-                <div class="f-title">IR draft ready · October LP letter · 3 citations pending</div>
-                <div class="f-sub">IR & Reporting · marketing-rule pre-check: 2 soft flags</div>
-              </div>
-              <span class="f-time">2h</span>
-            </li>
-          </ul>
+          <ul class="feed" id="live-feed"><!-- rendered by JS --></ul>
         </div>
 
         <div class="card dark-card">
@@ -615,7 +526,7 @@
         <div class="status-pill"><span class="live red"></span>2 critical · 71% breach prob</div>
       </div>
 
-      <div class="grid-4">
+      <div class="grid-4" id="risk-kpis">
         <div class="kpi"><div class="k-lab">VaR 99% · 1d</div><div class="k-val">$ 14.3 M</div><div class="k-sub">1.15% of NAV</div></div>
         <div class="kpi"><div class="k-lab">CVaR 99%</div><div class="k-val">$ 21.8 M</div><div class="k-sub">worst 1% tail</div></div>
         <div class="kpi"><div class="k-lab">Max drawdown YTD</div><div class="k-val">−4.6%</div><div class="k-sub">Jun 12</div></div>
@@ -627,7 +538,7 @@
           <div class="card-head"><h3 class="card-title">IMA & limit panel</h3><span class="chip red">1 projected breach</span></div>
           <table class="tbl">
             <thead><tr><th>Rule</th><th>Current</th><th>Limit</th><th>Headroom</th><th>Breach prob · 1d / 3d / 5d</th><th>Status</th></tr></thead>
-            <tbody>
+            <tbody id="risk-limits">
               <tr><td>Beta-adj net exposure</td><td class="warn">62.1%</td><td>60%</td><td class="warn">−2.1 pts</td><td><b class="red">71%</b> / 78% / 82%</td><td><span class="pill red">BREACH 1d</span></td></tr>
               <tr><td>Gross exposure</td><td>184%</td><td>220%</td><td>36 pts</td><td>3% / 6% / 9%</td><td><span class="pill good">OK</span></td></tr>
               <tr><td>Single-name max</td><td>8.2% (NVDA)</td><td>10%</td><td>1.8 pts</td><td>12% / 18% / 22%</td><td><span class="pill ok">watch</span></td></tr>
@@ -646,9 +557,9 @@
           <div class="whatif">
             <div class="wi-row">
               <div class="wi-lab">Scenario</div>
-              <select><option>Trim NVDA 12% + SMH Nov 215/205 put spread</option><option>Halve META + SPY hedge</option><option>Hot CPI (+0.4% MoM core)</option></select>
+              <select id="risk-whatif-select"><option>Trim NVDA 12% + SMH Nov 215/205 put spread</option><option>Halve META + SPY hedge</option><option>Hot CPI (+0.4% MoM core)</option></select>
             </div>
-            <div class="wi-grid">
+            <div class="wi-grid" id="risk-whatif">
               <div class="wi-cell"><div class="wi-k">Beta-net</div><div class="wi-v">62.1% → <b class="good">55.4%</b></div></div>
               <div class="wi-cell"><div class="wi-k">Gross</div><div class="wi-v">184% → 172%</div></div>
               <div class="wi-cell"><div class="wi-k">VaR 99%</div><div class="wi-v">$14.3M → $11.1M</div></div>
@@ -662,7 +573,7 @@
               <button class="btn dark">Export audit</button>
             </div>
           </div>
-          <div class="stress">
+          <div class="stress" id="risk-stress">
             <div class="st-head">Stress tests</div>
             <div class="st-row"><span>−5% equities · +50bp 10Y</span><b class="dn">−$ 23.4 M</b></div>
             <div class="st-row"><span>Semis −8%</span><b class="dn">−$ 11.6 M</b></div>
@@ -688,7 +599,7 @@
         </div>
         <table class="tbl">
           <thead><tr><th>Ticker</th><th>Price</th><th>50/200 DMA</th><th>RSI(14)</th><th>MACD</th><th>Vol z-score</th><th>ATR stop</th><th>Short-squeeze</th><th>Signal</th></tr></thead>
-          <tbody>
+          <tbody id="tech-rows">
             <tr><td>NVDA</td><td>184.10</td><td>↑ above both</td><td>72</td><td>bear div</td><td>+2.1σ</td><td>175.4 (−5%)</td><td>low</td><td><span class="pill red">CRIT · trim</span></td></tr>
             <tr><td>TSLA</td><td>245.60</td><td>flat</td><td>58</td><td>rolling over</td><td>+0.8σ</td><td>243.1 (−1%)</td><td>mid</td><td><span class="pill orange">WARN · stop near</span></td></tr>
             <tr><td>META</td><td>592.44</td><td>↑ above both</td><td>66</td><td>pos</td><td>+1.4σ</td><td>561.0</td><td>low</td><td><span class="pill orange">WARN · crowded</span></td></tr>
@@ -710,7 +621,7 @@
         <div><div class="eyebrow">Portfolio squad · Agent</div><h1 class="h2">⚖︎  PnL Attribution Agent</h1></div>
         <div class="chip">YTD +18.4% · bench +9.7%</div>
       </div>
-      <div class="grid-4">
+      <div class="grid-4" id="pnl-kpis">
         <div class="kpi"><div class="k-lab">Day</div><div class="k-val up">+34 bps</div><div class="k-sub">$ 4.24 M</div></div>
         <div class="kpi"><div class="k-lab">MTD</div><div class="k-val up">+1.82%</div><div class="k-sub">$ 22.7 M</div></div>
         <div class="kpi"><div class="k-lab">QTD</div><div class="k-val up">+4.9%</div><div class="k-sub">$ 61.1 M</div></div>
@@ -736,7 +647,7 @@
               <div><i class="sq grey"></i>Residual <b>16%</b></div>
             </div>
           </div>
-          <div class="kv-row">
+          <div class="kv-row" id="pnl-stats">
             <div><div class="kv-k">Hit rate</div><div class="kv-v">62%</div></div>
             <div><div class="kv-k">W/L ratio</div><div class="kv-v">1.84</div></div>
             <div><div class="kv-k">Alpha half-life</div><div class="kv-v">14d</div></div>
@@ -748,7 +659,7 @@
         <div class="card-head"><h3 class="card-title">Trim & exit candidates · alpha decayed / risk-budget heavy</h3><span class="chip ghost">suggested by agent</span></div>
         <table class="tbl">
           <thead><tr><th>Ticker</th><th>Thesis age</th><th>Alpha half-life</th><th>MTD PnL</th><th>Risk budget used</th><th>Catalyst</th><th>Suggestion</th></tr></thead>
-          <tbody>
+          <tbody id="pnl-trims">
             <tr><td>MSFT</td><td>284d</td><td>14d · <b class="red">expired</b></td><td class="dn">−24 bp</td><td>18%</td><td>none in 20d</td><td><span class="pill orange">Trim 25%</span></td></tr>
             <tr><td>CRM</td><td>161d</td><td>22d</td><td class="dn">−9 bp</td><td>11%</td><td>Dreamforce +9d</td><td><span class="pill ghost">Hold · catalyst near</span></td></tr>
             <tr><td>NFLX</td><td>98d</td><td>18d</td><td class="up">+41 bp</td><td>8%</td><td>Earnings +12d</td><td><span class="pill good">Hold</span></td></tr>
@@ -814,7 +725,7 @@
       <div class="grid-2">
         <div class="card">
           <div class="card-head"><h3 class="card-title">Catalyst calendar · next 10 days</h3></div>
-          <ul class="cal big">
+          <ul class="cal big" id="pos-cal">
             <li><b>Tue Oct 8</b><span>CPI 08:30 · <span class="red">macro</span></span></li>
             <li><b>Wed Oct 9</b><span>JPM Q3 earnings pre-mkt</span></li>
             <li><b>Thu Oct 10</b><span>Lumen Robotics (LMRX) coverage initiations</span></li>
@@ -827,7 +738,7 @@
         </div>
         <div class="card">
           <div class="card-head"><h3 class="card-title">News & sentiment · last 24h</h3></div>
-          <ul class="news">
+          <ul class="news" id="pos-news">
             <li><span class="t">05:12</span><span class="src">Bloomberg</span><div><b>Nvidia</b> insider sales total $220M over 10 trading days</div><span class="pill red">neg</span></li>
             <li><span class="t">04:48</span><span class="src">Reuters</span><div><b>Meta</b> secures EU AI compliance ruling</div><span class="pill good">pos</span></li>
             <li><span class="t">03:21</span><span class="src">13D filing</span><div><b>Elliott</b> discloses 1.9% in NVDA, pushing capital return</div><span class="pill orange">watch</span></li>
@@ -842,7 +753,7 @@
         <div class="card-head"><h3 class="card-title">Thesis-drift monitor</h3><span class="chip ghost">vs. analyst original thesis</span></div>
         <table class="tbl">
           <thead><tr><th>Ticker</th><th>Analyst</th><th>Thesis age</th><th>Original drivers</th><th>Current reality</th><th>Drift</th><th>Flag</th></tr></thead>
-          <tbody>
+          <tbody id="pos-drift">
             <tr><td>NVDA</td><td>P. Shah</td><td>284d</td><td>Hyperscaler capex ↑, DGX cycle</td><td>Insider sales + 13D + skew spike</td><td><b class="orange">medium</b></td><td><span class="pill orange">reassess</span></td></tr>
             <tr><td>MSFT</td><td>K. Lee</td><td>420d</td><td>Copilot adoption, Azure growth</td><td>Azure decel 2Q, Copilot pricing cut</td><td><b class="red">high</b></td><td><span class="pill red">trim</span></td></tr>
             <tr><td>CRM</td><td>P. Shah</td><td>161d</td><td>Margin story, AI Cloud</td><td>Dreamforce near · tone cautious</td><td><b class="good">low</b></td><td><span class="pill good">hold</span></td></tr>
@@ -866,7 +777,7 @@
         </div>
         <table class="tbl">
           <thead><tr><th>Rank</th><th>Ticker</th><th>Score</th><th>Quality</th><th>Momentum</th><th>Revisions</th><th>Sentiment</th><th>1d range</th><th>5d range</th><th>Thesis fit</th></tr></thead>
-          <tbody>
+          <tbody id="research-universe">
             <tr><td>1</td><td>UBER</td><td class="good">0.89</td><td>84</td><td>↑↑</td><td>+2</td><td>pos</td><td>82.4–85.1</td><td>80.0–89.2</td><td>strong</td></tr>
             <tr><td>2</td><td>SPOT</td><td class="good">0.86</td><td>72</td><td>↑</td><td>+1</td><td>pos</td><td>441–452</td><td>432–466</td><td>fit</td></tr>
             <tr><td>3</td><td>ANET</td><td class="good">0.82</td><td>88</td><td>↑</td><td>+3</td><td>pos</td><td>412–421</td><td>402–432</td><td>fit</td></tr>
@@ -880,8 +791,8 @@
       </div>
 
       <div class="card">
-        <div class="card-head"><h3 class="card-title">AI explanation · UBER (long)</h3><span class="chip ghost">explainable</span></div>
-        <div class="explain">
+        <div class="card-head"><h3 class="card-title">AI explanation · <span id="research-explain-name">UBER (long)</span></h3><span class="chip ghost">explainable</span></div>
+        <div class="explain" id="research-explain">
           <div class="ex-row"><div class="ex-k">Quality</div><div class="ex-bar"><div class="ex-fill" style="width:84%"></div></div><div class="ex-v">0.84</div></div>
           <div class="ex-row"><div class="ex-k">Momentum</div><div class="ex-bar"><div class="ex-fill" style="width:78%"></div></div><div class="ex-v">0.78</div></div>
           <div class="ex-row"><div class="ex-k">Revisions</div><div class="ex-bar"><div class="ex-fill" style="width:71%"></div></div><div class="ex-v">0.71</div></div>
@@ -903,7 +814,7 @@
           <div class="card-head"><h3 class="card-title">Crowding scores · your top names</h3></div>
           <table class="tbl">
             <thead><tr><th>Ticker</th><th>Crowding</th><th>HF ownership %</th><th>13F QoQ Δ</th><th>Short interest</th><th>Options skew</th><th>Flag</th></tr></thead>
-            <tbody>
+            <tbody id="flows-crowding">
               <tr><td>META</td><td class="warn">92</td><td>14.1%</td><td>+7 pts</td><td>1.1%</td><td>steep</td><td><span class="pill red">de-gross risk</span></td></tr>
               <tr><td>NVDA</td><td class="warn">88</td><td>18.4%</td><td>+3 pts</td><td>1.4%</td><td>steep</td><td><span class="pill orange">watch</span></td></tr>
               <tr><td>GOOGL</td><td>71</td><td>11.0%</td><td>+1</td><td>0.8%</td><td>mild</td><td><span class="pill ghost">neutral</span></td></tr>
@@ -915,7 +826,7 @@
         </div>
         <div class="card">
           <div class="card-head"><h3 class="card-title">Smart-money divergence</h3><span class="chip ghost">top-tier funds vs. you</span></div>
-          <ul class="div-list">
+          <ul class="div-list" id="flows-divergence">
             <li><div><b>META</b> — Point long · 4 of top-10 funds trimming</div><span class="pill orange">divergent</span></li>
             <li><div><b>UBER</b> — Point long · Lone Pine, Tiger Cub initiations</div><span class="pill good">aligned</span></li>
             <li><div><b>MSFT</b> — Point long · Viking cut 40% QoQ</div><span class="pill orange">divergent</span></li>
@@ -926,7 +837,7 @@
       </div>
       <div class="card">
         <div class="card-head"><h3 class="card-title">ETF flows · 5-day</h3></div>
-        <div class="etf">
+        <div class="etf" id="flows-etf">
           <div class="etf-row"><span>SPY</span><div class="bar"><div class="fill" style="width:70%"></div></div><b>+$ 3.1 B</b></div>
           <div class="etf-row"><span>QQQ</span><div class="bar"><div class="fill" style="width:52%"></div></div><b>+$ 1.8 B</b></div>
           <div class="etf-row"><span>SMH</span><div class="bar"><div class="fill" style="width:28%"></div></div><b>+$ 0.7 B</b></div>
@@ -949,7 +860,7 @@
           <div class="card-head"><h3 class="card-title">Tone shift QoQ · hedging language</h3></div>
           <table class="tbl">
             <thead><tr><th>Ticker</th><th>Last call</th><th>Tone Δ</th><th>Hedging</th><th>Guidance</th><th>Read-across</th></tr></thead>
-            <tbody>
+            <tbody id="earnings-tone">
               <tr><td>JPM (upcoming)</td><td>Thu 09:00</td><td class="orange">−0.21</td><td>↑</td><td>cautious consumer</td><td>V · MA · AXP</td></tr>
               <tr><td>NFLX</td><td>Sep 24</td><td class="good">+0.34</td><td>↓</td><td>raised</td><td>DIS · ROKU</td></tr>
               <tr><td>NVDA</td><td>Aug 28</td><td class="good">+0.18</td><td>flat</td><td>strong</td><td>AVGO · AMD · ANET</td></tr>
@@ -960,7 +871,7 @@
         </div>
         <div class="card">
           <div class="card-head"><h3 class="card-title">Social sentiment · bot-filtered</h3></div>
-          <div class="social">
+          <div class="social" id="earnings-social">
             <div class="s-row"><span>NVDA</span><div class="sent"><div class="sent-neg" style="width:22%"></div><div class="sent-pos" style="width:58%"></div></div><b>58/22</b></div>
             <div class="s-row"><span>TSLA</span><div class="sent"><div class="sent-neg" style="width:38%"></div><div class="sent-pos" style="width:42%"></div></div><b>42/38</b></div>
             <div class="s-row"><span>META</span><div class="sent"><div class="sent-neg" style="width:14%"></div><div class="sent-pos" style="width:68%"></div></div><b>68/14</b></div>
@@ -988,7 +899,7 @@
           <div class="card-head"><h3 class="card-title">Position-level macro betas</h3></div>
           <table class="tbl">
             <thead><tr><th>Ticker</th><th>β 10Y (+50bp)</th><th>β DXY (+1%)</th><th>β WTI (+5%)</th><th>β VIX (+5pt)</th><th>Scenario PnL (hot CPI)</th></tr></thead>
-            <tbody>
+            <tbody id="macro-betas">
               <tr><td>NVDA</td><td>−0.42</td><td>−0.18</td><td>+0.02</td><td>−0.63</td><td class="dn">−$ 820k</td></tr>
               <tr><td>MSFT</td><td>−0.31</td><td>−0.11</td><td>+0.01</td><td>−0.49</td><td class="dn">−$ 410k</td></tr>
               <tr><td>META</td><td>−0.28</td><td>−0.14</td><td>+0.01</td><td>−0.52</td><td class="dn">−$ 362k</td></tr>
@@ -999,7 +910,7 @@
         </div>
         <div class="card">
           <div class="card-head"><h3 class="card-title">Scenario PnL</h3><span class="chip ghost">whole book</span></div>
-          <div class="scenario">
+          <div class="scenario" id="macro-scenario">
             <div class="sc-row"><span>Base case</span><b class="good">+$ 1.2 M</b></div>
             <div class="sc-row"><span>Hot CPI (+0.4% MoM core)</span><b class="dn">−$ 4.78 M · −38 bps</b></div>
             <div class="sc-row"><span>Cold CPI (0.1%)</span><b class="up">+$ 6.1 M · +49 bps</b></div>
@@ -1034,7 +945,7 @@
           <div class="card-head"><h3 class="card-title">Tokenized equities · basis to primary listing</h3></div>
           <table class="tbl">
             <thead><tr><th>Token</th><th>Venue</th><th>Last</th><th>NYSE/Nasdaq Fri close</th><th>Basis</th><th>Depth 10bp</th><th>Signal</th></tr></thead>
-            <tbody>
+            <tbody id="digital-basis">
               <tr><td>tAAPL</td><td>Ondo</td><td>231.42</td><td>235.80</td><td class="dn">−1.86%</td><td>$ 2.1M</td><td><span class="pill orange">weekend gap</span></td></tr>
               <tr><td>tNVDA</td><td>xStocks</td><td>184.10</td><td>189.42</td><td class="dn">−2.81%</td><td>$ 1.4M</td><td><span class="pill red">gap-risk</span></td></tr>
               <tr><td>tTSLA</td><td>bStocks</td><td>246.75</td><td>245.65</td><td class="up">+0.45%</td><td>$ 0.9M</td><td><span class="pill good">neutral</span></td></tr>
@@ -1058,7 +969,7 @@
         <div class="card-head"><h3 class="card-title">Crypto cross-asset bridge</h3><span class="chip ghost">to equity book</span></div>
         <table class="tbl">
           <thead><tr><th>Ticker</th><th>Crypto β</th><th>Position $</th><th>24h impact</th><th>Risk Agent</th></tr></thead>
-          <tbody>
+          <tbody id="digital-bridge">
             <tr><td>COIN</td><td>0.86 BTC</td><td>$ 42.1 M</td><td class="dn">−$ 760k</td><td><span class="pill orange">watch</span></td></tr>
             <tr><td>MSTR</td><td>1.42 BTC</td><td>$ 61.8 M</td><td class="dn">−$ 1.84 M</td><td><span class="pill red">put spread queued</span></td></tr>
             <tr><td>HOOD</td><td>0.44 BTC</td><td>$ 18.4 M</td><td class="dn">−$ 170k</td><td><span class="pill ghost">OK</span></td></tr>

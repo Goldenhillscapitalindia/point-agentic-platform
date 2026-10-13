@@ -692,3 +692,25 @@ a.brand:hover{background:var(--panel)}
   .profile-name{display:none}
   .fund-btn .fund-name{max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 }
+
+/* ============ AI summary (top of each agent view) ============ */
+.ai-summary{background:linear-gradient(135deg,rgba(232,96,59,.09),var(--panel) 58%);
+  border:1px solid var(--line-2);border-radius:14px;padding:18px 20px;margin-bottom:20px;box-shadow:var(--shadow)}
+.ai-summary.gold{background:linear-gradient(135deg,rgba(212,164,43,.10),var(--panel) 58%)}
+.ais-head{display:flex;align-items:center;gap:12px;margin-bottom:15px}
+.ais-icon{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:18px;
+  background:linear-gradient(140deg,var(--orange),#c7421f);color:#fff;flex:none}
+.ais-icon.gold{background:linear-gradient(140deg,var(--gold),#a9811c)}
+.ais-title{font-family:var(--serif);font-weight:600;font-size:16px;display:flex;align-items:center;gap:8px}
+.ais-spark{color:var(--orange)}
+.ai-summary.gold .ais-spark{color:var(--gold-2)}
+.ais-sub{font-size:11.5px;color:var(--txt-3);margin-top:2px}
+.ais-badge{margin-left:auto;font-size:10.5px;font-weight:600;color:var(--txt-2);background:var(--panel);
+  border:1px solid var(--line);border-radius:20px;padding:5px 11px;display:flex;align-items:center;gap:7px}
+.ais-dot{width:6px;height:6px;border-radius:50%;background:var(--good);box-shadow:0 0 0 3px rgba(88,176,106,.2);animation:blink 2s infinite}
+.ais-points{display:grid;grid-template-columns:1fr 1fr;gap:10px 26px}
+@media(max-width:900px){.ais-points{grid-template-columns:1fr}}
+.ais-pt{display:flex;gap:10px;font-size:12.8px;line-height:1.5;color:var(--txt-2)}
+.ais-pt .pm{color:var(--orange);font-weight:700;flex:none;margin-top:1px}
+.ais-pt.gold .pm{color:var(--gold-2)}
+.ais-pt b{color:var(--txt);font-weight:600}
