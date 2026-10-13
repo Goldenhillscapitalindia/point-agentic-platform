@@ -11,7 +11,8 @@
     risk:'Risk & Guideline', tech:'Technical Signals', pnl:'PnL Attribution', ir:'IR & Reporting',
     pos:'Position Intelligence', research:'Research & Alpha', flows:'Fund Flows',
     earnings:'Earnings & Sentiment', macro:'Macro & Regime', digital:'Digital Assets',
-    mcp:'Point MCP', execute:'Point Execute', governance:'Governance'
+    mcp:'Point MCP', execute:'Point Execute', governance:'Governance',
+    profile:'My profile', settings:'Account settings', funds:'Manage funds', signout:'Sign out'
   };
   function go(view){
     views.forEach(v=>v.classList.toggle('active', v.id==='view-'+view));
@@ -1669,6 +1670,11 @@
   document.addEventListener('click', e=>{
     const b = e.target.closest('.btn.primary');
     if(b && b.textContent.trim()==='Approve'){
+      if(activeAccount==='user'){
+        b.textContent='Needs CIO';
+        b.style.background='var(--warn)';
+        return;
+      }
       b.textContent='Approved ✓'; b.style.background='var(--good)';
       setTimeout(()=>{ const card=b.closest('.card'); if(card) card.style.opacity='.55'; }, 150);
     }
@@ -1697,22 +1703,67 @@
   const fundMenu=document.getElementById('fund-menu');
   const fundBtnName=document.getElementById('fund-btn-name');
   let activeFund='alpha';
+  let activeAccount='admin';
   const setText=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
 
+  const ACCOUNTS={
+    admin:{
+      id:'admin', name:'Admin', init:'AD', email:'admin@goldenhillsindia.com',
+      role:'CIO', access:'Full access', desk:'Investment office', loc:'Mumbai · IST',
+      phone:'+91 22 4000 0142', emp:'GH-0142', joined:'March 2019', tz:'Asia/Kolkata',
+      autonomy:'Confirm — one-click approval sends the trade',
+      agents:'All ten agents, Point Conductor, MCP and Execute',
+      funds:['alpha','global','neutral','digital'],
+      canApprove:true, canManage:true,
+      blurb:'Sees every fund, approves Action Cards, and changes who else can sign in.',
+      activity:[
+        ['06:11 ET','Approved nothing yet','2 critical cards are waiting on the Alpha book'],
+        ['Fri 16:28','Modified a hedge','Hot-CPI ladder saved instead of sent'],
+        ['Fri 16:12','Signed the SMH spread','Suresh had already checked the premium'],
+        ['Fri 16:04','Approved the META trim','50% reduction, audit #AC-20261006-087']
+      ]
+    },
+    user:{
+      id:'user', name:'User', init:'US', email:'user@goldenhillsindia.com',
+      role:'Analyst', access:'Limited access', desk:'Research', loc:'Mumbai · IST',
+      phone:'+91 22 4000 2281', emp:'GH-2281', joined:'January 2024', tz:'Asia/Kolkata',
+      autonomy:'Alert only — cards can be read, not approved',
+      agents:'Research & Alpha, Earnings & Sentiment, Position Intel',
+      funds:['alpha','neutral'],
+      canApprove:false, canManage:false,
+      blurb:'Reads the Alpha and Market Neutral books. Approvals and the other two funds stay with the CIO.',
+      activity:[
+        ['06:08 ET','Opened the morning brief','Alpha semiconductor note, read only'],
+        ['05:40 ET','Ranked the payments pair','V/MA tilt drafted for the CIO'],
+        ['Fri 18:10','Exported a tear sheet','September Alpha sheet, no LP send'],
+        ['Fri 11:02','Commented on UBER','Composite 0.89 left on the research card']
+      ]
+    }
+  };
+  function account(){ return ACCOUNTS[activeAccount]||ACCOUNTS.admin; }
+  function allowedFunds(){
+    const a=ACCOUNTS[activeAccount];
+    return a ? funds.filter(f=>a.funds.includes(f.id)) : funds;
+  }
   function renderFundMenu(){
     if(!fundMenu) return;
-    fundMenu.innerHTML='<div class="fund-menu-h">Switch fund · 4</div>'+
-      funds.map(f=>`<div class="fund-opt ${f.id===activeFund?'active':''}" data-fund="${f.id}">
+    const list=allowedFunds();
+    fundMenu.innerHTML='<div class="fund-menu-h">Switch fund · '+list.length+'</div>'+
+      list.map(f=>`<div class="fund-opt ${f.id===activeFund?'active':''}" data-fund="${f.id}">
         <span class="fund-ic" style="background:${f.color}">${f.init}</span>
         <div><div class="fo-name">${f.name}</div><div class="fo-sub">${f.sub}</div></div>
         ${f.id===activeFund?'<span class="fo-check">✓</span>':`<span class="fo-aum">${f.aum}</span>`}
       </div>`).join('')+
-      '<div class="fund-menu-foot"><a>+ Add or manage funds</a></div>';
+      '<div class="fund-menu-foot"><a id="fund-manage-link">Manage funds</a></div>';
     fundMenu.querySelectorAll('.fund-opt').forEach(o=>o.addEventListener('click',()=>{
       selectFund(o.dataset.fund); fundSwitch.classList.remove('open');
     }));
+    const manage=document.getElementById('fund-manage-link');
+    if(manage) manage.onclick=e=>{ e.stopPropagation(); fundSwitch.classList.remove('open'); go('funds'); };
   }
   function selectFund(id){
+    const a=ACCOUNTS[activeAccount];
+    if(a && !a.funds.includes(id)) return;
     const f=funds.find(x=>x.id===id); if(!f) return;
     activeFund=id;
     if(fundBtnName) fundBtnName.textContent=f.name;
@@ -1736,10 +1787,14 @@
     try{ localStorage.setItem('point-fund', id); }catch(e){}
     renderFundMenu();
   }
+  try{ const sa=localStorage.getItem('point-account'); if(sa && ACCOUNTS[sa]) activeAccount=sa; }catch(e){}
   renderFundMenu();
   let _restored=false;
-  try{ const sf=localStorage.getItem('point-fund'); if(sf && funds.find(x=>x.id===sf)){ selectFund(sf); _restored=true; } }catch(e){}
-  if(!_restored) renderDetail(activeFund);
+  try{
+    const sf=localStorage.getItem('point-fund');
+    if(sf && account().funds.includes(sf)){ selectFund(sf); _restored=true; }
+  }catch(e){}
+  if(!_restored) selectFund(account().funds.includes(activeFund)?activeFund:account().funds[0]);
   if(document.getElementById('fund-btn')){
     document.getElementById('fund-btn').addEventListener('click',e=>{
       e.stopPropagation();
@@ -1757,12 +1812,210 @@
       fundSwitch?.classList.remove('open');
       profile.classList.toggle('open');
     });
-    profile.querySelectorAll('.pm-item').forEach(it=>it.addEventListener('click',()=>{
-      const label=it.textContent.trim();
-      if(label==='Manage funds'){ profile.classList.remove('open'); fundSwitch?.classList.add('open'); }
-      else { profile.classList.remove('open'); }
+    profile.querySelectorAll('.pm-item').forEach(it=>it.addEventListener('click',e=>{
+      e.preventDefault();
+      const dest=it.dataset.go;
+      profile.classList.remove('open');
+      if(dest) go(dest);
     }));
   }
+
+  const defaultPrefs=id=>({
+    brief:true, crit:true, digest:id==='admin', email:id==='admin',
+    landing:id==='admin'?'dashboard':'brief', timeout:id==='admin'?'8 hours':'1 hour'
+  });
+  function loadPrefs(){
+    try{ const raw=localStorage.getItem('point-prefs-'+activeAccount); if(raw) return Object.assign(defaultPrefs(activeAccount), JSON.parse(raw)); }catch(e){}
+    return defaultPrefs(activeAccount);
+  }
+  function savePrefs(p){ try{ localStorage.setItem('point-prefs-'+activeAccount, JSON.stringify(p)); }catch(e){} }
+
+  function renderAccountPages(){
+    const a=account();
+    const prefs=loadPrefs();
+    const avCls=a.id==='user'?'avatar user':'avatar';
+    const fields=[
+      ['Email',a.email],['Phone',a.phone],['Employee ID',a.emp],['Desk',a.desk],
+      ['Location',a.loc],['Time zone',a.tz],['Joined',a.joined],['Autonomy',a.autonomy]
+    ];
+    const rights=a.canApprove
+      ? [['Approve Action Cards','Yes — trades leave on your click'],['Manage fund access','Yes — all four funds'],['Export audit','Yes — CSV and JSON'],['Point Execute','Yes — within the guardrails']]
+      : [['Approve Action Cards','No — the CIO has to sign'],['Manage fund access','No — you can open the two funds you cover'],['Export audit','Read-only tear sheets only'],['Point Execute','No — alert tier']];
+    Qset('view-profile', `
+      <div class="view-head"><div><div class="eyebrow">Account · ${a.role}</div><h1 class="h2">My profile</h1></div><span class="chip">${a.access}</span></div>
+      <div class="card">
+        <div class="id-hero">
+          <span class="${avCls}" style="width:64px;height:64px;border-radius:16px;font-size:20px">${a.init}</span>
+          <div><div class="id-name">${a.name}</div><div class="id-mail">${a.email}</div><div style="margin-top:8px"><span class="pill orange">${a.role}</span> <span class="pill ghost">${a.desk}</span></div></div>
+        </div>
+        <p style="margin:0 0 16px;color:var(--txt-2);font-size:13.5px;line-height:1.5">${a.blurb}</p>
+        <div class="kv">${fields.map(f=>`<span>${f[0]}</span><b>${f[1]}</b>`).join('')}</div>
+      </div>
+      <div class="grid-2">
+        <div class="card"><div class="card-head"><h3 class="card-title">What this login can do</h3></div>
+          ${rights.map(r=>`<div class="act-row"><div><b>${r[0]}</b><small>${r[1]}</small></div></div>`).join('')}
+          <div class="act-row"><div><b>Agents</b><small>${a.agents}</small></div></div>
+        </div>
+        <div class="card"><div class="card-head"><h3 class="card-title">Recent activity</h3><span class="chip ghost">this login</span></div>
+          ${a.activity.map(r=>`<div class="act-row"><div><b>${r[1]}</b><small>${r[2]}</small></div><small style="margin-left:auto;white-space:nowrap">${r[0]}</small></div>`).join('')}
+        </div>
+      </div>`);
+
+    const tog=(key,on)=>`<button type="button" class="toggle ${on?'on':''}" data-pref="${key}" aria-label="${key}"><i></i></button>`;
+    const fundOpts=a.funds.map(id=>{ const f=funds.find(x=>x.id===id); return `<option value="${id}" ${prefs.fund===id?'selected':''}>${f.name}</option>`; }).join('');
+    Qset('view-settings', `
+      <div class="view-head"><div><div class="eyebrow">Account · ${a.name}</div><h1 class="h2">Account settings</h1></div><span class="chip ghost" id="settings-saved">Changes save on this browser</span></div>
+      <div class="grid-2">
+        <div class="card"><div class="card-head"><h3 class="card-title">Notifications</h3></div>
+          <div class="set-row"><div><b>Morning brief</b><small>Delivered at 05:58 ET for the funds you cover.</small></div>${tog('brief',prefs.brief)}</div>
+          <div class="set-row"><div><b>Critical cards</b><small>Ping when a card is ranked critical on your book.</small></div>${tog('crit',prefs.crit)}</div>
+          <div class="set-row"><div><b>Conductor digest</b><small>${a.canApprove?'A short note when alerts are merged into one card.':'Off for this login — digests go to the CIO.'}</small></div>${tog('digest',prefs.digest)}</div>
+          <div class="set-row"><div><b>Email as well as in-app</b><small>Sends to ${a.email}.</small></div>${tog('email',prefs.email)}</div>
+        </div>
+        <div class="card"><div class="card-head"><h3 class="card-title">Security</h3></div>
+          <div class="set-row"><div><b>Password</b><small>Last changed 12 Sep 2026. This demo does not store a password.</small></div><button class="btn ghost" type="button" id="pw-btn">Send reset link</button></div>
+          <div class="set-row"><div><b>Two-factor</b><small>${a.canApprove?'Authenticator app, required for CIO approval.':'Not required on the analyst login.'}</small></div><span class="pill ${a.canApprove?'good':'ghost'}">${a.canApprove?'On':'Off'}</span></div>
+          <div class="set-row"><div><b>Session timeout</b><small>Idle time before this browser is signed out.</small></div>
+            <select class="set-select" id="pref-timeout">${['30 minutes','1 hour','8 hours','Until I sign out'].map(t=>`<option ${prefs.timeout===t?'selected':''}>${t}</option>`).join('')}</select></div>
+          <div class="set-row"><div><b>This browser</b><small>Signed in as ${a.name}. Theme is kept after sign-out.</small></div><span class="pill ghost">Current</span></div>
+        </div>
+      </div>
+      <div class="card"><div class="card-head"><h3 class="card-title">Workspace</h3></div>
+        <div class="set-row"><div><b>Theme</b><small>Same control as the sun and moon in the header.</small></div>
+          <span style="display:flex;gap:8px"><button class="btn ghost" type="button" data-theme-set="dark">Dark</button><button class="btn ghost" type="button" data-theme-set="light">Light</button></span></div>
+        <div class="set-row"><div><b>Open on</b><small>Where sign-in lands for this account.</small></div>
+          <select class="set-select" id="pref-landing">${[['dashboard','Dashboard'],['brief','Morning Brief'],['cards','Action Cards'],['profile','My profile']].map(o=>`<option value="${o[0]}" ${prefs.landing===o[0]?'selected':''}>${o[1]}</option>`).join('')}</select></div>
+        <div class="set-row"><div><b>Default fund</b><small>Only funds this login is allowed to open.</small></div>
+          <select class="set-select" id="pref-fund">${fundOpts}</select></div>
+      </div>`);
+
+    const rows=funds.map(f=>{
+      const open=a.funds.includes(f.id);
+      const seat=f.id==='alpha'?(a.canApprove?'CIO':'Covering analyst'):f.id==='neutral'?(a.canApprove?'CIO':'Read'):a.canApprove?'CIO':'No seat';
+      return `<div class="fund-access">
+        <span class="fund-ic" style="background:${f.color}">${f.init}</span>
+        <div style="flex:1"><b style="font-size:14px">${f.name}</b><div style="font-size:12px;color:var(--txt-3);margin-top:2px">${f.sub} · your seat: ${seat}</div></div>
+        <span class="pill ${open?'good':'ghost'}">${open?'Can open':'Locked'}</span>
+        ${open?`<button class="btn primary" type="button" data-open-fund="${f.id}">Open</button>`:`<button class="btn ghost" type="button" data-ask-fund="${f.id}">Request access</button>`}
+      </div>`;
+    }).join('');
+    Qset('view-funds', `
+      <div class="view-head"><div><div class="eyebrow">Account · ${a.name}</div><h1 class="h2">Manage funds</h1></div><span class="chip">${a.funds.length} of 4 open</span></div>
+      <div class="card"><div class="card-head"><h3 class="card-title">Fund access</h3><span class="chip ghost">${a.canManage?'You grant seats':'Seats are granted by the CIO'}</span></div>
+        <div class="card-b" style="padding-top:0">${rows}</div>
+      </div>
+      <p style="color:var(--txt-3);font-size:12.5px;line-height:1.5">Opening a fund loads that book on the dashboard, the morning brief, the action cards and the conductor. A locked fund stays off the switcher until the CIO adds this login.</p>`);
+
+    Qset('view-signout', `
+      <div class="view-head"><div><div class="eyebrow">Account · session</div><h1 class="h2">Sign out</h1></div></div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><h3 class="card-title">This session</h3><span class="pill good">Signed in</span></div>
+          <div class="kv">
+            <span>Login</span><b>${a.name}</b>
+            <span>Email</span><b>${a.email}</b>
+            <span>Role</span><b>${a.role} · ${a.access}</b>
+            <span>Started</span><b>05:58 ET · this browser</b>
+            <span>Timeout</span><b>${prefs.timeout}</b>
+            <span>Still open</span><b>${a.canApprove?'Critical cards stay in the queue for the next CIO sign-in.':'Nothing of yours is waiting on an approval.'}</b>
+          </div>
+          <div class="card-foot">
+            <button class="btn ghost" type="button" id="stay-in">Stay signed in</button>
+            <button class="btn primary" type="button" id="do-signout" style="background:var(--bad)">Sign out</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3 class="card-title">What sign-out does</h3></div>
+          <div class="act-row"><div><b>Ends</b><small>This login, the fund you had open, and any half-written approval.</small></div></div>
+          <div class="act-row"><div><b>Stays</b><small>Theme, notification toggles and the default fund for ${a.name}. They are stored on this browser, per login.</small></div></div>
+          <div class="act-row"><div><b>Next</b><small>You land on the sign-in screen and can enter as Admin or as User.</small></div></div>
+        </div>
+      </div>`);
+
+    document.querySelectorAll('#view-settings [data-pref]').forEach(btn=>{
+      btn.onclick=()=>{
+        if(btn.dataset.pref==='digest' && !a.canApprove) return;
+        const p=loadPrefs();
+        p[btn.dataset.pref]=!btn.classList.contains('on');
+        btn.classList.toggle('on', p[btn.dataset.pref]);
+        savePrefs(p);
+        const note=document.getElementById('settings-saved'); if(note) note.textContent='Saved';
+      };
+    });
+    const digestBtn=document.querySelector('#view-settings [data-pref="digest"]');
+    if(digestBtn && !a.canApprove) digestBtn.disabled=true;
+    const timeout=document.getElementById('pref-timeout');
+    if(timeout) timeout.onchange=()=>{ const p=loadPrefs(); p.timeout=timeout.value; savePrefs(p); };
+    const landing=document.getElementById('pref-landing');
+    if(landing) landing.onchange=()=>{ const p=loadPrefs(); p.landing=landing.value; savePrefs(p); };
+    const fundSel=document.getElementById('pref-fund');
+    if(fundSel){
+      if(!fundSel.value) fundSel.value=a.funds.includes(activeFund)?activeFund:a.funds[0];
+      fundSel.onchange=()=>{ const p=loadPrefs(); p.fund=fundSel.value; savePrefs(p); selectFund(fundSel.value); };
+    }
+    document.querySelectorAll('[data-theme-set]').forEach(b=>b.onclick=()=>{ applyTheme(b.dataset.themeSet); try{ localStorage.setItem('point-theme', b.dataset.themeSet); }catch(e){} });
+    const pw=document.getElementById('pw-btn');
+    if(pw) pw.onclick=function(){ this.textContent='Link sent'; };
+    document.querySelectorAll('[data-open-fund]').forEach(b=>b.onclick=()=>{ selectFund(b.dataset.openFund); go('dashboard'); });
+    document.querySelectorAll('[data-ask-fund]').forEach(b=>b.onclick=function(){ this.textContent='Requested'; this.disabled=true; });
+    const stay=document.getElementById('stay-in'); if(stay) stay.onclick=()=>go('dashboard');
+    const out=document.getElementById('do-signout'); if(out) out.onclick=showLogin;
+  }
+  function Qset(id, html){ const el=document.getElementById(id); if(el) el.innerHTML=html; }
+
+  function paintAccount(){
+    const a=account();
+    const headerAv=document.getElementById('header-av');
+    const pmAv=document.getElementById('pm-av');
+    if(headerAv){ headerAv.textContent=a.init; headerAv.className='avatar sm'+(a.id==='user'?' user':''); }
+    if(pmAv){ pmAv.textContent=a.init; pmAv.className='avatar'+(a.id==='user'?' user':''); }
+    setText('profile-label', a.name);
+    setText('pm-name', a.name);
+    setText('pm-mail', a.email);
+    setText('pm-role', a.role+' · '+a.access);
+    setText('hero-name', a.name);
+    const box=document.getElementById('pm-accounts');
+    if(box){
+      box.innerHTML=Object.values(ACCOUNTS).map(ac=>`<button type="button" class="pm-acct ${ac.id===activeAccount?'on':''}" data-account="${ac.id}">
+        <span class="avatar sm ${ac.id==='user'?'user':''}">${ac.init}</span>
+        <span><b>${ac.name}</b><small>${ac.role} · ${ac.access}</small></span>
+        ${ac.id===activeAccount?'<span class="pm-check">✓</span>':''}
+      </button>`).join('');
+      box.querySelectorAll('[data-account]').forEach(b=>b.onclick=e=>{
+        e.stopPropagation();
+        applyAccount(b.dataset.account);
+        profile.classList.remove('open');
+      });
+    }
+    renderAccountPages();
+  }
+  function applyAccount(id){
+    if(!ACCOUNTS[id]) return;
+    activeAccount=id;
+    try{ localStorage.setItem('point-account', id); }catch(e){}
+    if(!account().funds.includes(activeFund)) selectFund(account().funds[0]);
+    else renderFundMenu();
+    paintAccount();
+  }
+  function showLogin(){
+    const gate=document.getElementById('login-gate');
+    const picks=document.getElementById('login-picks');
+    if(!gate||!picks) return;
+    picks.innerHTML=Object.values(ACCOUNTS).map(a=>`<button type="button" class="acct-card" data-signin="${a.id}">
+      <span class="avatar ${a.id==='user'?'user':''}">${a.init}</span>
+      <b>${a.name}</b>
+      <div class="role">${a.email}<br/>${a.role} · ${a.access}</div>
+      <p>${a.blurb}</p>
+    </button>`).join('');
+    picks.querySelectorAll('[data-signin]').forEach(b=>b.onclick=()=>{
+      gate.hidden=true;
+      applyAccount(b.dataset.signin);
+      const landing=(loadPrefs().landing)||'dashboard';
+      go(ACCOUNTS[b.dataset.signin] && document.getElementById('view-'+landing) ? landing : 'dashboard');
+    });
+    gate.hidden=false;
+  }
+  paintAccount();
   /* close popovers on outside click / Esc */
   document.addEventListener('click',()=>{ fundSwitch?.classList.remove('open'); profile?.classList.remove('open'); });
   document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ fundSwitch?.classList.remove('open'); profile?.classList.remove('open'); } });
