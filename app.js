@@ -25,6 +25,32 @@
     go(el.dataset.view);
   }));
 
+  /* ---- IR dashboard / tear sheet template tabs ---- */
+  const irTabs = [...document.querySelectorAll('[data-ir-tab]')];
+  function selectIrTab(tab){
+    const selected = tab.dataset.irTab;
+    irTabs.forEach(item=>{
+      const active = item === tab;
+      item.classList.toggle('active', active);
+      item.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    document.querySelectorAll('.ir-tab-panel').forEach(panel=>{
+      const active = panel.id === `ir-${selected}`;
+      panel.classList.toggle('active', active);
+      panel.hidden = !active;
+    });
+  }
+  irTabs.forEach((tab,index)=>{
+    tab.addEventListener('click',()=>selectIrTab(tab));
+    tab.addEventListener('keydown',event=>{
+      if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+      event.preventDefault();
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? irTabs.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : irTabs.length - 1)) % irTabs.length;
+      irTabs[next].focus();
+      selectIrTab(irTabs[next]);
+    });
+  });
+
   /* ---- per-fund detail datasets (positions + PnL) ---- */
   const flagMap = {
     trim:'pill orange', ok:'pill good', high:'pill red', crowded:'pill orange',
@@ -1134,7 +1160,10 @@
     const elog=document.getElementById('eventlog');
     if(elog) elog.innerHTML=md.events.map(e=>`<li><span class="et">${e[0]}</span><span class="ea">${e[1]}</span><span class="em">${e[2]}</span></li>`).join('');
     const ir=document.getElementById('ir-letter');
-    if(ir) ir.innerHTML=md.irLetter.map(p=>`<p>${p}</p>`).join('');
+    if(ir){
+      ir.innerHTML=md.irLetter.map(p=>`<p>${p}</p>`).join('');
+      try{const saved=localStorage.getItem(`ir-draft:${fund}:dashboard`);if(saved)ir.innerHTML=saved;}catch(e){}
+    }
     // what-if
     const sel=document.getElementById('risk-whatif-select');
     if(sel) sel.options[0] ? (sel.options[0].text=d.whatifSelect) : null;
@@ -2056,6 +2085,44 @@
      exp:'96% / 71%', expD:'Net ↑ 6pts on BTC drift', var:'$ 11.2 M', varD:'3.52% of NAV',
      cards:'5 action cards', crit:'2 critical'}
   ];
+  /* ---- fund-specific sample data for all IR tear sheet templates ---- */
+  const irTearData={
+    alpha:{name:'Alpha Fund',strategy:'Global long/short equity',monthly:'+1.82%',ytd:'+18.4%',net:'62%',gross:'184%',longExp:'123%',shortExp:'-61%',aum:'$1.248B',benchName:'S&P 500 TR',bench:'+3.72%',qtd:'+5.14%',long:'+4.51%',short:'+0.63%',returns:[['2026','1.2%','0.8%','2.1%','-0.6%','1.4%','2.8%','1.1%','1.6%','1.82%','18.4%'],['2025','0.9%','1.6%','-0.4%','1.2%','0.7%','1.9%','1.3%','-0.2%','1.1%','12.6%'],['2024','0.5%','1.1%','1.8%','-0.3%','0.9%','1.4%','0.7%','1.2%','-0.5%','10.8%']],snapshot:[['Strategy','Long/short equity'],['Inception','January 2021'],['Gross exposure','184%'],['Annualized volatility','11.6%'],['Largest drawdown','-8.2%'],['Reference index','S&P 500 TR']],mixTitle:'Exposure by sector',mix:[['Information technology',31],['Communication services',21],['Consumer discretionary',16],['Healthcare',12],['Cash & other',10]],allocTitle:'Exposure by market cap',allocation:[['Large cap',56],['Mid cap',31],['Small cap',13]],positions:[['NVIDIA','Long','6.4%','+0.42%','AI infrastructure'],['Microsoft','Long','5.8%','-0.11%','Cloud platform'],['Meta Platforms','Long','5.1%','+0.28%','Digital advertising'],['PepsiCo','Short','-3.2%','+0.07%','Consumer hedge']],attr:[['Long stock selection','+3.84%'],['Short stock selection','+0.63%'],['Sector allocation','+0.91%'],['Cash & expenses','-0.24%']],risk:[['ANNUALIZED RETURN - ITD','14.2%'],['ANNUALIZED VOLATILITY','11.6%'],['SHARPE RATIO','1.18'],['MAX DRAWDOWN','-8.2%']]},
+    global:{name:'Global Macro Fund',strategy:'Global macro - multi-asset',monthly:'-0.12%',ytd:'+11.2%',net:'38%',gross:'142%',longExp:'90%',shortExp:'-52%',aum:'$842.0M',benchName:'Macro Blend',bench:'+1.46%',qtd:'+2.18%',long:'+1.54%',short:'+0.64%',returns:[['2026','0.8%','1.1%','-0.5%','1.7%','2.2%','1.4%','1.8%','0.6%','-0.12%','11.2%'],['2025','1.2%','0.4%','0.9%','-1.1%','1.7%','0.8%','1.2%','0.5%','0.7%','8.9%'],['2024','0.7%','0.9%','1.3%','0.2%','-0.4%','1.1%','0.6%','0.8%','0.3%','7.2%']],snapshot:[['Strategy','Global macro'],['Inception','March 2018'],['Gross exposure','142%'],['Annualized volatility','8.9%'],['Largest drawdown','-6.4%'],['Reference index','Macro Blend']],mixTitle:'Exposure by asset class',mix:[['Rates',34],['Foreign exchange',22],['Equity index',18],['Commodities',16],['Cash & other',10]],allocTitle:'Risk allocation',allocation:[['Rates',40],['FX',24],['Equities',18],['Commodities',18]],positions:[['10Y Treasury future','Long','18.0%','-0.24%','Duration hedge'],['Gold future','Long','11.0%','+0.31%','Inflation hedge'],['EUR/USD','Short','-9.0%','+0.12%','Relative rates'],['WTI crude','Long','4.0%','-0.08%','Supply outlook']],attr:[['Rates & duration','+0.82%'],['FX positioning','+0.46%'],['Commodities','+1.08%'],['Cash & expenses','-0.18%']],risk:[['ANNUALIZED RETURN - ITD','9.6%'],['ANNUALIZED VOLATILITY','8.9%'],['SHARPE RATIO','1.07'],['MAX DRAWDOWN','-6.4%']]},
+    neutral:{name:'Market Neutral Fund',strategy:'Equity market neutral - paired',monthly:'+0.27%',ytd:'+7.8%',net:'4%',gross:'210%',longExp:'107%',shortExp:'-103%',aum:'$1.560B',benchName:'Neutral Composite',bench:'+0.82%',qtd:'+1.34%',long:'+0.92%',short:'+0.42%',returns:[['2026','0.6%','0.7%','0.5%','0.8%','0.4%','0.9%','0.6%','0.7%','0.27%','7.8%'],['2025','0.5%','0.6%','0.4%','0.7%','0.6%','0.5%','0.8%','0.3%','0.5%','6.6%'],['2024','0.4%','0.5%','0.6%','0.3%','0.5%','0.4%','0.6%','0.5%','0.4%','5.7%']],snapshot:[['Strategy','Equity market neutral'],['Inception','June 2019'],['Gross exposure','210%'],['Annualized volatility','4.2%'],['Largest drawdown','-3.1%'],['Reference index','Neutral Composite']],mixTitle:'Exposure by sector',mix:[['Healthcare',26],['Consumer staples',22],['Financials',20],['Industrials',16],['Other',16]],allocTitle:'Pair allocation',allocation:[['Healthcare pairs',26],['Consumer pairs',24],['Payments pairs',20],['Industrials pairs',16],['Other pairs',14]],positions:[['LLY / NVO','Long / short','5.2%','+0.22%','Pharma pair'],['V / MA','Long / short','4.4%','+0.14%','Payments pair'],['COST / WMT','Long / short','4.1%','+0.09%','Retail pair'],['HD / LOW','Long / short','3.8%','-0.03%','Home improvement']],attr:[['Pair selection','+0.72%'],['Spread convergence','+0.48%'],['Financing & borrow','+0.24%'],['Cash & expenses','-0.10%']],risk:[['ANNUALIZED RETURN - ITD','8.1%'],['ANNUALIZED VOLATILITY','4.2%'],['SHARPE RATIO','1.42'],['MAX DRAWDOWN','-3.1%']]},
+    digital:{name:'Digital Assets Fund',strategy:'Digital assets - liquid token markets',monthly:'-2.1%',ytd:'+34.1%',net:'71% crypto beta',gross:'96%',longExp:'83%',shortExp:'-12%',aum:'$318.4M',benchName:'Digital Asset 30',bench:'+6.2%',qtd:'+8.7%',long:'+7.9%',short:'+0.8%',returns:[['2026','4.8%','2.2%','6.1%','3.4%','4.7%','6.2%','5.1%','5.0%','-2.1%','34.1%'],['2025','3.1%','-1.8%','4.5%','2.2%','5.4%','-2.1%','4.8%','3.7%','1.6%','28.4%'],['2024','2.4%','1.9%','3.2%','-1.1%','4.6%','2.8%','3.4%','1.2%','2.2%','24.7%']],snapshot:[['Strategy','Digital assets'],['Inception','October 2020'],['Gross exposure','96%'],['24/7 VaR - 99%','$11.2M'],['Largest drawdown','-18.6%'],['Reference index','Digital Asset 30']],mixTitle:'Exposure by asset',mix:[['Bitcoin',42],['Ethereum',24],['Solana',14],['Digital equities',12],['Cash & other',8]],allocTitle:'Portfolio mix',allocation:[['Layer 1 assets',57],['DeFi & protocols',17],['Digital equities',14],['Cash & other',12]],positions:[['Bitcoin','Long','28.0%','-0.84%','Core digital asset'],['Ethereum','Long','16.0%','-0.42%','Smart contract platform'],['Solana','Long','9.0%','+0.31%','High beta growth'],['MSTR','Long','7.0%','-0.53%','Equity beta proxy']],attr:[['Bitcoin & Ethereum','+6.12%'],['Altcoin selection','+3.38%'],['Digital equities','-0.42%'],['Cash & expenses','-0.38%']],risk:[['ANNUALIZED RETURN - ITD','22.8%'],['ANNUALIZED VOLATILITY','38.4%'],['SHARPE RATIO','0.91'],['MAX DRAWDOWN','-18.6%']]}
+  };
+  const irMonths=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep'];
+  const irKpis=(items,extra='')=>`<div class="tear-kpis ${extra}">${items.map(([label,value])=>`<div><span>${label}</span><b>${value}</b></div>`).join('')}</div>`;
+  // Clear the old persistent demo queue state so the report returns to its original controls.
+  try{for(let i=localStorage.length-1;i>=0;i--){const key=localStorage.key(i);if(key&&key.startsWith('ir-compliance:'))localStorage.removeItem(key);}}catch(e){}
+  const irActions=(report,fund)=>{
+    return `<div class="ir-actions" data-ir-report="${report}"><button class="btn primary" data-ir-action="submit">Send to compliance</button><button class="btn ghost" data-ir-action="edit">Edit</button><button class="btn ghost" data-ir-action="save" hidden>Save</button><button class="btn ghost" data-ir-action="cancel" hidden>Cancel</button><button class="btn dark" data-ir-action="export">Export .docx</button><span class="ir-action-message" data-ir-message role="status" aria-live="polite"></span></div>`;
+  };
+  function renderIRTearSheets(id){
+    const d=irTearData[id]||irTearData.alpha;
+    const headings=['Year',...irMonths,'YTD'].map(x=>`<th>${x}</th>`).join('');
+    const retRows=d.returns.map(row=>`<tr><th>${row[0]}</th>${row.slice(1).map(v=>`<td>${v}</td>`).join('')}</tr>`).join('');
+    const snapshot=d.snapshot.map(([k,v])=>`<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
+    const monthly=`<article class="tear"><div class="tear-title-row"><div><div class="tear-kicker">MONTHLY FACTSHEET &middot; SEPTEMBER 2026</div><h2>${d.name}</h2><p>${d.strategy} &middot; USD &middot; Net of fees</p></div><div class="tear-period">AS OF<br><b>30 SEP 2026</b></div></div>${irKpis([['MONTHLY RETURN',d.monthly],['YTD RETURN',d.ytd],['NET EXPOSURE',d.net],['FUND AUM',d.aum]])}<div class="tear-columns"><div class="tear-block"><h3>Monthly net returns</h3><div class="tear-table-wrap"><table class="tear-table"><thead><tr>${headings}</tr></thead><tbody>${retRows}</tbody></table></div></div><aside class="tear-block tear-side"><h3>Fund snapshot</h3><dl>${snapshot}</dl></aside></div></article>`;
+    const mix=d.mix.map(([name,n])=>`<div class="exposure-row"><span>${name}</span><div class="exposure-track"><i style="width:${n}%"></i></div><b>${n}%</b></div>`).join('');
+    const palette=['var(--gold)','#687f75','#aeb8a5','#8b7861','#687f75'];
+    const stack=d.allocation.map(([name,n],i)=>`<i title="${name}: ${n}%" style="width:${n}%;background:${palette[i%palette.length]}"></i>`).join('');
+    const allocation=d.allocation.map(([name,n],i)=>`<div><i style="background:${palette[i%palette.length]}"></i><span>${name}</span><b>${n}%</b></div>`).join('');
+    const positions=d.positions.map(row=>`<tr><th>${row[0]}</th><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td><td>${row[4]}</td></tr>`).join('');
+    const exposure=`<article class="tear"><div class="tear-title-row"><div><div class="tear-kicker">PORTFOLIO &amp; EXPOSURE &middot; Q3 2026</div><h2>${d.name}</h2><p>Portfolio positioning at 30 September 2026 &middot; USD</p></div><div class="tear-period">STRATEGY<br><b>${d.strategy}</b></div></div>${irKpis([['LONG EXPOSURE',d.longExp],['SHORT EXPOSURE',d.shortExp],['NET / GROSS',`${d.net} / ${d.gross}`]],'three')}<div class="tear-columns"><div class="tear-block"><h3>${d.mixTitle}</h3><div class="exposure-list">${mix}</div></div><aside class="tear-block tear-side"><h3>${d.allocTitle}</h3><div class="cap-stack">${stack}</div><div class="cap-legend">${allocation}</div><div class="tear-callout"><span>PORTFOLIO PROFILE</span><b>${d.gross} gross exposure</b><small>Net exposure: ${d.net}</small></div></aside></div><div class="tear-block"><h3>Largest positions</h3><div class="tear-table-wrap"><table class="tear-table"><thead><tr><th>Position</th><th>Side</th><th>Weight</th><th>Contribution &middot; Q3</th><th>Portfolio role</th></tr></thead><tbody>${positions}</tbody></table></div></div></article>`;
+    const returnWidths=[d.qtd,d.bench,d.long,d.short].map(x=>Math.abs(parseFloat(x)));
+    const maxReturn=Math.max(...returnWidths,1);
+    const bar=(label,value,kind='')=>`<div><span>${label}</span><div><i class="${kind}" style="width:${Math.max(8,Math.round(Math.abs(parseFloat(value))/maxReturn*100))}%"></i></div><b>${value}</b></div>`;
+    const attribution=d.attr.map(([name,value])=>`<div><span>${name}</span><b class="${value.startsWith('-')?'dn':'up'}">${value}</b></div>`).join('');
+    const risk=irKpis(d.risk,'four risk-kpis');
+    const performance=`<article class="tear"><div class="tear-title-row"><div><div class="tear-kicker">PERFORMANCE &amp; ATTRIBUTION &middot; Q3 2026</div><h2>${d.name}</h2><p>Net performance compared with ${d.benchName}</p></div><div class="tear-period">QUARTER ENDED<br><b>30 SEP 2026</b></div></div>${irKpis([['FUND &middot; QTD',d.qtd],['FUND &middot; YTD',d.ytd],[`${d.benchName.toUpperCase()} &middot; QTD`,d.bench]],'three')}<div class="tear-columns"><div class="tear-block"><h3>Quarterly return comparison</h3><div class="return-bars">${bar(d.name,d.qtd)}${bar(d.benchName,d.bench,'benchmark')}${bar('Long book',d.long)}${bar('Short book',d.short,'short')}</div><div class="tear-callout"><span>QUARTERLY RETURN</span><b>${d.qtd}</b><small>Fund net return for the quarter</small></div></div><aside class="tear-block tear-side"><h3>Return attribution &middot; Q3</h3><div class="attribution-list">${attribution}<div class="total"><span>Net fund return</span><b>${d.qtd}</b></div></div></aside></div><div class="tear-block"><h3>Risk &amp; return profile</h3>${risk}</div></article>`;
+    [['ir-template1','template1',monthly],['ir-template2','template2',exposure],['ir-template3','template3',performance]].forEach(([panelId,report,html])=>{
+      const panel=document.getElementById(panelId); if(!panel) return;
+      panel.innerHTML=html.replace('<article class="tear">',`<article class="tear" data-ir-doc="${report}">`)+irActions(report,id);
+      try{const saved=localStorage.getItem(`ir-draft:${id}:${report}`);const doc=panel.querySelector('[data-ir-doc]');if(saved&&doc)doc.innerHTML=saved;}catch(e){}
+    });
+  }
   const fundSwitch=document.getElementById('fund-switch');
   const fundMenu=document.getElementById('fund-menu');
   const fundBtnName=document.getElementById('fund-btn-name');
@@ -2123,6 +2190,7 @@
     if(a && !a.funds.includes(id)) return;
     const f=funds.find(x=>x.id===id); if(!f) return;
     activeFund=id;
+    renderIRTearSheets(id);
     if(fundBtnName) fundBtnName.textContent=f.name;
     setText('hero-fund', f.name.replace(/ Fund$/,''));
     const cardList=cardsByFund[id]||cardsByFund.alpha;
@@ -2141,6 +2209,7 @@
     if(critEl) critEl.style.color = critN===0 ? 'var(--good)' : '';
     const dot=document.querySelector('.fund-dot'); if(dot) dot.style.background=f.color;
     renderDetail(id);
+    syncIRDashboardStatus(id);
     try{ localStorage.setItem('point-fund', id); }catch(e){}
     renderFundMenu();
     document.dispatchEvent(new Event('point:context'));
@@ -2148,6 +2217,87 @@
   try{ const sa=localStorage.getItem('point-account'); if(sa && ACCOUNTS[sa]) activeAccount=sa; }catch(e){}
   renderFundMenu();
   let _restored=false;
+  function syncIRDashboardStatus(fund){
+    const bar=document.querySelector('[data-ir-report="dashboard"]');if(!bar)return;
+    const submit=bar.querySelector('[data-ir-action="submit"]');
+    if(submit){submit.textContent='Send to compliance';submit.disabled=false;}
+  }
+
+  function irXmlEscape(value){return String(value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');}
+  function irCrc32(bytes){let crc=-1;for(let i=0;i<bytes.length;i++){crc^=bytes[i];for(let j=0;j<8;j++)crc=(crc>>>1)^((crc&1)?0xEDB88320:0);}return (crc^-1)>>>0;}
+  function irMakeDocx(text){
+    const enc=new TextEncoder();
+    const files=[
+      ['[Content_Types].xml','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>'],
+      ['_rels/.rels','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>'],
+      ['word/document.xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>${text.split(/\r?\n/).map(line=>`<w:p><w:r><w:t xml:space="preserve">${irXmlEscape(line)}</w:t></w:r></w:p>`).join('')}<w:sectPr><w:pgSz w:w="12240" w:h="15840"/><w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440"/></w:sectPr></w:body></w:document>`]
+    ].map(([name,content])=>({name:enc.encode(name),data:enc.encode(content)}));
+    const chunks=[],central=[];let offset=0;
+    const u16=n=>[n&255,(n>>>8)&255],u32=n=>[n&255,(n>>>8)&255,(n>>>16)&255,(n>>>24)&255];
+    const append=(target,arr)=>target.push(new Uint8Array(arr));
+    files.forEach(file=>{
+      const crc=irCrc32(file.data),local=[...u32(0x04034b50),...u16(20),...u16(0),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(file.data.length),...u32(file.data.length),...u16(file.name.length),...u16(0)];
+      chunks.push(new Uint8Array(local),file.name,file.data);
+      const c=[...u32(0x02014b50),...u16(20),...u16(20),...u16(0),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(file.data.length),...u32(file.data.length),...u16(file.name.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(offset)];
+      central.push(new Uint8Array(c),file.name);offset+=local.length+file.name.length+file.data.length;
+    });
+    const centralSize=central.reduce((n,b)=>n+b.length,0),end=new Uint8Array([...u32(0x06054b50),...u16(0),...u16(0),...u16(files.length),...u16(files.length),...u32(centralSize),...u32(offset),...u16(0)]);
+    return new Blob([...chunks,...central,end],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+  }
+  const irConfirmOverlay=document.getElementById('ir-confirm-overlay');
+  const irConfirmCard=document.getElementById('ir-confirm-card');
+  let irConfirmReturnFocus=null;
+  function openIRConfirmation(button,report){
+    if(!irConfirmOverlay||!irConfirmCard)return;
+    const fundName=(funds.find(f=>f.id===activeFund)||funds[0]).name;
+    const reportName=report==='dashboard'?'investor letter':report==='template1'?'monthly factsheet':report==='template2'?'portfolio and exposure report':'performance and attribution report';
+    const copy=irConfirmOverlay.querySelector('[data-ir-confirm-copy]');
+    if(copy)copy.textContent=`Your ${fundName} ${reportName} is marked for compliance review.`;
+    irConfirmReturnFocus=button.closest('[data-ir-report]')?.querySelector('[data-ir-action="edit"]')||button;
+    irConfirmOverlay.hidden=false;irConfirmCard.focus();
+  }
+  function closeIRConfirmation(){
+    if(!irConfirmOverlay)return;
+    irConfirmOverlay.hidden=true;
+    if(irConfirmReturnFocus&&!irConfirmReturnFocus.disabled)irConfirmReturnFocus.focus();
+  }
+  irConfirmOverlay?.addEventListener('click',event=>{if(event.target===irConfirmOverlay||event.target.closest('[data-ir-close]'))closeIRConfirmation();});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&irConfirmOverlay&&!irConfirmOverlay.hidden)closeIRConfirmation();});
+  document.addEventListener('click',event=>{
+    const button=event.target.closest('[data-ir-action]');if(!button)return;
+    const bar=button.closest('[data-ir-report]');if(!bar)return;
+    const report=bar.dataset.irReport, action=button.dataset.irAction, key=`ir-draft:${activeFund}:${report}`;
+    const target=report==='dashboard'?document.getElementById('ir-letter'):document.querySelector(`#ir-${report} [data-ir-doc]`);
+    const message=bar.querySelector('[data-ir-message]'),status=bar.querySelector('[data-ir-status]');
+    const say=text=>{if(message)message.textContent=text;};
+    if(!target){say('Report content is unavailable.');return;}
+    if(action==='edit'){
+      target.dataset.irBackup=target.innerHTML;target.contentEditable='true';target.classList.add('ir-editing');target.focus();
+      button.hidden=true;bar.querySelector('[data-ir-action="save"]').hidden=false;bar.querySelector('[data-ir-action="cancel"]').hidden=false;bar.querySelector('[data-ir-action="submit"]').disabled=true;say('Edit the report, then save or cancel.');
+    }else if(action==='save'){
+      target.contentEditable='false';target.classList.remove('ir-editing');delete target.dataset.irBackup;
+      try{localStorage.setItem(key,target.innerHTML);localStorage.removeItem(`ir-compliance:${activeFund}:${report}`);}catch(e){say('Could not save this draft in browser storage.');return;}
+      bar.querySelector('[data-ir-action="edit"]').hidden=false;button.hidden=true;bar.querySelector('[data-ir-action="cancel"]').hidden=true;
+      const submit=bar.querySelector('[data-ir-action="submit"]');submit.disabled=false;submit.textContent='Send to compliance';
+      if(status){status.textContent='Draft saved';status.classList.remove('good');status.classList.add('ghost');}say('Draft saved on this device.');
+    }else if(action==='cancel'){
+      if(target.dataset.irBackup!==undefined)target.innerHTML=target.dataset.irBackup;
+      target.contentEditable='false';target.classList.remove('ir-editing');delete target.dataset.irBackup;
+      bar.querySelector('[data-ir-action="edit"]').hidden=false;bar.querySelector('[data-ir-action="save"]').hidden=true;button.hidden=true;
+      const stillQueued=(()=>{try{return localStorage.getItem(`ir-compliance:${activeFund}:${report}`)==='queued';}catch(e){return false;}})();
+      const submit=bar.querySelector('[data-ir-action="submit"]');submit.disabled=stillQueued;
+      if(status){status.textContent=stillQueued?'Queued for compliance':'Draft';status.classList.toggle('good',stillQueued);status.classList.toggle('ghost',!stillQueued);}
+      say('Edits canceled.');
+    }else if(action==='submit'){
+      if(target.isContentEditable){say('Save or cancel your edits before submitting.');return;}
+      say('');openIRConfirmation(button,report);
+    }else if(action==='export'){
+      const fundName=(funds.find(f=>f.id===activeFund)||funds[0]).name;
+      const reportName=report==='dashboard'?'Investor Letter':report==='template1'?'Monthly Factsheet':report==='template2'?'Portfolio Exposure':'Performance Attribution';
+      const blob=irMakeDocx(`${fundName} - ${reportName}\n\n${target.innerText.trim()}`),url=URL.createObjectURL(blob),link=document.createElement('a');
+      link.href=url;link.download=`${fundName.replace(/[^a-z0-9]+/gi,'-')}-${reportName.replace(/[^a-z0-9]+/gi,'-')}.docx`;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);say('DOCX downloaded.');
+    }
+  });
   try{
     const sf=localStorage.getItem('point-fund');
     if(sf && account().funds.includes(sf)){ selectFund(sf); _restored=true; }

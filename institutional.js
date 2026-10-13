@@ -120,6 +120,12 @@ const CARDS=[
    evidence:[['Earnings Agent','TSMC call tone +0.3 QoQ, AI mentions +22%']]}
 ];
 
+/* inbox state per card — read / status / owner (drives Alert center, Command center queue, nav badge) */
+const AL={};
+CARDS.forEach(c=>{AL[c.id]={read:!['AC-7731','AC-7728','AC-7725','AC-7704'].includes(c.id),status:'open',
+  owner:{'AC-7731':'You','AC-7719':'You','AC-7728':'Macro desk','AC-7725':'Flows desk','AC-7704':'Research','AC-7698':'Research'}[c.id]||'Unassigned'};});
+const isOpen=c=>AL[c.id].status==='open';
+
 /* ---------- GUIDELINES ---------- */
 const LIMITS=[
   ['Gross exposure','Risk Policy §2.1','186%','220%','250%','64%','4%','9%','14%','SAFE'],
@@ -161,6 +167,7 @@ function kcell(l,v,sub,subcls,valcls){return `<div class="kcell"><div class="kla
 const ICO={
   cmd:'<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 3a3 3 0 00-3 3v12a3 3 0 103-3H6a3 3 0 103 3V6a3 3 0 10-3 3h12a3 3 0 000-6z"/></svg>',
   book:'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 014 4v13a3 3 0 00-3-3H2zM22 4h-6a4 4 0 00-4 4v13a3 3 0 013-3h7z"/></svg>',
+  check:'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>',
   zap:'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>'
 };
 
@@ -239,9 +246,9 @@ function renderCommand(){
   const whatChanged=`<div class="card"><div class="card-h"><h3>What changed since yesterday?</h3><span class="sp"></span><span class="tag">Conductor · ranked</span></div><div class="card-b flush">${wcCats}</div></div>`;
 
   // action cards (critical+warning)
-  const q=CARDS.filter(c=>c.sev!=='opp');
+  const q=CARDS.filter(c=>c.sev!=='opp'&&isOpen(c));
   const nCrit=q.filter(c=>c.sev==='crit').length, nWarn=q.filter(c=>c.sev==='warn').length;
-  const actionCards=`<div class="card"><div class="card-h"><h3>Action queue</h3><span class="sp"></span><span class="pill crit">${nCrit} critical</span><span class="pill warn">${nWarn} warning</span></div><div class="card-b" style="padding:12px 12px 2px">${q.map(acardMarkup).join('')}</div></div>`;
+  const actionCards=`<div class="card"><div class="card-h"><h3>Action queue</h3><span class="sp"></span>${nCrit?`<span class="pill crit">${nCrit} critical</span>`:''}${nWarn?`<span class="pill warn">${nWarn} warning</span>`:''}</div><div class="card-b" style="padding:12px 12px 2px">${q.length?q.map(acardMarkup).join(''):'<div class="al-empty" style="padding:28px 10px 36px"><div class="al-empty-ic">✓</div><b>Queue clear</b><div class="mut">Every critical and warning item has been actioned.</div><button class="btn gh sm" data-goto="alerts">Review in Alert center</button></div>'}</div></div>`;
 
   // limit headroom (compact)
   const lhRows=LIMITS.slice(0,6).map(r=>{
@@ -309,11 +316,15 @@ function renderCommand(){
 
 function acardMarkup(c){
   const sevl={crit:'CRITICAL',warn:'WARNING',opp:'OPPORTUNITY',info:'INFO'};
-  return `<div class="acard ${c.sev}" data-card="${c.id}">
-    <div class="ac-h"><span class="pill ${c.sev==='opp'?'info':c.sev}">${sevl[c.sev]}</span><span class="tag">${c.agent} · ${c.ts} · #${c.id}</span></div>
+  const st=AL[c.id], done=st.status!=='open';
+  const foot=done
+    ? `<span class="pill ${st.status==='approved'?'ok':'neu'}">${st.status==='approved'?'✓ Approved':'Dismissed'}</span><button class="btn gh sm" data-act="undo" data-id="${c.id}">Undo</button>`
+    : `<button class="btn pri sm" data-act="approve" data-id="${c.id}">Approve</button><button class="btn gh sm" data-goto="scenarios">What-if</button><button class="btn gh sm" data-act="dismiss" data-id="${c.id}">Dismiss</button>`;
+  return `<div class="acard ${c.sev}${st.read?'':' unread'}${done?' done':''}" data-card="${c.id}" tabindex="0" role="button" aria-label="${sevl[c.sev]}: ${c.title}${st.read?'':' (unread)'}">
+    <div class="ac-h">${st.read?'':'<span class="ud" title="Unread"></span>'}<span class="pill ${c.sev==='opp'?'info':c.sev}">${sevl[c.sev]}</span><span class="tag">${c.agent} · ${c.ts} · #${c.id}</span><span class="sp"></span><span class="own${st.owner==='You'?' me':''}">${st.owner==='You'?'Assigned to you':st.owner}</span></div>
     <div class="ac-ttl">${c.title}</div>
     <div class="ac-m">${c.m.map(x=>`<div class="ac-mi"><div class="v num">${x[0]}</div><div class="l">${x[1]}</div></div>`).join('')}</div>
-    <div class="ac-foot"><button class="btn pri sm" data-approve>Approve</button><button class="btn gh sm" data-goto="scenarios">What-if</button><button class="btn gh sm">Dismiss</button><span class="meta">Conf ${c.conf} · ${c.fresh}</span></div>
+    <div class="ac-foot">${foot}<span class="meta">Conf ${c.conf} · ${c.fresh}</span></div>
   </div>`;
 }
 
@@ -482,16 +493,88 @@ function renderDecisions(){
   Q('#view-decisions').innerHTML=`<div class="pg-head"><div><div class="pg-title">Decision Journal</div><div class="pg-sub">Institutional memory · every Action Card becomes a decision record</div></div></div>
     <div class="kstrip"><div class="kcell"><div class="klab">Accepted hit rate</div><div class="kval num">67%</div><div class="ksub pos">+42 bps avg 5D</div></div>
       ${kcell('Dismissed','18 bps','missed alpha','neg')}${kcell('Risk Agent','82%','effectiveness')}${kcell('Technical','61%','effectiveness')}${kcell('Flows','74%','effectiveness')}${kcell('Macro','69%','effectiveness')}${kcell('Open','4','awaiting decision','warnc')}</div>
-    <div class="two"><div><div class="drw-sl" style="margin-bottom:10px">Open queue</div>${CARDS.filter(c=>c.sev!=='opp').map(acardMarkup).join('')}</div>
+    <div class="two"><div><div class="drw-sl" style="margin-bottom:10px">Open queue</div>${CARDS.filter(c=>c.sev!=='opp'&&isOpen(c)).map(acardMarkup).join('')||'<div class="al-empty"><div class="al-empty-ic">✓</div><b>Queue clear</b></div>'}</div>
       <div><div class="drw-sl" style="margin-bottom:10px">Decision history & outcomes</div>${djs}</div></div>`;
 }
 
 /* ---- ALERTS ---- */
+let alFilter='all', alSev='all', alQuery='';
+const alCollapsed={};
+const AL_GROUPS=[['crit','Critical','var(--crit)','crit'],['warn','Warnings','var(--warn)','warn'],['opp','Opportunities','var(--accent)','info']];
+function alMatches(c,f){
+  const st=AL[c.id];
+  if(f==='resolved')return st.status!=='open';
+  if(st.status!=='open')return false;
+  if(f==='unread')return !st.read;
+  if(f==='mine')return st.owner==='You';
+  return true;
+}
+function alCounts(){
+  const n=f=>CARDS.filter(c=>alMatches(c,f)).length;
+  return {all:n('all'),unread:n('unread'),mine:n('mine'),resolved:n('resolved'),
+    crit:CARDS.filter(c=>c.sev==='crit'&&isOpen(c)).length,warn:CARDS.filter(c=>c.sev==='warn'&&isOpen(c)).length,opp:CARDS.filter(c=>c.sev==='opp'&&isOpen(c)).length};
+}
 function renderAlerts(){
-  const groups=[['Critical','crit',CARDS.filter(c=>c.sev==='crit')],['Warnings','warn',CARDS.filter(c=>c.sev==='warn')],['Opportunities','info',CARDS.filter(c=>c.sev==='opp')]];
-  const html=groups.map(g=>g[2].length?`<div class="card"><div class="card-h"><h3>${g[0]}</h3><span class="sp"></span><span class="pill ${g[1]}">${g[2].length}</span></div><div class="card-b">${g[2].map(acardMarkup).join('')}</div></div>`:'').join('');
-  Q('#view-alerts').innerHTML=`<div class="pg-head"><div><div class="pg-title">Alert Center</div><div class="pg-sub">One unified inbox · duplicates grouped by the Conductor</div></div><div class="filters"><button class="fchip on">All</button><button class="fchip">Unread</button><button class="fchip">Assigned to me</button></div></div>
-    <div class="prov" style="margin-bottom:14px"><b>3 related semiconductor signals grouped</b> into one critical card — instead of three separate alerts, the Conductor de-duplicates and ranks by $ at risk.</div>${html}`;
+  const n=alCounts();
+  const stat=(k,l,col)=>`<button class="al-stat${alSev===k?' on':''}" data-al-sev="${k}" aria-pressed="${alSev===k}" title="${alSev===k?'Show all severities':'Show '+l.toLowerCase()+' only'}"><span class="n num">${n[k]}</span><span class="l"><i style="background:${col}"></i>${l}</span></button>`;
+  const seg=(k,l)=>`<button class="${alFilter===k?'on':''}" data-al-filter="${k}" aria-pressed="${alFilter===k}">${l}<span class="c num">${n[k]}</span></button>`;
+  Q('#view-alerts').innerHTML=`
+    <div class="pg-head"><div><div class="pg-eyebrow">${ICO.cmd}<span>Unified inbox</span></div><div class="pg-title">Alert center</div><div class="pg-sub">One unified inbox · duplicates grouped by the Conductor</div></div>
+      <div class="pg-acts"><button class="btn gh sm" data-goto="ask">${ICO.book}Ask the book</button><button class="btn gh sm" data-goto="scenarios">Scenario studio</button><button class="btn pri sm" data-al-readall ${n.unread?'':'disabled'}>${ICO.check}Mark all read</button></div></div>
+    <div class="al-hero">
+      <div class="al-hero-t"><div class="eb">Today · Oct 07, 2026</div><h2>Signal triage</h2><p>${n.crit+n.warn?`${n.crit+n.warn} item${n.crit+n.warn>1?'s':''} need a decision — prioritized by portfolio impact.`:'Nothing needs a decision right now.'}</p></div>
+      <div class="al-stats">${stat('crit','Critical','#f97066')}${stat('warn','Warnings','#fdb022')}${stat('opp','Opportunities','#84a9ff')}
+        <div class="al-stat static"><span class="n num">09:41</span><span class="l"><i style="background:#32d583"></i>Last sync</span></div></div>
+    </div>
+    <div class="card al-bar">
+      <div class="al-note"><b>Conductor grouping is on.</b> 3 related semiconductor signals merged into <a data-card="AC-7731">#AC-7731</a> · ranked by $ at risk.</div>
+      <label class="al-search"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="al-q" placeholder="Search alerts, tickers, IDs…" value="${alQuery.replace(/"/g,'&quot;')}" aria-label="Search alerts"/></label>
+      <div class="seg" role="group" aria-label="Filter alerts">${seg('all','All')}${seg('unread','Unread')}${seg('mine','Assigned to me')}${seg('resolved','Resolved')}</div>
+    </div>
+    <div id="al-list"></div>`;
+  renderAlertList();
+}
+function renderAlertList(){
+  const q=alQuery.trim().toLowerCase();
+  const match=c=>alMatches(c,alFilter)&&(alSev==='all'||c.sev===alSev)&&(!q||[c.title,c.agent,c.id,c.rec,...c.drivers].join(' ').toLowerCase().includes(q));
+  const html=AL_GROUPS.map(([k,label,col,pc])=>{
+    const items=CARDS.filter(c=>c.sev===k&&match(c)); if(!items.length)return '';
+    const shut=!!alCollapsed[k];
+    return `<section class="card al-sec${shut?' shut':''}">
+      <button class="al-sec-h" data-al-toggle="${k}" aria-expanded="${!shut}"><span class="al-dot" style="background:${col}"></span><h3>${label}</h3><span class="pill ${pc}">${items.length}</span><span class="sp"></span><span class="al-hint">${shut?'Show':'Hide'}</span><svg class="al-chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+      ${shut?'':`<div class="al-grid">${items.map(acardMarkup).join('')}</div>`}</section>`;}).join('');
+  const filtered=alFilter!=='all'||alSev!=='all'||q;
+  const empty=alFilter==='resolved'&&alSev==='all'&&!q
+    ? `<div class="card al-empty"><div class="al-empty-ic">↺</div><b>Nothing resolved yet</b><div class="mut">Approved and dismissed alerts land here, with an option to reopen.</div><button class="btn gh sm" data-al-filter="all">Back to open alerts</button></div>`
+    : alFilter==='all'&&alSev==='all'&&!q
+    ? `<div class="card al-empty"><div class="al-empty-ic">✓</div><b>Inbox zero</b><div class="mut">Every alert has been approved or dismissed. Resolved items stay under <a data-al-filter="resolved">Resolved</a>.</div></div>`
+    : `<div class="card al-empty"><div class="al-empty-ic">∅</div><b>No alerts match</b><div class="mut">Try a different filter or search term.</div><button class="btn gh sm" data-al-clear>Clear filters</button></div>`;
+  Q('#al-list').innerHTML=(filtered&&html?`<div class="al-active">Showing <b>${[alSev!=='all'?AL_GROUPS.find(g=>g[0]===alSev)[1].toLowerCase():'',{all:'open',unread:'unread',mine:'assigned to you',resolved:'resolved'}[alFilter]].filter(Boolean).join(' · ')}</b>${q?` matching “${q.replace(/</g,'&lt;')}”`:''}<button class="lnk" data-al-clear>Clear</button></div>`:'')+(html||empty);
+}
+function syncAlertBadges(){
+  const u=alCounts().unread, b=Q('#nav a[data-v="alerts"] .cnt');
+  if(b){b.textContent=u;b.style.display=u?'':'none';}
+  const d=Q('.icon-btn[data-goto="alerts"] .dot'); if(d)d.style.display=u?'':'none';
+}
+function refreshAlerts(){renderAlerts();renderCommand();renderDecisions();syncAlertBadges();}
+let toastT;
+function toast(msg,undo){
+  let t=Q('#toast'); if(!t){t=document.createElement('div');t.id='toast';t.className='toast';t.setAttribute('role','status');document.body.appendChild(t);}
+  t.innerHTML=`<span>${msg}</span>${undo?'<button>Undo</button>':''}`;
+  if(undo)t.querySelector('button').onclick=()=>{undo();t.classList.remove('on');};
+  t.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('on'),5000);
+}
+function alertAct(id,act){
+  const s=AL[id]; if(!s)return;
+  const prev={...s};
+  if(act==='undo'){s.status='open';toast(`#${id} restored to inbox`);}
+  else{s.status=act==='approve'?'approved':'dismissed'; s.read=true;
+    toast(act==='approve'?`Approved #${id} · decision logged to Journal`:`Dismissed #${id}`,()=>{Object.assign(s,prev);refreshAlerts();});}
+  closeDrw(); refreshAlerts();
+}
+function markAllRead(){
+  const prev={}; CARDS.forEach(c=>{prev[c.id]=AL[c.id].read; AL[c.id].read=true;});
+  refreshAlerts(); toast('All alerts marked as read',()=>{CARDS.forEach(c=>AL[c.id].read=prev[c.id]);refreshAlerts();});
 }
 
 /* ---- ASK ---- */
@@ -525,10 +608,13 @@ function openDrw(html){drwInner.innerHTML=html;ov.classList.add('on');drw.classL
 }
 function closeDrw(){ov.classList.remove('on');drw.classList.remove('on');document.body.style.overflow='';}
 ov.onclick=closeDrw;
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrw();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrw();
+  if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('.acard[data-card]')){e.preventDefault();openCard(e.target.dataset.card);}});
+document.addEventListener('input',e=>{if(e.target.id==='al-q'){alQuery=e.target.value;renderAlertList();}});
 
 function openCard(id){
   const c=CARDS.find(x=>x.id===id); if(!c)return;
+  const st=AL[c.id]; if(!st.read){st.read=true;refreshAlerts();}
   const sevl={crit:'CRITICAL',warn:'WARNING',opp:'OPPORTUNITY'};
   openDrw(`<div class="drw-h"><div class="drw-top"><span class="pill ${c.sev==='opp'?'info':c.sev}">${sevl[c.sev]}</span><span class="tag">${c.agent} · ${c.ts} · #${c.id}</span><button class="drw-x" id="drw-x">✕</button></div><div class="drw-ttl">${c.title}</div></div>
     <div class="drw-b">
@@ -537,7 +623,9 @@ function openCard(id){
       <div class="drw-sec"><div class="drw-sl">Recommended action</div><div class="prov" style="color:var(--ink-2)">${c.rec}</div></div>
       <div class="drw-sec"><div class="drw-sl">Evidence & provenance</div>${c.evidence.map(e=>`<div class="evi"><span class="src">${e[0]}</span><span>${e[1]}</span></div>`).join('')}</div>
       <div class="drw-sec"><div class="prov">Confidence <b>${c.conf}</b> · freshness <b>${c.fresh}</b>. Quantitative values from the Quant Engine; the agent ranks, explains and recommends. Approving creates a decision record in the Journal.</div></div>
-      <div style="display:flex;gap:8px"><button class="btn pri" data-approve>Approve</button><button class="btn gh" data-goto="scenarios">Modify in what-if</button><button class="btn gh">Dismiss</button></div>
+      <div style="display:flex;gap:8px;align-items:center">${st.status==='open'
+        ?`<button class="btn pri" data-act="approve" data-id="${c.id}">Approve</button><button class="btn gh" data-goto="scenarios">Modify in what-if</button><button class="btn gh" data-act="dismiss" data-id="${c.id}">Dismiss</button>`
+        :`<span class="pill ${st.status==='approved'?'ok':'neu'}">${st.status==='approved'?'✓ Approved':'Dismissed'}</span><button class="btn gh" data-act="undo" data-id="${c.id}">Reopen</button>`}<span class="mut" style="margin-left:auto;font-size:11px">Owner · ${st.owner}</span></div>
     </div>`);
 }
 
@@ -607,7 +695,7 @@ function go(v){
 /* ======================= WIRE ======================= */
 renderFundMenu();
 try{const sf=localStorage.getItem('point-inst-fund'); if(sf&&FUNDS[sf])FUND=sf; const f=FUNDS[FUND]; Q('#fs-ic').textContent=f.ic;Q('#fs-ic').style.background=f.col;Q('#fs-name').textContent=f.name;Q('#fs-sub').textContent=f.sub;}catch(e){}
-renderAll();
+renderAll(); syncAlertBadges();
 
 Q('#fundsel-btn').onclick=e=>{e.stopPropagation();Q('#fundsel').classList.toggle('open');};
 document.addEventListener('click',()=>Q('#fundsel').classList.remove('open'));
@@ -617,7 +705,13 @@ QA('#nav a').forEach(a=>a.onclick=()=>go(a.dataset.v));
 
 /* delegated clicks */
 document.addEventListener('click',e=>{
-  const nav=e.target.closest('[data-goto]'); if(nav){go(nav.dataset.goto);return;}
+  const act=e.target.closest('[data-act]'); if(act){alertAct(act.dataset.id,act.dataset.act);return;}
+  const nav=e.target.closest('[data-goto]'); if(nav){closeDrw();go(nav.dataset.goto);return;}
+  const af=e.target.closest('[data-al-filter]'); if(af){alFilter=af.dataset.alFilter;renderAlerts();return;}
+  const as=e.target.closest('[data-al-sev]'); if(as){alSev=alSev===as.dataset.alSev?'all':as.dataset.alSev;renderAlerts();return;}
+  const at=e.target.closest('[data-al-toggle]'); if(at){const k=at.dataset.alToggle;alCollapsed[k]=!alCollapsed[k];renderAlertList();return;}
+  if(e.target.closest('[data-al-clear]')){alFilter='all';alSev='all';alQuery='';renderAlerts();return;}
+  if(e.target.closest('[data-al-readall]')){markAllRead();return;}
   const card=e.target.closest('[data-card]'); if(card&&!e.target.closest('[data-approve]')&&!e.target.closest('[data-goto]')){openCard(card.dataset.card);return;}
   const pos=e.target.closest('[data-pos]'); if(pos){openPos(pos.dataset.pos);return;}
   const pf=e.target.closest('[data-pf]'); if(pf){posFilter=pf.dataset.pf;renderPortfolio();return;}

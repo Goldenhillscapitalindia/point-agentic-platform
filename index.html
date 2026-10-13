@@ -682,14 +682,24 @@
         <div><div class="eyebrow">Portfolio squad · Agent</div><h1 class="h2">📝  IR & Reporting Agent</h1></div>
         <div class="chip gold">2 drafts · SEC Mkt Rule pre-check</div>
       </div>
+      <nav class="ir-tabs" aria-label="IR reporting views" role="tablist">
+        <button class="ir-tab active" id="ir-tab-dashboard" type="button" role="tab" aria-selected="true" aria-controls="ir-dashboard" data-ir-tab="dashboard">Dashboard</button>
+        <button class="ir-tab" id="ir-tab-template1" type="button" role="tab" aria-selected="false" aria-controls="ir-template1" data-ir-tab="template1">Template 1 <span>Monthly factsheet</span></button>
+        <button class="ir-tab" id="ir-tab-template2" type="button" role="tab" aria-selected="false" aria-controls="ir-template2" data-ir-tab="template2">Template 2 <span>Portfolio &amp; exposure</span></button>
+        <button class="ir-tab" id="ir-tab-template3" type="button" role="tab" aria-selected="false" aria-controls="ir-template3" data-ir-tab="template3">Template 3 <span>Performance &amp; attribution</span></button>
+      </nav>
+      <div class="ir-tab-panel active" id="ir-dashboard" role="tabpanel" aria-labelledby="ir-tab-dashboard">
       <div class="grid-2">
         <div class="card">
           <div class="card-head"><h3 class="card-title">LP Letter · October 2026 · draft</h3><span class="chip ghost">v3 · 92% ready</span></div>
           <div class="doc" id="ir-letter"><!-- rendered by JS --></div>
-          <div class="card-foot">
-            <button class="btn primary">Send to compliance</button>
-            <button class="btn ghost">Edit</button>
-            <button class="btn dark">Export .docx</button>
+          <div class="card-foot" data-ir-report="dashboard">
+            <button class="btn primary" data-ir-action="submit">Send to compliance</button>
+            <button class="btn ghost" data-ir-action="edit">Edit</button>
+            <button class="btn ghost" data-ir-action="save" hidden>Save</button>
+            <button class="btn ghost" data-ir-action="cancel" hidden>Cancel</button>
+            <button class="btn dark" data-ir-action="export">Export .docx</button>
+            <span class="ir-action-message" data-ir-message role="status" aria-live="polite"></span>
           </div>
         </div>
 
@@ -714,6 +724,39 @@
           <div class="tile"><div class="t-h">Prospect DDQ · Castle Peak</div><div class="t-sub">On-demand · 68 Q</div><div class="t-foot"><span class="pill good">approved</span></div></div>
         </div>
       </div>
+
+      </div>
+      <section class="ir-tab-panel" id="ir-template1" role="tabpanel" aria-labelledby="ir-tab-template1" hidden>
+        <article class="tear">
+          <div class="tear-title-row"><div><div class="tear-kicker">MONTHLY FACTSHEET &middot; SEPTEMBER 2026</div><h2>Alpha Fund</h2><p>Global long/short equity &middot; USD &middot; Net of fees</p></div><div class="tear-period">AS OF<br><b>30 SEP 2026</b></div></div>
+          <div class="tear-kpis"><div><span>MONTHLY RETURN</span><b class="up">+1.82%</b></div><div><span>YTD RETURN</span><b class="up">+16.3%</b></div><div><span>NET EXPOSURE</span><b>42%</b></div><div><span>FUND AUM</span><b>$248M</b></div></div>
+          <div class="tear-columns"><div class="tear-block"><h3>Monthly net returns</h3><div class="tear-table-wrap"><table class="tear-table"><thead><tr><th>Year</th><th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th><th>Jul</th><th>Aug</th><th>Sep</th><th>YTD</th></tr></thead><tbody>
+            <tr><th>2026</th><td>1.2%</td><td>0.8%</td><td>2.1%</td><td>-0.6%</td><td>1.4%</td><td>2.8%</td><td>1.1%</td><td>1.6%</td><td class="up">1.82%</td><td class="up">16.3%</td></tr>
+            <tr><th>2025</th><td>0.9%</td><td>1.6%</td><td>-0.4%</td><td>1.2%</td><td>0.7%</td><td>1.9%</td><td>1.3%</td><td>-0.2%</td><td>1.1%</td><td>12.6%</td></tr>
+            <tr><th>2024</th><td>0.5%</td><td>1.1%</td><td>1.8%</td><td>-0.3%</td><td>0.9%</td><td>1.4%</td><td>0.7%</td><td>1.2%</td><td>-0.5%</td><td>10.8%</td></tr>
+          </tbody></table></div></div>
+          <aside class="tear-block tear-side"><h3>Fund snapshot</h3><dl><div><dt>Strategy</dt><dd>Long/short equity</dd></div><div><dt>Inception</dt><dd>January 2021</dd></div><div><dt>Gross exposure</dt><dd>118%</dd></div><div><dt>Annualized volatility</dt><dd>11.6%</dd></div><div><dt>Largest drawdown</dt><dd>-8.2%</dd></div><div><dt>Reference index</dt><dd>S&amp;P 500 TR</dd></div></dl></aside></div>
+        </article>
+      </section>
+      <section class="ir-tab-panel" id="ir-template2" role="tabpanel" aria-labelledby="ir-tab-template2" hidden>
+        <article class="tear">
+          <div class="tear-title-row"><div><div class="tear-kicker">PORTFOLIO &amp; EXPOSURE &middot; Q3 2026</div><h2>Alpha Fund</h2><p>Positioning at 30 September 2026 &middot; USD</p></div><div class="tear-period">PORTFOLIO<br><b>LONG / SHORT</b></div></div>
+          <div class="tear-kpis three"><div><span>LONG EXPOSURE</span><b>81%</b></div><div><span>SHORT EXPOSURE</span><b>-39%</b></div><div><span>NET / GROSS</span><b>42% / 120%</b></div></div>
+          <div class="tear-columns"><div class="tear-block"><h3>Exposure by sector</h3><div class="exposure-list">
+            <div class="exposure-row"><span>Information technology</span><div class="exposure-track"><i style="width:78%"></i></div><b>31%</b></div><div class="exposure-row"><span>Communication services</span><div class="exposure-track"><i style="width:52%"></i></div><b>21%</b></div><div class="exposure-row"><span>Consumer discretionary</span><div class="exposure-track"><i style="width:40%"></i></div><b>16%</b></div><div class="exposure-row"><span>Healthcare</span><div class="exposure-track"><i style="width:30%"></i></div><b>12%</b></div><div class="exposure-row"><span>Cash &amp; other</span><div class="exposure-track"><i style="width:25%"></i></div><b>10%</b></div>
+          </div></div><aside class="tear-block tear-side"><h3>Exposure by market cap</h3><div class="cap-stack"><i style="width:56%"></i><i style="width:31%"></i><i style="width:13%"></i></div><div class="cap-legend"><div><i></i><span>Large cap</span><b>56%</b></div><div><i></i><span>Mid cap</span><b>31%</b></div><div><i></i><span>Small cap</span><b>13%</b></div></div><div class="tear-callout"><span>TOP 10 POSITIONS</span><b>38% of long book</b><small>Largest single position: 6.4% of NAV</small></div></aside></div>
+          <div class="tear-block"><h3>Largest positions</h3><div class="tear-table-wrap"><table class="tear-table"><thead><tr><th>Position</th><th>Side</th><th>Weight</th><th>Contribution &middot; Q3</th><th>Portfolio role</th></tr></thead><tbody><tr><th>NVIDIA</th><td>Long</td><td>6.4%</td><td class="up">+0.42%</td><td>AI infrastructure</td></tr><tr><th>Microsoft</th><td>Long</td><td>5.8%</td><td class="dn">-0.11%</td><td>Cloud platform</td></tr><tr><th>Meta Platforms</th><td>Long</td><td>5.1%</td><td class="up">+0.28%</td><td>Digital advertising</td></tr><tr><th>PepsiCo</th><td>Short</td><td>-3.2%</td><td class="up">+0.07%</td><td>Consumer hedge</td></tr></tbody></table></div></div>
+        </article>
+      </section>
+      <section class="ir-tab-panel" id="ir-template3" role="tabpanel" aria-labelledby="ir-tab-template3" hidden>
+        <article class="tear">
+          <div class="tear-title-row"><div><div class="tear-kicker">PERFORMANCE &amp; ATTRIBUTION &middot; Q3 2026</div><h2>Alpha Fund</h2><p>Net performance compared with the S&amp;P 500 TR Index</p></div><div class="tear-period">QUARTER ENDED<br><b>30 SEP 2026</b></div></div>
+          <div class="tear-kpis three"><div><span>FUND &middot; QTD</span><b class="up">+5.14%</b></div><div><span>FUND &middot; YTD</span><b class="up">+16.3%</b></div><div><span>S&amp;P 500 &middot; QTD</span><b>+3.72%</b></div></div>
+          <div class="tear-columns"><div class="tear-block"><h3>Quarterly return comparison</h3><div class="return-bars"><div><span>Alpha Fund</span><div><i style="width:82%"></i></div><b>+5.14%</b></div><div><span>S&amp;P 500 TR</span><div><i class="benchmark" style="width:59%"></i></div><b>+3.72%</b></div><div><span>Long book</span><div><i style="width:72%"></i></div><b>+4.51%</b></div><div><span>Short book</span><div><i class="short" style="width:22%"></i></div><b>+0.63%</b></div></div><div class="tear-callout"><span>RELATIVE RETURN</span><b class="up">+1.42%</b><small>Fund net return less benchmark return for Q3</small></div></div>
+          <aside class="tear-block tear-side"><h3>Return attribution &middot; Q3</h3><div class="attribution-list"><div><span>Long stock selection</span><b class="up">+3.84%</b></div><div><span>Short stock selection</span><b class="up">+0.63%</b></div><div><span>Sector allocation</span><b class="up">+0.91%</b></div><div><span>Cash &amp; expenses</span><b class="dn">-0.24%</b></div><div class="total"><span>Net fund return</span><b>+5.14%</b></div></div></aside></div>
+          <div class="tear-block"><h3>Risk &amp; return profile</h3><div class="tear-kpis four risk-kpis"><div><span>ANNUALIZED RETURN &middot; ITD</span><b>14.2%</b></div><div><span>ANNUALIZED VOLATILITY</span><b>11.6%</b></div><div><span>SHARPE RATIO</span><b>1.18</b></div><div><span>MAX DRAWDOWN</span><b>-8.2%</b></div></div></div>
+        </article>
+      </section>
     </section>
 
     <!-- ======== VIEW: POSITION INTEL ======== -->
@@ -1246,6 +1289,17 @@
 </div>
 
 <!-- =============== CARD DETAIL DRAWER =============== -->
+<div class="ir-confirm-overlay" id="ir-confirm-overlay" hidden>
+  <section class="ir-confirm-card" id="ir-confirm-card" role="dialog" aria-modal="true" aria-labelledby="ir-confirm-title" tabindex="-1">
+    <button class="ir-confirm-close" type="button" aria-label="Close confirmation" data-ir-close>&times;</button>
+    <div class="ir-confirm-message">
+      <span class="ir-confirm-check" aria-hidden="true">&#10003;</span>
+      <div><h2 id="ir-confirm-title">Request received.</h2><p data-ir-confirm-copy>Your report is marked for compliance review.</p></div>
+    </div>
+    <p class="ir-confirm-note">Demo mode: no compliance service is connected, so this confirmation is temporary and nothing is sent.</p>
+    <button class="btn primary ir-confirm-return" type="button" data-ir-close>Return to report</button>
+  </section>
+</div>
 <div class="drawer-overlay" id="drawer-overlay"></div>
 <aside class="drawer" id="drawer" aria-hidden="true">
   <div class="drawer-inner" id="drawer-inner"><!-- populated by JS --></div>
