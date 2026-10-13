@@ -6,24 +6,35 @@ const fmt=n=>n.toLocaleString('en-US');
 const sgn=(v,suf='')=>(v>=0?'+':'')+v+suf;
 const cls=v=>v>0?'pos':v<0?'neg':'mut';
 
+function setTheme(theme){
+  const next=theme==='dark'?'dark':'light';
+  document.body.dataset.theme=next;
+  try{localStorage.setItem('point-inst-theme',next);}catch(e){}
+  const control=Q('#theme-btn');
+  if(control){
+    const label=next==='light'?'Switch to dark theme':'Switch to light theme';
+    control.title=label; control.setAttribute('aria-label',label);
+  }
+}
+
 /* ---------- FUNDS ---------- */
 const FUNDS={
-  apex:{ic:'AX',col:'#3157d5',name:'Apex Long/Short Equity',sub:'Equity L/S · $1.26B AUM',aum:'$1.26B',
-    nav:'$1.26B',day:'+$8.42M',dayp:'+0.67%',dayPos:true,gross:'186%',net:'42%',var:'7.4%',cash:'8.3%',
+  alpha:{ic:'AL',col:'#e8603b',name:'Alpha Fund',sub:'Equity L/S · flagship',aum:'$1.248 B',
+    nav:'$1.248B',day:'+$4.24M',dayp:'+0.34%',dayPos:true,gross:'184%',net:'62%',var:'1.15%',cash:'8.3%',
     health:74,yhealth:81,type:'ls'},
-  helios:{ic:'HE',col:'#8a4fd8',name:'Helios Global Macro',sub:'Global Macro · $840M AUM',aum:'$840M',
-    nav:'$840M',day:'−$1.9M',dayp:'−0.23%',dayPos:false,gross:'142%',net:'18%',var:'6.1%',cash:'22%',
+  global:{ic:'GM',col:'#d4a42b',name:'Global Macro Fund',sub:'Macro · multi-asset',aum:'$842.0 M',
+    nav:'$842.0M',day:'−$1.01M',dayp:'−0.12%',dayPos:false,gross:'142%',net:'38%',var:'1.16%',cash:'22%',
     health:69,yhealth:66,type:'macro'},
-  vertex:{ic:'VX',col:'#16855b',name:'Vertex Market Neutral',sub:'Market Neutral · $1.56B AUM',aum:'$1.56B',
-    nav:'$1.56B',day:'+$1.4M',dayp:'+0.09%',dayPos:true,gross:'210%',net:'4%',var:'3.9%',cash:'11%',
+  neutral:{ic:'MN',col:'#58b06a',name:'Market Neutral Fund',sub:'Equity MN · low beta',aum:'$1.560 B',
+    nav:'$1.560B',day:'+$1.40M',dayp:'+0.09%',dayPos:true,gross:'210%',net:'4%',var:'0.39%',cash:'11%',
     health:82,yhealth:80,type:'neutral'},
-  nova:{ic:'NV',col:'#d97706',name:'Nova Digital Assets',sub:'Crypto + Tokenized · $318M AUM',aum:'$318M',
-    nav:'$318M',day:'−$6.8M',dayp:'−2.10%',dayPos:false,gross:'96%',net:'71%',var:'11.2%',cash:'14%',
+  digital:{ic:'DA',col:'#6c7bf0',name:'Digital Assets Fund',sub:'Crypto + tokenized',aum:'$318.4 M',
+    nav:'$318.4M',day:'−$6.80M',dayp:'−2.10%',dayPos:false,gross:'96%',net:'71%',var:'3.52%',cash:'4%',
     health:58,yhealth:67,type:'digital'}
 };
-let FUND='apex';
+let FUND='alpha';
 
-/* ---------- POSITIONS (Apex) ---------- */
+/* ---------- POSITIONS (Alpha) ---------- */
 /* tk, company, side, qty, mv($M), nav%, day$M, mtd$M, ytd$M, varc%, rbud%, rused%, sector, factor, crowd, liqDays, catalyst, health, beta, ret% */
 const APEX=[
 ['NVDA','NVIDIA Corp','L',120000,108.4,8.6,2.8,6.1,18.4,11.2,14,80,'Technology','Growth','High',2.1,'Earnings 12d','WATCH',1.82,13.2],
@@ -53,12 +64,12 @@ const APEX=[
 ['NOW','ServiceNow','L',18000,16.2,1.3,0.3,1.0,2.4,3.1,4,64,'Technology','Growth','Mid',1.29,'—','GOOD',1.29,4.9],
 ['SNOW','Snowflake','L',94000,14.6,1.2,0.5,1.4,2.8,3.4,4,72,'Technology','Growth','Mid',1.4,'Investor Day 18d','GOOD',1.4,5.1]
 ];
-const DATA={apex:APEX};
+const DATA={alpha:APEX};
 function positions(){return DATA[FUND]||APEX;}
 
 /* health components */
 const HEALTH={
-  apex:[['Risk',72,-3,'VaR rose to 7.4% on semiconductor beta drift.',68],
+  alpha:[['Risk',72,-3,'VaR rose to 7.4% on semiconductor beta drift.',68],
     ['Liquidity',91,0,'88% of book liquidates in under 3 days.',40],
     ['Concentration',58,-9,'Semiconductor exposure increased after NVDA rally.',82],
     ['Crowding',64,-4,'Three top holdings sit in top-decile HF ownership.',70],
@@ -66,11 +77,11 @@ const HEALTH={
     ['Catalyst risk',69,-5,'Four holdings report earnings within 14 days.',62],
     ['Guideline headroom',84,-1,'Beta-adjusted net nearing IMA soft limit.',22]]
 };
-function health(){return HEALTH[FUND]||HEALTH.apex;}
+function health(){return HEALTH[FUND]||HEALTH.alpha;}
 
 /* ---------- WHAT CHANGED ---------- */
 const CHANGED={
-  apex:{
+  alpha:{
     RISK:[['VaR','7.1% → 7.4%',1],['Semiconductor exposure','21.4% → 24.8%',1],['Net exposure','38% → 42%',1]],
     MARKET:[['NVDA','+4.2%',1],['WTI Crude','−3.1%',-1],['10Y Yield','+11 bps',1]],
     FLOWS:[['2 names · institutional accumulation','META, AVGO',1],['1 name · rising short interest','AMD',-1]],
@@ -78,7 +89,7 @@ const CHANGED={
     LIMITS:[['2 guidelines moved SAFE → WARNING','Beta-net, Tech exposure',-1]]
   }
 };
-function changed(){return CHANGED[FUND]||CHANGED.apex;}
+function changed(){return CHANGED[FUND]||CHANGED.alpha;}
 
 /* ---------- ACTION CARDS ---------- */
 const CARDS=[
@@ -176,7 +187,7 @@ function renderCommand(){
   const hd=f.health-f.yhealth, hlev=f.health>=75?'pos':f.health>=60?'warnc':'neg';
   const strip=`<div class="kstrip">
     ${kcell('NAV',f.nav,'as-of 09:42 ET')}
-    ${kcell('Daily PnL',f.day,f.dayp,f.dayPos?'pos':'neg',f.dayPos?'pos':'neg')}
+    ${kcell('Daily P&L',f.day,f.dayp,f.dayPos?'pos':'neg',f.dayPos?'pos':'neg')}
     ${kcell('Gross',f.gross,'exposure')}
     ${kcell('Net',f.net,'beta-adj 56%')}
     ${kcell('1D VaR',f.var,'of NAV')}
@@ -272,33 +283,72 @@ function renderCommand(){
   const mvMax=Math.max(...mv.map(m=>Math.abs(m.v)));
   const mvHtml=mv.map(m=>{const w=Math.abs(m.v)/mvMax*86, pos=m.v>=0;
     return `<div class="mvr" data-pos="${m.tk}"><span class="tk">${m.tk}</span><div class="mvr-track"><span class="mvr-b" style="${pos?'left:0':'right:0'};width:${w}%;background:${pos?'var(--pos)':'var(--crit)'}"></span></div><span class="pnl ${cls(m.v)}">${sgn(m.v)}M</span></div>`;}).join('');
-  const movers=`<div class="card"><div class="card-h"><h3>Portfolio movers · today</h3><span class="sp"></span><span class="tag">$ PnL</span></div><div class="card-b" style="padding:12px 13px">${mvHtml}</div></div>`;
+  const movers=`<div class="card"><div class="card-h"><h3>Portfolio movers · today</h3><span class="sp"></span><span class="tag">$ P&L</span></div><div class="card-b" style="padding:12px 13px">${mvHtml}</div></div>`;
 
-  // Briefs follow the selected mandate; detailed positions currently cover Apex only.
+  // Briefs follow the selected mandate; detailed positions currently cover Alpha only.
   const deskBriefs={
-    apex:[
-      ['The view for the desk','Review semiconductor concentration before adding risk. The scenario projects exposure above the internal cap, so compare a measured reduction with protection and verify the resulting headroom.'],
-      ['Why it matters','The sample book shows semiconductor exposure at <b>24.8% against a 27% cap</b>. CPI could compound that concentration risk. The projected breach is a scenario to discuss, not a confirmed market outcome.'],
-      ['Conviction to revisit','Ask the AMD analyst whether the margin and pricing evidence changes the investment case. Review UNH and CRM on their own evidence rather than treating every thesis alert as a sell instruction.'],
-      ['For the desk','Agree the downside the fund is willing to carry through CPI. Review a META addition only after checking portfolio fit and resolving the concentration concern.']
+  "alpha": [
+    [
+      "Our recommendation",
+      "Trim NVDA by the $8.4M proposed in the action card and reduce AMD. This lowers semiconductor concentration while retaining the core holdings."
     ],
-    helios:[
-      ['The view for the desk','Start with the macro positions that depend most on the next policy or inflation release. Ask the desk to compare retaining that conviction with reducing event exposure.'],
-      ['Evidence to request','The selected fund has headline figures, but the detailed position dataset in this demo covers Apex. Obtain a Helios position and sensitivity breakdown before proposing a specific hedge.'],
-      ['For the desk','Agree which rate or currency move would challenge the thesis, then compare the available responses using fund-specific scenarios.']
+    [
+      "Why now",
+      "Semiconductor exposure is <b>24.8% against a 27% cap</b>, with a projected rise to 28.3%. AMD is using <b>98% of its risk budget for a −4% return</b>, with weaker margin and pricing evidence."
     ],
-    vertex:[
-      ['The view for the desk','Focus the discussion on pair economics, financing, and balance between the legs. Low net exposure alone is not enough to conclude that the risks offset.'],
-      ['Evidence to request','The selected fund has headline figures, but the detailed position dataset in this demo covers Apex. Request the Vertex pair and borrow breakdown before recommending a resize.'],
-      ['For the desk','Ask each pair owner what should close the spread and what it costs to wait. Review both legs together before changing the allocation.']
+    [
+      "Other holdings",
+      "Reduce UNH, which is also flagged for a trim with high risk usage and a negative return. Hold CRM without adding through its nearby catalyst."
     ],
-    nova:[
-      ['The view for the desk','Review the ability to reduce exposure during a fast crypto move before considering new positions. Discuss liquidity and custody alongside the expected return.'],
-      ['Evidence to request','The selected fund has headline figures, but the detailed position dataset in this demo covers Apex. Obtain Nova holdings, venue balances, and sensitivities before selecting protection.'],
-      ['For the desk','Agree the acceptable downside and the response to an exchange disruption. Size any proposed hedge against the verified Nova exposures.']
+    [
+      "Suggested next step",
+      "Check the combined concentration after the reductions. Defer a META addition until headroom is restored, then use its existing opportunity case and portfolio-fit assessment to size it."
     ]
-  };
-  const brief=`<div class="card"><div class="card-h"><h3>Point Morning Brief</h3><span class="sp"></span><span class="tag">Demo data · for discussion</span><button class="btn gh sm">Export</button></div><div class="card-b">
+  ],
+  "global": [
+    [
+      "Our recommendation",
+      "Pause new directional additions and retain the liquidity buffer until fund-specific exposures are available."
+    ],
+    [
+      "Why now",
+      "Global Macro shows <b>1.16% VaR and 22% cash</b>, but this terminal has no detailed Global Macro holdings or sensitivities. The available evidence supports holding off on new risk, rather than naming an unsupported position to sell."
+    ],
+    [
+      "Suggested next step",
+      "Keep new risk orders on hold pending the Global Macro position and DV01 breakdown. Use that breakdown to size any rate or currency reduction; the Alpha trade proposals do not apply to this fund."
+    ]
+  ],
+  "neutral": [
+    [
+      "Our recommendation",
+      "Maintain the neutral allocation and keep new positions matched across both legs."
+    ],
+    [
+      "Why now",
+      "Market Neutral shows <b>4% net and 210% gross exposure</b>. Low net exposure supports retaining the neutral stance, while the substantial gross book warrants care with additional pair size."
+    ],
+    [
+      "Suggested next step",
+      "Hold off on increasing gross exposure until the Market Neutral pair and borrow breakdown is available. Preserve beta balance in any adjustment; there is no fund-specific evidence here for a named pair trade."
+    ]
+  ],
+  "digital": [
+    [
+      "Our recommendation",
+      "Pause fresh risk additions and preserve the cash buffer while the portfolio is under pressure."
+    ],
+    [
+      "Why now",
+      "Digital Assets shows a <b>−2.10% day, 3.52% VaR and 4% cash</b>. Those headline figures favor maintaining liquidity, but the detailed holdings needed to select a sale or hedge are missing."
+    ],
+    [
+      "Suggested next step",
+      "Keep new buys on hold and obtain the Digital Assets holdings and venue balances before sizing reductions. Protect the existing cash buffer; do not reuse Alpha holdings to construct a Digital Assets hedge."
+    ]
+  ]
+};
+  const brief=`<div class="card"><div class="card-h"><h3>Point Morning Brief</h3><span class="sp"></span><span class="tag">Demo data · suggested actions</span><button class="btn gh sm" data-action="export-brief">Export</button></div><div class="card-b">
     <div class="brief">
       ${deskBriefs[FUND].map(([heading,copy])=>`<p style="margin:0 0 12px"><b>${heading}.</b> ${copy}</p>`).join('')}
     </div></div></div>`;
@@ -381,7 +431,7 @@ function renderRisk(){
     if(w[2]==='base'){h=w[1]/wmax*100;cum=w[1];} else {h=w[1]/wmax*100;bottom=cum/wmax*100;cum+=w[1];}
     const col=w[2]==='base'?'var(--accent)':'var(--warn)';
     return `<div class="wf-col"><div class="wf-v num">${w[2]==='base'?w[1].toFixed(1):sgn(w[1])}</div><div class="wf-bar" style="height:${h}%;margin-bottom:${bottom}%;background:${col}"></div><div class="wf-lab">${w[0]}</div></div>`;}).join('');
-  const waterfall=`<div class="card"><div class="card-h"><h3>What changed my risk? · VaR attribution</h3><span class="sp"></span><div class="filters"><button class="fchip on">1D</button><button class="fchip">1W</button><button class="fchip">1M</button></div></div><div class="card-b"><div class="wf">${wfHtml}</div><div class="mut" style="font-size:11px;text-align:center;margin-top:8px">VaR rose <b class="num" style="color:var(--ink)">+1.1%</b> (7.1% → 8.2%), driven mainly by the new NVDA risk and rising cross-correlation. Source: Quant Engine v2.4, 09:41 ET.</div></div></div>`;
+  const waterfall=`<div class="card"><div class="card-h"><h3>What changed my risk? · VaR attribution</h3><span class="sp"></span><div class="filters" aria-label="VaR attribution period"><button class="fchip on" data-range="1D">1D</button><button class="fchip" data-range="1W">1W</button><button class="fchip" data-range="1M">1M</button></div></div><div class="card-b"><div class="wf">${wfHtml}</div><div class="mut" style="font-size:11px;text-align:center;margin-top:8px">VaR rose <b class="num" style="color:var(--ink)">+1.1%</b> (7.1% → 8.2%), driven mainly by the new NVDA risk and rising cross-correlation. Source: Quant Engine v2.4, 09:41 ET.</div></div></div>`;
 
   // risk budget
   const rb=positions().slice().sort((a,b)=>b[11]-a[11]).slice(0,10).map(p=>{
@@ -422,7 +472,7 @@ function renderRisk(){
 function renderGuidelines(){
   const rows=LIMITS.map(r=>{const st=r[9];
     return `<tr data-limit="${r[0]}"><td class="l">${r[0]}</td><td class="l co">${r[1]}</td><td class="num">${r[2]}</td><td class="num">${r[4]}</td><td class="num">${r[5]}</td><td class="num ${st==='WARN'?'warnc':''}">${r[6]} / ${r[7]} / ${r[8]}</td><td><span class="pill ${st==='WARN'?'warn':st==='BREACH'?'crit':'ok'}">${st}</span></td></tr>`;}).join('');
-  Q('#view-guidelines').innerHTML=`<div class="pg-head"><div><div class="pg-title">Guideline Engine</div><div class="pg-sub">Investment mandate · codified, compliance-approved rules · forecast by Quant Engine</div></div><button class="btn gh sm">Propose rule (AI)</button></div>
+  Q('#view-guidelines').innerHTML=`<div class="pg-head"><div><div class="pg-title">Guideline Engine</div><div class="pg-sub">Investment mandate · codified, compliance-approved rules · forecast by Quant Engine</div></div><button class="btn gh sm" data-action="propose-rule">Propose rule (AI)</button></div>
     <div class="card"><div class="card-h"><h3>Mandate rules</h3><span class="sp"></span><span class="tag">click a rule → source clause</span><span class="pill warn">3 warning</span></div><div class="card-b flush"><div class="tbl-wrap"><table class="t"><thead><tr><th class="l">Rule</th><th class="l">Source</th><th>Current</th><th>Threshold</th><th>Headroom</th><th>Breach 1/3/5D</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table></div></div></div>
     <div class="prov" style="margin-top:4px"><b>Governance.</b> AI may <b>propose</b> rules from IMAs, PPMs and side letters, but only compliance-approved rules become active. Each active rule carries a source clause, machine definition, approver and version.</div>`;
 }
@@ -439,20 +489,20 @@ function renderOpps(){
 const PRESETS=['Rates +50 bp','Nasdaq −5%','S&P 500 −10%','Oil +10%','USD +5%','VIX 35','Semiconductors −10%','BTC −15%','Credit +100 bp'];
 const SHOCKS=[['10Y Yield','+50 bp',70],['Nasdaq','−7%',40],['Oil','+12%',62],['USD','+3%',55],['BTC','−15%',30]];
 function renderScenarios(){
-  const presetHtml=PRESETS.map(p=>`<span class="preset">${p}</span>`).join('');
+  const presetHtml=PRESETS.map(p=>`<button class="preset" type="button" data-preset="${p}">${p}</button>`).join('');
   const shockHtml=SHOCKS.map(s=>`<div class="shock-row"><span class="shock-name">${s[0]}</span><div class="shock-slider"><i style="left:${s[2]-6}%;width:12px"></i></div><span class="shock-val">${s[1]}</span></div>`).join('');
   const losers=[['NVDA',-8.4],['AMD',-4.3],['META',-3.9],['AVGO',-3.1],['MSFT',-2.6]];
   const lmax=8.4;
   const loseHtml=losers.map(l=>`<div class="mover"><span class="tk">${l[0]}</span><div class="mv-track"><span class="mv-b" style="right:0;width:${Math.abs(l[1])/lmax*100}%;background:var(--crit)"></span></div><span class="pnl neg">${l[1]}M</span></div>`).join('');
-  Q('#view-scenarios').innerHTML=`<div class="pg-head"><div><div class="pg-title">Scenario Studio</div><div class="pg-sub">Shock the book · results from Quant Engine stress API</div></div><button class="btn pri sm">Run scenario</button></div>
+  Q('#view-scenarios').innerHTML=`<div class="pg-head"><div><div class="pg-title">Scenario Studio</div><div class="pg-sub">Shock the book · results from Quant Engine stress API</div></div><button class="btn pri sm" data-action="run-scenario">Run scenario</button></div>
     <div class="grid g-2b">
       <div class="card"><div class="card-h"><h3>Custom scenario</h3><span class="sp"></span></div><div class="card-b">
         <div class="mut" style="font-size:11px;margin-bottom:8px">Presets — click to load</div><div style="margin-bottom:14px">${presetHtml}</div>
         <div class="drw-sl">Active shocks</div>${shockHtml}
-        <button class="btn pri" style="margin-top:14px;width:100%">Run scenario</button></div></div>
+        <button class="btn pri" style="margin-top:14px;width:100%" data-action="run-scenario">Run scenario</button></div></div>
       <div class="card"><div class="card-h"><h3>Scenario result</h3><span class="sp"></span><span class="pill crit">2 limits breached</span></div><div class="card-b">
         <div class="kv2" style="margin-bottom:12px">
-          <div class="c"><div class="k">Estimated PnL</div><div class="v num neg">−$34.8M</div></div>
+          <div class="c"><div class="k">Estimated P&L</div><div class="v num neg">−$34.8M</div></div>
           <div class="c"><div class="k">% NAV</div><div class="v num neg">−2.76%</div></div>
           <div class="c"><div class="k">VaR</div><div class="v num">7.4% → 10.9%</div></div>
           <div class="c"><div class="k">Net β</div><div class="v num">0.42 → 0.51</div></div>
@@ -471,12 +521,12 @@ function renderPnl(){
   const max=Math.max(...byName.map(p=>Math.abs(p[7])));
   const bars=byName.map(p=>{const h=Math.abs(p[7])/max*100,pos=p[7]>=0;
     return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:${pos?'flex-end':'flex-start'};height:100%"><div style="width:72%;${pos?'':'order:2;'}height:${h}%;background:${pos?'var(--pos)':'var(--crit)'};border-radius:${pos?'3px 3px 0 0':'0 0 3px 3px'}"></div><div style="font-size:9px;color:var(--muted);margin-top:4px;${pos?'':'order:1;margin-bottom:4px;margin-top:0'}">${p[0]}</div></div>`;}).join('');
-  Q('#view-pnl').innerHTML=`<div class="pg-head"><div><div class="pg-title">PnL Attribution</div><div class="pg-sub">${FUNDS[FUND].name} · reconciled to admin</div></div><div class="filters"><button class="fchip">Today</button><button class="fchip on">MTD</button><button class="fchip">QTD</button><button class="fchip">YTD</button></div></div>
+  Q('#view-pnl').innerHTML=`<div class="pg-head"><div><div class="pg-title">P&L Attribution</div><div class="pg-sub">${FUNDS[FUND].name} · reconciled to admin</div></div><div class="filters" aria-label="P&L period"><button class="fchip" data-range="Today">Today</button><button class="fchip on" data-range="MTD">MTD</button><button class="fchip" data-range="QTD">QTD</button><button class="fchip" data-range="YTD">YTD</button></div></div>
     <div class="kstrip"><div class="kcell"><div class="klab">Total MTD</div><div class="kval num pos">+$29.4M</div><div class="ksub pos">+2.33%</div></div>
-      ${kcell('Long PnL','+$34.1M','',' pos')}${kcell('Short PnL','−$4.7M','','neg')}${kcell('Factor','+$11.2M','38% of total')}${kcell('Stock-specific','+$18.2M','62% of total')}${kcell('Hit rate','64%','W/L 1.9')}${kcell('vs Bench','+71 bps','net of fees','pos')}</div>
-    <div class="card"><div class="card-h"><h3>Attribution by position · MTD</h3><span class="sp"></span><span class="tag">$ PnL</span></div><div class="card-b"><div style="display:flex;align-items:center;height:170px;gap:3px">${bars}</div></div></div>
-    <div class="card"><div class="card-h"><h3>PnL reconciliation</h3><span class="sp"></span><span class="pill ok">RECONCILED · 1bp tol</span></div><div class="card-b">
-      <div class="kv2" style="margin-bottom:12px"><div class="c"><div class="k">Point PnL</div><div class="v num">$8.43M</div></div><div class="c"><div class="k">Admin PnL</div><div class="v num">$8.42M</div></div><div class="c"><div class="k">Difference</div><div class="v num">$10K</div></div><div class="c"><div class="k">Status</div><div class="v pos" style="font-size:14px">Reconciled</div></div></div>
+      ${kcell('Long P&L','+$34.1M','',' pos')}${kcell('Short P&L','−$4.7M','','neg')}${kcell('Factor','+$11.2M','38% of total')}${kcell('Stock-specific','+$18.2M','62% of total')}${kcell('Hit rate','64%','W/L 1.9')}${kcell('vs Bench','+71 bps','net of fees','pos')}</div>
+    <div class="card"><div class="card-h"><h3>Attribution by position · MTD</h3><span class="sp"></span><span class="tag">$ P&L</span></div><div class="card-b"><div style="display:flex;align-items:center;height:170px;gap:3px">${bars}</div></div></div>
+    <div class="card"><div class="card-h"><h3>P&L reconciliation</h3><span class="sp"></span><span class="pill ok">RECONCILED · 1bp tol</span></div><div class="card-b">
+      <div class="kv2" style="margin-bottom:12px"><div class="c"><div class="k">Point P&L</div><div class="v num">$8.43M</div></div><div class="c"><div class="k">Admin P&L</div><div class="v num">$8.42M</div></div><div class="c"><div class="k">Difference</div><div class="v num">$10K</div></div><div class="c"><div class="k">Status</div><div class="v pos" style="font-size:14px">Reconciled</div></div></div>
       <div class="drw-sl">Reconciliation bridge</div>
       ${[['Price effect','+$8.21M'],['FX effect','+$0.08M'],['Trade effect','+$0.19M'],['Corporate actions','$0.00M'],['Fees','−$0.04M'],['Financing','−$0.01M'],['Residual','+$0.01M']].map(r=>`<div class="a-drv"><span>${r[0]}</span><span class="num">${r[1]}</span></div>`).join('')}
     </div></div>`;
@@ -579,14 +629,14 @@ function markAllRead(){
 
 /* ---- ASK ---- */
 function renderAsk(){
-  Q('#view-ask').innerHTML='<div class="pg-head"><div><div class="pg-title">Ask Point</div><div class="pg-sub">Discuss the selected fund using the data available in this demo.</div></div></div><div class="card"><div class="card-b"><p>Connect your own OpenAI key in the private chat. Answers use this fund’s snapshot and, optionally, a fund-specific vector search.</p><p>Detailed positions are available for Apex only. Ask Point will explain missing data for the other institutional funds.</p><div class="ask-bar"><input id="ask-in" placeholder="Ask about risk, exposure or a holding…"/><button class="btn pri" id="ask-send">Open chat</button></div></div></div>';
+  Q('#view-ask').innerHTML='<div class="pg-head"><div><div class="pg-title">Ask Portfolio Intelligence</div><div class="pg-sub">Discuss the selected fund using the data available in this demo.</div></div></div><div class="card"><div class="card-b"><p>Ask about holdings, performance, or the next suggested portfolio action. Answers use the selected fund’s website data.</p><p>Detailed positions are available for Alpha only. Ask Portfolio Intelligence will explain missing data for the other institutional funds.</p><div class="ask-bar"><input id="ask-in" placeholder="Ask about risk, exposure or a holding…"/><button class="btn pri" id="ask-send">Open chat</button></div></div></div>';
 }
 
 /* ---- REPORTS ---- */
 function renderReports(){
   const reps=[['Monthly Tear Sheet','Sep 2026','Published','ok'],['Investor Letter','Oct 2026','AI Draft','neu'],['Risk Transparency Report','Q3 2026','Pending Approval','warn'],['DDQ · Castle Peak','On-demand','Approved','ok'],['Performance Attribution','Sep 2026','Published','ok'],['Exposure Report','Weekly','AI Draft','neu']];
-  const rows=reps.map(r=>`<tr><td class="l" style="font-weight:600">${r[0]}</td><td class="l co">${r[1]}</td><td><span class="pill ${r[3]}">${r[2]}</span></td><td class="l"><button class="btn gh sm">Open</button> <button class="btn gh sm">Export PDF</button></td></tr>`).join('');
-  Q('#view-reports').innerHTML=`<div class="pg-head"><div><div class="pg-title">Reporting Center</div><div class="pg-sub">AI Draft → Reviewer → Compliance → Approved → Export · every number carries source provenance</div></div><button class="btn pri sm">New report</button></div>
+  const rows=reps.map(r=>`<tr><td class="l" style="font-weight:600">${r[0]}</td><td class="l co">${r[1]}</td><td><span class="pill ${r[3]}">${r[2]}</span></td><td class="l"><button class="btn gh sm" data-action="report-open" data-report="${r[0]}">Open</button> <button class="btn gh sm" data-action="report-export" data-report="${r[0]}">Export PDF</button></td></tr>`).join('');
+  Q('#view-reports').innerHTML=`<div class="pg-head"><div><div class="pg-title">Reporting Center</div><div class="pg-sub">AI Draft → Reviewer → Compliance → Approved → Export · every number carries source provenance</div></div><button class="btn pri sm" data-action="new-report">New report</button></div>
     <div class="card"><div class="card-h"><h3>Reports</h3><span class="sp"></span><span class="tag">approval workflow</span></div><div class="card-b flush"><div class="tbl-wrap"><table class="t"><thead><tr><th class="l">Report</th><th class="l">Period</th><th>Status</th><th class="l">Actions</th></tr></thead><tbody>${rows}</tbody></table></div></div></div>`;
 }
 
@@ -594,7 +644,7 @@ function renderReports(){
 function renderAudit(){
   const ev=[['09:41:02','admin','Risk Agent','v2.3','Quant v2.4','AC-7731 composed','—'],['09:38:44','conductor','Conductor','v1.8','—','Grouped 3 semis signals','—'],['09:12:10','admin','—','—','—','AC-7725 dismissed','Admin'],['08:55:31','macro','Macro Agent','v2.0','Quant v2.4','AC-7728 composed','—'],['Oct 01','admin','—','—','—','AC-7701 (NVDA trim) dismissed','Admin']];
   const rows=ev.map(e=>`<tr><td class="l mono">${e[0]}</td><td class="l">${e[1]}</td><td class="l">${e[2]}</td><td class="l co">${e[3]}</td><td class="l co">${e[4]}</td><td class="l">${e[5]}</td><td class="l">${e[6]}</td></tr>`).join('');
-  Q('#view-audit').innerHTML=`<div class="pg-head"><div><div class="pg-title">Audit Trail</div><div class="pg-sub">Complete lineage · agent, version, quant version, inputs, decision, approver</div></div><div class="filters"><button class="btn gh sm">Export CSV</button><button class="btn gh sm">Export JSON</button></div></div>
+  Q('#view-audit').innerHTML=`<div class="pg-head"><div><div class="pg-title">Audit Trail</div><div class="pg-sub">Complete lineage · agent, version, quant version, inputs, decision, approver</div></div><div class="filters"><button class="btn gh sm" data-action="export-audit" data-export-format="csv">Export CSV</button><button class="btn gh sm" data-action="export-audit" data-export-format="json">Export JSON</button></div></div>
     <div class="card"><div class="card-h"><h3>Event log</h3><span class="sp"></span><input class="srch" placeholder="Filter…"/></div><div class="card-b flush"><div class="tbl-wrap"><table class="t"><thead><tr><th class="l">Time</th><th class="l">User</th><th class="l">Agent</th><th class="l">Agent v.</th><th class="l">Quant v.</th><th class="l">Event</th><th class="l">Approver</th></tr></thead><tbody>${rows}</tbody></table></div></div></div>`;
 }
 
@@ -608,7 +658,7 @@ function openDrw(html){drwInner.innerHTML=html;ov.classList.add('on');drw.classL
 }
 function closeDrw(){ov.classList.remove('on');drw.classList.remove('on');document.body.style.overflow='';}
 ov.onclick=closeDrw;
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrw();
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrw();Q('#fundsel')?.classList.remove('open');Q('#profile')?.classList.remove('open');setMobileNav(false);}
   if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('.acard[data-card]')){e.preventDefault();openCard(e.target.dataset.card);}});
 document.addEventListener('input',e=>{if(e.target.id==='al-q'){alQuery=e.target.value;renderAlertList();}});
 
@@ -638,8 +688,8 @@ function openPos(tk){
       <div data-tabc="ov"><div class="kv2" style="margin-bottom:16px">
         <div class="c"><div class="k">Market value</div><div class="v num">$${Math.abs(p[4]).toFixed(1)}M</div></div>
         <div class="c"><div class="k">% NAV</div><div class="v num">${p[5]}%</div></div>
-        <div class="c"><div class="k">Day PnL</div><div class="v num ${cls(p[6])}">${sgn(p[6])}M</div></div>
-        <div class="c"><div class="k">YTD PnL</div><div class="v num ${cls(p[8])}">${sgn(p[8])}M</div></div>
+        <div class="c"><div class="k">Day P&L</div><div class="v num ${cls(p[6])}">${sgn(p[6])}M</div></div>
+        <div class="c"><div class="k">YTD P&L</div><div class="v num ${cls(p[8])}">${sgn(p[8])}M</div></div>
         <div class="c"><div class="k">VaR contribution</div><div class="v num">${p[9]}%</div></div>
         <div class="c"><div class="k">Risk budget used</div><div class="v num ${p[11]>=90?'neg':''}">${p[11]}%</div></div>
         <div class="c"><div class="k">Beta</div><div class="v num">${p[18]}</div></div>
@@ -685,26 +735,82 @@ const RENDER={command:renderCommand,portfolio:renderPortfolio,risk:renderRisk,gu
 function renderAll(){Object.values(RENDER).forEach(fn=>fn());}
 
 let VIEW='command';
+const VIEW_LABELS={command:'Command center',portfolio:'Portfolio',risk:'Risk monitor',guidelines:'Guidelines',
+  opportunities:'Opportunities',scenarios:'Scenario studio',pnl:'P&L attribution',decisions:'Decisions',
+  alerts:'Alert center',ask:'Ask Point',reports:'Reports',audit:'Audit trail'};
 function go(v){
+  if(!RENDER[v])return;
   VIEW=v;
   QA('.view').forEach(s=>s.classList.toggle('on',s.id==='view-'+v));
   QA('#nav a').forEach(a=>a.classList.toggle('on',a.dataset.v===v));
+  const crumb=Q('#crumb-view'); if(crumb)crumb.textContent=VIEW_LABELS[v]||'Workspace';
+  const mobile=Q('#mobile-nav'); if(mobile){mobile.classList.remove('open');mobile.setAttribute('aria-hidden','true');}
+  const mobileBtn=Q('#mobile-nav-btn'); if(mobileBtn)mobileBtn.setAttribute('aria-expanded','false');
+  const profile=Q('#profile'); if(profile)profile.classList.remove('open');
+  const profileBtn=Q('#profile-btn'); if(profileBtn)profileBtn.setAttribute('aria-expanded','false');
+  if(window.location.hash!==`#${v}`)window.history.replaceState(null,'',`#${v}`);
   window.scrollTo(0,0);
+}
+
+function setMobileNav(open){
+  const nav=Q('#mobile-nav'),btn=Q('#mobile-nav-btn'); if(!nav)return;
+  nav.classList.toggle('open',open);nav.setAttribute('aria-hidden',String(!open));
+  if(btn)btn.setAttribute('aria-expanded',String(open));
+}
+function renderMobileNav(){
+  const items=Q('#mobile-nav-items'),source=Q('#nav'); if(!items||!source)return;
+  items.innerHTML=source.innerHTML+'<div class="side-foot">'+Q('.side-foot').innerHTML+'</div>';
+  items.querySelectorAll('[data-v]').forEach(link=>link.addEventListener('click',()=>go(link.dataset.v)));
+}
+function downloadDemoFile(filename,content,type='text/plain;charset=utf-8'){
+  const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');
+  a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function runAction(action,control){
+  const report=control?.dataset.report||'Point report';
+  if(action==='run-scenario'){
+    go('scenarios');
+    const result=Q('#view-scenarios .card:nth-of-type(2)'); if(result){result.style.outline='2px solid var(--accent)';setTimeout(()=>result.style.outline='',700);}
+    toast('Scenario refreshed with the active shock set.');return;
+  }
+  if(action==='export-brief'){downloadDemoFile(`${FUNDS[FUND].name.replace(/[^a-z0-9]+/gi,'-')}-morning-brief.txt`,Q('#view-command').innerText);toast('Morning brief downloaded.');return;}
+  if(action==='propose-rule'){openDrw('<div class="drw-h"><div class="drw-top"><span class="tag">Governance workflow</span><button class="drw-x" id="drw-x">✕</button></div><div class="drw-ttl">Propose a guideline</div></div><div class="drw-b"><p class="prov" style="color:var(--ink-2)">Describe a measurable guardrail. In this demo, proposals are routed to Compliance and do not change active limits.</p><div class="ask-bar"><input id="rule-proposal" placeholder="e.g. Single-name exposure below 8%"/><button class="btn pri" data-action="submit-rule">Send for review</button></div></div>');return;}
+  if(action==='submit-rule'){const input=Q('#rule-proposal');if(input?.value.trim()){closeDrw();toast('Guideline proposal sent to Compliance for review.');}else toast('Add a guideline before sending it for review.');return;}
+  if(action==='open-fund-menu'){Q('#profile')?.classList.remove('open');Q('#fundsel-btn')?.click();return;}
+  if(action==='toggle-profile-theme'){setTheme(document.body.dataset.theme==='light'?'dark':'light');return;}
+  if(action==='demo-signout'){toast('Demo mode keeps this workspace signed in.');return;}
+  if(action==='new-report'){openDrw('<div class="drw-h"><div class="drw-top"><span class="tag">Reporting center</span><button class="drw-x" id="drw-x">✕</button></div><div class="drw-ttl">New report</div></div><div class="drw-b"><p class="prov" style="color:var(--ink-2)">Choose a report from the approved template library. The new draft will use the selected fund context.</p><button class="btn pri" data-action="create-report">Create investor update</button></div>');return;}
+  if(action==='create-report'){closeDrw();toast('Investor update draft created for review.');return;}
+  if(action==='report-open'){openDrw(`<div class="drw-h"><div class="drw-top"><span class="tag">Report preview</span><button class="drw-x" id="drw-x">✕</button></div><div class="drw-ttl">${report}</div></div><div class="drw-b"><p class="prov" style="color:var(--ink-2)">Preview is scoped to ${FUNDS[FUND].name}. Values remain illustrative demo data until a reviewer approves the report.</p><button class="btn pri" data-action="report-export" data-report="${report}">Export PDF</button></div>`);return;}
+  if(action==='report-export'){downloadDemoFile(`${report.replace(/[^a-z0-9]+/gi,'-')}.txt`,`${report}\n\nPoint demo export for ${FUNDS[FUND].name}.`);toast(`${report} downloaded.`);return;}
+  if(action==='export-audit'){const format=control?.dataset.exportFormat||'csv';const rows='time,user,event\n09:41,admin,AC-7731 composed\n09:38,conductor,Signals grouped';downloadDemoFile(`point-audit.${format}`,format==='json'?JSON.stringify([{time:'09:41',user:'admin',event:'AC-7731 composed'}],null,2):rows,format==='json'?'application/json':'text/csv');toast(`Audit ${format.toUpperCase()} downloaded.`);}
 }
 
 /* ======================= WIRE ======================= */
 renderFundMenu();
 try{const sf=localStorage.getItem('point-inst-fund'); if(sf&&FUNDS[sf])FUND=sf; const f=FUNDS[FUND]; Q('#fs-ic').textContent=f.ic;Q('#fs-ic').style.background=f.col;Q('#fs-name').textContent=f.name;Q('#fs-sub').textContent=f.sub;}catch(e){}
 renderAll(); syncAlertBadges();
+renderMobileNav();
+try{setTheme(localStorage.getItem('point-inst-theme')||'light');}catch(e){setTheme('light');}
+Q('#theme-btn')?.addEventListener('click',()=>setTheme(document.body.dataset.theme==='light'?'dark':'light'));
 
 Q('#fundsel-btn').onclick=e=>{e.stopPropagation();Q('#fundsel').classList.toggle('open');};
-document.addEventListener('click',()=>Q('#fundsel').classList.remove('open'));
+document.addEventListener('click',()=>{Q('#fundsel').classList.remove('open');Q('#profile')?.classList.remove('open');Q('#profile-btn')?.setAttribute('aria-expanded','false');});
 Q('#fundsel-menu').onclick=e=>e.stopPropagation();
 
+Q('#profile-btn')?.addEventListener('click',e=>{e.stopPropagation();Q('#fundsel').classList.remove('open');const profile=Q('#profile');const open=!profile.classList.contains('open');profile.classList.toggle('open',open);e.currentTarget.setAttribute('aria-expanded',String(open));});
+Q('#profile-menu')?.addEventListener('click',e=>e.stopPropagation());
+Q('#mobile-nav-btn')?.addEventListener('click',()=>setMobileNav(!Q('#mobile-nav').classList.contains('open')));
+Q('#mobile-nav')?.addEventListener('click',e=>{if(e.target.closest('[data-mobile-close]'))setMobileNav(false);});
+
 QA('#nav a').forEach(a=>a.onclick=()=>go(a.dataset.v));
+const initialView=window.location.hash.slice(1);if(RENDER[initialView])go(initialView);
+window.addEventListener('hashchange',()=>{const view=window.location.hash.slice(1);if(RENDER[view]&&view!==VIEW)go(view);});
 
 /* delegated clicks */
 document.addEventListener('click',e=>{
+  const viewLink=e.target.closest('[data-v]'); if(viewLink){e.preventDefault();go(viewLink.dataset.v);return;}
+  const action=e.target.closest('[data-action]'); if(action){runAction(action.dataset.action,action);return;}
   const act=e.target.closest('[data-act]'); if(act){alertAct(act.dataset.id,act.dataset.act);return;}
   const nav=e.target.closest('[data-goto]'); if(nav){closeDrw();go(nav.dataset.goto);return;}
   const af=e.target.closest('[data-al-filter]'); if(af){alFilter=af.dataset.alFilter;renderAlerts();return;}
@@ -715,6 +821,8 @@ document.addEventListener('click',e=>{
   const card=e.target.closest('[data-card]'); if(card&&!e.target.closest('[data-approve]')&&!e.target.closest('[data-goto]')){openCard(card.dataset.card);return;}
   const pos=e.target.closest('[data-pos]'); if(pos){openPos(pos.dataset.pos);return;}
   const pf=e.target.closest('[data-pf]'); if(pf){posFilter=pf.dataset.pf;renderPortfolio();return;}
+  const range=e.target.closest('[data-range]'); if(range){const filters=range.closest('.filters');filters?.querySelectorAll('[data-range]').forEach(b=>b.classList.toggle('on',b===range));toast(`Showing ${range.dataset.range} data.`);return;}
+  const preset=e.target.closest('[data-preset]'); if(preset){QA('[data-preset]').forEach(p=>p.classList.toggle('on',p===preset));toast(`${preset.dataset.preset} loaded into the scenario.`);return;}
   const th=e.target.closest('th[data-sort]'); if(th){const k=+th.dataset.sort; posSort.dir=(posSort.k===k?-posSort.dir:-1);posSort.k=k;renderPortfolio();return;}
   const hc=e.target.closest('[data-hc]'); if(hc){const c=health()[+hc.dataset.hc];openDrw(`<div class="drw-h"><div class="drw-top"><span class="tag">Health component</span><button class="drw-x" id="drw-x">✕</button></div><div class="drw-ttl">${c[0]} · ${c[1]}/100</div></div><div class="drw-b"><div class="prov" style="color:var(--ink-2);font-size:13px">${c[3]}</div><div class="kv2" style="margin-top:14px"><div class="c"><div class="k">Current</div><div class="v num">${c[1]}</div></div><div class="c"><div class="k">Yesterday</div><div class="v num">${c[1]-c[2]}</div></div><div class="c"><div class="k">Change</div><div class="v num ${cls(c[2])}">${sgn(c[2])}</div></div><div class="c"><div class="k">Benchmark</div><div class="v num">${c[4]}</div></div></div></div>`);return;}
   const lim=e.target.closest('[data-limit]'); if(lim){openLimit(lim.dataset.limit);return;}
@@ -726,7 +834,7 @@ function openLimit(name){
     <div class="drw-b"><div class="kv2" style="margin-bottom:16px"><div class="c"><div class="k">Current</div><div class="v num">${r[2]}</div></div><div class="c"><div class="k">Warning</div><div class="v num">${r[3]}</div></div><div class="c"><div class="k">Limit</div><div class="v num">${r[4]}</div></div><div class="c"><div class="k">Headroom</div><div class="v num">${r[5]}</div></div></div>
     <div class="drw-sl">Breach forecast</div><div class="kv2" style="margin-bottom:16px"><div class="c"><div class="k">1 day</div><div class="v num ${parseFloat(r[6])>40?'neg':''}">${r[6]}</div></div><div class="c"><div class="k">3 day</div><div class="v num">${r[7]}</div></div><div class="c"><div class="k">5 day</div><div class="v num">${r[8]}</div></div><div class="c"><div class="k">Trend</div><div class="v" style="font-size:13px">${r[9]==='WARN'?'Deteriorating':'Stable'}</div></div></div>
     <div class="drw-sl">Source clause</div><div class="prov" style="color:var(--ink-2)"><b>Document:</b> ${r[1].includes('IMA')?'Investment Management Agreement':'Risk Policy'}<br/><b>Section:</b> ${r[1].split('§')[1]||'—'}<br/><b>Machine rule:</b> <span class="mono">metric ${r[0].toLowerCase().replace(/[^a-z]/g,'_')} ≤ ${r[4]}</span><br/><b>Approved by:</b> Jane Smith (Compliance)<br/><b>Version:</b> 3 · Sep 21, 2026</div>
-    <div style="margin-top:14px;display:flex;gap:8px"><button class="btn pri" data-goto="scenarios">Run what-if</button><button class="btn gh">View positions</button></div></div>`);
+    <div style="margin-top:14px;display:flex;gap:8px"><button class="btn pri" data-goto="scenarios">Run what-if</button><button class="btn gh" data-goto="portfolio">View positions</button></div></div>`);
 }
 function askQ(q){ pointChat.open(q); }
 Q('#view-ask').addEventListener?.('click',()=>{}); // noop guard
@@ -734,22 +842,22 @@ document.addEventListener('click',e=>{
   if(e.target.id==='ask-send'){const inp=Q('#ask-in');if(inp&&inp.value.trim()){askQ(inp.value.trim());inp.value='';}}
 });
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='ask-in'&&e.target.value.trim()){askQ(e.target.value.trim());e.target.value='';}});
-Q('#ask-mini-in')?.addEventListener('keydown',e=>{if(e.key==='Enter'){go('ask');}});
-Q('#ask-mini')?.addEventListener('click',()=>go('ask'));
+Q('#ask-mini-in')?.addEventListener('keydown',e=>{if(e.key==='Enter'){const q=e.target.value.trim();e.target.value='';pointChat.open(q||undefined);}});
+Q('#ask-mini')?.addEventListener('click',()=>pointChat.open());
 
 /* role picker */
-const ROLES=[['PM · Apex L/S','command'],['Head of Risk','risk'],['CIO','portfolio'],['Compliance','guidelines'],['Investor Relations','reports']];
+const ROLES=[['PM · Alpha Fund','command'],['Head of Risk','risk'],['CIO','portfolio'],['Compliance','guidelines'],['Investor Relations','reports']];
 let roleI=0;
 Q('#role-pick').onclick=()=>{roleI=(roleI+1)%ROLES.length;Q('#rp-role').textContent=ROLES[roleI][0];go(ROLES[roleI][1]);};
 function terminalSnapshot(id){
-  const full=id==='apex';
+  const full=id==='alpha';
   return PointChatCore.clean({surface:'terminal',fundId:id,fundName:FUNDS[id].name,
-    scope:'Illustrative static terminal dataset. Not the same funds as the platform app. Only Apex has detailed positions. Other terminal screens reuse Apex placeholders; never attribute those to another fund. Conflicting demo figures must be reported, not reconciled by guessing. Relative dates are historical sample labels.',
+    scope:'Illustrative static terminal dataset using the same fund roster as the platform app. Only Alpha has detailed positions. Other terminal screens reuse Alpha placeholders; never attribute those to another fund. Conflicting demo figures must be reported, not reconciled by guessing. Relative dates are historical sample labels.',
     sections:{
-      Overview:{fund:FUNDS[id],coverage:full?'Apex detailed sample is available.':'Only headline fund figures are available. Holdings, risk limits, attribution and scenarios are missing for this fund.'},
+      Overview:{fund:FUNDS[id],coverage:full?'Alpha detailed sample is available.':'Only headline fund figures are available. Holdings, risk limits, attribution and scenarios are missing for this fund.'},
       ...(full?{
         Positions:{columns:['ticker','company','side','quantity','marketValueUSDmillions','NAVpercent','dayPnLUSDmillions','MTDPnLUSDmillions','YTDPnLUSDmillions','VaRContributionPercent','riskBudgetPercent','riskUsedPercent','sector','factor','crowding','liquidationDays','catalyst','health','beta','returnPercent'],rows:APEX},
-        Risk:{health:HEALTH.apex,changes:CHANGED.apex,limits:{columns:['rule','source','current','warning','limit','headroom','oneDayBreachProbability','threeDayBreachProbability','fiveDayBreachProbability','status'],rows:LIMITS}},
+        Risk:{health:HEALTH.alpha,changes:CHANGED.alpha,limits:{columns:['rule','source','current','warning','limit','headroom','oneDayBreachProbability','threeDayBreachProbability','fiveDayBreachProbability','status'],rows:LIMITS}},
         Decisions:{cards:CARDS,history:DECISIONS},
         Research:{columns:['ticker','alphaScore','portfolioFit','momentum','quality','revisions','institutionalFlow','sentiment','fiveDayRangePercent','catalyst','crowding','rationale'],rows:OPPS}
       }:{})

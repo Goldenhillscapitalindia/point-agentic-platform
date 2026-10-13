@@ -8,83 +8,97 @@ tokenized market, Point MCP and Point Execute.
 Pure HTML/CSS/JS — no framework, no backend, no build tooling beyond Node for
 bundling. Fonts load from Google Fonts; everything else is inline.
 
-## Private OpenAI chatbot
+## Ask Portfolio Intelligence
 
-Both the platform and institutional terminal include a browser-only **Ask Point**
-chat. Serve the site over localhost or HTTPS, open Ask Point, and enter your own
-OpenAI API key in **Connection**. Do not paste keys into chat or source files.
-The key is kept only in this tab's memory and cleared on disconnect/reload; it is
-never saved to localStorage, sessionStorage, the repository, or a build artifact.
-Any script or browser extension with access to the page can still access browser
-memory, so this is a private bring-your-own-key demo, not a way to distribute a
-shared secret on a public website. A Vercel frontend environment variable does
-not make an embedded key private. API billing must be enabled separately from a
-ChatGPT subscription.
+Visitors choose a fund and ask a question immediately. There is no API-key form,
+vector-store input, or indexing control in the visitor interface. Conversations
+stay in browser memory and are separated by fund and demo account.
 
-1. Open `dist/app.html`, choose a fund, open **Ask Point**, and connect your key.
-2. Ask a question immediately using that fund's website snapshot.
-3. In **Connection**, select **Create knowledge base** to upload the available
-   funds' documents to your key's OpenAI project. OpenAI creates and stores the
-   embeddings automatically. API and vector storage charges may apply.
-4. Wait for **Ready**, then copy the `vs_...` value or choose **Download store
-   details**. The download contains the vector store ID, model, dataset revision,
-   batch and file IDs, and readiness. It contains no credentials. The ID is not an
-   embedding token or an authentication key; another app still needs authorized
-   API access to the same OpenAI project.
+The pages remain static. One Vercel Function, `api/chat.js`, calls OpenAI using
+server-only environment variables. It loads trusted fund snapshots generated
+from the same datasets and table headings as the UI. The browser sends only the
+fund, question and recent conversation. The server chooses the model and store;
+visitor-supplied credentials, models, portfolio facts and resource IDs are ignored.
 
-Indexing uploads one document per fund/section. Non-secret checkpoints are saved
-locally so **Resume indexing** can reuse uploaded files and poll the same batch.
-If the network fails during a write, the remote operation may have succeeded;
-check OpenAI Storage before restarting. **Start a new index** resets only the
-local checkpoint and does not delete old cloud files or stores. Manage/delete
-unused stores and files in the OpenAI dashboard to control ongoing storage.
-Disconnecting does not delete cloud resources. Failed indexing is never marked
-ready. If storage is blocked, keep the store ID before closing the tab.
+### Environment setup
 
-Every question includes the selected fund's current structured demo snapshot.
-When a store is configured, semantic/keyword retrieval is filtered by fund,
-platform vs terminal, and a hash of the dataset. A changed or unindexed dataset
-is explicitly reported and the current snapshot is used. Rebuild the index after
-editing the data. The platform's four funds and the terminal's four funds are
-different datasets; each page builds its own scoped store. The simulated account
-picker is a demo convenience, not an authentication or authorization boundary.
-All client-side demo data is publicly readable by anyone with the static files.
+Copy `.env.example` to `.env.local` and supply your key locally. Both `.env`
+and `.env.local` are supported by `npm run dev` (local values take precedence).
+Do not commit either file. Set the same variables in Vercel Project Settings:
 
-Conversations stay in memory and are separated by selected fund/account.
-Switching funds cancels pending answers. Responses use `store: false`; this does
-not mean zero retention by OpenAI. Uploaded knowledge-base documents persist
-until deleted. The client sends requests only to `https://api.openai.com/v1`.
+| Variable | Purpose |
+| --- | --- |
+| `OPENAI_API_KEY` | Required. Key with Responses and read access to the configured vector store. |
+| `OPENAI_VECTOR_STORE_ID` | Optional platform knowledge base. Existing ID: `vs_6acdd4ab3c448191b81ceb4a5be4be11`. |
+| `OPENAI_TERMINAL_VECTOR_STORE_ID` | Optional separate terminal index; leave blank for snapshot-only answers. |
+| `OPENAI_MODEL` | Optional; defaults to `gpt-5.4-mini`. |
 
-Data limitations: positions are partial; some sample prices, percentages, dates,
-and scenarios conflict. The instructions tell the model to identify conflicts,
-cite the supplied sections, and avoid inventing totals or risk calculations.
-The terminal only has detailed positions for Apex; other funds get their own
-headline figures and an explicit missing-data explanation. Model calculations
-are estimates, not a deterministic portfolio analytics engine. There are no
-live feeds, web search, approvals, or trading actions in the chatbot.
+These values are read during function execution, never embedded during the static
+build. No public-prefixed variables are needed. After changing Vercel variables,
+redeploy. With no key configured, visitors see a friendly unavailable message;
+there is no fallback that asks them for credentials.
 
-`chat-config.js` contains the existing platform vector store ID, so a fresh
-browser or Vercel deployment prefills it automatically. It is a public resource
-identifier, not a secret. Connect a key authorized for the same OpenAI project.
-The institutional terminal has no default store; it can use its snapshot alone
-or create its own separate index. Do not recreate the platform index just to
-open a new browser session.
+### Local development and Vercel
 
-Implementation: `chat-core.js` handles OpenAI and indexing, `chat-ui.js` handles
-the connection and conversations, and `chat.css` styles the shared panel. Fund
-adapters live in `app.js` and `institutional.js`. `node build.js` inlines these
-assets into `dist/`. `npm test` runs mocked API regression checks without a key
-or any paid requests. Mock checks cannot establish billing, model permissions,
-browser access or answer quality for a different account. Live smoke tests on
-October 13, 2026 verified the platform connection, 48-document indexing,
-retrieval-backed answers, a fund switch, and conflicting scenario handling.
-For an isolated browser test, run `node tests/browser-preview.cjs` and open
-`http://127.0.0.1:4186/app.html`. It replaces all OpenAI calls with mocks; never
-enter a real key in that test page. It is not a production backend.
+Use Node 22 or later, then `npm run dev`. Open
+`http://127.0.0.1:4178/app.html` or `/terminal.html`. Set `PORT` to use another
+port. This local server serves only the built pages and the same chat function;
+it never serves env files or repository source.
 
-Official references: [Retrieval](https://developers.openai.com/api/docs/guides/retrieval),
-[Vector store search](https://developers.openai.com/api/reference/resources/vector_stores/methods/search),
-[GPT-5.4 mini](https://developers.openai.com/api/docs/models/gpt-5.4-mini).
+On Vercel, deploy the **repository root**, with Framework Preset **Other**.
+Use build command `npm run build` and output directory `dist`; the root
+`vercel.json` supplies these settings. Keep the Vercel Root Directory empty
+(or `.`), not `dist`, so Vercel includes `api/chat.js` and its data.
+Uploading only `dist` serves the pages but cannot run the chatbot.
+
+This is a shared, publicly callable demo endpoint; all visitors' questions use
+the configured OpenAI account. Request/history lengths and response tokens are
+bounded, but the route is not user authentication or a global rate limiter. Use
+Vercel Deployment Protection for a private demo or Firewall rate limits for a
+public rollout, and monitor OpenAI usage. The simulated account picker does not
+restrict access to confidential data. Only public illustrative data belongs here.
+
+### Knowledge base maintenance
+
+Each answer includes the latest built fund snapshot. Optional retrieval matches
+fund, platform/terminal and dataset revision, so stale documents cannot override
+updated briefs. If the index is older than the site, the answer uses the current
+snapshot and reports that no matching indexed version was found.
+
+After changing fund data, the owner can run `npm run index:knowledge -- platform`
+(or `-- terminal`) with environment variables configured. This uploads one file
+per section and lets OpenAI generate embeddings. It adds the new revision to the
+configured store, or creates a store if the corresponding ID is blank. The command
+prints the resulting store ID. Non-secret resumable checkpoints live in ignored
+`.point-index/`. Repeating the same completed revision does not upload it again.
+There is no public indexing endpoint. Indexing may incur OpenAI charges; it does
+not delete older documents. Manage obsolete files and stores in OpenAI Storage.
+After an ambiguous network failure, inspect OpenAI Storage before retrying.
+
+### Data and verification
+
+The platform and terminal share a fund roster but have separate datasets. Only Alpha has detailed terminal
+holdings; other terminal funds get their own headline figures. Positions are
+partial and some example figures conflict. Answers must identify conflicts,
+cite sections and avoid inventing risk calculations. Recommendations use the
+supplied sizing and triggers; they cannot approve or execute trades.
+
+`build-data.js` generates `server/portfolio-data.json` at build time from the
+source datasets and adapters. `chat-core.js` handles OpenAI/retrieval and owner
+indexing; `chat-ui.js` sends visitor questions to `/api/chat`. Responses use
+`store: false`, which does not mean zero retention by OpenAI. Index documents
+persist until deleted.
+
+Run `npm test` for mocked API checks. Run `node tests/browser-preview.cjs` and
+open `http://127.0.0.1:4186/app.html` for a clearly labeled mock UI preview that
+uses the real local route with a mocked upstream. Neither command needs a real
+key or makes paid requests. Prior browser-only live tests verified indexing and
+answers; the new server route requires configured environment variables for a
+live deployment check.
+
+Official references: [OpenAI authentication](https://developers.openai.com/api/reference/overview),
+[Vercel functions](https://vercel.com/docs/functions),
+[Vercel environment variables](https://vercel.com/docs/environment-variables).
 
 ---
 
@@ -157,12 +171,12 @@ automatically as `index.html`.
 | Host | How |
 |------|-----|
 | **Netlify** | Drag the `dist` folder onto the Netlify dashboard |
-| **Vercel** | `vercel deploy dist` (or point a project at it) |
+| **Vercel** | Deploy the repository root; root `vercel.json` builds `dist` plus the chat function |
 | **GitHub Pages** | Commit `dist/` contents to the Pages branch/root |
 | **Cloudflare Pages** | Set the output directory to `dist` |
 | **S3 / any web server** | Copy both files to the web root |
 
-No server, no environment variables, no runtime needed.
+Static-only hosts serve the pages. The shared chatbot needs the Vercel function and server environment variables described above.
 
 ---
 
