@@ -188,6 +188,65 @@ button,input,select,textarea{font-family:inherit}
 .btn.md{padding:8px 12px}
 .btn.sm{padding:4px 9px;font-size:11px}
 .ac-foot .meta{margin-left:auto;font-size:10.5px;color:var(--muted)}
+.ac-h .sp{flex:1}
+.ud{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none;box-shadow:0 0 0 3px var(--accent-weak)}
+.own{font-size:10.5px;color:var(--muted);white-space:nowrap}
+.own.me{color:var(--accent);font-weight:600}
+.acard:focus-visible,.btn:focus-visible,.al-stat:focus-visible,.seg button:focus-visible,.al-sec-h:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.acard.done{background:var(--panel-2)}
+.acard.done .ac-ttl,.acard.done .ac-m{opacity:.55}
+.acard.done.crit,.acard.done.warn,.acard.done.opp{border-left-color:var(--line-2)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+/* alert center */
+.al-hero{display:flex;align-items:center;gap:20px;flex-wrap:wrap;background:#101828;color:#fff;border-radius:var(--r-lg);padding:18px 20px;margin-bottom:14px}
+.al-hero .eb{font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:#98a2b3}
+.al-hero h2{margin:5px 0 3px;font-size:19px;font-weight:700;letter-spacing:-.3px}
+.al-hero p{margin:0;font-size:12.5px;color:#d0d5dd}
+.al-stats{display:flex;margin-left:auto;flex-wrap:wrap}
+.al-stat{display:flex;flex-direction:column;gap:3px;min-width:112px;padding:6px 18px;text-align:left;background:none;border:none;border-left:1px solid rgba(255,255,255,.14);color:#fff;font-family:var(--sans);cursor:pointer;border-radius:4px;transition:.12s}
+.al-stat:hover{background:rgba(255,255,255,.07)}
+.al-stat.on{background:rgba(255,255,255,.12);box-shadow:inset 0 -2px 0 #fff}
+.al-stat.static{cursor:default}.al-stat.static:hover{background:none}
+.al-stat .n{font-size:18px;font-weight:700}
+.al-stat .l{display:flex;align-items:center;gap:6px;font-size:11px;color:#d0d5dd}
+.al-stat .l i{width:6px;height:6px;border-radius:50%}
+.al-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 13px}
+.al-note{flex:1;min-width:240px;font-size:12px;color:var(--muted)}
+.al-note b{color:var(--ink)}
+.al-note a,.al-empty a{color:var(--accent);font-weight:600;cursor:pointer}
+.al-search{display:flex;align-items:center;gap:7px;border:1px solid var(--line-2);border-radius:var(--r);padding:6px 10px;color:var(--muted);width:230px;cursor:text}
+.al-search:focus-within{border-color:var(--accent)}
+.al-search input{border:none;outline:none;flex:1;min-width:0;font-family:var(--sans);font-size:12px;background:none;color:var(--ink)}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:12px;font-weight:500;padding:6px 11px;border-radius:var(--r);border:1px solid var(--line-2);background:var(--panel);color:var(--ink-2);cursor:pointer}
+.seg button:hover{border-color:var(--muted-2)}
+.seg button .c{font-size:10.5px;font-weight:600;color:var(--muted);background:#f2f4f7;border-radius:10px;padding:0 6px;min-width:18px;text-align:center}
+.seg button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.seg button.on .c{background:rgba(255,255,255,.22);color:#fff}
+.al-active{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin:0 2px 10px}
+.al-active b{color:var(--ink)}
+.lnk{background:none;border:none;color:var(--accent);font-weight:600;cursor:pointer;font-family:var(--sans);font-size:12px;padding:0 4px}
+.al-sec{overflow:hidden}
+.al-sec-h{display:flex;align-items:center;gap:9px;width:100%;padding:12px 15px;background:var(--panel);border:none;border-bottom:1px solid var(--line);cursor:pointer;font-family:var(--sans);color:var(--ink);text-align:left}
+.al-sec.shut .al-sec-h{border-bottom:none}
+.al-sec-h:hover{background:var(--panel-2)}
+.al-sec-h h3{font-size:13.5px;font-weight:600;margin:0}
+.al-sec-h .sp{flex:1}
+.al-dot{width:8px;height:8px;border-radius:50%}
+.al-hint{font-size:11px;color:var(--muted)}
+.al-chev{color:var(--muted);transition:transform .15s}
+.al-sec.shut .al-chev{transform:rotate(-90deg)}
+.al-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:14px}
+.al-grid .acard{margin:0;display:flex;flex-direction:column}
+.al-grid .ac-foot{margin-top:auto}
+.al-empty{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:40px 20px;font-size:12.5px}
+.al-empty b{font-size:14px}
+.al-empty .btn{margin-top:6px}
+.al-empty-ic{width:38px;height:38px;border-radius:50%;background:var(--pos-weak);color:var(--pos);display:grid;place-items:center;font-size:17px;font-weight:700;margin-bottom:4px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);display:flex;align-items:center;gap:16px;background:var(--ink);color:#fff;padding:10px 14px;border-radius:var(--r-lg);font-size:12.5px;box-shadow:var(--sh-lg);opacity:0;pointer-events:none;transition:.2s;z-index:120}
+.toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.toast button{background:none;border:none;color:#9db2ff;font-weight:600;font-family:var(--sans);font-size:12.5px;cursor:pointer;padding:0}
+@media(max-width:1100px){.al-grid{grid-template-columns:1fr}.al-stats{margin-left:0;width:100%}.al-stat:first-child{border-left:none;padding-left:0}.al-search{width:100%}}
 
 /* tables */
 .tbl-wrap{overflow-x:auto}
@@ -353,7 +412,7 @@ table.t.lite th.c,table.t.lite td.c{text-align:center}
       <div class="nav-lab">Workspace</div>
       <a data-v="command" class="on"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Command center</a>
       <a data-v="decisions"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>Decisions<span class="cnt">4</span></a>
-      <a data-v="alerts"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>Alert center<span class="cnt">7</span></a>
+      <a data-v="alerts"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>Alert center<span class="cnt">4</span></a>
       <div class="nav-lab">Analyze</div>
       <a data-v="portfolio"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2M2 13h20"/></svg>Portfolio</a>
       <a data-v="risk"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Risk</a>
