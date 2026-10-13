@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="chat.css">
 </head>
 <body data-theme="dark">
 
@@ -358,8 +359,8 @@
     <section class="view" id="view-brief">
       <div class="brief-head">
         <div>
-          <div class="eyebrow" id="brief-eyebrow">Morning Brief · Monday, Oct 7, 2026 · composed by Point Conductor at 05:58 ET</div>
-          <h1 class="h1" id="brief-title">Overnight: tokenized semis gapped down. CPI tomorrow. <span class="orange">Trim semis before open.</span></h1>
+          <div class="eyebrow" id="brief-eyebrow">Morning Brief · Alpha Fund · Demo data · For the investment discussion</div>
+          <h1 class="h1" id="brief-title">Start with mandate headroom. <span class="orange">Then decide which risks are worth retaining.</span></h1>
         </div>
         <div class="brief-actions">
           <button class="btn ghost">Export PDF</button>
@@ -370,26 +371,23 @@
 
       <div class="brief-wrap">
         <article class="brief-main">
-          <h3 class="h3">What changed overnight</h3>
-          <p id="brief-overnight">Tokenized NVDA, AMD and SMH traded <b>−2.3% to −2.9%</b> on weekend venues (xStocks, Ondo). Options skew on SMH is now the steepest in 60 days. BTC funding spiked to +0.082%, open interest +18%, consistent with crowded longs — COIN and MSTR exposure at risk Monday.</p>
+          <h3 class="h3">The view for the desk</h3>
+          <p id="brief-overnight">The weaker semiconductor indications and crowded crypto positioning deserve attention because both affect exposures already in the fund. The first priority is to review the projected mandate breach; the next is to decide how much inflation-event risk to retain. Treat the weekend prices as signals to confirm at the cash open.</p>
 
-          <h3 class="h3">Agent findings</h3>
+          <h3 class="h3">What deserves a closer look</h3>
           <ul class="brief-list" id="brief-findings">
-            <li><span class="tag red">Risk</span> Beta-net projected <b>63.1%</b> at open vs. IMA cap 60%. Trim <b>NVDA 12%</b> + <b>SMH Nov 215/205 put spread</b>.</li>
-            <li><span class="tag red">Macro</span> CPI tomorrow 08:30 ET. Hot-print scenario (+0.4% MoM core) = <b>−38 bps</b> NAV. Suggest ladder: 10Y DV01 hedge 0.6× book.</li>
-            <li><span class="tag gold">Flows</span> META crowding score <b>92</b> (top decile). HF ownership +7pts QoQ. De-grossing risk if VIX breaks 22.</li>
-            <li><span class="tag gold">Earnings</span> JPM reports Thu — supplier read-across for V, MA. Tone model suggests cautious guidance (confidence 71%).</li>
-            <li><span class="tag gold">Digital</span> Tokenized AAPL basis −1.9%; arb desk could add; depth thin on Securitize.</li>
-            <li><span class="tag red">PnL</span> MSFT contributing <b>−24 bps</b> MTD · alpha half-life expired, flagged for trim.</li>
-            <li><span class="tag red">Pos Intel</span> NVDA thesis drift <b>↑</b>: insider sales $220M + activist 13D (Elliot).</li>
-          </ul>
+<li><span class="tag red">Risk</span> Projected opening exposure is <b>63.1% against the 60% limit</b>. Compare a partial NVDA reduction with a semiconductor hedge, and confirm which combination restores adequate headroom.</li>
+<li><span class="tag red">Macro</span> The hot-CPI scenario implies a loss of <b>38 basis points</b>. Price the rate hedge against that downside and the upside it would give away if the release is benign.</li>
+<li><span class="tag gold">Flows</span> META crowding could make an exit harder if investors sell together. Review the position size and cost of protection while liquidity is available.</li>
+<li><span class="tag red">Research</span> Ask the MSFT analyst to refresh the forward return case and the NVDA analyst to assess the new filings. Recent losses and headlines are reasons to review conviction, not conclusions on their own.</li>
+</ul>
 
-          <h3 class="h3">The three decisions for today</h3>
+          <h3 class="h3">Decisions to discuss</h3>
           <ol class="brief-ol" id="brief-decisions">
-            <li>Approve the <b>Risk & Guideline</b> card trimming NVDA 12%. Alpha cost 6bps, headroom restored, IMA clean.</li>
-            <li>Layer CPI hedge via <b>Macro agent</b> ladder. Pre-trade what-if shows &lt;2bps carry.</li>
-            <li>Halve <b>META</b> or buy OTM Dec put spread to pre-empt de-grossing.</li>
-          </ol>
+<li>Ask Risk to compare the proposed NVDA trim and semiconductor protection. Choose a response only after checking the resulting mandate headroom.</li>
+<li>Agree the portfolio loss the desk is willing to accept through CPI, then decide whether the proposed rate hedge offers value at the quoted cost.</li>
+<li>Review META sizing with the covering analyst. Compare retaining the position, reducing it, and buying protection against the strength of the thesis.</li>
+</ol>
         </article>
 
         <aside class="brief-side">
@@ -1179,6 +1177,9 @@
   <div class="drawer-inner" id="drawer-inner"><!-- populated by JS --></div>
 </aside>
 
+<script src="chat-config.js"></script>
+<script src="chat-core.js"></script>
+<script src="chat-ui.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

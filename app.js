@@ -408,7 +408,7 @@
       </div>`;
   }
 
-  /* ---- AI summaries (per fund × per agent) ---- */
+  /* ---- Decision briefs: recommendation, evidence, and a question for the desk ---- */
   const agentMeta = {
     risk:{n:'Risk & Guideline Agent',i:'🛡',sq:'red'},
     tech:{n:'Technical Signals Agent',i:'📈',sq:'red'},
@@ -421,82 +421,247 @@
     macro:{n:'Macro & Regime Agent',i:'🌍',sq:'gold'},
     digital:{n:'Digital Assets & Tokenization Agent',i:'◉',sq:'gold'}
   };
-  const aiSummaries = {
+  // Each entry is [recommendation, why it matters, decision to discuss].
+  // Copy describes the illustrative fund snapshot, not live analysis or human approval.
+  const decisionBriefs = {
     alpha:{
-      risk:['Beta-adjusted net <b>63.1%</b> vs. <b>60% IMA cap</b> — breach probability <b>71%</b> at open.','Restoring set: trim <b>NVDA 12%</b> + SMH put spread; alpha cost just 6 bps.','VaR 99% <b>$14.3M</b> (1.15% NAV); semis 28% vs 30% cap.','Stress −5% equities / +50bp 10Y = <b>−$23.4M</b>.','Days-to-liquidate 2.4 at 20% ADV — inside the 5-day limit.','9 IMA rules: 1 breach, 3 on watch, 5 clear.'],
-      tech:['1 critical, 4 warnings; NVDA RSI <b>72</b> with bearish MACD divergence.','TSLA <b>0.3 ATR</b> from trailing stop; RSI divergence 5d.','MSFT 50-DMA fading below 200 — bearish cross forming.','MSTR volume z-score <b>+2.9σ</b>, extended.','AAPL, GOOGL, AMZN trends intact — no action.','Alerts tiered Critical/Warning to PM and CIO.'],
-      pnl:['Day +34 bps; YTD <b>+18.4%</b> vs. bench +9.7%.','60% stock-specific; top NVDA/META/UBER, drags MSTR/COIN.','Hit rate 62%, W/L 1.84, alpha half-life 14d.','MSFT half-life expired (−24 bps) — trim candidate.','Momentum & quality factors positive.','MSFT at 18% risk-budget flagged for reallocation.'],
-      ir:['October LP letter v3 (92% ready) — +18.4% YTD narrative.','Marketing-Rule pre-check: 2 soft flags remaining.','DDQ library 142 Q&A; 3 refreshed this week.','Q3 risk-transparency report scheduled Oct 15.','September tear sheets sent to 142 LPs.','Castle Peak prospect DDQ (68 Q) approved.'],
-      pos:['<b>3 thesis-drift alerts</b>: NVDA (med), MSFT (high), UNH (med).','NVDA: Elliott 13D + <b>$220M insider sales</b>.','MSFT: Azure deceleration contradicts the thesis.','Catalysts: CPI (Tue), JPM (Wed), LMRX (Thu).','24h news: META positive (EU ruling), NVDA negative.','Revisions: UBER/ANET positive, WBA negative.'],
-      research:['503 names scored; top long <b>UBER (0.89)</b>.','SPOT #2, ANET #3; new IPO LMRX #4 of 38.','Lowest shorts: WBA 0.14, HOG 0.13.','Ranges: UBER 1d 82.4–85.1, 5d 80.0–89.2.','Explainable quality/momentum/revisions scoring.','CLSK (0.78) — crypto-β long with momentum.'],
-      flows:['META crowding <b>92</b>; NVDA 88 (top decile).','Viking cut MSFT 40%; Berkshire added UNH.','ETF flows: SPY +$3.1B, IWM −$0.9B.','IBIT (BTC) +$1.4B — crypto inflows rising.','Aligned with you: UBER, CRM.','De-gross risk if VIX breaks 22.'],
-      earnings:['JPM Thu tone <b>−0.21</b> — read-across V/MA/AXP.','NFLX +0.34 (raised); MSFT −0.42 (hedging up).','META social sentiment <b>68/14</b> positive.','6 prints this week; 112 transcripts parsed.','Guidance-change detector active.','QoQ tone shift tracked per name.'],
-      macro:['Late-cycle, tightening; CPI 3.1%, core PCE 2.8%.','Hot CPI (+0.4% core) = <b>−38 bps NAV</b>.','Fed funds 4.75%; 2 cuts priced by March.','Position betas across 10Y, DXY, WTI, VIX.','Scenario: 10Y +50bp = −$9.4M.','Hedge ladder (0.6× DV01) queued for 1.8 bps.'],
-      digital:['Crypto exposure via <b>COIN/MSTR/HOOD</b> (equity β).','BTC funding +0.082% — hedge the equity-crypto β.','Tokenized basis signals weekend gap for semis.','Crypto-β 17% of book vs 20% cap.','MSTR/COIN put-spread queued, checked by Risk.','24/7 coverage ahead of the Monday open.']
+      risk:[
+        'Make room under the investment mandate before adding risk.',
+        'The projected opening exposure is <b>63.1% against a 60% limit</b>. That makes restoring headroom the first discussion for the desk. A partial NVDA reduction with a semiconductor hedge is worth comparing with a larger outright trim.',
+        'Ask Risk to compare both options in the scenario view. Which restores enough headroom while retaining the positions you still have conviction in? Confirm the effect before approving a trade.'
+      ],
+      tech:[
+        'Review the vulnerable positions before changing the whole book.',
+        'NVDA is stretched and its momentum is weakening; TSLA is close to its trailing stop. These signals suggest reviewing position size and exit levels, while leaving the stronger trends alone. They do not, by themselves, invalidate the investment theses.',
+        'Recheck the NVDA trim alongside the risk brief, and agree how to handle TSLA if its stop is reached. Would a smaller position serve the thesis better than a tighter stop?'
+      ],
+      pnl:[
+        'Put MSFT through a fresh conviction review before committing more risk.',
+        'The fund is up <b>18.4% year to date</b>, but MSFT has detracted while using 18% of the risk budget. The question is whether the expected return still justifies that allocation, rather than whether a recent loser should automatically be sold.',
+        'Ask the covering analyst what could change the earnings outlook and over what horizon. Compare holding the position with a partial trim; keep the allocation only if the forward case supports it.'
+      ],
+      ir:[
+        'Finish the evidence and disclosure checks before circulating the LP letter.',
+        'The October draft has a clear performance story, but <b>two review flags remain</b>. Investors should understand both what drove the gains and the risks still in the portfolio, rather than receive a list of returns without context.',
+        'Have the reporting owner resolve the flags and reconcile the performance exhibits. Ask whether the letter explains the current risk decisions plainly enough for an investor to challenge them.'
+      ],
+      pos:[
+        'Bring MSFT back to the investment discussion; keep NVDA and UNH under review.',
+        'Slower Azure growth challenges the MSFT thesis. NVDA insider sales and the activist filing also warrant a closer look, but those headlines alone do not establish that the business case has changed.',
+        'Ask each covering analyst to separate new evidence from market noise. What would change the valuation, position size, or exit condition? Record that answer before deciding whether to reduce exposure.'
+      ],
+      research:[
+        'Take UBER into diligence as a candidate for available risk budget.',
+        'UBER leads the research ranking, with SPOT and ANET also screening well. That is a useful starting point for investigation, but a high score does not tell us whether the current price or portfolio fit is attractive.',
+        'Compare the upside case, downside case, and overlap with existing holdings. Would a small starter position improve the book after the exposure issue is resolved?'
+      ],
+      flows:[
+        'Review whether META and NVDA are sized for a crowded exit.',
+        'Both names sit near the top of the crowding measures. Shared ownership can amplify selling when funds reduce risk together, even if the company outlook remains sound.',
+        'Compare a modest reduction with the cost of protection. Decide what change in volatility or liquidity would trigger action, rather than treating crowding alone as a sell signal.'
+      ],
+      earnings:[
+        'Use the next bank results to challenge the consumer assumptions in the book.',
+        'The JPM tone estimate points to a more cautious outlook, which could matter for the payments holdings. It is a model signal ahead of the release, not confirmed guidance.',
+        'Ask the analyst covering V and MA which comments on spending and credit would change the thesis. Verify the reporting calendar and revisit the positions after the actual results.'
+      ],
+      macro:[
+        'Price protection around CPI before choosing how much risk to carry through it.',
+        'The hot-inflation scenario implies a <b>38 basis point portfolio loss</b>. A partial interest-rate hedge may soften that outcome, but it will cost carry and can also reduce gains if the release is benign.',
+        'Compare the unhedged and hedged outcomes, including the cost if nothing happens. Agree the downside the fund is willing to accept before selecting the hedge size.'
+      ],
+      digital:[
+        'Treat the crypto-linked equities as a shared risk when reviewing protection.',
+        'COIN, MSTR, and HOOD connect the equity book to crypto sentiment. Elevated funding suggests leveraged investors could unwind together, while tokenized share prices offer an early, imperfect warning of a cash-market gap.',
+        'Review the combined exposure before assessing the proposed put spread. Confirm prices and liquidity in the underlying market; a thin weekend quote is not enough reason to trade.'
+      ]
     },
     global:{
-      risk:['Book DV01 <b>long</b> — 10Y +50bp = <b>−$9.4M</b>; CPI is the key risk.','Net 38% vs 50% cap; gross 142% — ample headroom.','VaR 99% <b>$9.8M</b> (1.16% NAV); rate-vol dominates.','Hedge ladder (0.6× DV01) restores neutrality for 1.8 bps.','FX gap risk: USD/JPY intervention above 158.','Commodity tail: crude −10% = −$3.1M.'],
-      tech:['Gold RSI <b>74</b> after +6.2% MTD — overbought, take partial.','10Y future momentum breaking down — trend short confirmed.','DXY coiling at range highs; breakout watch.','Crude backwardation steepening — roll yield positive.','Copper MACD turning up.','Signals on futures/ETF proxies, ranked by $ at risk.'],
-      pnl:['Day −12 bps; YTD <b>+11.2%</b>.','Gold +88 and equity-index lead; rates −54 the drag.','Attribution dominated by <b>macro factor</b>, not single names.','FX detracting (−28); commodities +36.','Hit rate 57%, W/L 1.41.','Duration positioning the main swing into CPI.'],
-      ir:['October letter frames <b>+11.2% YTD</b> macro positioning.','Emphasis on rate/FX risk management into the print.','DDQ: duration & leverage questions refreshed.','Derivatives-use disclosure updated for the futures book.','Monthly tear sheet in review.','Scenario-PnL exhibit added for LPs.'],
-      pos:['Catalyst watch is <b>macro-driven</b>: CPI, ECB minutes, BOJ.','China stimulus headline lifting FXI/EM.','OPEC+ commentary a crude swing factor.','Fed-speak calendar mapped to the rate book.','Treasury auction schedule tracked (3Y today).','FX-intervention headlines monitored.'],
-      research:['Cross-asset ranking: <b>gold & EM</b> screen top.','Rate regime favors value/short-duration equities.','Commodity momentum: crude and copper positive.','DXY model signals USD fade into cuts.','Scenario ranges on futures (ES, GC, CL).','Ideas tuned to the macro thesis.'],
-      flows:['CFTC <b>CoT</b>: spec longs crowded in gold & crude.','Rate-vol sellers positioned short — unwind risk.','EM inflows turning positive on China stimulus.','USD net-short building.','Bond-fund flows into duration.','Positioning-squeeze alerts on commodities.'],
-      earnings:['Earnings are <b>second-order</b>; macro prints dominate.','Bank earnings read-through to the rate/credit view.','Commodity-producer guidance informs crude/copper.','Central-bank communications parsed like transcripts.','Consumer-health signals from retailer prints.','Tone model applied to Fed/ECB speeches.'],
-      macro:['Macro is the <b>core book</b> — regime drives everything.','CPI tomorrow: hot = −$4.78M; cold = +$6.1M.','Curve steepener + USD-short the primary expression.','Fed-funds-future path: 2 cuts by March.','Commodity-rate correlation regime elevated.','DV01 ladder centrally managed here.'],
-      digital:['Crypto as a <b>macro-liquidity</b> gauge for the book.','Stablecoin supply +$1.4B — risk-on signal.','BTC–DXY and BTC–rates correlations tracked.','Minimal direct crypto exposure; monitoring only.','Gold vs BTC store-of-value rotation watched.','On-chain flows as a sentiment input.']
+      risk:[
+        'Focus the risk discussion on interest rates ahead of CPI.',
+        'The book has room under its exposure limits, but a <b>50 basis point rise in the 10-year yield implies a $9.4M loss</b> in the stress scenario. Being inside a limit does not make this concentration comfortable.',
+        'Compare a partial rate hedge with reducing the underlying positions. Agree how much event risk to retain, and review the yen short separately for intervention risk.'
+      ],
+      tech:[
+        'Consider taking some profit in gold while retaining the core thesis.',
+        'Gold has gained <b>6.2% this month</b> and looks stretched on the technical measures. That supports a sizing discussion, rather than an automatic exit; the longer-term case may still hold.',
+        'Compare a partial reduction with holding through CPI. Set the conditions for rebuilding the position, and check whether the move in Treasury futures reinforces the rate-risk concern.'
+      ],
+      pnl:[
+        'Review whether the rate position still earns its place in the book.',
+        'Gold and equity-index exposure are supporting the month while rates and FX detract. The fund remains up <b>11.2% year to date</b>, but that aggregate result can hide how much the next outcome depends on duration.',
+        'Ask the rates analyst to restate the thesis and the evidence that would disprove it. Separate a deliberate event position from an exposure the team has simply carried forward.'
+      ],
+      ir:[
+        'Explain the portfolio choices behind the return in the next investor letter.',
+        'The <b>11.2% year-to-date gain</b> needs context: what gold contributed, why rates detracted, and how the team is managing the next inflation release. The scenario exhibit can make those trade-offs easier to understand.',
+        'Reconcile the attribution and derivatives disclosures before sign-off. Does the letter explain both why the positions remain and what would cause the team to change them?'
+      ],
+      pos:[
+        'Assign a clear response plan to the macro catalysts that can change the book.',
+        'CPI, central-bank communication, and intervention headlines can affect several positions at once. China stimulus and OPEC commentary also need to be assessed against the specific EM and commodity theses.',
+        'Have each analyst name the release or policy change that would alter their view. Prioritize the rate and yen exposures, and distinguish confirmed policy from headline speculation.'
+      ],
+      research:[
+        'Test the EM opportunity against the existing macro exposures before adding.',
+        'Gold and EM lead the cross-asset screen, and China stimulus supports further investigation. An attractive ranking may still add to the same rate or dollar sensitivity already driving the portfolio.',
+        'Compare the opportunity with the current gold allocation under both inflation outcomes. What new source of return would the position add, and at what entry price?'
+      ],
+      flows:[
+        'Check the exit plan for gold and crude before increasing either position.',
+        'Speculative positioning is crowded in both markets. Positive EM inflows are encouraging, but flow momentum can reverse; it should support the investment case rather than replace it.',
+        'Review available liquidity and the effect of a positioning unwind. Would a smaller allocation leave more flexibility if the macro view is right but the market moves against it first?'
+      ],
+      earnings:[
+        'Use company results to test the macro view where they offer direct evidence.',
+        'Bank commentary can inform the credit outlook, while producers and retailers can shed light on demand. These are supporting inputs for this fund; the inflation and policy releases remain the more direct catalysts.',
+        'Ask analysts to bring only findings that challenge a portfolio assumption. Would weaker consumer demand or producer guidance change the rate or commodity positions?'
+      ],
+      macro:[
+        'Decide the acceptable CPI loss before settling on a hedge.',
+        'The curve and dollar positions express a view on the policy path. Their outcome depends on the inflation surprise, so one forecast is less useful than comparing the hot and cold scenarios already shown below.',
+        'Review the rate hedge across both outcomes, including its carry. Agree what part of the macro conviction to retain and what result would prompt a reassessment.'
+      ],
+      digital:[
+        'Use crypto liquidity as a supporting signal for the macro discussion.',
+        'Stablecoin issuance and Bitcoin flows may help interpret risk appetite, but this fund has minimal direct crypto exposure. These observations alone do not justify adding a new asset class to the book.',
+        'Look for confirmation in the dollar, rates, and broader flows. Does the crypto signal strengthen the existing thesis, or is it moving for reasons specific to that market?'
+      ]
     },
     neutral:{
-      risk:['Net exposure <b>4%</b> — beta-neutral, inside the ±10% band.','Gross 210% across <b>44 pairs</b>; single-pair cap 6%.','VaR 99% <b>$6.1M</b> (0.39% NAV) — lowest of the complex.','Factor exposures style-neutral; low momentum/size tilt.','Short-leg borrow watch: NVO at 180bp.','Market shock −5% = −$1.8M (largely hedged).'],
-      tech:['Pair spreads tracked vs 60-day z — PG/CL at <b>+2.1σ</b>.','LLY/NVO pair mean-reverting toward fair value.','V/MA spread tightening — momentum favoring V.','No single-name stop triggers (hedged legs).','Volume anomalies clean across pairs.','Technicals used for pair timing, not direction.'],
-      pnl:['Day +9 bps; YTD <b>+7.8%</b> — low vol, steady.','PnL is <b>pair convergence</b>: pharma +52, staples +41.','Tech pair −18 the main drag.','Hit rate 64%, W/L 1.22 — high consistency.','Factor PnL ≈ 0 by design (beta-neutral).','Staples pair add flagged on a 2.1σ spread.'],
-      ir:['October letter: <b>+7.8% YTD</b>, low-beta consistency story.','Marketing-Rule clean; Sharpe/pair-hit-rate exhibits added.','DDQ: market-neutral construction & borrow questions.','Factor-neutrality attestation included.','Tear sheet highlights the 0.39% VaR.','Investor-call deck drafted.'],
-      pos:['Pair-level catalysts: both legs’ earnings dates aligned.','NVO borrow-fee spike flagged on the short leg.','No single-name thesis drift (hedged construction).','Dividend/ex-dates checked for pair carry.','Index-rebalance flow watch for pairs.','Event-neutrality maintained across pairs.'],
-      research:['Ranking drives <b>pair selection</b>, not direction.','Top pairs: LLY/NVO, V/MA by score spread.','Factor-balanced candidates only.','Borrow-availability screen on short legs.','Reversion ranges modeled per pair.','New pair idea: COST/WMT spread widening.'],
-      flows:['Pair-level crowding: both legs’ HF ownership tracked.','NVO short interest rising — borrow pressure.','Smart-money aligned on the V/MA tilt.','13F pair-overlap screen is clean.','ETF-rebalance flows mapped to pairs.','De-gross risk low (market-neutral).'],
-      earnings:['<b>Pair-aligned</b> earnings dates keep the book event-neutral.','LLY vs NVO guidance comparison drives the tilt.','V vs MA tone spread informs pair weight.','Hedging-language delta between legs flagged.','Post-earnings drift modeled per pair.','No naked single-name event risk.'],
-      macro:['Macro impact is <b>minimized by design</b> (net 4%).','CPI-scenario NAV impact < ±8 bps.','Rate sensitivity near zero across pairs.','Regime shifts affect borrow/financing, not direction.','Factor-neutrality holds through the print.','Hedge overlay only for residual beta.'],
-      digital:['Near-zero crypto exposure — <b>monitoring only</b>.','Tokenized-equity basis used as an arb reference.','Crypto-β of any hedge leg is checked.','24/7 risk alerts for residual exposure.','No directional digital-asset bets.','Stablecoin-depeg watch for cash management.']
+      risk:[
+        'Keep the low market exposure, but review the cost of maintaining the pairs.',
+        'Net exposure is <b>4%, within the ±10% band</b>. That leaves directional headroom, but gross exposure and rising NVO borrow costs still matter: a balanced pair can lose money through financing or a change in the relationship.',
+        'Review borrow, liquidity, and pair concentration before adding size. If the NVO short is reduced, check the long leg too so the adjustment does not introduce an unintended market bet.'
+      ],
+      tech:[
+        'Investigate the wider PG/CL spread before treating it as an entry.',
+        'The pair is <b>2.1 standard deviations from its recent average</b>. That may offer a convergence opportunity, but a statistical gap is only useful if the economic relationship remains intact.',
+        'Check for fresh news and changes in relative earnings expectations. Consider an addition only after confirming the thesis, borrow availability, and balance between the two legs.'
+      ],
+      pnl:[
+        'Review the lagging technology pair while preserving the sources of convergence gains.',
+        'Pharma and staples are contributing while the technology pair detracts. The <b>7.8% year-to-date return</b> supports the strategy so far, but does not establish that every pair still has a sound convergence case.',
+        'Ask the pair owner what should close the gap and when. Compare the expected gain after financing with the cost of waiting before retaining or reallocating the risk.'
+      ],
+      ir:[
+        'Explain how the fund makes money without implying that neutral means risk-free.',
+        'The investor story is steady pair convergence with limited market exposure. Borrow costs, liquidity, and a breakdown in a pair relationship still deserve explanation alongside the <b>7.8% year-to-date gain</b>.',
+        'Have the reporting owner check the neutrality and risk exhibits against the book. Can an investor understand both the source of returns and the circumstances in which the strategy could lose?'
+      ],
+      pos:[
+        'Revisit the economics of LLY/NVO as the short becomes more expensive.',
+        'NVO borrow has risen to <b>180 basis points</b>, which reduces the return available from convergence. The same review should consider both companies and their event calendars; holding two legs does not remove company-specific risk.',
+        'Compare holding, resizing both legs, and exiting the pair after financing costs. Confirm the earnings and dividend dates before deciding that the event exposure is balanced.'
+      ],
+      research:[
+        'Prioritize pair ideas that remain attractive after borrow and factor checks.',
+        'LLY/NVO and V/MA screen well on relative scores, while COST/WMT deserves investigation. A score gap is a research lead, not proof that the two prices will converge.',
+        'Ask for a concrete convergence catalyst and a reason the gap exists. Compare the expected return after financing, and reject candidates that depend on an unintended market or sector bet.'
+      ],
+      flows:[
+        'Review crowding on each leg, especially the NVO short.',
+        'Rising short interest can make borrow harder to obtain and an exit more expensive. A low net market exposure does not protect the fund from a squeeze in one side of a pair.',
+        'Confirm borrow availability and the liquidity of both legs. Decide how the pair would be resized if the short becomes costly, without assuming the long can be left unchanged.'
+      ],
+      earnings:[
+        'Prepare a joint earnings review for both sides of each pair.',
+        'Relative guidance from LLY/NVO and V/MA can change the convergence case. Similar reporting dates help organize the review, but do not guarantee that the two earnings reactions will offset each other.',
+        'Agree which difference in guidance would justify a tilt or an exit. Check the actual release timing and review the residual exposure if only one leg moves sharply.'
+      ],
+      macro:[
+        'Retain the neutral stance while checking what a macro shock could still disturb.',
+        'The illustrated CPI scenarios have a small direct portfolio impact. Financing, borrow costs, and changing relationships between the legs can still matter even when the market sensitivity is close to zero.',
+        'Review those indirect risks before paying for a broad market hedge. Use an overlay only if the residual exposure warrants it, and recheck neutrality after any pair adjustment.'
+      ],
+      digital:[
+        'Keep digital assets as a monitoring input for this mandate.',
+        'Direct crypto exposure is near zero. Tokenized share prices may provide a reference, but differences in liquidity and trading hours can make an apparent discount difficult to capture.',
+        'Check whether any existing leg has material crypto sensitivity. Investigate a basis opportunity only if settlement, costs, and the mandate support it; there is no need to create a directional position.'
+      ]
     },
     digital:{
-      risk:['Crypto-β <b>71%</b> vs 75% cap — nearing the limit.','24/7 VaR <b>$11.2M</b> (3.52% NAV) — highest of the funds.','BTC −15% + funding spike = <b>−$6.1M</b>.','Exchange & stablecoin-depeg alerts active round the clock.','MSTR/COIN beta concentrated; put-spread queued.','Weekend gap-risk mapped before the Monday open.'],
-      tech:['CLSK <b>−4.2%</b> breaking 200-day — stop hit, miners leading lower.','BTC momentum rolling over with funding +0.082%.','SOL +22% MTD — momentum accelerating, add on pullback.','MSTR volume z <b>+2.9σ</b>; squeeze risk both ways.','tNVDA/tAAPL basis signals a weekend gap.','24/7 signal engine — nights and weekends covered.'],
-      pnl:['Day −2.1%; YTD <b>+34.1%</b> — highest return, highest vol.','SOL +74 and BTC +44 lead; miners −62 the drag.','Tokenized −31, exchanges −38 detracting today.','Hit rate 51%, W/L 1.96 — fat-tailed winners.','Stablecoin carry +3.','CLSK flagged for exit after the 200-day break.'],
-      ir:['October letter: <b>+34.1% YTD</b>, 24/7 digital-assets mandate.','Custody, tokenized-asset & crypto-risk disclosures front-loaded.','DDQ: digital-asset governance Q&A expanded.','On-chain transparency exhibit for LPs.','Volatility/risk framing emphasized.','Tear sheet notes the 3.52% VaR.'],
-      pos:['24/7 catalyst radar: token unlocks, ETF flows, exploits.','SEC/CFTC action calendar monitored.','COIN pre-announce 16:30; MSTR capital-raise watch.','On-chain whale-wallet & exchange-flow alerts.','Stablecoin mint/burn as a liquidity gauge.','Weekend headline coverage (desk unstaffed).'],
-      research:['Top-10 coin ranking: <b>SOL</b> leads on momentum.','Tokenized-equity basis opportunities screened.','Miners (CLSK) ranked low on the breakdown.','BTC/ETH ETF-flow momentum positive.','Defined-risk structures sized to budget.','24/7 ranking refresh.'],
-      flows:['Spot <b>BTC ETF +$1.4B</b>, ETH +$0.2B.','Stablecoin mint +$1.4B — liquidity rising.','Exchange net-flows: outflows (bullish).','OI +18% — leverage crowding.','Whale wallets accumulating.','De-gross trigger on funding + VIX.'],
-      earnings:['COIN & MSTR prints are the key equity-crypto reads.','COIN pre-announce 16:30 today.','Miner (CLSK) cost-guidance watched.','Exchange-volume commentary a demand signal.','Crypto-treasury updates (MSTR BTC/share).','Social sentiment bot-filtered on top coins.'],
-      macro:['<b>BTC–Nasdaq correlation</b> regime elevated.','Macro risk-off = crypto-β drawdown; CPI watched.','Real-rate moves drive BTC as a duration proxy.','USD liquidity & stablecoin supply tracked.','Fed path feeds crypto risk appetite.','24/7 macro-event monitor (weekends included).'],
-      digital:['Core mandate: BTC <b>$101,842</b>, ETH $3,842, SOL top mover.','Funding +0.082%, OI +18% — crowded longs.','Tokenized tNVDA −2.81%, tAAPL −1.86% basis.','MSTR 1.42× / COIN 0.86× BTC-β bridge.','Liquidation clusters 98–99k; stablecoin mint +$1.4B.','24/7 VaR, exchange & depeg alerts live.']
+      risk:[
+        'Create more room below the crypto exposure limit before adding to winners.',
+        'Crypto sensitivity is <b>71% against a 75% cap</b>, with concentration in MSTR and COIN. The proposed protection deserves review, but it should not be assumed to solve the exposure limit or exchange-liquidity risks.',
+        'Compare reducing a position with buying the put spread under the downside scenarios. Confirm the remaining exposure and available liquidity before considering another addition.'
+      ],
+      tech:[
+        'Review the CLSK stop before considering a new SOL allocation.',
+        'CLSK has broken its 200-day trend, while SOL remains a strong performer. The immediate question is whether to reduce the weaker position; chasing the winner first could add risk while the fund is close to its cap.',
+        'Confirm the stop policy and executable market prices, then assess the effect of a reduction. Revisit a SOL entry only after checking the remaining risk budget and funding conditions.'
+      ],
+      pnl:[
+        'Separate the gains in the major coins from the losses in the equity-linked positions.',
+        'SOL and BTC are contributing, while miners, exchanges, and tokenized assets detract. The <b>34.1% year-to-date gain</b> should not obscure how much risk the weaker holdings consume during a drawdown.',
+        'Review whether the miners still offer a better forward return than the alternatives. Compare a CLSK reduction with retaining it, using the thesis and risk budget as well as its recent loss.'
+      ],
+      ir:[
+        'Lead the investor discussion with how the fund manages its volatility.',
+        'The <b>34.1% year-to-date return</b> is only part of the story. Investors also need to understand custody, round-the-clock trading, and what happens if an exchange or tokenized market becomes difficult to access.',
+        'Reconcile the return and risk exhibits, and verify the custody disclosures. Make sure the letter explains current protections and their limits before it is circulated.'
+      ],
+      pos:[
+        'Give the desk a response plan for the events that can change holdings outside cash-market hours.',
+        'COIN communication, MSTR financing, token unlocks, and exchange incidents can affect different parts of the book. A large wallet movement is a reason to investigate, not proof of an impending sale.',
+        'Confirm the source and affected holdings for each material alert. Assign a review owner and agree what evidence would justify a position change, including when the desk is unstaffed.'
+      ],
+      research:[
+        'Keep SOL on the candidate list, but resolve the existing risk pressure first.',
+        'SOL leads the coin ranking while miners look weaker. That relative strength supports further work; it does not remove the entry-price risk or create additional capacity below the portfolio limit.',
+        'Compare a measured SOL addition with retaining cash after any reduction. Define the entry conditions and downside case before deciding whether the expected gain justifies more exposure.'
+      ],
+      flows:[
+        'Balance the supportive spot flows against the build-up in leverage.',
+        'ETF inflows and stablecoin issuance suggest improving liquidity, but open interest is up <b>18%</b>. Spot demand and crowded leveraged positions can coexist, so the combined signal calls for care with sizing.',
+        'Check whether inflows persist as funding cools. Avoid increasing leverage solely because flows look positive; agree what evidence would indicate an unwind instead.'
+      ],
+      earnings:[
+        'Use the equity-linked results to test whether business performance supports the crypto exposure.',
+        'COIN trading-volume commentary, MSTR financing, and miner cost guidance matter in different ways. A rising coin price does not necessarily improve the economics of every company held.',
+        'Confirm the release times and ask the covering analysts what would change earnings or dilution assumptions. Reassess the relevant position after the evidence arrives, rather than trading on tone alone.'
+      ],
+      macro:[
+        'Review crypto and growth-equity exposure together ahead of CPI.',
+        'The elevated Bitcoin–Nasdaq relationship suggests that a macro sell-off could hit both parts of the book. Rising stablecoin liquidity is supportive, but may not offset a rate or dollar shock.',
+        'Compare the combined downside scenario with the proposed protection. Decide how much shared market risk to carry and what change in the relationship would alter that decision.'
+      ],
+      digital:[
+        'Prepare for a leverage unwind before acting on apparent weekend discounts.',
+        'Elevated funding and open interest suggest crowded longs. Discounts in tokenized shares may flag a difficult cash open, but thin trading and differences in market access can also explain part of the gap.',
+        'Review protection on MSTR and COIN, check exchange liquidity, and confirm underlying prices before acting on the tokenized basis. Keep the position-size decision separate from the monitoring signal.'
+      ]
     }
   };
-  // inject the summary card shell into each agent view once
   Object.keys(agentMeta).forEach(k=>{
     const view=document.getElementById('view-'+k); if(!view) return;
     const head=view.querySelector('.view-head'); if(!head) return;
-    const m=agentMeta[k]; const gold=m.sq==='gold';
-    const el=document.createElement('div');
-    el.className='ai-summary'+(gold?' gold':'');
+    const m=agentMeta[k];
+    const el=document.createElement('section');
+    el.className='decision-brief'+(m.sq==='gold'?' gold':'');
+    el.setAttribute('aria-labelledby', 'decision-title-'+k);
     el.innerHTML=`
-      <div class="ais-head">
-        <div class="ais-icon${gold?' gold':''}">${m.i}</div>
+      <div class="db-head">
+        <div class="db-icon" aria-hidden="true">${m.i}</div>
         <div>
-          <div class="ais-title"><span class="ais-spark">✦</span> AI Summary</div>
-          <div class="ais-sub">Synthesized by the ${m.n} · updated just now</div>
+          <h2 class="db-title" id="decision-title-${k}">Decision brief</h2>
+          <div class="db-sub" id="decision-context-${k}"></div>
         </div>
-        <div class="ais-badge"><span class="ais-dot"></span>live</div>
+        <span class="db-badge">Demo data</span>
       </div>
-      <div class="ais-points" id="ais-points-${k}"></div>`;
+      <div class="db-body" id="decision-body-${k}"></div>`;
     head.insertAdjacentElement('afterend', el);
   });
-  function renderAISummary(fund){
-    const set=aiSummaries[fund]||aiSummaries.alpha;
+  function renderDecisionBriefs(fund){
+    const set=decisionBriefs[fund]||decisionBriefs.alpha;
+    const selected=funds.find(f=>f.id===fund)||funds[0];
     Object.keys(agentMeta).forEach(k=>{
-      const box=document.getElementById('ais-points-'+k); if(!box) return;
-      const gold=agentMeta[k].sq==='gold';
-      const pts=set[k]||aiSummaries.alpha[k]||[];
-      box.innerHTML=pts.map(p=>`<div class="ais-pt${gold?' gold':''}"><span class="pm">▸</span><span>${p}</span></div>`).join('');
+      const box=document.getElementById('decision-body-'+k); if(!box) return;
+      document.getElementById('decision-context-'+k).textContent=selected.name+' · For the investment discussion';
+      const [recommendation, rationale, discussion]=set[k];
+      box.innerHTML=`<h3 class="db-recommendation">${recommendation}</h3>
+        <p class="db-rationale">${rationale}</p>
+        <div class="db-discussion"><h4>For the desk</h4><p>${discussion}</p></div>`;
     });
   }
 
@@ -945,7 +1110,7 @@
   function renderDetail(id){
     renderPositions(id); renderPnl(id);
     renderExposure(id); renderFeed(id); renderPnlMeta(id); renderTopCard(id);
-    renderAISummary(id); renderViews(id); renderPanels(id);
+    renderDecisionBriefs(id); renderViews(id); renderPanels(id);
     renderBrief(id); renderActionCards(id); renderConductor(id);
     if(window.__tagRows) window.__tagRows();
   }
@@ -1288,96 +1453,223 @@
   }
 
   const briefs = {
-    alpha:{
-      eyebrow:'Morning Brief · Monday, Oct 7, 2026 · Alpha Fund · composed by Point Conductor at 05:58 ET',
-      title:'Overnight: tokenized semis gapped down. CPI tomorrow. <span class="orange">Trim semis before open.</span>',
-      approve:'Approve all 2 critical',
-      overnight:'Tokenized NVDA, AMD and SMH traded <b>−2.3% to −2.9%</b> on weekend venues (xStocks, Ondo). Options skew on SMH is now the steepest in 60 days. BTC funding spiked to +0.082%, open interest +18%, consistent with crowded longs — COIN and MSTR exposure at risk Monday.',
-      findings:[
-        ['red','Risk','Beta-net projected <b>63.1%</b> at open vs. IMA cap 60%. Trim <b>NVDA 12%</b> + <b>SMH Nov 215/205 put spread</b>.'],
-        ['red','Macro','CPI tomorrow 08:30 ET. Hot-print scenario (+0.4% MoM core) = <b>−38 bps</b> NAV. Suggest ladder: 10Y DV01 hedge 0.6× book.'],
-        ['gold','Flows','META crowding score <b>92</b> (top decile). HF ownership +7pts QoQ. De-grossing risk if VIX breaks 22.'],
-        ['gold','Earnings','JPM reports Thu — supplier read-across for V, MA. Tone model suggests cautious guidance (confidence 71%).'],
-        ['gold','Digital','Tokenized AAPL basis −1.9%; arb desk could add; depth thin on Securitize.'],
-        ['red','PnL','MSFT contributing <b>−24 bps</b> MTD · alpha half-life expired, flagged for trim.'],
-        ['red','Pos Intel','NVDA thesis drift <b>↑</b>: insider sales $220M + activist 13D (Elliot).']
+  "alpha": {
+    "eyebrow": "Morning Brief · Alpha Fund · Demo data · For the investment discussion",
+    "title": "Start with mandate headroom. <span class=\"orange\">Then decide which risks are worth retaining.</span>",
+    "approve": "Approve all 2 critical",
+    "overnight": "The weaker semiconductor indications and crowded crypto positioning deserve attention because both affect exposures already in the fund. The first priority is to review the projected mandate breach; the next is to decide how much inflation-event risk to retain. Treat the weekend prices as signals to confirm at the cash open.",
+    "findings": [
+      [
+        "red",
+        "Risk",
+        "Projected opening exposure is <b>63.1% against the 60% limit</b>. Compare a partial NVDA reduction with a semiconductor hedge, and confirm which combination restores adequate headroom."
       ],
-      decisions:[
-        'Approve the <b>Risk & Guideline</b> card trimming NVDA 12%. Alpha cost 6bps, headroom restored, IMA clean.',
-        'Layer CPI hedge via <b>Macro agent</b> ladder. Pre-trade what-if shows &lt;2bps carry.',
-        'Halve <b>META</b> or buy OTM Dec put spread to pre-empt de-grossing.'
+      [
+        "red",
+        "Macro",
+        "The hot-CPI scenario implies a loss of <b>38 basis points</b>. Price the rate hedge against that downside and the upside it would give away if the release is benign."
       ],
-      pnl:['−$ 2.14 M','dn','tokenized semis + BTC drag'],
-      head:['0.4 pts','warn','Beta-net vs. IMA 60%'],
-      cal:['<b>08:30</b> Chicago Fed index','<b>10:00</b> Consumer credit','<b>13:00</b> 3Y auction','<b>16:30</b> COIN Q3 pre-announce','<b>Tue 08:30</b> <span class="red">CPI</span>'],
-      ask:['What\'s my worst-case NAV if CPI prints 0.5% MoM core?','<b>−72 bps</b> NAV under the hot-print scenario; drivers: 10Y +18bp, semis −3.4%, growth multiple compression. Macro agent has a hedge ladder queued (cost 1.8bps). <a>Open what-if →</a>']
-    },
-    global:{
-      eyebrow:'Morning Brief · Monday, Oct 7, 2026 · Global Macro Fund · composed by Point Conductor at 05:58 ET',
-      title:'Rates broke 4.40% overnight. CPI is tomorrow. <span class="orange">Hedge duration before the print.</span>',
-      approve:'Approve the 1 critical',
-      overnight:'The 10-year pushed through <b>4.40%</b> after a hot services PPI. Gold extended another <b>+0.9%</b> into overbought territory. USD/JPY tested <b>158</b> with fresh intervention headlines, and a China stimulus package bid <b>FXI +2.2%</b>.',
-      findings:[
-        ['red','Macro','Book DV01 is long into CPI. A +50bp move in the 10-year maps to <b>−$9.4M</b>. The 0.6× ZN ladder cuts the hot-print loss to about <b>−$1.4M</b>.'],
-        ['gold','FX','USD/JPY is sitting on the intervention line. The yen short is <b>−22 bp</b> MTD — trim 25% before a squeeze.'],
-        ['gold','Technical','Gold RSI <b>74</b> after +6.2% MTD. Take 20% off the GC long; keep the real-rate core.'],
-        ['gold','Flows','CFTC specs are crowded long gold and crude. EM ETF flows turned positive on the stimulus headline.'],
-        ['red','PnL','Day is <b>−12 bps</b>. Rates are the drag; gold and the equity index are carrying the month.']
+      [
+        "gold",
+        "Flows",
+        "META crowding could make an exit harder if investors sell together. Review the position size and cost of protection while liquidity is available."
       ],
-      decisions:[
-        'Approve the <b>ZN DV01 ladder</b> at 0.6× book. Carry is 1.8 bps/month.',
-        'Cover <b>25% of the yen short</b> above 158.',
-        'Take a <b>20% partial on gold</b> and leave a bid to add FXI only on a dip.'
+      [
+        "red",
+        "Research",
+        "Ask the MSFT analyst to refresh the forward return case and the NVDA analyst to assess the new filings. Recent losses and headlines are reasons to review conviction, not conclusions on their own."
+      ]
+    ],
+    "decisions": [
+      "Ask Risk to compare the proposed NVDA trim and semiconductor protection. Choose a response only after checking the resulting mandate headroom.",
+      "Agree the portfolio loss the desk is willing to accept through CPI, then decide whether the proposed rate hedge offers value at the quoted cost.",
+      "Review META sizing with the covering analyst. Compare retaining the position, reducing it, and buying protection against the strength of the thesis."
+    ],
+    "pnl": [
+      "−$ 2.14 M",
+      "dn",
+      "tokenized semis + BTC drag"
+    ],
+    "head": [
+      "0.4 pts",
+      "warn",
+      "Beta-net vs. IMA 60%"
+    ],
+    "cal": [
+      "<b>08:30</b> Chicago Fed index",
+      "<b>10:00</b> Consumer credit",
+      "<b>13:00</b> 3Y auction",
+      "<b>16:30</b> COIN Q3 pre-announce",
+      "<b>Tue 08:30</b> <span class=\"red\">CPI</span>"
+    ],
+    "ask": [
+      "What's my worst-case NAV if CPI prints 0.5% MoM core?",
+      "<b>−72 bps</b> NAV under the hot-print scenario; drivers: 10Y +18bp, semis −3.4%, growth multiple compression. Macro agent has a hedge ladder queued (cost 1.8bps). <a>Open what-if →</a>"
+    ]
+  },
+  "global": {
+    "eyebrow": "Morning Brief · Global Macro Fund · Demo data · For the investment discussion",
+    "title": "Make the CPI risk a deliberate choice. <span class=\"orange\">Review duration, then the yen and gold.</span>",
+    "approve": "Approve the 1 critical",
+    "overnight": "Higher yields put the existing rate exposure under pressure, while the yen short faces intervention risk and gold has extended its gains. These call for separate sizing decisions. The CPI discussion should establish how much downside the desk is prepared to carry before choosing a hedge.",
+    "findings": [
+      [
+        "red",
+        "Rates",
+        "A <b>50 basis point rise in the 10-year yield implies a $9.4M loss</b> in the stress case. Compare reducing duration with the proposed partial Treasury hedge."
       ],
-      pnl:['−$ 1.01 M','dn','rates and FX vs. gold'],
-      head:['0.1×','warn','DV01 headroom vs. 1.0× cap'],
-      cal:['<b>08:30</b> <span class="red">CPI</span>','<b>13:00</b> 3Y auction','<b>14:00</b> Fed minutes Thu','<b>Wed</b> ECB minutes','<b>Thu</b> China GDP'],
-      ask:['What does a hot CPI do to this book?','<b>−$4.1M</b> unhedged, about <b>−$1.4M</b> with the 0.6× ladder. The short-rate position wins if the print is hot; gold and EM give some of it back. <a>Open what-if →</a>']
-    },
-    neutral:{
-      eyebrow:'Morning Brief · Monday, Oct 7, 2026 · Market Neutral Fund · composed by Point Conductor at 05:58 ET',
-      title:'The market was a non-event. One pair is stretched. <span class="orange">Add to PG/CL and stay flat.</span>',
-      approve:'No critical cards',
-      overnight:'Index futures did not move the book. Net beta finished at <b>0.04</b>. The PG/CL staples spread widened to <b>+2.1σ</b> with no news on either name, and the NVO borrow fee jumped to <b>180bp</b>.',
-      findings:[
-        ['gold','PnL','PG/CL is the widest it has been in 60 days and there is no catalyst. Adding 15% keeps the pair <b>beta-neutral</b>.'],
-        ['gold','Flows','NVO borrow at <b>180bp</b> is now the expensive leg of LLY/NVO. Review the short before the fee eats the spread.'],
-        ['gold','Research','Estimate revisions favor <b>Visa over Mastercard</b>. Tilt the existing pair; do not add market beta.'],
-        ['red','Risk','Nothing is near a limit. Net <b>4%</b> vs. the ±10% band. Gross 210% is the only number worth watching.']
+      [
+        "gold",
+        "FX",
+        "USD/JPY around 158 raises intervention concerns for the yen short. Consider a partial reduction if the potential squeeze outweighs the remaining upside."
       ],
-      decisions:[
-        'Add <b>15% to the PG/CL pair</b>, matched long and short.',
-        'Cover <b>20% of the NVO short</b> while borrow is 180bp.',
-        'Tilt <b>V/MA toward Visa</b> by the same dollars on each leg.'
+      [
+        "gold",
+        "Gold",
+        "Gold has risen <b>6.2% this month</b> and looks stretched. Taking some profit may preserve flexibility while retaining the core real-rate view."
       ],
-      pnl:['+$ 1.40 M','up','pair convergence'],
-      head:['6 pts','up','Net vs. ±10% band'],
-      cal:['<b>Tue</b> CPI · low book impact','<b>+6d</b> V and MA both report','<b>+12d</b> LLY and NVO','<b>Thu</b> index rebalance preview','<b>Fri</b> borrow-rate review'],
-      ask:['How much does CPI move this book?','Under <b>±8 bps</b>. The pairs are beta-neutral by construction, so the print shows up in financing and borrow, not in direction. <a>Open what-if →</a>']
-    },
-    digital:{
-      eyebrow:'Morning Brief · Monday, Oct 7, 2026 · Digital Assets Fund · composed by Point Conductor at 05:58 ET',
-      title:'Weekend funding spiked and miners broke down. <span class="orange">Hedge crypto-beta before the cash open.</span>',
-      approve:'Approve all 2 critical',
-      overnight:'BTC perp funding hit <b>+0.082%</b> with open interest <b>+18%</b> and liquidation clusters at 98–99k. <b>CLSK broke its 200-day</b> on thin weekend volume. Tokenized NVDA traded <b>−2.8%</b> versus Friday’s NYSE close. SOL is still <b>+22% MTD</b>.',
-      findings:[
-        ['red','Digital','Crowded longs. MSTR and COIN are the equity-beta expression of that funding spike. A defined-risk put spread is queued for <b>$0.6M</b>.'],
-        ['red','Technical','CLSK stop is hit. Cut the <b>$11.1M</b> miner at the open — it is also the cleanest way off the crypto-β cap.'],
-        ['gold','Digital','tNVDA basis <b>−2.8%</b> is a gap warning, not a new thesis. Trim 15% only if the cash open confirms it.'],
-        ['gold','Research','SOL is <b>#1</b> on the coin rank. Add only on a pullback, and only after CLSK is sold.'],
-        ['gold','Flows','Stablecoin mint <b>+$1.4B</b> and exchange outflows are risk-on for BTC and ETH. Hold the majors; do not lever into the funding spike.']
+      [
+        "gold",
+        "Research",
+        "China stimulus makes EM worth revisiting. Check whether an addition would diversify the book or increase the same dollar and rate sensitivities."
+      ]
+    ],
+    "decisions": [
+      "Compare the proposed rate hedge with a smaller underlying position across both CPI outcomes. Confirm carry and acceptable loss before choosing the size.",
+      "Review a partial reduction of the yen short and agree what intervention evidence would prompt a further change.",
+      "Discuss taking some profit in gold. Keep an EM addition conditional on valuation and portfolio fit rather than reacting to the stimulus headline."
+    ],
+    "pnl": [
+      "−$ 1.01 M",
+      "dn",
+      "rates and FX vs. gold"
+    ],
+    "head": [
+      "0.1×",
+      "warn",
+      "DV01 headroom vs. 1.0× cap"
+    ],
+    "cal": [
+      "<b>08:30</b> <span class=\"red\">CPI</span>",
+      "<b>13:00</b> 3Y auction",
+      "<b>14:00</b> Fed minutes Thu",
+      "<b>Wed</b> ECB minutes",
+      "<b>Thu</b> China GDP"
+    ],
+    "ask": [
+      "What does a hot CPI do to this book?",
+      "<b>−$4.1M</b> unhedged, about <b>−$1.4M</b> with the 0.6× ladder. The short-rate position wins if the print is hot; gold and EM give some of it back. <a>Open what-if →</a>"
+    ]
+  },
+  "neutral": {
+    "eyebrow": "Morning Brief · Market Neutral Fund · Demo data · For the investment discussion",
+    "title": "Keep the book balanced. <span class=\"orange\">Test the pair opportunity and the cost of waiting.</span>",
+    "approve": "No critical cards",
+    "overnight": "The wider PG/CL spread may offer an opportunity, but it needs a fresh check of the relationship before adding size. Higher NVO borrow costs make the LLY/NVO review more immediate. Any adjustment should preserve the intended balance of the two legs.",
+    "findings": [
+      [
+        "gold",
+        "Pairs",
+        "PG/CL is <b>2.1 standard deviations from its recent average</b>. Check for changes in the companies or relative earnings expectations before assuming the gap will close."
       ],
-      decisions:[
-        'Approve the <b>MSTR/COIN put spread</b> before the cash open.',
-        'Sell <b>CLSK</b> market-on-open. The 200-day is broken.',
-        'Leave a <b>SOL bid</b> under today’s low, cancelled if funding stays above 0.08%.'
+      [
+        "gold",
+        "Borrow",
+        "NVO borrow has risen to <b>180 basis points</b>. Recalculate the expected pair return after financing and compare it with resizing or exiting."
       ],
-      pnl:['−$ 6.80 M','dn','miners, funding, tokenized gap'],
-      head:['4 pts','warn','Crypto-β 71% vs. 75% cap'],
-      cal:['<b>24/7</b> weekend coverage live','<b>09:30</b> cash open · tNVDA gap','<b>16:30</b> COIN pre-announce','<b>Tue 08:30</b> <span class="red">CPI</span>','<b>Fri</b> SEC crypto roundtable'],
-      ask:['What if BTC drops 15% before I hedge?','About <b>−$6.1M</b> unhedged, closer to <b>−$2.6M</b> on the MSTR/COIN sleeve once the put spread is on. Cutting CLSK does more for the cap than the hedge does. <a>Open what-if →</a>']
-    }
-  };
+      [
+        "gold",
+        "Research",
+        "Revisions favor Visa over Mastercard. Ask whether the difference is already reflected in prices before tilting the pair."
+      ],
+      [
+        "red",
+        "Risk",
+        "Net exposure is <b>4%, within the ±10% band</b>. Preserve that balance, while checking gross exposure and the liquidity of each leg."
+      ]
+    ],
+    "decisions": [
+      "Ask the staples analyst to validate the PG/CL convergence case. Consider a matched addition only if the relationship and available borrow still support it.",
+      "Review LLY/NVO after financing costs. If reducing the short, reassess the long at the same time to avoid an unintended directional position.",
+      "Compare the proposed Visa tilt with keeping V/MA unchanged. Require a clear earnings argument and check the resulting factor exposure."
+    ],
+    "pnl": [
+      "+$ 1.40 M",
+      "up",
+      "pair convergence"
+    ],
+    "head": [
+      "6 pts",
+      "up",
+      "Net vs. ±10% band"
+    ],
+    "cal": [
+      "<b>Tue</b> CPI · low book impact",
+      "<b>+6d</b> V and MA both report",
+      "<b>+12d</b> LLY and NVO",
+      "<b>Thu</b> index rebalance preview",
+      "<b>Fri</b> borrow-rate review"
+    ],
+    "ask": [
+      "How much does CPI move this book?",
+      "Under <b>±8 bps</b>. The pairs are beta-neutral by construction, so the print shows up in financing and borrow, not in direction. <a>Open what-if →</a>"
+    ]
+  },
+  "digital": {
+    "eyebrow": "Morning Brief · Digital Assets Fund · Demo data · For the investment discussion",
+    "title": "Make room for uncertainty. <span class=\"orange\">Review the stop and protection before adding risk.</span>",
+    "approve": "Approve all 2 critical",
+    "overnight": "The funding spike suggests crowded leveraged positions, while the CLSK trend break calls for a stop-policy review. Strength in SOL is worth following, but the fund should settle those existing risks before considering another addition. Confirm weekend indications against executable prices.",
+    "findings": [
+      [
+        "red",
+        "Protection",
+        "MSTR and COIN share exposure to a crypto unwind. Compare the proposed put spread with reducing the positions; check both the premium and remaining portfolio sensitivity."
+      ],
+      [
+        "red",
+        "Technical",
+        "CLSK has broken its 200-day trend. Confirm the stop policy and trading conditions before deciding how to reduce the position."
+      ],
+      [
+        "gold",
+        "Digital",
+        "The tokenized NVDA discount may warn of a weak cash open. Wait for confirmation in the underlying market before treating it as a position-sizing signal."
+      ],
+      [
+        "gold",
+        "Research",
+        "SOL remains a research candidate, and spot flows are supportive. Neither removes the risk from crowded leverage or creates room below the exposure cap."
+      ]
+    ],
+    "decisions": [
+      "Review the proposed MSTR/COIN protection against a direct reduction. Agree the downside to accept and verify the exposure left after either choice.",
+      "Resolve the CLSK stop with the position owner, using executable prices and the existing policy. Check the effect on mandate headroom.",
+      "Revisit SOL only after the risk review. Set entry conditions and a downside case rather than adding solely because it has outperformed."
+    ],
+    "pnl": [
+      "−$ 6.80 M",
+      "dn",
+      "miners, funding, tokenized gap"
+    ],
+    "head": [
+      "4 pts",
+      "warn",
+      "Crypto-β 71% vs. 75% cap"
+    ],
+    "cal": [
+      "<b>24/7</b> weekend coverage live",
+      "<b>09:30</b> cash open · tNVDA gap",
+      "<b>16:30</b> COIN pre-announce",
+      "<b>Tue 08:30</b> <span class=\"red\">CPI</span>",
+      "<b>Fri</b> SEC crypto roundtable"
+    ],
+    "ask": [
+      "What if BTC drops 15% before I hedge?",
+      "About <b>−$6.1M</b> unhedged, closer to <b>−$2.6M</b> on the MSTR/COIN sleeve once the put spread is on. Cutting CLSK does more for the cap than the hedge does. <a>Open what-if →</a>"
+    ]
+  }
+};
   function renderBrief(fund){
     const b=briefs[fund]||briefs.alpha;
     const set=(id,v)=>{const el=document.getElementById(id); if(el) el.textContent=v;};
@@ -1786,6 +2078,7 @@
     renderDetail(id);
     try{ localStorage.setItem('point-fund', id); }catch(e){}
     renderFundMenu();
+    document.dispatchEvent(new Event('point:context'));
   }
   try{ const sa=localStorage.getItem('point-account'); if(sa && ACCOUNTS[sa]) activeAccount=sa; }catch(e){}
   renderFundMenu();
@@ -2040,160 +2333,41 @@
 
   if(window.__tagRows) window.__tagRows();
 
-  /* ============ Ask Point chatbot ============ */
-  (function setupAskPoint(){
-    const fab=document.createElement('button');
-    fab.className='askp-fab'; fab.id='askp-fab';
-    fab.innerHTML='<span class="fab-i">◑</span> Ask Point';
-    const panel=document.createElement('aside');
-    panel.className='askp'; panel.id='askp';
-    panel.innerHTML=`
-      <div class="askp-head">
-        <span class="askp-logo"><svg viewBox="0 0 32 32"><path fill="#fff" d="M16 3C10 3 6 8 6 14c0 4 2 7 5 9v3c0 1 .5 2 2 2h6c1.5 0 2-1 2-2v-3c3-2 5-5 5-9 0-6-5-11-10-11Zm-1 3h2v18h-2V6Z"/></svg></span>
-        <div><div class="askp-ht">Ask Point</div><div class="askp-hs">Agentic intelligence · reads your live book</div></div>
-        <span class="askp-fundtag" id="askp-fundtag">Alpha Fund</span>
-        <button class="askp-x" id="askp-x" aria-label="Close">✕</button>
-      </div>
-      <div class="askp-body" id="askp-body"></div>
-      <div class="askp-sugg" id="askp-sugg"></div>
-      <div class="askp-input">
-        <input id="askp-text" placeholder="Ask about the book…" autocomplete="off"/>
-        <button id="askp-send" aria-label="Send">↑</button>
-      </div>`;
-    document.body.appendChild(fab);
-    document.body.appendChild(panel);
-    const body=panel.querySelector('#askp-body');
-    const sugg=panel.querySelector('#askp-sugg');
-    const input=panel.querySelector('#askp-text');
-    const fundtag=panel.querySelector('#askp-fundtag');
-    let greeted=false;
-
-    const curFund=()=>funds.find(x=>x.id===activeFund)||funds[0];
-    const fD=()=>fundDetail[activeFund]||fundDetail.alpha;
-    const vT=()=>viewTables[activeFund]||viewTables.alpha;
-    const mD=()=>marketData[activeFund]||marketData.alpha;
-    const pD=()=>panelData[activeFund]||panelData.alpha;
-    const topCard=()=>cardIndex[(fundExtra[activeFund]||fundExtra.alpha).topCardId];
-    const strip=s=>(Array.isArray(s)?(s[1]||''):(s||'')).toString().replace(/<[^>]+>/g,'');
-
-    function addMsg(html, who){
-      const el=document.createElement('div');
-      el.className='am '+who; el.innerHTML=html;
-      body.appendChild(el); body.scrollTop=body.scrollHeight;
-      return el;
-    }
-    function typing(){
-      const t=document.createElement('div');
-      t.className='am-typing'; t.innerHTML='<span></span><span></span><span></span>';
-      body.appendChild(t); body.scrollTop=body.scrollHeight; return t;
-    }
-    const SUGG=['How are we doing?','Any limit breaches?','Biggest positions','What should I trim?','What\'s crowded?','Macro outlook'];
-    function renderSugg(){ sugg.innerHTML=SUGG.map(s=>`<span class="askp-chip">${s}</span>`).join(''); }
-    renderSugg();
-    sugg.addEventListener('click',e=>{ const c=e.target.closest('.askp-chip'); if(c){ send(c.textContent); } });
-
-    function answer(qRaw){
-      const q=(qRaw||'').toLowerCase();
-      const f=curFund(), d=fD(), vt=vT(), md=mD(), pd=pD();
-      const has=(...ks)=>ks.some(k=>q.includes(k));
-      const money=v=>`<span class="amv">${v}</span>`;
-      // switch fund
-      for(const fu of funds){
-        const nm=fu.name.toLowerCase().replace(' fund','');
-        if((q.includes('switch')||q.includes('go to')||q.includes('open'))&&(q.includes(nm)||q.includes(fu.id))){
-          selectFund(fu.id);
-          return `Switched to the <b>${fu.name}</b>. The whole workspace now reflects it — AUM ${money(fu.aum)}, day PnL ${money(fu.pnl)}. Ask me anything about this book.`;
-        }
-      }
-      // ticker lookup
-      const tkMatch=(q.toUpperCase().match(/\b[A-Z]{2,5}\b/g)||[]);
-      for(const tk of tkMatch){
-        const p=d.positions.find(x=>x[0].toUpperCase()===tk);
-        if(p){
-          return `<b>${p[0]}</b> — ${p[1]}: ${p[2]==='L'?'long':'short'} ${p[3]}, market value ${money(p[4])} (${p[5]} of book). Day ${money(p[6])}, MTD ${money(p[7])}, beta ${p[8]}. Agent flag: <b>${p[10]}</b>.`;
-        }
-      }
-      if(has('hello','hi ','hey','hi','hola')) return `Hi — I'm <b>Ask Point</b>, watching the <b>${f.name}</b>. I can tell you performance, risk & limits, positions, crowding, macro, or details on any holding. What would you like?`;
-      if(has('help','what can you','what do you do','capab')) return `I read the <b>${f.name}</b>'s live book. Try:<ul><li>"How are we doing?" — performance</li><li>"Any limit breaches?" — risk</li><li>"Biggest positions" / "What should I trim?"</li><li>"What's crowded?" — positioning</li><li>"Macro outlook" — regime & CPI</li><li>Or a ticker, e.g. "${d.positions[0][0]}"</li></ul>`;
-      if(has('which fund','current fund','what fund','where am i')) return `You're viewing the <b>${f.name}</b> (${f.sub}) — AUM ${money(f.aum)}. Switch with the header fund picker, or ask me to "switch to Digital Assets".`;
-      if(has('list fund','what fund','all fund','funds')) return `There are four books:<ul><li><b>Alpha Fund</b> — equity L/S</li><li><b>Global Macro</b> — futures, rates, FX</li><li><b>Market Neutral</b> — paired, beta ≈ 0</li><li><b>Digital Assets</b> — crypto + tokenized</li></ul>Say "switch to <i>name</i>" and everything updates.`;
-      if(has('aum','how big','size of','how much money','assets under')) return `<b>${f.name}</b> runs ${money(f.aum)} in AUM (${f.aumD}).`;
-      if(has('how are we','performance','return','pnl','p&l','doing','profit','up or down')){
-        const k=vt.pnlKpis;
-        return `<b>${f.name}</b> performance — Day ${money(k[0][1])} (${k[0][2]}), MTD ${money(k[1][1])}, QTD ${money(k[2][1])}, YTD ${money(k[3][1])}. Hit rate ${pd.pnlStats[0][1]}, W/L ${pd.pnlStats[1][1]}.`;
-      }
-      if(has('breach','limit','ima','guideline','headroom','over the limit')){
-        const br=vt.riskLimits.find(r=>/BREACH|near/.test(strip(r[5])+strip(r[r.length-1])));
-        if(br){ const tc=topCard();
-          return `⚠️ <b>${strip(br[0])}</b> is at <b>${strip(br[1])}</b> vs. a ${strip(br[2])} limit — breach path ${strip(br[4])}. Recommended: ${tc?tc.body:'see the Risk agent card'}`;
-        }
-        return `All limits are currently within range for the <b>${f.name}</b> — no projected breaches.`;
-      }
-      if(has('var','value at risk','how risky','risk level','downside')){
-        const mag=v=>Math.abs(parseFloat((v||'').replace(/[^\d.]/g,''))||0);
-        const worst=[...pd.stress].sort((a,b)=>mag(b[1])-mag(a[1]))[0];
-        return `<b>${f.name}</b> 1-day 99% VaR is ${money(f.var)} (${f.varD}). Worst stress scenario: <b>${strip(worst[0])}</b> → ${money(strip(worst[1]))}.`;
-      }
-      if(has('net','gross','exposure','leverage','how long')) return `<b>${f.name}</b> exposure: gross/net ${money(f.exp)}. ${f.expD}.`;
-      if(has('biggest','largest','top position','top holding','concentrat','main position')){
-        const ps=d.positions.slice(0,3).map(p=>`<li><b>${p[0]}</b> ${p[4]} (${p[5]})</li>`).join('');
-        return `Top positions in the <b>${f.name}</b>:<ul>${ps}</ul>`;
-      }
-      if(has('trim','sell','reduce','cut','what should i','recommend','action','do now','next best')){
-        const tc=topCard();
-        return tc?`Top action for the <b>${f.name}</b> — <b>${tc.title}</b>. ${tc.body} <br><span class="amv">Open the dashboard card for the full what-if & approval.</span>`:`No critical action right now.`;
-      }
-      if(has('crowd','de-gross','degross','positioning','consensus')){
-        const c=vt.crowding[0];
-        return `Most crowded in the <b>${f.name}</b>: <b>${strip(c[0])}</b> — crowding ${strip(c[1])}${c[2]&&c[2]!=='—'?', ownership '+c[2]:''}. Flag: ${strip(c[c.length-1])}.`;
-      }
-      if(has('macro','cpi','inflation','fed','rate','regime','interest')){
-        const sc=pd.scenario.find(r=>/hot cpi/i.test(r[0]));
-        return `Macro: CPI 3.1% YoY, Fed funds 4.75% (2 cuts priced by March). Book stance: <b>${md.macroKpis[3][1]}</b>. ${sc?'Hot-CPI scenario for this book: '+money(strip(sc[1])):''}.`;
-      }
-      if(has('crypto','bitcoin','btc','ethereum','eth','token','digital asset')){
-        return `Digital read: BTC $101,842 (−2.1%), ETH $3,842 (−3.4%). Perp funding +0.082%, OI +18% — crowded longs. Tokenized tNVDA basis −2.81% vs NYSE. ${activeFund==='digital'?'This book is the Digital Assets fund.':'Your crypto-β here is '+(f.exp)+'.'}`;
-      }
-      if(has('brief','overnight','summary','catch me up','what happened','what\'s new','whats new')){
-        const fe=fundExtra[activeFund]||fundExtra.alpha;
-        const items=fe.feed.slice(0,3).map(x=>`<li>${x[1]}</li>`).join('');
-        return `Overnight for the <b>${f.name}</b> — ${f.cards}, ${f.crit}:<ul>${items}</ul>`;
-      }
-      if(has('thank','thanks','cheers','great','nice','cool')) return `Anytime. Ask me anything else about the book.`;
-      if(has('who are you','what is point','about point')) return `Point is an agentic decision layer — ten specialist agents watch the portfolio and the market, predict what matters, and recommend the next best action. I'm the chat front-end to that team.`;
-      return `I can help with <b>performance</b>, <b>risk & limits</b>, <b>positions</b>, <b>crowding</b>, <b>macro</b>, or a specific <b>ticker</b> for the <b>${f.name}</b>. Try one of the suggestions below, or rephrase.`;
-    }
-
-    function send(text){
-      const t=(text||input.value).trim(); if(!t) return;
-      input.value='';
-      addMsg(strip(t), 'user');
-      const tp=typing();
-      setTimeout(()=>{ tp.remove(); let a; try{ a=answer(t); }catch(e){ a='Sorry — I hit a snag on that one. Try rephrasing, or ask about performance, risk & limits, positions, crowding, macro, or a ticker.'; } addMsg(a, 'bot'); }, 420+Math.random()*320);
-    }
-    function openPanel(prefill){
-      fundtag.textContent=curFund().name;
-      fab.classList.add('hide'); panel.classList.add('open');
-      if(!greeted){ greeted=true;
-        addMsg(`Hi — I'm <b>Ask Point</b>. I'm watching the <b>${curFund().name}</b> and can answer questions about performance, risk, positions, crowding and macro. What would you like to know?`, 'bot');
-      }
-      if(prefill){ send(prefill); } else { setTimeout(()=>input.focus(),120); }
-    }
-    function closePanel(){ panel.classList.remove('open'); fab.classList.remove('hide'); }
-
-    fab.addEventListener('click',()=>openPanel());
-    panel.querySelector('#askp-x').addEventListener('click',closePanel);
-    panel.querySelector('#askp-send').addEventListener('click',()=>send());
-    input.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); send(); } });
-    document.addEventListener('keydown',e=>{ if(e.key==='Escape') closePanel(); });
-
-    // wire existing "Ask Point" buttons + the top search
-    document.querySelectorAll('.btn').forEach(b=>{
-      if(/ask point/i.test(b.textContent)) b.addEventListener('click',ev=>{ ev.preventDefault(); openPanel(); });
+  /* ---- Selected-fund data adapter for the private OpenAI demo ---- */
+  function chatSnapshot(id){
+    const fund=funds.find(f=>f.id===id);
+    if(!fund || !account().funds.includes(id)) throw new Error('Choose an available fund.');
+    const detail=fundDetail[id], tables=viewTables[id], panels=panelData[id];
+    const table=(bodyId,rows)=>({
+      columns:Array.from(document.getElementById(bodyId).closest('table').querySelectorAll('thead th'),th=>th.textContent.trim()),
+      rows:rows.map(row=>row.map(cell=>Array.isArray(cell)?cell[1]:cell))
     });
-    const topSearch=document.querySelector('.search input');
-    if(topSearch) topSearch.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); const v=topSearch.value.trim(); topSearch.value=''; openPanel(v||undefined); } });
-  })();
+    return PointChatCore.clean({surface:'platform',fundId:id,fundName:fund.name,
+      scope:'Static illustrative demo. Partial holdings only, not a live book. Dates are the original sample dates. Displayed market values and percentages may not reconcile with AUM; do not silently repair them. Current and projected figures differ. Conflicting macro scenarios must be identified by source. Unlabeled chart values have no verified unit.',
+      sections:{
+        Overview:{fund,exposures:fundExtra[id].exposure.map(r=>({metric:r[0],value:r[2]})),product:'Point supports an investment discussion with ten specialist agents, decision briefs and illustrative action cards. This chatbot cannot approve or execute trades.'},
+        Positions:{coverage:'Only '+detail.positions.length+' rows are supplied. The display says '+detail.shown+'. The supplied list is not the complete portfolio.',holdings:table('pos-rows',detail.positions),thesisDrift:table('pos-drift',tables.posDrift),news:panels.news,catalysts:panels.cal},
+        Risk:{metrics:tables.riskKpis,limits:table('risk-limits',tables.riskLimits),stressScenarios:panels.stress,proposedWhatIf:{proposal:panels.whatifSelect,results:panels.whatif}},
+        Technical:{signals:table('tech-rows',tables.tech)},
+        Performance:{metrics:tables.pnlKpis,statistics:panels.pnlStats,reviewCandidates:table('pnl-trims',tables.pnlTrims),dayChart:{unit:'unspecified in source',values:detail.pnlDay},monthlyChart:{unit:'unspecified in source',values:detail.pnlNames}},
+        Research:{rankedUniverse:table('research-universe',tables.universe),explanationFor:panels.explainName,factors:panels.explain,explanation:panels.explainTxt},
+        Flows:{crowding:table('flows-crowding',tables.crowding),divergence:panels.divergence,etf:panels.etf},
+        Earnings:{tone:table('earnings-tone',tables.tone),social:panels.social},
+        Macro:{metrics:marketData[id].macroKpis,betas:table('macro-betas',tables.betas),scenarios:panels.scenario},
+        Digital:{bridge:table('digital-bridge',tables.bridge)},
+        Reporting:{letter:marketData[id].irLetter},
+        Briefs:{decisionBriefs:decisionBriefs[id],morningBrief:briefs[id],actionCards:cardsByFund[id],activity:fundExtra[id].feed}
+      }});
+  }
+  const pointChat=window.PointChat.mount({surface:'platform',accountScope:()=>activeAccount,
+    getSnapshot:()=>chatSnapshot(activeFund),getAllSnapshots:()=>allowedFunds().map(f=>chatSnapshot(f.id))});
+  document.querySelectorAll('.btn').forEach(button=>{
+    if(/ask point/i.test(button.textContent)) button.addEventListener('click',event=>{event.preventDefault();pointChat.open();});
+  });
+  const chatSearch=document.querySelector('.search input');
+  if(chatSearch) chatSearch.addEventListener('keydown',event=>{
+    if(event.key==='Enter'){event.preventDefault();const question=chatSearch.value.trim();chatSearch.value='';pointChat.open(question||undefined);}
+  });
 
   /* open from hash */
   const h = (location.hash||'').replace('#','');

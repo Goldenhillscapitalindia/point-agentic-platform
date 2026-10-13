@@ -267,13 +267,33 @@ function renderCommand(){
     return `<div class="mvr" data-pos="${m.tk}"><span class="tk">${m.tk}</span><div class="mvr-track"><span class="mvr-b" style="${pos?'left:0':'right:0'};width:${w}%;background:${pos?'var(--pos)':'var(--crit)'}"></span></div><span class="pnl ${cls(m.v)}">${sgn(m.v)}M</span></div>`;}).join('');
   const movers=`<div class="card"><div class="card-h"><h3>Portfolio movers · today</h3><span class="sp"></span><span class="tag">$ PnL</span></div><div class="card-b" style="padding:12px 13px">${mvHtml}</div></div>`;
 
-  // morning brief
-  const brief=`<div class="card"><div class="card-h"><h3>Point Morning Brief</h3><span class="sp"></span><button class="btn gh sm">Export</button></div><div class="card-b">
+  // Briefs follow the selected mandate; detailed positions currently cover Apex only.
+  const deskBriefs={
+    apex:[
+      ['The view for the desk','Review semiconductor concentration before adding risk. The scenario projects exposure above the internal cap, so compare a measured reduction with protection and verify the resulting headroom.'],
+      ['Why it matters','The sample book shows semiconductor exposure at <b>24.8% against a 27% cap</b>. CPI could compound that concentration risk. The projected breach is a scenario to discuss, not a confirmed market outcome.'],
+      ['Conviction to revisit','Ask the AMD analyst whether the margin and pricing evidence changes the investment case. Review UNH and CRM on their own evidence rather than treating every thesis alert as a sell instruction.'],
+      ['For the desk','Agree the downside the fund is willing to carry through CPI. Review a META addition only after checking portfolio fit and resolving the concentration concern.']
+    ],
+    helios:[
+      ['The view for the desk','Start with the macro positions that depend most on the next policy or inflation release. Ask the desk to compare retaining that conviction with reducing event exposure.'],
+      ['Evidence to request','The selected fund has headline figures, but the detailed position dataset in this demo covers Apex. Obtain a Helios position and sensitivity breakdown before proposing a specific hedge.'],
+      ['For the desk','Agree which rate or currency move would challenge the thesis, then compare the available responses using fund-specific scenarios.']
+    ],
+    vertex:[
+      ['The view for the desk','Focus the discussion on pair economics, financing, and balance between the legs. Low net exposure alone is not enough to conclude that the risks offset.'],
+      ['Evidence to request','The selected fund has headline figures, but the detailed position dataset in this demo covers Apex. Request the Vertex pair and borrow breakdown before recommending a resize.'],
+      ['For the desk','Ask each pair owner what should close the spread and what it costs to wait. Review both legs together before changing the allocation.']
+    ],
+    nova:[
+      ['The view for the desk','Review the ability to reduce exposure during a fast crypto move before considering new positions. Discuss liquidity and custody alongside the expected return.'],
+      ['Evidence to request','The selected fund has headline figures, but the detailed position dataset in this demo covers Apex. Obtain Nova holdings, venue balances, and sensitivities before selecting protection.'],
+      ['For the desk','Agree the acceptable downside and the response to an exchange disruption. Size any proposed hedge against the verified Nova exposures.']
+    ]
+  };
+  const brief=`<div class="card"><div class="card-h"><h3>Point Morning Brief</h3><span class="sp"></span><span class="tag">Demo data · for discussion</span><button class="btn gh sm">Export</button></div><div class="card-b">
     <div class="brief">
-      <p><b>Overnight.</b> Semiconductor beta drifted higher as NVDA (+4.2%) and AVGO extended; net exposure rose 38% → 42%. Tokenized-equity venues traded semis −2.3% into the weekend. CPI prints tomorrow 08:30 ET — the dominant near-term risk.</p>
-      <p><b>Portfolio risk.</b> VaR 7.1% → 7.4%. Semiconductor concentration 24.8% vs 27% internal cap — projected 28.3% on current drift (<span class="neg">63% 1-day breach</span>). Beta-adjusted net and technology exposure both moved SAFE → WARNING.</p>
-      <p><b>Thesis.</b> AMD alignment fell 86% → 61% (margin + capex + pricing); position uses 98% of its risk budget for −4% return — flagged TRIM. UNH and CRM also show new contradicting evidence.</p>
-      <p><b>Opportunities.</b> META ranks Alpha 84 with HIGH portfolio fit — adds non-semiconductor upside. TSMC read-across is positive for NVDA and AVGO.</p>
+      ${deskBriefs[FUND].map(([heading,copy])=>`<p style="margin:0 0 12px"><b>${heading}.</b> ${copy}</p>`).join('')}
     </div></div></div>`;
 
   Q('#view-command').innerHTML=`
@@ -475,30 +495,8 @@ function renderAlerts(){
 }
 
 /* ---- ASK ---- */
-const ANSWERS={
-  default:{a:'Portfolio VaR increased from 7.1% to 8.2% today.',keys:[['VaR today','8.2%'],['VaR yesterday','7.1%'],['Change','+1.1%']],
-    drv:[['New NVDA position','+0.42%'],['Market volatility','+0.31%'],['Correlation increase','+0.18%'],['FX','+0.11%'],['Other','+0.08%']],
-    pos:'NVDA, AVGO, AMD are the largest VaR contributors.',next:'Open Risk → VaR attribution, or run a Scenario.',src:'Point Quant Engine v2.4 · calculated 09:41 ET'}
-};
 function renderAsk(){
-  const suggest=['Why did portfolio risk increase today?','Which 3 positions lose most if rates rise 50bp?','What can I sell to cut gross 20% with minimum alpha loss?','Which earnings next week create >$1M implied PnL risk?','Why is AMD a warning?','Show my largest crowding risks.'];
-  Q('#view-ask').innerHTML=`<div class="pg-head"><div><div class="pg-title">Ask Point</div><div class="pg-sub">Ask the book — answers are structured, sourced and actionable</div></div></div>
-    <div class="chatlog" id="chatlog">
-      <div class="q-bub">Why did VaR increase today?</div>
-      ${answerBubble(ANSWERS.default)}
-    </div>
-    <div class="suggest">${suggest.map(s=>`<span class="sg" data-ask="${s}">${s}</span>`).join('')}</div>
-    <div class="ask-bar"><input id="ask-in" placeholder="Ask about risk, exposure, PnL, catalysts, thesis…"/><button class="btn pri" id="ask-send">Ask</button></div>`;
-}
-function answerBubble(A){
-  return `<div class="a-bub">
-    <div class="a-sec"><div class="a-lab">Answer</div><div class="a-big">${A.a}</div></div>
-    <div class="a-sec"><div class="a-lab">Key numbers</div><div class="two" style="gap:0">${A.keys.map(k=>`<div class="a-drv"><span>${k[0]}</span><span class="num">${k[1]}</span></div>`).join('')}</div></div>
-    <div class="a-sec"><div class="a-lab">Drivers</div>${A.drv.map(d=>`<div class="a-drv"><span>${d[0]}</span><span class="num">${d[1]}</span></div>`).join('')}</div>
-    <div class="a-sec"><div class="a-lab">Positions</div><div style="font-size:12.5px;color:var(--ink-2)">${A.pos}</div></div>
-    <div class="a-sec"><div class="a-lab">Recommended next step</div><div style="font-size:12.5px;color:var(--ink-2)">${A.next}</div></div>
-    <div class="a-sec" style="display:flex;gap:16px;align-items:center;background:var(--panel-2)"><span class="mut" style="font-size:11px">Source: ${A.src}</span><span class="sp" style="flex:1"></span><button class="btn gh sm" data-goto="risk">Open Risk</button><button class="btn gh sm" data-goto="scenarios">Run scenario</button></div>
-  </div>`;
+  Q('#view-ask').innerHTML='<div class="pg-head"><div><div class="pg-title">Ask Point</div><div class="pg-sub">Discuss the selected fund using the data available in this demo.</div></div></div><div class="card"><div class="card-b"><p>Connect your own OpenAI key in the private chat. Answers use this fund’s snapshot and, optionally, a fund-specific vector search.</p><p>Detailed positions are available for Apex only. Ask Point will explain missing data for the other institutional funds.</p><div class="ask-bar"><input id="ask-in" placeholder="Ask about risk, exposure or a holding…"/><button class="btn pri" id="ask-send">Open chat</button></div></div></div>';
 }
 
 /* ---- REPORTS ---- */
@@ -591,6 +589,7 @@ function selectFund(id){
   Q('#fs-name').textContent=f.name; Q('#fs-sub').textContent=f.sub;
   try{localStorage.setItem('point-inst-fund',id);}catch(e){}
   renderAll(); renderFundMenu();
+  document.dispatchEvent(new Event('point:context'));
 }
 const RENDER={command:renderCommand,portfolio:renderPortfolio,risk:renderRisk,guidelines:renderGuidelines,
   opportunities:renderOpps,scenarios:renderScenarios,pnl:renderPnl,decisions:renderDecisions,
@@ -635,11 +634,7 @@ function openLimit(name){
     <div class="drw-sl">Source clause</div><div class="prov" style="color:var(--ink-2)"><b>Document:</b> ${r[1].includes('IMA')?'Investment Management Agreement':'Risk Policy'}<br/><b>Section:</b> ${r[1].split('§')[1]||'—'}<br/><b>Machine rule:</b> <span class="mono">metric ${r[0].toLowerCase().replace(/[^a-z]/g,'_')} ≤ ${r[4]}</span><br/><b>Approved by:</b> Jane Smith (Compliance)<br/><b>Version:</b> 3 · Sep 21, 2026</div>
     <div style="margin-top:14px;display:flex;gap:8px"><button class="btn pri" data-goto="scenarios">Run what-if</button><button class="btn gh">View positions</button></div></div>`);
 }
-function askQ(q){
-  const log=Q('#chatlog');
-  log.insertAdjacentHTML('beforeend',`<div class="q-bub">${q}</div>`+answerBubble(ANSWERS.default));
-  log.lastElementChild.scrollIntoView({behavior:'smooth'});
-}
+function askQ(q){ pointChat.open(q); }
 Q('#view-ask').addEventListener?.('click',()=>{}); // noop guard
 document.addEventListener('click',e=>{
   if(e.target.id==='ask-send'){const inp=Q('#ask-in');if(inp&&inp.value.trim()){askQ(inp.value.trim());inp.value='';}}
@@ -652,4 +647,20 @@ Q('#ask-mini')?.addEventListener('click',()=>go('ask'));
 const ROLES=[['PM · Apex L/S','command'],['Head of Risk','risk'],['CIO','portfolio'],['Compliance','guidelines'],['Investor Relations','reports']];
 let roleI=0;
 Q('#role-pick').onclick=()=>{roleI=(roleI+1)%ROLES.length;Q('#rp-role').textContent=ROLES[roleI][0];go(ROLES[roleI][1]);};
+function terminalSnapshot(id){
+  const full=id==='apex';
+  return PointChatCore.clean({surface:'terminal',fundId:id,fundName:FUNDS[id].name,
+    scope:'Illustrative static terminal dataset. Not the same funds as the platform app. Only Apex has detailed positions. Other terminal screens reuse Apex placeholders; never attribute those to another fund. Conflicting demo figures must be reported, not reconciled by guessing. Relative dates are historical sample labels.',
+    sections:{
+      Overview:{fund:FUNDS[id],coverage:full?'Apex detailed sample is available.':'Only headline fund figures are available. Holdings, risk limits, attribution and scenarios are missing for this fund.'},
+      ...(full?{
+        Positions:{columns:['ticker','company','side','quantity','marketValueUSDmillions','NAVpercent','dayPnLUSDmillions','MTDPnLUSDmillions','YTDPnLUSDmillions','VaRContributionPercent','riskBudgetPercent','riskUsedPercent','sector','factor','crowding','liquidationDays','catalyst','health','beta','returnPercent'],rows:APEX},
+        Risk:{health:HEALTH.apex,changes:CHANGED.apex,limits:{columns:['rule','source','current','warning','limit','headroom','oneDayBreachProbability','threeDayBreachProbability','fiveDayBreachProbability','status'],rows:LIMITS}},
+        Decisions:{cards:CARDS,history:DECISIONS},
+        Research:{columns:['ticker','alphaScore','portfolioFit','momentum','quality','revisions','institutionalFlow','sentiment','fiveDayRangePercent','catalyst','crowding','rationale'],rows:OPPS}
+      }:{})
+    }});
+}
+const pointChat=window.PointChat.mount({surface:'terminal',accountScope:()=> 'demo',
+  getSnapshot:()=>terminalSnapshot(FUND),getAllSnapshots:()=>Object.keys(FUNDS).map(terminalSnapshot)});
 })();
