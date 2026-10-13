@@ -31,7 +31,7 @@
       <nav class="side-nav">
         <a href="#dashboard" class="side-item active" data-view="dashboard"><span class="dot"></span>Dashboard</a>
         <a href="#brief" class="side-item" data-view="brief"><span class="dot"></span>Morning Brief</a>
-        <a href="#cards" class="side-item" data-view="cards"><span class="dot"></span>Action Cards<span class="badge">7</span></a>
+        <a href="#cards" class="side-item" data-view="cards"><span class="dot"></span>Action Cards<span class="badge" id="cards-badge">7</span></a>
         <a href="#conductor" class="side-item" data-view="conductor"><span class="dot"></span>Point Conductor</a>
       </nav>
     </div>
@@ -355,23 +355,23 @@
     <section class="view" id="view-brief">
       <div class="brief-head">
         <div>
-          <div class="eyebrow">Morning Brief · Monday, Oct 7, 2026 · composed by Point Conductor at 05:58 ET</div>
-          <h1 class="h1">Overnight: tokenized semis gapped down. CPI tomorrow. <span class="orange">Trim semis before open.</span></h1>
+          <div class="eyebrow" id="brief-eyebrow">Morning Brief · Monday, Oct 7, 2026 · composed by Point Conductor at 05:58 ET</div>
+          <h1 class="h1" id="brief-title">Overnight: tokenized semis gapped down. CPI tomorrow. <span class="orange">Trim semis before open.</span></h1>
         </div>
         <div class="brief-actions">
           <button class="btn ghost">Export PDF</button>
           <button class="btn ghost">Send to Teams</button>
-          <button class="btn primary">Approve all 2 critical</button>
+          <button class="btn primary" id="brief-approve">Approve all 2 critical</button>
         </div>
       </div>
 
       <div class="brief-wrap">
         <article class="brief-main">
           <h3 class="h3">What changed overnight</h3>
-          <p>Tokenized NVDA, AMD and SMH traded <b>−2.3% to −2.9%</b> on weekend venues (xStocks, Ondo). Options skew on SMH is now the steepest in 60 days. BTC funding spiked to +0.082%, open interest +18%, consistent with crowded longs — COIN and MSTR exposure at risk Monday.</p>
+          <p id="brief-overnight">Tokenized NVDA, AMD and SMH traded <b>−2.3% to −2.9%</b> on weekend venues (xStocks, Ondo). Options skew on SMH is now the steepest in 60 days. BTC funding spiked to +0.082%, open interest +18%, consistent with crowded longs — COIN and MSTR exposure at risk Monday.</p>
 
           <h3 class="h3">Agent findings</h3>
-          <ul class="brief-list">
+          <ul class="brief-list" id="brief-findings">
             <li><span class="tag red">Risk</span> Beta-net projected <b>63.1%</b> at open vs. IMA cap 60%. Trim <b>NVDA 12%</b> + <b>SMH Nov 215/205 put spread</b>.</li>
             <li><span class="tag red">Macro</span> CPI tomorrow 08:30 ET. Hot-print scenario (+0.4% MoM core) = <b>−38 bps</b> NAV. Suggest ladder: 10Y DV01 hedge 0.6× book.</li>
             <li><span class="tag gold">Flows</span> META crowding score <b>92</b> (top decile). HF ownership +7pts QoQ. De-grossing risk if VIX breaks 22.</li>
@@ -382,7 +382,7 @@
           </ul>
 
           <h3 class="h3">The three decisions for today</h3>
-          <ol class="brief-ol">
+          <ol class="brief-ol" id="brief-decisions">
             <li>Approve the <b>Risk & Guideline</b> card trimming NVDA 12%. Alpha cost 6bps, headroom restored, IMA clean.</li>
             <li>Layer CPI hedge via <b>Macro agent</b> ladder. Pre-trade what-if shows &lt;2bps carry.</li>
             <li>Halve <b>META</b> or buy OTM Dec put spread to pre-empt de-grossing.</li>
@@ -392,17 +392,17 @@
         <aside class="brief-side">
           <div class="side-card">
             <div class="sc-lab">Overnight PnL (est.)</div>
-            <div class="sc-val dn">−$ 2.14 M</div>
-            <div class="sc-sub">tokenized semis + BTC drag</div>
+            <div class="sc-val dn" id="brief-pnl">−$ 2.14 M</div>
+            <div class="sc-sub" id="brief-pnl-sub">tokenized semis + BTC drag</div>
           </div>
           <div class="side-card">
             <div class="sc-lab">Headroom to limits</div>
-            <div class="sc-val warn">0.4 pts</div>
-            <div class="sc-sub">Beta-net vs. IMA 60%</div>
+            <div class="sc-val warn" id="brief-head">0.4 pts</div>
+            <div class="sc-sub" id="brief-head-sub">Beta-net vs. IMA 60%</div>
           </div>
           <div class="side-card">
             <div class="sc-lab">Today's calendar</div>
-            <ul class="cal">
+            <ul class="cal" id="brief-cal">
               <li><b>08:30</b> Chicago Fed index</li>
               <li><b>10:00</b> Consumer credit</li>
               <li><b>13:00</b> 3Y auction</li>
@@ -413,8 +413,8 @@
           <div class="side-card dark">
             <div class="sc-lab white">Ask Point</div>
             <div class="chat">
-              <div class="cb user">What's my worst-case NAV if CPI prints 0.5% MoM core?</div>
-              <div class="cb bot"><b>−72 bps</b> NAV under the hot-print scenario; drivers: 10Y +18bp, semis −3.4%, growth multiple compression. Macro agent has a hedge ladder queued (cost 1.8bps). <a>Open what-if →</a></div>
+              <div class="cb user" id="brief-ask-q">What's my worst-case NAV if CPI prints 0.5% MoM core?</div>
+              <div class="cb bot" id="brief-ask-a"><b>−72 bps</b> NAV under the hot-print scenario; drivers: 10Y +18bp, semis −3.4%, growth multiple compression. Macro agent has a hedge ladder queued (cost 1.8bps). <a>Open what-if →</a></div>
             </div>
           </div>
         </aside>
@@ -429,10 +429,10 @@
           <h1 class="h2">Decide. Don't just read.</h1>
         </div>
         <div class="filters">
-          <button class="chip-btn active">All <span>14</span></button>
-          <button class="chip-btn">Critical <span class="red">2</span></button>
-          <button class="chip-btn">Warning <span class="orange">5</span></button>
-          <button class="chip-btn">Ideas <span class="gold">7</span></button>
+          <button class="chip-btn active">All <span id="cards-n-all">8</span></button>
+          <button class="chip-btn">Critical <span class="red" id="cards-n-crit">2</span></button>
+          <button class="chip-btn">Warning <span class="orange" id="cards-n-warn">3</span></button>
+          <button class="chip-btn">Ideas <span class="gold" id="cards-n-idea">3</span></button>
         </div>
       </div>
       <div class="cards-grid" id="cards-grid"></div>
@@ -442,10 +442,10 @@
     <section class="view" id="view-conductor">
       <div class="view-head">
         <div>
-          <div class="eyebrow">Point Conductor · event bus</div>
-          <h1 class="h2">Ten agents sharing one view of the book.</h1>
+          <div class="eyebrow" id="conductor-eyebrow">Point Conductor · event bus</div>
+          <h1 class="h2" id="conductor-title">Ten agents sharing one view of the book.</h1>
         </div>
-        <div class="chip gold">24/7 · running on Portfolio Knowledge Graph</div>
+        <div class="chip gold" id="conductor-chip">24/7 · running on Portfolio Knowledge Graph</div>
       </div>
 
       <div class="conductor">
@@ -500,6 +500,11 @@
         </div>
       </div>
 
+      <div class="card" id="conductor-focus">
+        <div class="card-head"><h3 class="card-title" id="conductor-focus-title">Today's composition</h3><span class="chip ghost" id="conductor-focus-meta">Alpha Fund</span></div>
+        <div id="conductor-focus-body" style="font-size:13.5px;line-height:1.55;color:var(--txt-2)"></div>
+      </div>
+
       <div class="grid-2">
         <div class="card">
           <div class="card-head"><h3 class="card-title">Event bus · last 60s</h3><span class="chip ghost">live</span></div>
@@ -507,7 +512,7 @@
         </div>
         <div class="card">
           <div class="card-head"><h3 class="card-title">Agent handoffs today</h3><span class="chip ghost">cross-agent triggers</span></div>
-          <div class="matrix">
+          <div class="matrix" id="handoff-matrix">
             <div class="mx-head"><span></span><span>Risk</span><span>Tech</span><span>PnL</span><span>Pos</span><span>Macro</span><span>Flows</span></div>
             <div class="mx-row"><span class="mx-lab">Macro</span><span class="c on">8</span><span class="c">1</span><span class="c on">4</span><span class="c">2</span><span class="c self">—</span><span class="c on">3</span></div>
             <div class="mx-row"><span class="mx-lab">Flows</span><span class="c on">5</span><span class="c">0</span><span class="c">2</span><span class="c on">3</span><span class="c">1</span><span class="c self">—</span></div>

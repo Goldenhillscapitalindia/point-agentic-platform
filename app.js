@@ -196,7 +196,7 @@
   };
 
   /* top-card detail for non-alpha funds (alpha reuses its existing card) */
-  const fundCards = [
+  const fundCards = { global: [
     {lvl:'CRIT', agent:'Macro & Regime', id:'AC-G-001', ts:'5 min ago',
      title:'10Y UST breaking 4.40% — book DV01 at risk into CPI',
      metrics:[['$4.1M','At risk','red'],['0.6×','Hedge ratio',''],['1.8 bps','Carry cost',''],['−$9.4M','If 10Y +50bp','']],
@@ -210,6 +210,46 @@
        timeline:[{t:'Rates breakout flagged',s:'06:02 · 10Y > 4.40%',st:'done'},{t:'DV01 ladder sized',s:'06:09 · 0.6×',st:'done'},{t:'Awaiting your approval',s:'now',st:'active'}],
        reasoning:'A probability-weighted CPI grid shows asymmetric downside; the ladder cuts hot-print loss by two-thirds for under 2 bps/month carry.'
      }},
+    {lvl:'WARN', agent:'Macro & Regime', id:'AC-G-002', ts:'22 min ago',
+     title:'USD/JPY intervention risk above 158 — trim the short',
+     metrics:[['158','Line in sand','warn'],['−25%','Trim size',''],['−22 bp','MTD on JPY','bad'],['$8.9M','Short notional','']],
+     body:'BOJ headline risk is rising with spot pinned above 158. Trim the yen short by a quarter before the print.',
+     detail:{
+       summary:'The yen short is the book’s main intervention risk. Spot is testing <b>158</b>, the level desks treat as the BOJ line, and the position is already a <b>−22 bp</b> MTD drag.',
+       drivers:[{t:'Spot above 158',s:'Intervention rhetoric picked up overnight',w:'main'},{t:'Short notional $8.9M',s:'Largest single FX gap in the book',w:'size'},{t:'CPI tomorrow',s:'A hot print can gap USD/JPY further — or reverse it',w:'event'}],
+       trades:[{act:'buy',tk:'JPY cover',sz:'25% of the short',det:'Reduce intervention gap without giving up the yield-differential thesis.'}],
+       whatif:[['JPY short','$8.9M','$6.7M'],['Gap if −3% squeeze','−$1.6M','−$1.2M'],['Yield thesis','kept','kept']],
+       evidence:[{ag:'Position Intel',tx:'BOJ officials flagged “one-sided” moves in the last 12 hours.'},{ag:'Risk & Guideline',tx:'Single-pair FX is 9% vs a 15% cap — trim is optional, not a breach.'}],
+       timeline:[{t:'Intervention watch raised',s:'04:10 · spot > 158',st:'done'},{t:'Trim sized',s:'04:12 · 25%',st:'done'},{t:'Awaiting your decision',s:'now',st:'active'}],
+       reasoning:'The yield-differential thesis is intact, but the gap risk is no longer symmetric. Cutting a quarter keeps the expression and caps the squeeze.'
+     }},
+    {lvl:'WARN', agent:'Technical Signals', id:'AC-G-003', ts:'38 min ago',
+     title:'Gold RSI 74 after +6.2% MTD — take a partial',
+     metrics:[['74','RSI','warn'],['+6.2%','MTD','good'],['20%','Suggested trim',''],['$34.6M','GC long','']],
+     body:'The gold long is extended. Take 20% off into overbought RSI while the real-rate thesis stays in place.',
+     detail:{
+       summary:'Gold is the book’s best MTD contributor and now <b>overbought (RSI 74)</b>. The agent wants a partial, not an exit.',
+       drivers:[{t:'RSI 74',s:'+6.2% MTD, above both moving averages',w:'extended'},{t:'Specs crowded long',s:'CoT positioning in the top decile',w:'fragile'},{t:'Real-rate thesis intact',s:'CB buying and the cut path still support the long',w:'hold core'}],
+       trades:[{act:'sell',tk:'GC Gold',sz:'−20% · ~$6.9M',det:'Scale out into strength; leave the core for the CPI print.'}],
+       whatif:[['Gold weight','11%','8.8%'],['If −3% pullback','−$1.0M','−$0.8M'],['Thesis','full','core retained']],
+       evidence:[{ag:'Fund Flows',tx:'Spec longs in gold are crowded on the same side as the book.'},{ag:'Macro & Regime',tx:'A hot CPI that lifts real yields is the risk to the residual long.'}],
+       timeline:[{t:'RSI band hit',s:'05:20 · 74',st:'done'},{t:'Partial sized',s:'05:21 · 20%',st:'done'},{t:'Awaiting your decision',s:'now',st:'active'}],
+       reasoning:'Crowded and extended is a reason to harvest, not to abandon the thesis. Twenty percent restores room to add back if CPI is cold.'
+     }},
+    {lvl:'IDEA', agent:'Fund Flows', id:'AC-G-004', ts:'1h ago',
+     title:'China stimulus bid FXI +2.2% — add EM on dips',
+     metrics:[['+2.2%','FXI day','good'],['+$1.6B','FXI ETF flow',''],['#2','Cross-asset rank',''],['$6.1M','Current FXI','']],
+     body:'Stimulus headlines turned EM flows positive. Add to FXI on a dip; the cross-asset rank already has EM second.',
+     detail:{
+       summary:'Overnight China stimulus lifted <b>FXI +2.2%</b> and turned EM ETF flows positive. The research rank already has EM at <b>#2</b>.',
+       drivers:[{t:'Stimulus headline',s:'Package details support the FXI long',w:'catalyst'},{t:'ETF flow +$1.6B',s:'FXI inflows confirming the move',w:'flow'},{t:'Rank #2',s:'Behind gold in the cross-asset screen',w:'fit'}],
+       trades:[{act:'buy',tk:'FXI',sz:'+$2.0M on a −1% dip',det:'Add only if the open gives back part of the gap.'}],
+       whatif:[['FXI weight','2.4%','3.2%'],['EM sleeve','14%','16%'],['Net','38%','39%']],
+       evidence:[{ag:'Research & Alpha',tx:'EM composite 0.84, second only to gold.'},{ag:'Macro & Regime',tx:'Adds a little equity beta; still inside the 50% net cap.'}],
+       timeline:[{t:'Headline ingested',s:'05:30',st:'done'},{t:'Flow confirmation',s:'05:48 · ETF prints',st:'done'},{t:'Idea queued',s:'now',st:'active'}],
+       reasoning:'The add is conditional on a dip so the book does not chase the gap. Net stays well inside the cap.'
+     }}
+  ], neutral: [
     {lvl:'WARN', agent:'PnL Attribution', id:'AC-N-001', ts:'9 min ago',
      title:'Staples pair PG/CL at 60-day spread wide — add to pair',
      metrics:[['+2.1σ','Spread z','warn'],['$1.1M','Pair notional',''],['0.02','Net beta',''],['64%','Pair hit rate','good']],
@@ -223,6 +263,33 @@
        timeline:[{t:'Spread flagged',s:'05:30 · 60-day z-score',st:'done'},{t:'Pair sized',s:'05:31 · beta-neutral add',st:'done'},{t:'Awaiting your decision',s:'now',st:'active'}],
        reasoning:'Market-neutral alpha comes from pair convergence; a 2.1σ dislocation with no catalyst is a high-hit-rate add that does not change the book’s factor profile.'
      }},
+    {lvl:'WARN', agent:'Fund Flows', id:'AC-N-002', ts:'25 min ago',
+     title:'NVO borrow fee spiked to 180bp — review the short leg',
+     metrics:[['180bp','Borrow fee','warn'],['LLY/NVO','Pair',''],['5.1%','Short weight',''],['180','vs 32bp CL','']],
+     body:'The Novo short is getting expensive. Review the LLY/NVO pair before the fee eats the spread.',
+     detail:{
+       summary:'Borrow on the <b>NVO short leg jumped to 180bp</b>. The pair thesis is intact, but carry on the short is no longer cheap.',
+       drivers:[{t:'Fee 180bp',s:'Up sharply versus the rest of the short book',w:'cost'},{t:'Pair still the #1 spread',s:'Score gap vs NVO remains the reason to be short',w:'thesis'},{t:'No earnings for 12d',s:'Time to reassess size before the print',w:'window'}],
+       trades:[{act:'buy',tk:'NVO cover 20%',sz:'−20% of the short leg',det:'Shrink the expensive leg and keep LLY unless the spread collapses.'}],
+       whatif:[['Borrow drag','180bp','144bp blended'],['Pair notional','$7.9M','$6.3M'],['Net beta','0.04','0.05']],
+       evidence:[{ag:'PnL Attribution',tx:'Pair is still a winner; the fee is the new drag, not the spread.'},{ag:'Risk & Guideline',tx:'A smaller short stays inside the single-pair cap.'}],
+       timeline:[{t:'Fee spike flagged',s:'05:20',st:'done'},{t:'Cover sized',s:'05:22 · 20%',st:'done'},{t:'Awaiting your decision',s:'now',st:'active'}],
+       reasoning:'Keep the pair, pay less for it. Covering a fifth of NVO protects the hit rate without flipping the book to a naked long.'
+     }},
+    {lvl:'IDEA', agent:'Research & Alpha', id:'AC-N-003', ts:'44 min ago',
+     title:'V/MA revisions turning — tilt the pair toward Visa',
+     metrics:[['V','Favor','good'],['+1','Revision',''],['4.4%','V weight',''],['0.02','Net beta','']],
+     body:'Estimate revisions now favor Visa over Mastercard. Tilt the existing pair; do not add market beta.',
+     detail:{
+       summary:'The payments pair is balanced. New revisions favor <b>Visa</b>. The agent wants a tilt, not a new directional bet.',
+       drivers:[{t:'V revisions +1',s:'Volume data ahead of MA',w:'signal'},{t:'Spread tightening',s:'Technicals already leaning V',w:'confirm'},{t:'Beta stays ~0',s:'Add V only against MA',w:'constraint'}],
+       trades:[{act:'buy',tk:'V',sz:'+$0.8M',det:'Increase the long leg.'},{act:'sell',tk:'MA',sz:'−$0.8M',det:'Match on the short leg so net beta does not move.'}],
+       whatif:[['V weight','4.4%','4.9%'],['MA short','4.2%','4.7%'],['Net beta','0.04','0.04']],
+       evidence:[{ag:'Earnings & Sentiment',tx:'Visa tone constructive; Mastercard still neutral.'},{ag:'Technical Signals',tx:'V/MA spread is tightening in Visa’s favor.'}],
+       timeline:[{t:'Revisions refreshed',s:'05:40',st:'done'},{t:'Tilt sized beta-neutral',s:'05:41',st:'done'},{t:'Idea queued',s:'now',st:'active'}],
+       reasoning:'Pair selection is the whole mandate. A revision gap is a reason to tilt, and matching legs keeps the book market-neutral.'
+     }}
+  ], digital: [
     {lvl:'CRIT', agent:'Digital Assets', id:'AC-D-001', ts:'2 min ago',
      title:'BTC funding +0.082% · OI +18% — crowded longs into Monday',
      metrics:[['−$2.6M','Crypto-β risk','red'],['+18%','OI 24h',''],['0.6M','Hedge premium',''],['Mon','Risk window','']],
@@ -235,8 +302,60 @@
        evidence:[{ag:'Risk & Guideline',tx:'Crypto-β 71% near 75% cap; hedge keeps headroom.'},{ag:'Technical Signals',tx:'CLSK already broke 200-day; miners leading lower.'}],
        timeline:[{t:'Funding spike detected',s:'Sat 02:14 · 24/7 monitor',st:'done'},{t:'Book impact mapped',s:'Sat 02:15',st:'done'},{t:'Put spread queued',s:'now',st:'active'}],
        reasoning:'The 24/7 agent caught this over the weekend. Rather than sell into thin Sunday liquidity, it translates the crypto signal into equity-beta risk and queues a defined-risk Monday hedge, pre-checked against limits.'
+     }},
+    {lvl:'CRIT', agent:'Technical Signals', id:'AC-D-002', ts:'18 min ago',
+     title:'CLSK broke the 200-day — stop is hit, cut the miner',
+     metrics:[['−4.2%','Today','bad'],['200d','Broken','red'],['$11.1M','Position',''],['2.90','BTC beta','']],
+     body:'CleanSpark broke its 200-day on thin weekend volume. The stop is hit. Cut the miner before the cash open.',
+     detail:{
+       summary:'<b>CLSK is through its 200-day</b> and is the book’s worst name. The stop fired over the weekend; the agent wants it sold at the open.',
+       drivers:[{t:'200-day break',s:'−4.2% on thin volume',w:'stop'},{t:'Miners leading lower',s:'High-beta complex rolling over with funding',w:'regime'},{t:'2.90 BTC beta',s:'Largest beta in the miner sleeve',w:'risk'}],
+       trades:[{act:'sell',tk:'CLSK',sz:'full position · $11.1M',det:'Market-on-open. Do not average down through a broken stop.'}],
+       whatif:[['Miner sleeve','20%','6%'],['Crypto-β','71%','64%'],['If −8% Monday','−$0.9M','flat']],
+       evidence:[{ag:'Digital Assets',tx:'Funding spike and OI build are hitting miners first.'},{ag:'Risk & Guideline',tx:'Cutting CLSK is the cleanest way back from the 75% crypto-β cap.'}],
+       timeline:[{t:'Stop hit',s:'Sun 11:20',st:'done'},{t:'Exit queued for the open',s:'Sun 11:22',st:'done'},{t:'Awaiting your approval',s:'now',st:'active'}],
+       reasoning:'A broken stop on the highest-beta miner is not a debate. Selling it also pulls crypto-β off the cap before the hedge is even filled.'
+     }},
+    {lvl:'WARN', agent:'Digital Assets', id:'AC-D-003', ts:'26 min ago',
+     title:'tNVDA basis −2.8% versus Friday’s NYSE close',
+     metrics:[['−2.8%','Basis','warn'],['$5.7M','tNVDA',''],['Mon','Gap into open',''],['1.82','Equity beta','']],
+     body:'Tokenized NVDA traded at a 2.8% discount all weekend. Treat Monday’s cash open as a gap, not a new thesis.',
+     detail:{
+       summary:'The tokenized NVDA line is <b>2.8% cheap to Friday’s NYSE close</b>. That discount is a weekend gap warning for the cash open, not a reason to add.',
+       drivers:[{t:'Basis −2.8%',s:'xStocks / Ondo versus Friday official close',w:'gap'},{t:'Depth is thin',s:'Weekend prints are not full size',w:'caution'},{t:'Equity beta 1.82',s:'The gap lands on a high-beta sleeve',w:'pnl'}],
+       trades:[{act:'sell',tk:'tNVDA trim 15%',sz:'~$0.9M',det:'Reduce into the open if the cash market confirms the discount.'}],
+       whatif:[['tNVDA','$5.7M','$4.8M'],['If cash opens −2.8%','−$160k','−$135k'],['Thesis','unchanged','unchanged']],
+       evidence:[{ag:'Technical Signals',tx:'No cash-market confirmation until 09:30. Size the response, do not front-run it.'},{ag:'Risk & Guideline',tx:'Trim stays inside single-name and crypto-β bands.'}],
+       timeline:[{t:'Basis flagged',s:'Mon 04:30 · 24/7 monitor',st:'done'},{t:'Open plan set',s:'04:32 · 15% if confirmed',st:'done'},{t:'Awaiting the cash open',s:'now',st:'active'}],
+       reasoning:'Weekend tokenized prints lead the cash open. The conductor keeps this as a warning until the NYSE price confirms it.'
+     }},
+    {lvl:'IDEA', agent:'Research & Alpha', id:'AC-D-004', ts:'1h ago',
+     title:'SOL leads the coin rank — add only on a pullback',
+     metrics:[['#1','Coin rank','good'],['+22%','MTD',''],['$9.4M','Current',''],['1.60','BTC beta','']],
+     body:'Solana is the top-ranked coin on momentum and on-chain flow. Add on a pullback, not into the spike.',
+     detail:{
+       summary:'SOL is <b>#1 of the coin universe</b> and +22% MTD. The agent wants more, but only if price gives some back.',
+       drivers:[{t:'Momentum + on-chain flow',s:'Activity and stablecoin inflows both up',w:'rank'},{t:'Already 12% of NAV',s:'Do not chase a vertical move',w:'size'},{t:'ETF optionality',s:'Still only partly in the price',w:'upside'}],
+       trades:[{act:'buy',tk:'SOL',sz:'+$1.5M below today’s low',det:'Resting bid. Cancel if funding stays above 0.08%.'}],
+       whatif:[['SOL weight','12%','14%'],['Crypto-β','71%','73%'],['Vs 75% cap','4 pts','2 pts']],
+       evidence:[{ag:'Fund Flows',tx:'Spot demand is real; perp funding is the reason not to pay up.'},{ag:'Risk & Guideline',tx:'The add fits only if CLSK is cut — otherwise crypto-β breaches 75%.'}],
+       timeline:[{t:'Universe re-ranked',s:'Mon 05:10',st:'done'},{t:'Bid placed conditional',s:'05:12',st:'done'},{t:'Idea queued',s:'now',st:'active'}],
+       reasoning:'Rank and funding disagree. The conductor allows the add only after the CLSK stop is honored, so the cap still has room.'
+     }},
+    {lvl:'IDEA', agent:'Fund Flows', id:'AC-D-005', ts:'2h ago',
+     title:'Stablecoin mint +$1.4B — liquidity gauge is risk-on',
+     metrics:[['+$1.4B','Mint 24h','good'],['outflow','Exchanges',''],['bullish','Majors',''],['4%','USDC cash','']],
+     body:'A large stablecoin mint and exchange outflows say spot demand is rising. Use it as context for BTC and ETH, not as a new trade.',
+     detail:{
+       summary:'<b>$1.4B of stablecoins minted</b> and coins are leaving exchanges. That is a risk-on liquidity gauge for the majors you already hold.',
+       drivers:[{t:'Mint +$1.4B',s:'Fresh buying power on chain',w:'liquidity'},{t:'Exchange outflows',s:'Historically bullish for BTC and ETH',w:'positioning'},{t:'Cash buffer 4%',s:'USDC is already the dry powder',w:'capacity'}],
+       trades:[{act:'buy',tk:'No new order',sz:'context only',det:'Supports holding BTC and ETH. Do not add until the funding spike cools.'}],
+       whatif:[['BTC weight','27%','27%'],['Cash','4%','4%'],['Action','hold','hold']],
+       evidence:[{ag:'Digital Assets',tx:'Funding is still elevated, so the mint is a reason to hold, not to lever.'},{ag:'Macro & Regime',tx:'Liquidity gauge agrees with a risk-on read unless CPI is hot.'}],
+       timeline:[{t:'Mint detected',s:'Sat 06:40',st:'done'},{t:'Classified as context',s:'Sat 06:44',st:'done'},{t:'Noted on the brief',s:'now',st:'active'}],
+       reasoning:'Not every positive flow is a trade. With funding crowded, this card explains why the majors are held while the hedges go on the high-beta names.'
      }}
-  ];
+  ] };
 
   function renderExposure(id){
     const box=document.getElementById('exposure-bars'); if(!box) return;
@@ -826,6 +945,7 @@
     renderPositions(id); renderPnl(id);
     renderExposure(id); renderFeed(id); renderPnlMeta(id); renderTopCard(id);
     renderAISummary(id); renderViews(id); renderPanels(id);
+    renderBrief(id); renderActionCards(id); renderConductor(id);
     if(window.__tagRows) window.__tagRows();
   }
 
@@ -1123,8 +1243,9 @@
      }}
   ];
   const lvlCls = {CRIT:'pill red', WARN:'pill orange', IDEA:'pill gold'};
-  const cardIndex = {}; cards.forEach(c=>cardIndex[c.id]=c);
-  fundCards.forEach(c=>cardIndex[c.id]=c);
+  const cardsByFund = {alpha:cards, global:fundCards.global, neutral:fundCards.neutral, digital:fundCards.digital};
+  const cardIndex = {};
+  Object.values(cardsByFund).flat().forEach(c=>cardIndex[c.id]=c);
 
   function cardMarkup(c,critClass){
     return `<div class="card clickable ${c.lvl==='CRIT'&&critClass!==false?'critical':''}" data-card="${c.id}" data-lvl="${c.lvl}">
@@ -1147,8 +1268,218 @@
         </div>
       </div>`;
   }
-  const grid = document.getElementById('cards-grid');
-  if(grid){ grid.innerHTML = cards.map(c=>cardMarkup(c)).join(''); }
+  function renderActionCards(fund){
+    const list=cardsByFund[fund]||cardsByFund.alpha;
+    const grid=document.getElementById('cards-grid');
+    if(grid) grid.innerHTML=list.map(c=>cardMarkup(c)).join('');
+    const n=lvl=>list.filter(c=>c.lvl===lvl).length;
+    const set=(id,v)=>{const el=document.getElementById(id); if(el) el.textContent=v;};
+    set('cards-n-all', list.length);
+    set('cards-n-crit', n('CRIT'));
+    set('cards-n-warn', n('WARN'));
+    set('cards-n-idea', n('IDEA'));
+    set('cards-badge', list.length);
+    set('hero-cards', list.length+' action cards');
+    set('hero-crit', n('CRIT')+' critical');
+    const critEl=document.getElementById('hero-crit');
+    if(critEl) critEl.style.color = n('CRIT')===0 ? 'var(--good)' : '';
+    document.querySelectorAll('#view-cards .filters .chip-btn').forEach((b,i)=>b.classList.toggle('active', i===0));
+  }
+
+  const briefs = {
+    alpha:{
+      eyebrow:'Morning Brief · Monday, Oct 7, 2026 · Alpha Fund · composed by Point Conductor at 05:58 ET',
+      title:'Overnight: tokenized semis gapped down. CPI tomorrow. <span class="orange">Trim semis before open.</span>',
+      approve:'Approve all 2 critical',
+      overnight:'Tokenized NVDA, AMD and SMH traded <b>−2.3% to −2.9%</b> on weekend venues (xStocks, Ondo). Options skew on SMH is now the steepest in 60 days. BTC funding spiked to +0.082%, open interest +18%, consistent with crowded longs — COIN and MSTR exposure at risk Monday.',
+      findings:[
+        ['red','Risk','Beta-net projected <b>63.1%</b> at open vs. IMA cap 60%. Trim <b>NVDA 12%</b> + <b>SMH Nov 215/205 put spread</b>.'],
+        ['red','Macro','CPI tomorrow 08:30 ET. Hot-print scenario (+0.4% MoM core) = <b>−38 bps</b> NAV. Suggest ladder: 10Y DV01 hedge 0.6× book.'],
+        ['gold','Flows','META crowding score <b>92</b> (top decile). HF ownership +7pts QoQ. De-grossing risk if VIX breaks 22.'],
+        ['gold','Earnings','JPM reports Thu — supplier read-across for V, MA. Tone model suggests cautious guidance (confidence 71%).'],
+        ['gold','Digital','Tokenized AAPL basis −1.9%; arb desk could add; depth thin on Securitize.'],
+        ['red','PnL','MSFT contributing <b>−24 bps</b> MTD · alpha half-life expired, flagged for trim.'],
+        ['red','Pos Intel','NVDA thesis drift <b>↑</b>: insider sales $220M + activist 13D (Elliot).']
+      ],
+      decisions:[
+        'Approve the <b>Risk & Guideline</b> card trimming NVDA 12%. Alpha cost 6bps, headroom restored, IMA clean.',
+        'Layer CPI hedge via <b>Macro agent</b> ladder. Pre-trade what-if shows &lt;2bps carry.',
+        'Halve <b>META</b> or buy OTM Dec put spread to pre-empt de-grossing.'
+      ],
+      pnl:['−$ 2.14 M','dn','tokenized semis + BTC drag'],
+      head:['0.4 pts','warn','Beta-net vs. IMA 60%'],
+      cal:['<b>08:30</b> Chicago Fed index','<b>10:00</b> Consumer credit','<b>13:00</b> 3Y auction','<b>16:30</b> COIN Q3 pre-announce','<b>Tue 08:30</b> <span class="red">CPI</span>'],
+      ask:['What\'s my worst-case NAV if CPI prints 0.5% MoM core?','<b>−72 bps</b> NAV under the hot-print scenario; drivers: 10Y +18bp, semis −3.4%, growth multiple compression. Macro agent has a hedge ladder queued (cost 1.8bps). <a>Open what-if →</a>']
+    },
+    global:{
+      eyebrow:'Morning Brief · Monday, Oct 7, 2026 · Global Macro Fund · composed by Point Conductor at 05:58 ET',
+      title:'Rates broke 4.40% overnight. CPI is tomorrow. <span class="orange">Hedge duration before the print.</span>',
+      approve:'Approve the 1 critical',
+      overnight:'The 10-year pushed through <b>4.40%</b> after a hot services PPI. Gold extended another <b>+0.9%</b> into overbought territory. USD/JPY tested <b>158</b> with fresh intervention headlines, and a China stimulus package bid <b>FXI +2.2%</b>.',
+      findings:[
+        ['red','Macro','Book DV01 is long into CPI. A +50bp move in the 10-year maps to <b>−$9.4M</b>. The 0.6× ZN ladder cuts the hot-print loss to about <b>−$1.4M</b>.'],
+        ['gold','FX','USD/JPY is sitting on the intervention line. The yen short is <b>−22 bp</b> MTD — trim 25% before a squeeze.'],
+        ['gold','Technical','Gold RSI <b>74</b> after +6.2% MTD. Take 20% off the GC long; keep the real-rate core.'],
+        ['gold','Flows','CFTC specs are crowded long gold and crude. EM ETF flows turned positive on the stimulus headline.'],
+        ['red','PnL','Day is <b>−12 bps</b>. Rates are the drag; gold and the equity index are carrying the month.']
+      ],
+      decisions:[
+        'Approve the <b>ZN DV01 ladder</b> at 0.6× book. Carry is 1.8 bps/month.',
+        'Cover <b>25% of the yen short</b> above 158.',
+        'Take a <b>20% partial on gold</b> and leave a bid to add FXI only on a dip.'
+      ],
+      pnl:['−$ 1.01 M','dn','rates and FX vs. gold'],
+      head:['0.1×','warn','DV01 headroom vs. 1.0× cap'],
+      cal:['<b>08:30</b> <span class="red">CPI</span>','<b>13:00</b> 3Y auction','<b>14:00</b> Fed minutes Thu','<b>Wed</b> ECB minutes','<b>Thu</b> China GDP'],
+      ask:['What does a hot CPI do to this book?','<b>−$4.1M</b> unhedged, about <b>−$1.4M</b> with the 0.6× ladder. The short-rate position wins if the print is hot; gold and EM give some of it back. <a>Open what-if →</a>']
+    },
+    neutral:{
+      eyebrow:'Morning Brief · Monday, Oct 7, 2026 · Market Neutral Fund · composed by Point Conductor at 05:58 ET',
+      title:'The market was a non-event. One pair is stretched. <span class="orange">Add to PG/CL and stay flat.</span>',
+      approve:'No critical cards',
+      overnight:'Index futures did not move the book. Net beta finished at <b>0.04</b>. The PG/CL staples spread widened to <b>+2.1σ</b> with no news on either name, and the NVO borrow fee jumped to <b>180bp</b>.',
+      findings:[
+        ['gold','PnL','PG/CL is the widest it has been in 60 days and there is no catalyst. Adding 15% keeps the pair <b>beta-neutral</b>.'],
+        ['gold','Flows','NVO borrow at <b>180bp</b> is now the expensive leg of LLY/NVO. Review the short before the fee eats the spread.'],
+        ['gold','Research','Estimate revisions favor <b>Visa over Mastercard</b>. Tilt the existing pair; do not add market beta.'],
+        ['red','Risk','Nothing is near a limit. Net <b>4%</b> vs. the ±10% band. Gross 210% is the only number worth watching.']
+      ],
+      decisions:[
+        'Add <b>15% to the PG/CL pair</b>, matched long and short.',
+        'Cover <b>20% of the NVO short</b> while borrow is 180bp.',
+        'Tilt <b>V/MA toward Visa</b> by the same dollars on each leg.'
+      ],
+      pnl:['+$ 1.40 M','up','pair convergence'],
+      head:['6 pts','up','Net vs. ±10% band'],
+      cal:['<b>Tue</b> CPI · low book impact','<b>+6d</b> V and MA both report','<b>+12d</b> LLY and NVO','<b>Thu</b> index rebalance preview','<b>Fri</b> borrow-rate review'],
+      ask:['How much does CPI move this book?','Under <b>±8 bps</b>. The pairs are beta-neutral by construction, so the print shows up in financing and borrow, not in direction. <a>Open what-if →</a>']
+    },
+    digital:{
+      eyebrow:'Morning Brief · Monday, Oct 7, 2026 · Digital Assets Fund · composed by Point Conductor at 05:58 ET',
+      title:'Weekend funding spiked and miners broke down. <span class="orange">Hedge crypto-beta before the cash open.</span>',
+      approve:'Approve all 2 critical',
+      overnight:'BTC perp funding hit <b>+0.082%</b> with open interest <b>+18%</b> and liquidation clusters at 98–99k. <b>CLSK broke its 200-day</b> on thin weekend volume. Tokenized NVDA traded <b>−2.8%</b> versus Friday’s NYSE close. SOL is still <b>+22% MTD</b>.',
+      findings:[
+        ['red','Digital','Crowded longs. MSTR and COIN are the equity-beta expression of that funding spike. A defined-risk put spread is queued for <b>$0.6M</b>.'],
+        ['red','Technical','CLSK stop is hit. Cut the <b>$11.1M</b> miner at the open — it is also the cleanest way off the crypto-β cap.'],
+        ['gold','Digital','tNVDA basis <b>−2.8%</b> is a gap warning, not a new thesis. Trim 15% only if the cash open confirms it.'],
+        ['gold','Research','SOL is <b>#1</b> on the coin rank. Add only on a pullback, and only after CLSK is sold.'],
+        ['gold','Flows','Stablecoin mint <b>+$1.4B</b> and exchange outflows are risk-on for BTC and ETH. Hold the majors; do not lever into the funding spike.']
+      ],
+      decisions:[
+        'Approve the <b>MSTR/COIN put spread</b> before the cash open.',
+        'Sell <b>CLSK</b> market-on-open. The 200-day is broken.',
+        'Leave a <b>SOL bid</b> under today’s low, cancelled if funding stays above 0.08%.'
+      ],
+      pnl:['−$ 6.80 M','dn','miners, funding, tokenized gap'],
+      head:['4 pts','warn','Crypto-β 71% vs. 75% cap'],
+      cal:['<b>24/7</b> weekend coverage live','<b>09:30</b> cash open · tNVDA gap','<b>16:30</b> COIN pre-announce','<b>Tue 08:30</b> <span class="red">CPI</span>','<b>Fri</b> SEC crypto roundtable'],
+      ask:['What if BTC drops 15% before I hedge?','About <b>−$6.1M</b> unhedged, closer to <b>−$2.6M</b> on the MSTR/COIN sleeve once the put spread is on. Cutting CLSK does more for the cap than the hedge does. <a>Open what-if →</a>']
+    }
+  };
+  function renderBrief(fund){
+    const b=briefs[fund]||briefs.alpha;
+    const set=(id,v)=>{const el=document.getElementById(id); if(el) el.textContent=v;};
+    const html=(id,v)=>{const el=document.getElementById(id); if(el) el.innerHTML=v;};
+    set('brief-eyebrow', b.eyebrow);
+    html('brief-title', b.title);
+    set('brief-approve', b.approve);
+    html('brief-overnight', b.overnight);
+    html('brief-findings', b.findings.map(f=>`<li><span class="tag ${f[0]}">${f[1]}</span> ${f[2]}</li>`).join(''));
+    html('brief-decisions', b.decisions.map(d=>`<li>${d}</li>`).join(''));
+    const pnl=document.getElementById('brief-pnl');
+    if(pnl){ pnl.textContent=b.pnl[0]; pnl.className='sc-val '+b.pnl[1]; }
+    set('brief-pnl-sub', b.pnl[2]);
+    const head=document.getElementById('brief-head');
+    if(head){ head.textContent=b.head[0]; head.className='sc-val '+b.head[1]; }
+    set('brief-head-sub', b.head[2]);
+    html('brief-cal', b.cal.map(c=>`<li>${c}</li>`).join(''));
+    set('brief-ask-q', b.ask[0]);
+    html('brief-ask-a', b.ask[1]);
+  }
+
+  const conductorCopy = {
+    alpha:{
+      eyebrow:'Point Conductor · Alpha Fund',
+      title:'Ten agents, one semi-complex problem.',
+      chip:'De-duplicated 4 semis alerts → 1 card',
+      meta:'Alpha Fund',
+      focusTitle:'Today\'s composition · Alpha',
+      focus:'Four overnight semiconductor signals were the same risk. The conductor collapsed them into <b>one critical card</b> (beta-net 63.1% vs. the 60% IMA cap) and left CPI and META crowding as separate cards, because those are different risks. Ranked by dollars at risk, the NVDA trim is first.',
+      matrix:[
+        ['Macro','8','1','4','2','—','3'],
+        ['Flows','5','0','2','3','1','—'],
+        ['Digital','6','0','1','0','1','0'],
+        ['Earnings','1','2','7','5','0','2'],
+        ['Pos Intel','4','3','1','—','0','2']
+      ]
+    },
+    global:{
+      eyebrow:'Point Conductor · Global Macro Fund',
+      title:'The rate book is the whole story today.',
+      chip:'Merged 3 rate alerts → 1 DV01 card',
+      meta:'Global Macro Fund',
+      focusTitle:'Today\'s composition · Global Macro',
+      focus:'CPI, the 4.40% break, and long book DV01 were three alerts about one exposure. The conductor merged them into <b>a single 0.6× ZN ladder</b> and kept the yen trim and the gold partial separate. China stimulus is an idea, not a risk.',
+      matrix:[
+        ['Macro','—','2','6','1','—','4'],
+        ['Flows','3','0','1','1','5','—'],
+        ['Digital','1','0','0','0','2','0'],
+        ['Earnings','0','1','2','1','3','1'],
+        ['Pos Intel','2','1','1','—','4','1']
+      ]
+    },
+    neutral:{
+      eyebrow:'Point Conductor · Market Neutral Fund',
+      title:'No single-name drift. The conductor is watching pairs.',
+      chip:'44 pairs balanced · 0 critical',
+      meta:'Market Neutral Fund',
+      focusTitle:'Today\'s composition · Market Neutral',
+      focus:'Nothing breached a limit and no single name drifted. The conductor ranked a <b>pair add</b> (PG/CL at +2.1σ), a <b>borrow warning</b> on the NVO short, and a <b>Visa tilt</b> inside V/MA. Net beta stays 0.04. There is no critical card on this fund.',
+      matrix:[
+        ['Macro','1','0','1','0','—','0'],
+        ['Flows','1','0','2','2','0','—'],
+        ['Digital','0','0','0','0','0','0'],
+        ['Earnings','0','1','3','2','0','1'],
+        ['Pos Intel','0','1','1','—','0','2']
+      ]
+    },
+    digital:{
+      eyebrow:'Point Conductor · Digital Assets Fund',
+      title:'Weekend coverage is the edge on this book.',
+      chip:'2 ranked cards queued for the open',
+      meta:'Digital Assets Fund',
+      focusTitle:'Today\'s composition · Digital Assets',
+      focus:'The desk was dark. The conductor kept the weekend tape: funding and open interest became the <b>MSTR/COIN hedge</b>, and the CLSK 200-day break became a <b>separate stop</b> because it is a different decision. The tNVDA basis stays a warning until the cash open confirms it. SOL is an idea only after CLSK is sold, so crypto-β does not tag the 75% cap.',
+      matrix:[
+        ['Macro','3','1','2','1','—','2'],
+        ['Flows','2','0','1','1','1','—'],
+        ['Digital','6','2','3','1','4','2'],
+        ['Earnings','1','1','2','2','1','1'],
+        ['Pos Intel','2','2','1','—','1','2']
+      ]
+    }
+  };
+  function renderConductor(fund){
+    const c=conductorCopy[fund]||conductorCopy.alpha;
+    const set=(id,v)=>{const el=document.getElementById(id); if(el) el.textContent=v;};
+    const html=(id,v)=>{const el=document.getElementById(id); if(el) el.innerHTML=v;};
+    set('conductor-eyebrow', c.eyebrow);
+    set('conductor-title', c.title);
+    set('conductor-chip', c.chip);
+    set('conductor-focus-meta', c.meta);
+    set('conductor-focus-title', c.focusTitle);
+    html('conductor-focus-body', c.focus);
+    const mx=document.getElementById('handoff-matrix');
+    if(!mx) return;
+    const head='<div class="mx-head"><span></span><span>Risk</span><span>Tech</span><span>PnL</span><span>Pos</span><span>Macro</span><span>Flows</span></div>';
+    const rows=c.matrix.map(r=>'<div class="mx-row"><span class="mx-lab">'+r[0]+'</span>'+r.slice(1).map(cell=>{
+      if(cell==='—') return '<span class="c self">—</span>';
+      const hot=parseInt(cell,10)>=3;
+      return `<span class="c${hot?' on':''}">${cell}</span>`;
+    }).join('')+'</div>').join('');
+    mx.innerHTML=head+rows;
+  }
 
   /* ---- card detail drawer ---- */
   const overlay=document.getElementById('drawer-overlay');
@@ -1386,8 +1717,10 @@
     activeFund=id;
     if(fundBtnName) fundBtnName.textContent=f.name;
     setText('hero-fund', f.name.replace(/ Fund$/,''));
-    setText('hero-cards', f.cards);
-    setText('hero-crit', f.crit);
+    const cardList=cardsByFund[id]||cardsByFund.alpha;
+    const critN=cardList.filter(c=>c.lvl==='CRIT').length;
+    setText('hero-cards', cardList.length+' action cards');
+    setText('hero-crit', critN+' critical');
     setText('kpi-aum', f.aum); setText('kpi-aum-d', f.aumD);
     setText('kpi-pnl', f.pnl); setText('kpi-pnl-d', f.pnlD);
     setText('kpi-exp', f.exp); setText('kpi-exp-d', f.expD);
@@ -1397,7 +1730,7 @@
     const aumD=document.getElementById('kpi-aum-d');
     if(aumD){ const up=!f.aumD.includes('−'); aumD.classList.toggle('up',up); aumD.classList.toggle('dn',!up); }
     const critEl=document.getElementById('hero-crit');
-    if(critEl) critEl.style.color = f.crit.startsWith('0') ? 'var(--good)' : '';
+    if(critEl) critEl.style.color = critN===0 ? 'var(--good)' : '';
     const dot=document.querySelector('.fund-dot'); if(dot) dot.style.background=f.color;
     renderDetail(id);
     try{ localStorage.setItem('point-fund', id); }catch(e){}
