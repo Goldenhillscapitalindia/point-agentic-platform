@@ -704,8 +704,89 @@
       scenario:[['Base case','<b class="good">+$ 1.8 M</b>'],['Hot CPI (+0.4% core)','<b class="dn">−$ 3.4 M · BTC-rate β</b>'],['Cold CPI (0.1%)','<b class="up">+$ 4.2 M</b>'],['BTC −15%','<b class="dn">−$ 6.1 M</b>'],['Alt −25%','<b class="dn">−$ 7.8 M</b>'],['Risk-off (VIX >30)','<b class="dn">−$ 9.0 M</b>']]
     }
   };
+  const marketData = {
+    alpha:{
+      macroKpis:[['CPI YoY','3.1%','+0.1 vs. prior'],['Core PCE','2.8%','target 2.0'],['Fed funds','4.75%','market: 2 cuts by Mar'],['Book stance','Risk-on tilt','net 62% · semis-led']],
+      events:[
+        ['06:11:42','Macro','CPI nowcast → 3.12% YoY · re-ran Risk, PnL, Flows'],
+        ['06:11:08','Digital','tNVDA basis −2.81% · triggered Risk gap-check'],
+        ['06:10:51','Risk','Beta-net 63.1% · breach prob 71% · Action Card composed'],
+        ['06:10:40','Flows','META crowding 92 → de-gross alert to Risk'],
+        ['06:10:22','Technical','TSLA RSI divergence 5d · stop proximity 0.3 ATR'],
+        ['06:09:58','PosIntel','NVDA 13D (Elliott) ingested · thesis-drift ↑'],
+        ['06:09:30','Earnings','JPM transcript primed · tone −0.21 forecast'],
+        ['06:09:04','Research','Universe re-ranked · UBER #1 · 12 new ideas'],
+        ['06:08:41','Conductor','De-duplicated 4 semis alerts → 1 ranked card']],
+      irLetter:[
+        '<b>Dear Partner,</b>',
+        'October brought a two-sided tape. The Alpha fund delivered a <b>+1.82% net return</b> for the month and <b>+18.4% YTD</b>, ahead of the benchmark’s <b>+9.7%</b>. Attribution was dominated by stock-specific wins in Communications and Semiconductors, offset by a drag from large-cap software where our Microsoft thesis has entered a resting phase.',
+        'We tightened net exposure after the agent team flagged <b>beta-adjusted net drifting toward the IMA cap</b>; a defined-risk hedge on the semi-complex preserves the long thesis while restoring headroom. On digital assets, we continue the 24/7 monitor on tokenized equities — our edge is being awake before the Monday open…',
+        '<span class="muted">[auto-generated · 2 citations pending · 4 compliance soft-flags resolved]</span>']
+    },
+    global:{
+      macroKpis:[['CPI YoY','3.1%','+0.1 vs. prior'],['Core PCE','2.8%','target 2.0'],['Fed funds','4.75%','market: 2 cuts by Mar'],['Book stance','Duration short','curve steepener']],
+      events:[
+        ['06:11:42','Macro','CPI nowcast → 3.12% YoY · re-ran rate-book DV01'],
+        ['06:11:08','Macro','10Y through 4.40% · hedge ladder sized'],
+        ['06:10:51','Flows','CoT: specs crowded long gold & crude'],
+        ['06:10:22','Technical','Gold RSI 74 · take-partial signal'],
+        ['06:09:58','Macro','BOJ intervention risk > 158 · trim JPY short'],
+        ['06:09:30','Research','Cross-asset re-rank · gold #1 · EM #2'],
+        ['06:09:04','PosIntel','China stimulus headline ingested · FXI bid'],
+        ['06:08:41','Conductor','Merged 3 rate alerts → 1 DV01 card'],
+        ['06:08:12','Macro','3Y auction 13:00 · calendar flagged']],
+      irLetter:[
+        '<b>Dear Partner,</b>',
+        'The Global Macro fund returned <b>−0.12% on the day</b> but remains <b>+11.2% YTD</b>. Gains were led by a long-gold position and a short-duration expression in the rate complex; FX detracted modestly as the yen stayed resilient on intervention risk.',
+        'Into tomorrow’s CPI we run a <b>0.6× DV01 hedge ladder</b> that caps a hot-print drawdown for under two basis points of monthly carry, while retaining most of the cold-print upside. We added to EM on the China-stimulus headline and trimmed the yen short ahead of potential BOJ action.',
+        '<span class="muted">[auto-generated · derivatives-use disclosure updated · scenario-PnL exhibit attached]</span>']
+    },
+    neutral:{
+      macroKpis:[['CPI YoY','3.1%','+0.1 vs. prior'],['Core PCE','2.8%','target 2.0'],['Fed funds','4.75%','market: 2 cuts by Mar'],['Book stance','Beta-neutral','net 4% · pairs']],
+      events:[
+        ['06:11:42','PnL','PG/CL spread +2.1σ · mean-rev add flagged'],
+        ['06:11:08','Flows','NVO borrow fee 180bp · short-leg watch'],
+        ['06:10:51','Research','Pair re-rank · LLY/NVO #1 by score spread'],
+        ['06:10:22','Risk','Net beta 0.04 · beta-neutral confirmed'],
+        ['06:09:58','Earnings','LLY/NVO earnings aligned +12d · event-neutral'],
+        ['06:09:30','Technical','V/MA spread tightening · tilt V'],
+        ['06:09:04','PosIntel','Index rebalance preview · pair flows'],
+        ['06:08:41','Conductor','No single-name drift · 44 pairs balanced'],
+        ['06:08:12','Risk','Factor net style-neutral · low momentum tilt']],
+      irLetter:[
+        '<b>Dear Partner,</b>',
+        'The Market Neutral fund compounded <b>+0.09% on the day</b> and <b>+7.8% YTD</b> with a realized net beta of <b>0.04</b>. Returns came almost entirely from pair convergence — pharma (LLY/NVO) and staples (PG/CL) led, while a tech pair was the sole detractor.',
+        'We added 15% to the PG/CL pair as its spread reached a <b>2.1σ</b> dislocation with no catalyst, and flagged a rising borrow cost on the NVO short leg. Factor and market-beta exposures remain neutral by construction; a 1-day VaR of <b>0.39%</b> of NAV keeps the book inside every risk band.',
+        '<span class="muted">[auto-generated · factor-neutrality attestation included · Sharpe exhibit attached]</span>']
+    },
+    digital:{
+      macroKpis:[['CPI YoY','3.1%','+0.1 vs. prior'],['Core PCE','2.8%','target 2.0'],['Fed funds','4.75%','market: 2 cuts by Mar'],['Book stance','High-beta','crypto-β 71%']],
+      events:[
+        ['Sat 02:14','Digital','BTC funding +0.082% · OI +18% · put-spread queued'],
+        ['Sat 06:40','Flows','Stablecoin mint +$1.4B · risk-on gauge'],
+        ['Sun 11:20','Technical','CLSK breaks 200-day · stop hit'],
+        ['Sun 19:05','PosIntel','SEC crypto roundtable scheduled Fri'],
+        ['Mon 04:30','Digital','tNVDA basis −2.8% · weekend gap-check'],
+        ['Mon 05:10','Research','Coin re-rank · SOL #1 on momentum'],
+        ['Mon 05:40','Risk','Crypto-β 71% near 75% cap · hedge queued'],
+        ['Mon 06:02','Conductor','Weekend events → 2 ranked cards for open'],
+        ['Mon 06:11','Digital','MSTR 1.42× BTC-β · exposure mapped']],
+      irLetter:[
+        '<b>Dear Partner,</b>',
+        'The Digital Assets fund fell <b>−2.1% on the day</b> but holds a <b>+34.1% YTD</b> — the strongest of the complex and, predictably, the most volatile. Solana led the book higher this month while the mining complex (CleanSpark) was the principal drag after breaking its 200-day average.',
+        'Our 24/7 monitor caught a weekend funding spike (+0.082%, OI +18%) and queued a defined-risk MSTR/COIN put spread for the Monday open, sized to budget and pre-checked by the Risk agent. Crypto-β sits at <b>71%</b> of a 75% cap; custody and tokenized-asset disclosures are front-loaded in this letter.',
+        '<span class="muted">[auto-generated · digital-asset governance Q&A expanded · on-chain transparency exhibit attached]</span>']
+    }
+  };
   function renderPanels(fund){
     const d=panelData[fund]||panelData.alpha;
+    const md=marketData[fund]||marketData.alpha;
+    const mk=document.getElementById('macro-kpis');
+    if(mk) mk.innerHTML=md.macroKpis.map(k=>`<div class="kpi"><div class="k-lab">${k[0]}</div><div class="k-val">${k[1]}</div><div class="k-sub">${k[2]}</div></div>`).join('');
+    const elog=document.getElementById('eventlog');
+    if(elog) elog.innerHTML=md.events.map(e=>`<li><span class="et">${e[0]}</span><span class="ea">${e[1]}</span><span class="em">${e[2]}</span></li>`).join('');
+    const ir=document.getElementById('ir-letter');
+    if(ir) ir.innerHTML=md.irLetter.map(p=>`<p>${p}</p>`).join('');
     // what-if
     const sel=document.getElementById('risk-whatif-select');
     if(sel) sel.options[0] ? (sel.options[0].text=d.whatifSelect) : null;
@@ -745,6 +826,7 @@
     renderPositions(id); renderPnl(id);
     renderExposure(id); renderFeed(id); renderPnlMeta(id); renderTopCard(id);
     renderAISummary(id); renderViews(id); renderPanels(id);
+    if(window.__tagRows) window.__tagRows();
   }
 
   /* ---- line chart (reusable) ---- */
@@ -1045,7 +1127,7 @@
   fundCards.forEach(c=>cardIndex[c.id]=c);
 
   function cardMarkup(c,critClass){
-    return `<div class="card clickable ${c.lvl==='CRIT'&&critClass!==false?'critical':''}" data-card="${c.id}">
+    return `<div class="card clickable ${c.lvl==='CRIT'&&critClass!==false?'critical':''}" data-card="${c.id}" data-lvl="${c.lvl}">
         <div class="card-head">
           <span class="${lvlCls[c.lvl]}">${c.lvl}</span>
           <span class="chip-meta">${c.agent}${c.ts?' · '+c.ts:''}</span>
@@ -1133,22 +1215,7 @@
   });
 
   /* ---- event log (live sim) ---- */
-  const evts = [
-    ['06:11:42','Macro','CPI nowcast updated → 3.12% YoY · re-ran Risk, PnL, Flows'],
-    ['06:11:08','Digital','tNVDA basis −2.81% · triggered Risk gap-check'],
-    ['06:10:51','Risk','Beta-net projection 63.1% · breach prob 71% · Action Card composed'],
-    ['06:10:40','Flows','META crowding 92 → de-gross alert to Risk'],
-    ['06:10:22','Technical','TSLA RSI divergence 5d · stop proximity 0.3 ATR'],
-    ['06:09:58','PosIntel','NVDA 13D (Elliott) ingested · thesis-drift ↑'],
-    ['06:09:30','Earnings','JPM transcript model primed · tone −0.21 forecast'],
-    ['06:09:04','Research','Universe re-ranked · UBER #1 · 12 new ideas'],
-    ['06:08:41','Conductor','De-duplicated 4 semis alerts → 1 ranked card'],
-    ['06:08:12','Digital','BTC funding +0.082% · OI +18% · put-spread queued'],
-  ];
-  const log = document.getElementById('eventlog');
-  if(log){
-    log.innerHTML = evts.map(e=>`<li><span class="et">${e[0]}</span><span class="ea">${e[1]}</span><span class="em">${e[2]}</span></li>`).join('');
-  }
+  /* event log is rendered per-fund via renderPanels */
 
   /* ---- search focus with ⌘K ---- */
   document.addEventListener('keydown', e=>{
@@ -1158,18 +1225,109 @@
     }
   });
 
-  /* ---- segmented + filter button toggles (visual only) ---- */
+  /* ---- row tagging for filters ---- */
+  const cryptoSet=['COIN','MSTR','HOOD','CLSK','BTC','ETH','SOL','USDC','TNVDA','TAAPL','TTSLA','TSPY','TMETA'];
+  const futSet=['TY','ES','GC','6E','CL','DX','JPY','HG','BTP'];
+  function tagPositions(){
+    document.querySelectorAll('#pos-rows tr').forEach(tr=>{
+      const tk=(tr.children[0]?.textContent||'').toUpperCase();
+      const side=(tr.children[2]?.textContent||'').toLowerCase().includes('short')?'short':'long';
+      let kind='equity';
+      if(cryptoSet.includes(tk)) kind='crypto';
+      else if(futSet.includes(tk)) kind='future';
+      else if(tk.includes('/')) kind='pair';
+      if(tk==='USDC') kind='cash';
+      tr.dataset.tags=side+' '+kind;
+    });
+  }
+  function tagTech(){
+    document.querySelectorAll('#tech-rows tr').forEach(tr=>{
+      const rsi=parseFloat(tr.children[3]?.textContent)||0;
+      const macd=(tr.children[4]?.textContent||'').toLowerCase();
+      const volz=parseFloat((tr.children[5]?.textContent||'').replace('σ','').replace('−','-').replace('+',''))||0;
+      const atr=(tr.children[6]?.textContent||'').toLowerCase();
+      const sig=(tr.children[8]?.textContent||'').toLowerCase();
+      const t=[];
+      if(atr.includes('stop')||sig.includes('stop')||sig.includes('cut')||sig.includes('crit')) t.push('stops');
+      if(rsi>=70||rsi<=35||/div|cross|bear|break|neg/.test(macd)) t.push('rsi');
+      if(Math.abs(volz)>=2) t.push('volume');
+      if(sig.includes('earn')||/gap|basis/.test(sig)) t.push('earnings');
+      tr.dataset.tags=t.join(' ')||'other';
+    });
+  }
+  function tagUniverse(){
+    document.querySelectorAll('#research-universe tr').forEach(tr=>{
+      const tk=(tr.children[1]?.textContent||'').toUpperCase();
+      const fit=(tr.children[9]?.textContent||'').toLowerCase();
+      let cat='long';
+      if(/short|unwind|exit/.test(fit)) cat='short';
+      if(tk.includes('IPO')) cat='ipo';
+      tr.dataset.tags=cat;
+    });
+  }
+  window.__tagRows=function(){
+    tagPositions(); tagTech(); tagUniverse();
+    document.querySelectorAll('.seg').forEach(seg=>{ seg.querySelectorAll('.seg-btn').forEach((x,i)=>x.classList.toggle('active',i===0)); });
+  };
+
+  /* ---- functional segmented filters ---- */
+  const segKeyMap={'all':'','long':'long','short':'short','options':'option','crypto':'crypto',
+    'stops':'stops','rsi/macd':'rsi','volume':'volume','earnings move':'earnings',
+    'long ideas':'long','short ideas':'short','ipo/lock-ups':'ipo','ipo':'ipo'};
   document.querySelectorAll('.seg').forEach(seg=>{
+    const card=seg.closest('.card'); const tbody=card?card.querySelector('tbody'):null;
     seg.querySelectorAll('.seg-btn').forEach(b=>b.addEventListener('click',()=>{
       seg.querySelectorAll('.seg-btn').forEach(x=>x.classList.remove('active'));
       b.classList.add('active');
+      if(!tbody) return;
+      const key=segKeyMap[b.textContent.trim().toLowerCase()];
+      [...tbody.querySelectorAll('tr')].forEach(tr=>{
+        tr.style.display=(!key||(tr.dataset.tags||'').indexOf(key)>=0)?'':'none';
+      });
     }));
   });
+
+  /* ---- functional Action-Cards filters ---- */
   document.querySelectorAll('.filters').forEach(f=>{
+    const grid=document.getElementById('cards-grid');
     f.querySelectorAll('.chip-btn').forEach(b=>b.addEventListener('click',()=>{
       f.querySelectorAll('.chip-btn').forEach(x=>x.classList.remove('active'));
       b.classList.add('active');
+      if(!grid) return;
+      const label=b.textContent.trim().toLowerCase();
+      const lvl=label.startsWith('critical')?'CRIT':label.startsWith('warning')?'WARN':label.startsWith('idea')?'IDEA':'';
+      [...grid.querySelectorAll('[data-lvl]')].forEach(c=>{
+        c.style.display=(!lvl||c.dataset.lvl===lvl)?'':'none';
+      });
     }));
+  });
+
+  /* ---- click-to-sort on all data tables ---- */
+  function cellVal(td){
+    if(!td) return '';
+    const t=td.textContent.trim();
+    const m=t.replace(/[,$%×σ]/g,'').replace(/−/g,'-').match(/-?\d+(\.\d+)?/);
+    return (m && /^[\s$+\-−]*[\d.,]/.test(t)) ? parseFloat(m[0]) : t.toLowerCase();
+  }
+  document.querySelectorAll('.tbl').forEach(table=>{
+    const ths=table.querySelectorAll('thead th'); if(!ths.length) return;
+    ths.forEach((th,i)=>{
+      th.classList.add('th-sort');
+      th.addEventListener('click',()=>{
+        const tbody=table.querySelector('tbody'); if(!tbody) return;
+        const rows=[...tbody.querySelectorAll('tr')].filter(r=>r.style.display!=='none');
+        const asc=th.dataset.asc!=='asc';
+        ths.forEach(t=>{t.removeAttribute('data-asc');t.classList.remove('sorted-asc','sorted-desc');});
+        th.dataset.asc=asc?'asc':'desc';
+        th.classList.add(asc?'sorted-asc':'sorted-desc');
+        rows.sort((a,b)=>{
+          const av=cellVal(a.children[i]), bv=cellVal(b.children[i]);
+          if(typeof av==='number'&&typeof bv==='number') return asc?av-bv:bv-av;
+          return asc?String(av).localeCompare(String(bv)):String(bv).localeCompare(String(av));
+        });
+        rows.forEach(r=>tbody.appendChild(r));
+      });
+    });
   });
   document.querySelectorAll('.auto-opt').forEach(o=>o.addEventListener('click',()=>{
     document.querySelectorAll('.auto-opt').forEach(x=>x.classList.remove('active'));
@@ -1293,6 +1451,163 @@
     try{ localStorage.setItem('point-theme', next); }catch(e){}
   });
 
+
+  if(window.__tagRows) window.__tagRows();
+
+  /* ============ Ask Point chatbot ============ */
+  (function setupAskPoint(){
+    const fab=document.createElement('button');
+    fab.className='askp-fab'; fab.id='askp-fab';
+    fab.innerHTML='<span class="fab-i">◑</span> Ask Point';
+    const panel=document.createElement('aside');
+    panel.className='askp'; panel.id='askp';
+    panel.innerHTML=`
+      <div class="askp-head">
+        <span class="askp-logo"><svg viewBox="0 0 32 32"><path fill="#fff" d="M16 3C10 3 6 8 6 14c0 4 2 7 5 9v3c0 1 .5 2 2 2h6c1.5 0 2-1 2-2v-3c3-2 5-5 5-9 0-6-5-11-10-11Zm-1 3h2v18h-2V6Z"/></svg></span>
+        <div><div class="askp-ht">Ask Point</div><div class="askp-hs">Agentic intelligence · reads your live book</div></div>
+        <span class="askp-fundtag" id="askp-fundtag">Alpha Fund</span>
+        <button class="askp-x" id="askp-x" aria-label="Close">✕</button>
+      </div>
+      <div class="askp-body" id="askp-body"></div>
+      <div class="askp-sugg" id="askp-sugg"></div>
+      <div class="askp-input">
+        <input id="askp-text" placeholder="Ask about the book…" autocomplete="off"/>
+        <button id="askp-send" aria-label="Send">↑</button>
+      </div>`;
+    document.body.appendChild(fab);
+    document.body.appendChild(panel);
+    const body=panel.querySelector('#askp-body');
+    const sugg=panel.querySelector('#askp-sugg');
+    const input=panel.querySelector('#askp-text');
+    const fundtag=panel.querySelector('#askp-fundtag');
+    let greeted=false;
+
+    const curFund=()=>funds.find(x=>x.id===activeFund)||funds[0];
+    const fD=()=>fundDetail[activeFund]||fundDetail.alpha;
+    const vT=()=>viewTables[activeFund]||viewTables.alpha;
+    const mD=()=>marketData[activeFund]||marketData.alpha;
+    const pD=()=>panelData[activeFund]||panelData.alpha;
+    const topCard=()=>cardIndex[(fundExtra[activeFund]||fundExtra.alpha).topCardId];
+    const strip=s=>(Array.isArray(s)?(s[1]||''):(s||'')).toString().replace(/<[^>]+>/g,'');
+
+    function addMsg(html, who){
+      const el=document.createElement('div');
+      el.className='am '+who; el.innerHTML=html;
+      body.appendChild(el); body.scrollTop=body.scrollHeight;
+      return el;
+    }
+    function typing(){
+      const t=document.createElement('div');
+      t.className='am-typing'; t.innerHTML='<span></span><span></span><span></span>';
+      body.appendChild(t); body.scrollTop=body.scrollHeight; return t;
+    }
+    const SUGG=['How are we doing?','Any limit breaches?','Biggest positions','What should I trim?','What\'s crowded?','Macro outlook'];
+    function renderSugg(){ sugg.innerHTML=SUGG.map(s=>`<span class="askp-chip">${s}</span>`).join(''); }
+    renderSugg();
+    sugg.addEventListener('click',e=>{ const c=e.target.closest('.askp-chip'); if(c){ send(c.textContent); } });
+
+    function answer(qRaw){
+      const q=(qRaw||'').toLowerCase();
+      const f=curFund(), d=fD(), vt=vT(), md=mD(), pd=pD();
+      const has=(...ks)=>ks.some(k=>q.includes(k));
+      const money=v=>`<span class="amv">${v}</span>`;
+      // switch fund
+      for(const fu of funds){
+        const nm=fu.name.toLowerCase().replace(' fund','');
+        if((q.includes('switch')||q.includes('go to')||q.includes('open'))&&(q.includes(nm)||q.includes(fu.id))){
+          selectFund(fu.id);
+          return `Switched to the <b>${fu.name}</b>. The whole workspace now reflects it — AUM ${money(fu.aum)}, day PnL ${money(fu.pnl)}. Ask me anything about this book.`;
+        }
+      }
+      // ticker lookup
+      const tkMatch=(q.toUpperCase().match(/\b[A-Z]{2,5}\b/g)||[]);
+      for(const tk of tkMatch){
+        const p=d.positions.find(x=>x[0].toUpperCase()===tk);
+        if(p){
+          return `<b>${p[0]}</b> — ${p[1]}: ${p[2]==='L'?'long':'short'} ${p[3]}, market value ${money(p[4])} (${p[5]} of book). Day ${money(p[6])}, MTD ${money(p[7])}, beta ${p[8]}. Agent flag: <b>${p[10]}</b>.`;
+        }
+      }
+      if(has('hello','hi ','hey','hi','hola')) return `Hi — I'm <b>Ask Point</b>, watching the <b>${f.name}</b>. I can tell you performance, risk & limits, positions, crowding, macro, or details on any holding. What would you like?`;
+      if(has('help','what can you','what do you do','capab')) return `I read the <b>${f.name}</b>'s live book. Try:<ul><li>"How are we doing?" — performance</li><li>"Any limit breaches?" — risk</li><li>"Biggest positions" / "What should I trim?"</li><li>"What's crowded?" — positioning</li><li>"Macro outlook" — regime & CPI</li><li>Or a ticker, e.g. "${d.positions[0][0]}"</li></ul>`;
+      if(has('which fund','current fund','what fund','where am i')) return `You're viewing the <b>${f.name}</b> (${f.sub}) — AUM ${money(f.aum)}. Switch with the header fund picker, or ask me to "switch to Digital Assets".`;
+      if(has('list fund','what fund','all fund','funds')) return `There are four books:<ul><li><b>Alpha Fund</b> — equity L/S</li><li><b>Global Macro</b> — futures, rates, FX</li><li><b>Market Neutral</b> — paired, beta ≈ 0</li><li><b>Digital Assets</b> — crypto + tokenized</li></ul>Say "switch to <i>name</i>" and everything updates.`;
+      if(has('aum','how big','size of','how much money','assets under')) return `<b>${f.name}</b> runs ${money(f.aum)} in AUM (${f.aumD}).`;
+      if(has('how are we','performance','return','pnl','p&l','doing','profit','up or down')){
+        const k=vt.pnlKpis;
+        return `<b>${f.name}</b> performance — Day ${money(k[0][1])} (${k[0][2]}), MTD ${money(k[1][1])}, QTD ${money(k[2][1])}, YTD ${money(k[3][1])}. Hit rate ${pd.pnlStats[0][1]}, W/L ${pd.pnlStats[1][1]}.`;
+      }
+      if(has('breach','limit','ima','guideline','headroom','over the limit')){
+        const br=vt.riskLimits.find(r=>/BREACH|near/.test(strip(r[5])+strip(r[r.length-1])));
+        if(br){ const tc=topCard();
+          return `⚠️ <b>${strip(br[0])}</b> is at <b>${strip(br[1])}</b> vs. a ${strip(br[2])} limit — breach path ${strip(br[4])}. Recommended: ${tc?tc.body:'see the Risk agent card'}`;
+        }
+        return `All limits are currently within range for the <b>${f.name}</b> — no projected breaches.`;
+      }
+      if(has('var','value at risk','how risky','risk level','downside')){
+        const mag=v=>Math.abs(parseFloat((v||'').replace(/[^\d.]/g,''))||0);
+        const worst=[...pd.stress].sort((a,b)=>mag(b[1])-mag(a[1]))[0];
+        return `<b>${f.name}</b> 1-day 99% VaR is ${money(f.var)} (${f.varD}). Worst stress scenario: <b>${strip(worst[0])}</b> → ${money(strip(worst[1]))}.`;
+      }
+      if(has('net','gross','exposure','leverage','how long')) return `<b>${f.name}</b> exposure: gross/net ${money(f.exp)}. ${f.expD}.`;
+      if(has('biggest','largest','top position','top holding','concentrat','main position')){
+        const ps=d.positions.slice(0,3).map(p=>`<li><b>${p[0]}</b> ${p[4]} (${p[5]})</li>`).join('');
+        return `Top positions in the <b>${f.name}</b>:<ul>${ps}</ul>`;
+      }
+      if(has('trim','sell','reduce','cut','what should i','recommend','action','do now','next best')){
+        const tc=topCard();
+        return tc?`Top action for the <b>${f.name}</b> — <b>${tc.title}</b>. ${tc.body} <br><span class="amv">Open the dashboard card for the full what-if & approval.</span>`:`No critical action right now.`;
+      }
+      if(has('crowd','de-gross','degross','positioning','consensus')){
+        const c=vt.crowding[0];
+        return `Most crowded in the <b>${f.name}</b>: <b>${strip(c[0])}</b> — crowding ${strip(c[1])}${c[2]&&c[2]!=='—'?', ownership '+c[2]:''}. Flag: ${strip(c[c.length-1])}.`;
+      }
+      if(has('macro','cpi','inflation','fed','rate','regime','interest')){
+        const sc=pd.scenario.find(r=>/hot cpi/i.test(r[0]));
+        return `Macro: CPI 3.1% YoY, Fed funds 4.75% (2 cuts priced by March). Book stance: <b>${md.macroKpis[3][1]}</b>. ${sc?'Hot-CPI scenario for this book: '+money(strip(sc[1])):''}.`;
+      }
+      if(has('crypto','bitcoin','btc','ethereum','eth','token','digital asset')){
+        return `Digital read: BTC $101,842 (−2.1%), ETH $3,842 (−3.4%). Perp funding +0.082%, OI +18% — crowded longs. Tokenized tNVDA basis −2.81% vs NYSE. ${activeFund==='digital'?'This book is the Digital Assets fund.':'Your crypto-β here is '+(f.exp)+'.'}`;
+      }
+      if(has('brief','overnight','summary','catch me up','what happened','what\'s new','whats new')){
+        const fe=fundExtra[activeFund]||fundExtra.alpha;
+        const items=fe.feed.slice(0,3).map(x=>`<li>${x[1]}</li>`).join('');
+        return `Overnight for the <b>${f.name}</b> — ${f.cards}, ${f.crit}:<ul>${items}</ul>`;
+      }
+      if(has('thank','thanks','cheers','great','nice','cool')) return `Anytime. Ask me anything else about the book.`;
+      if(has('who are you','what is point','about point')) return `Point is an agentic decision layer — ten specialist agents watch the portfolio and the market, predict what matters, and recommend the next best action. I'm the chat front-end to that team.`;
+      return `I can help with <b>performance</b>, <b>risk & limits</b>, <b>positions</b>, <b>crowding</b>, <b>macro</b>, or a specific <b>ticker</b> for the <b>${f.name}</b>. Try one of the suggestions below, or rephrase.`;
+    }
+
+    function send(text){
+      const t=(text||input.value).trim(); if(!t) return;
+      input.value='';
+      addMsg(strip(t), 'user');
+      const tp=typing();
+      setTimeout(()=>{ tp.remove(); let a; try{ a=answer(t); }catch(e){ a='Sorry — I hit a snag on that one. Try rephrasing, or ask about performance, risk & limits, positions, crowding, macro, or a ticker.'; } addMsg(a, 'bot'); }, 420+Math.random()*320);
+    }
+    function openPanel(prefill){
+      fundtag.textContent=curFund().name;
+      fab.classList.add('hide'); panel.classList.add('open');
+      if(!greeted){ greeted=true;
+        addMsg(`Hi — I'm <b>Ask Point</b>. I'm watching the <b>${curFund().name}</b> and can answer questions about performance, risk, positions, crowding and macro. What would you like to know?`, 'bot');
+      }
+      if(prefill){ send(prefill); } else { setTimeout(()=>input.focus(),120); }
+    }
+    function closePanel(){ panel.classList.remove('open'); fab.classList.remove('hide'); }
+
+    fab.addEventListener('click',()=>openPanel());
+    panel.querySelector('#askp-x').addEventListener('click',closePanel);
+    panel.querySelector('#askp-send').addEventListener('click',()=>send());
+    input.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); send(); } });
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape') closePanel(); });
+
+    // wire existing "Ask Point" buttons + the top search
+    document.querySelectorAll('.btn').forEach(b=>{
+      if(/ask point/i.test(b.textContent)) b.addEventListener('click',ev=>{ ev.preventDefault(); openPanel(); });
+    });
+    const topSearch=document.querySelector('.search input');
+    if(topSearch) topSearch.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); const v=topSearch.value.trim(); topSearch.value=''; openPanel(v||undefined); } });
+  })();
 
   /* open from hash */
   const h = (location.hash||'').replace('#','');
