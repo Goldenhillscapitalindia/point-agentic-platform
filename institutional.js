@@ -63,8 +63,8 @@ const HEALTH={
     ['Concentration',58,-9,'Semiconductor exposure increased after NVDA rally.',82],
     ['Crowding',64,-4,'Three top holdings sit in top-decile HF ownership.',70],
     ['Momentum',78,+2,'Breadth positive; growth factor leading.',38],
-    ['Catalyst Risk',69,-5,'Four holdings report earnings within 14 days.',62],
-    ['Guideline Headroom',84,-1,'Beta-adjusted net nearing IMA soft limit.',22]]
+    ['Catalyst risk',69,-5,'Four holdings report earnings within 14 days.',62],
+    ['Guideline headroom',84,-1,'Beta-adjusted net nearing IMA soft limit.',22]]
 };
 function health(){return HEALTH[FUND]||HEALTH.apex;}
 
@@ -90,13 +90,13 @@ const CARDS=[
    evidence:[['Quant Engine','Concentration = 24.8% of NAV, computed 09:41 ET'],['Risk Agent','Projected 28.3% at next-open on current drift'],['Guideline Engine','Internal sector cap 27% (Risk Policy §3.1)']]},
   {id:'AC-7728',sev:'crit',agent:'Macro & Regime',ts:'08:55 ET',conf:'Med',fresh:'Macro latest',
    title:'CPI print tomorrow 08:30 — hot scenario = −$8.2M',
-   m:[['−$8.2M','Hot scenario'],['−0.65%','% NAV'],['0.6×','DV01 hedge'],['HIGH','Portfolio sens.']],
+   m:[['−$8.2M','Hot scenario'],['−0.65%','% NAV'],['0.6×','DV01 hedge'],['High','Portfolio sens.']],
    drivers:['Core CPI consensus 0.3% MoM','Book long-duration growth','Rate-vol sellers crowded'],
    rec:'Deploy 10Y DV01 hedge ladder at 0.6× book. Carry < 2 bps/mo.',
    evidence:[['Quant Engine','Scenario PnL grid vs position-level rate betas'],['Catalyst Calendar','CPI Oct 08 08:30 ET · HIGH sensitivity']]},
   {id:'AC-7725',sev:'warn',agent:'Fund Flows',ts:'08:12 ET',conf:'Med',fresh:'13F 54d',
    title:'META crowding score 92 — de-grossing vulnerability',
-   m:[['92','Crowding'],['14.1%','HF ownership'],['+7pts','QoQ Δ'],['HIGH','De-gross risk']],
+   m:[['92','Crowding'],['14.1%','HF ownership'],['+7pts','QoQ Δ'],['High','De-gross risk']],
    drivers:['Top-decile hedge-fund ownership','Options skew steep','4 of top-10 funds trimming'],
    rec:'Consider halving META or a Dec OTM put spread ahead of any vol event.',
    evidence:[['Fund Flows Agent','13F observed Jun 30 · filed Aug 14 · 54 days old'],['Options','25-delta skew 90th percentile']]},
@@ -108,7 +108,7 @@ const CARDS=[
    evidence:[['Position Intel','8-K + transcript delta vs recorded thesis'],['PnL Agent','YTD −$2.4M · efficiency POOR']]},
   {id:'AC-7704',sev:'opp',agent:'Research & Alpha',ts:'07:05 ET',conf:'High',fresh:'Estimates 3h',
    title:'META — Alpha 84, diversifies semiconductor concentration',
-   m:[['84','Alpha score'],['HIGH','Portfolio fit'],['+4.1/−2.3%','5D range'],['18d','Earnings']],
+   m:[['84','Alpha score'],['High','Portfolio fit'],['+4.1/−2.3%','5D range'],['18d','Earnings']],
    drivers:['Strong estimate revisions','Improving institutional positioning','Momentum positive'],
    rec:'Add on weakness; portfolio fit HIGH — reduces reliance on semis for upside.',
    evidence:[['Research Agent','Composite 84/100 · explainable factor stack'],['Flows Agent','Institutional ownership +7 pts QoQ']]},
@@ -156,132 +156,141 @@ const OPPS=[
 ];
 
 /* ======================= RENDERERS ======================= */
-function kcell(l,v,sub,subcls){return `<div class="kcell"><div class="klab">${l}</div><div class="kval num">${v}</div><div class="ksub ${subcls||'mut'}">${sub||''}</div></div>`;}
+function kcell(l,v,sub,subcls,valcls){return `<div class="kcell"><div class="klab">${l}</div><div class="kval num ${valcls||''}">${v}</div><div class="ksub ${subcls||'mut'}">${sub||''}</div></div>`;}
+
+const ICO={
+  cmd:'<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 3a3 3 0 00-3 3v12a3 3 0 103-3H6a3 3 0 103 3V6a3 3 0 10-3 3h12a3 3 0 000-6z"/></svg>',
+  book:'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 014 4v13a3 3 0 00-3-3H2zM22 4h-6a4 4 0 00-4 4v13a3 3 0 013-3h7z"/></svg>',
+  zap:'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>'
+};
 
 function renderCommand(){
   const f=FUNDS[FUND];
+  const hd=f.health-f.yhealth, hlev=f.health>=75?'pos':f.health>=60?'warnc':'neg';
   const strip=`<div class="kstrip">
     ${kcell('NAV',f.nav,'as-of 09:42 ET')}
-    ${kcell('Daily PnL',f.day,f.dayp,f.dayPos?'pos':'neg')}
+    ${kcell('Daily PnL',f.day,f.dayp,f.dayPos?'pos':'neg',f.dayPos?'pos':'neg')}
     ${kcell('Gross',f.gross,'exposure')}
     ${kcell('Net',f.net,'beta-adj 56%')}
     ${kcell('1D VaR',f.var,'of NAV')}
     ${kcell('Cash',f.cash,'available')}
-    ${kcell('Health',f.health+' / 100',sgn(f.health-f.yhealth)+' vs yest',f.health>=f.yhealth?'pos':'neg')}
+    ${kcell('Health',f.health+' / 100',sgn(hd)+' vs yesterday',hd>=0?'pos':'neg',hlev)}
   </div>`;
 
   // health ring
-  const h=f.health, circ=2*Math.PI*52, off=circ*(1-h/100);
+  const h=f.health, circ=2*Math.PI*41, off=circ*(1-h/100);
   const hcol=h>=75?'var(--pos)':h>=60?'var(--warn)':'var(--crit)';
   const comps=health().map((c,i)=>{
-    const col=c[1]>=75?'var(--pos)':c[1]>=55?'var(--warn)':'var(--crit)';
+    const col=c[1]>=75?'var(--pos)':'var(--warn)';
     return `<div class="hc" data-hc="${i}">
       <div class="hc-top"><span class="hc-name">${c[0]}</span><span class="hc-val num">${c[1]}</span><span class="hc-chg num ${cls(c[2])}">${sgn(c[2])}</span></div>
       <div class="hc-bar"><div class="hc-fill" style="width:${c[1]}%;background:${col}"></div></div>
       <div class="hc-why">${c[3]}</div></div>`;}).join('');
 
   const healthCard=`<div class="card">
-    <div class="card-h"><h3>Portfolio Health</h3><span class="sp"></span><span class="pill ${h>=75?'ok':h>=60?'warn':'crit'}">${h>=75?'HEALTHY':h>=60?'ELEVATED':'STRESSED'}</span></div>
+    <div class="card-h"><h3>Portfolio health</h3><span class="sp"></span><span class="pill ${h>=75?'ok':h>=60?'warn':'crit'}">${h>=75?'HEALTHY':h>=60?'ELEVATED':'STRESSED'}</span></div>
     <div class="card-b">
       <div class="health">
-        <div class="ring"><svg width="118" height="118" viewBox="0 0 118 118">
-          <circle cx="59" cy="59" r="52" fill="none" stroke="var(--line)" stroke-width="10"/>
-          <circle cx="59" cy="59" r="52" fill="none" stroke="${hcol}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${circ}" stroke-dashoffset="${off}"/>
+        <div class="ring"><svg width="96" height="96" viewBox="0 0 96 96">
+          <circle cx="48" cy="48" r="41" fill="none" stroke="var(--line)" stroke-width="7"/>
+          <circle cx="48" cy="48" r="41" fill="none" stroke="${hcol}" stroke-width="7" stroke-linecap="round" stroke-dasharray="${circ}" stroke-dashoffset="${off}"/>
         </svg><div class="rc"><div class="rn num">${h}</div><div class="rl">/ 100</div></div></div>
-        <div class="health-meta">Yesterday <b class="num">${f.yhealth}</b> · Change <b class="num ${cls(h-f.yhealth)}">${sgn(h-f.yhealth)}</b><br/>
-        <span class="mut">Driven down by rising semiconductor concentration and net exposure. Seven components monitored by the Conductor.</span></div>
+        <div class="health-meta"><b>Yesterday <span class="num">${f.yhealth}</span></b> · Change <b class="num ${cls(hd)}">${sgn(hd)}</b><br/>
+        Driven down by rising semiconductor concentration and net exposure. Seven components monitored by the Conductor.</div>
       </div>
     </div>
     <div class="hcomp">${comps}</div></div>`;
 
   // top risk
   const topRisk=`<div class="card">
-    <div class="card-h"><h3>Top Risk</h3><span class="sp"></span><span class="pill crit">CRITICAL</span></div>
+    <div class="card-h"><h3>Top risk</h3><span class="sp"></span><span class="pill crit">CRITICAL</span></div>
     <div class="card-b">
-      <div style="font-size:13.5px;font-weight:600;margin-bottom:10px">Semiconductor concentration approaching internal limit</div>
-      <div class="kv2" style="margin-bottom:10px">
+      <div style="font-size:13.5px;font-weight:600;margin:6px 0 12px">Semiconductor concentration approaching internal limit</div>
+      <div class="kv2" style="margin-bottom:12px">
         <div class="c"><div class="k">Current</div><div class="v num">24.8%</div></div>
         <div class="c"><div class="k">Limit</div><div class="v num">27%</div></div>
         <div class="c"><div class="k">Projected (1D)</div><div class="v num neg">28.3%</div></div>
         <div class="c"><div class="k">Breach prob</div><div class="v num neg">63%</div></div>
       </div>
-      <div style="font-size:11.5px;color:var(--muted);margin-bottom:10px">$ at risk <b class="num" style="color:var(--ink)">$18.4M</b> · drivers: NVDA +4.2%, AMD, correlation ↑</div>
+      <div style="font-size:11.5px;color:var(--muted);margin-bottom:14px">$ at risk <b class="num" style="color:var(--ink)">$18.4M</b> · drivers: NVDA +4.2%, AMD, correlation ↑</div>
       <button class="btn pri sm" data-card="AC-7731">View analysis</button>
       <button class="btn gh sm" data-goto="scenarios">Run scenario</button>
     </div></div>`;
 
   // top opportunity
   const topOpp=`<div class="card">
-    <div class="card-h"><h3>Top Opportunity</h3><span class="sp"></span><span class="pill info">OPPORTUNITY</span></div>
+    <div class="card-h"><h3>Top opportunity</h3><span class="sp"></span><span class="pill info">OPPORTUNITY</span></div>
     <div class="card-b">
-      <div style="display:flex;align-items:baseline;gap:9px;margin-bottom:10px"><div style="font-size:16px;font-weight:700">META</div><div class="mut" style="font-size:12px">Alpha 84 / 100</div></div>
-      <div class="kv2" style="margin-bottom:10px">
+      <div style="display:flex;align-items:baseline;gap:9px;margin:6px 0 12px"><div style="font-size:16px;font-weight:700">META</div><div class="mut" style="font-size:12px">Alpha 84 / 100</div></div>
+      <div class="kv2" style="margin-bottom:12px">
         <div class="c"><div class="k">Expected 5D</div><div class="v num">+4.1 / −2.3%</div></div>
         <div class="c"><div class="k">Institutional flow</div><div class="v pos" style="font-size:13px">Positive</div></div>
         <div class="c"><div class="k">Momentum</div><div class="v pos" style="font-size:13px">Positive</div></div>
         <div class="c"><div class="k">Earnings</div><div class="v num">18 days</div></div>
       </div>
-      <div style="font-size:11.5px;color:var(--muted);margin-bottom:10px">Portfolio fit <b style="color:var(--pos)">STRONG</b> — diversifies semiconductor concentration.</div>
+      <div style="font-size:11.5px;color:var(--muted);margin-bottom:14px">Portfolio fit <b style="color:var(--pos)">STRONG</b> — diversifies semiconductor concentration.</div>
       <button class="btn pri sm" data-card="AC-7704">View thesis</button>
     </div></div>`;
 
-  // what changed
-  const ch=changed();
+  // what changed — THESIS / LIMITS rows drill down (›)
+  const ch=changed(), drill={THESIS:1,LIMITS:1};
   const wcCats=Object.keys(ch).map(cat=>`<div class="wc-cat"><div class="wc-h">${cat}</div>${
-    ch[cat].map(r=>`<div class="wc-row"><span class="lab">${r[0]}</span><span class="chg ${cls(r[2])}">${r[1]}</span><span class="wc-arrow">›</span></div>`).join('')}</div>`).join('');
+    ch[cat].map(r=>`<div class="wc-row"><span class="lab">${r[0]}</span><span class="chg ${cls(r[2])}">${r[1]}${drill[cat]?'<span class="wc-arrow">›</span>':''}</span></div>`).join('')}</div>`).join('');
   const whatChanged=`<div class="card"><div class="card-h"><h3>What changed since yesterday?</h3><span class="sp"></span><span class="tag">Conductor · ranked</span></div><div class="card-b flush">${wcCats}</div></div>`;
 
   // action cards (critical+warning)
-  const acHtml=CARDS.filter(c=>c.sev!=='opp').map(acardMarkup).join('');
-  const actionCards=`<div class="card"><div class="card-h"><h3>Action queue</h3><span class="sp"></span><span class="pill crit">2 critical</span><span class="pill warn">2 warning</span></div><div class="card-b">${acHtml}</div></div>`;
+  const q=CARDS.filter(c=>c.sev!=='opp');
+  const nCrit=q.filter(c=>c.sev==='crit').length, nWarn=q.filter(c=>c.sev==='warn').length;
+  const actionCards=`<div class="card"><div class="card-h"><h3>Action queue</h3><span class="sp"></span><span class="pill crit">${nCrit} critical</span><span class="pill warn">${nWarn} warning</span></div><div class="card-b" style="padding:12px 12px 2px">${q.map(acardMarkup).join('')}</div></div>`;
 
   // limit headroom (compact)
   const lhRows=LIMITS.slice(0,6).map(r=>{
     const st=r[9], pct=parseFloat(r[2]), lim=parseFloat(r[4]), warn=parseFloat(r[3]);
     const w=Math.min(100,pct/lim*100), col=st==='WARN'?'var(--warn)':st==='BREACH'?'var(--crit)':'var(--pos)';
-    return `<tr data-limit="${r[0]}"><td class="l">${r[0]}</td><td class="num">${r[2]}</td><td><span class="hr-bar"><span class="hr-fill" style="width:${w}%;background:${col}"></span><span class="hr-mark" style="left:${warn/lim*100}%"></span></span></td><td class="num">${r[4]}</td><td class="num ${st==='WARN'?'warnc':''}">${r[6]}</td><td><span class="pill ${st==='WARN'?'warn':st==='BREACH'?'crit':'ok'}">${st}</span></td></tr>`;}).join('');
-  const headroom=`<div class="card"><div class="card-h"><h3>Limit headroom</h3><span class="sp"></span><span class="pill warn">2 warning</span></div><div class="card-b flush"><div class="tbl-wrap"><table class="t"><thead><tr><th class="l">Rule</th><th>Current</th><th>Headroom</th><th>Limit</th><th>1D breach</th><th>Status</th></tr></thead><tbody>${lhRows}</tbody></table></div></div></div>`;
+    return `<tr data-limit="${r[0]}"><td class="l">${r[0]}</td><td class="num">${r[2]}</td><td class="c"><span class="hr-bar"><span class="hr-fill" style="width:${w}%;background:${col}"></span><span class="hr-mark" style="left:${warn/lim*100}%"></span></span></td><td class="num">${r[4]}</td><td class="num">${r[6]}</td><td><span class="pill ${st==='WARN'?'warn':st==='BREACH'?'crit':'ok'}">${st}</span></td></tr>`;}).join('');
+  const nLimWarn=LIMITS.slice(0,6).filter(r=>r[9]==='WARN').length;
+  const headroom=`<div class="card"><div class="card-h"><h3>Limit headroom</h3><span class="sp"></span><span class="pill warn">${nLimWarn} warning</span></div><div class="card-b flush" style="padding-bottom:8px"><div class="tbl-wrap"><table class="t lite"><thead><tr><th class="l">Rule</th><th>Current</th><th class="c">Headroom</th><th>Limit</th><th>1D breach</th><th>Status</th></tr></thead><tbody>${lhRows}</tbody></table></div></div></div>`;
 
   // catalysts
   const cats=[['12','OCT','CPI · 08:30 ET','Portfolio sensitivity HIGH · scenario −$8.2M','crit'],
     ['09','OCT','JPM earnings','Pre-market · read-across GS, financials','warn'],
     ['16','OCT','AVGO earnings','After close · $62M position','warn'],
     ['18','OCT','NVDA earnings','Largest position · implied move ±8%','crit'],
-    ['26','OCT','UNH investor day','Thesis in WARNING · $34M position','info']];
+    ['26','OCT','UNH investor day','Thesis in WARNING · $34M position','neu']];
   const catHtml=cats.map(c=>`<div class="cal-row"><div class="cal-date"><div class="cal-d num">${c[0]}</div><div class="cal-m">${c[1]}</div></div><div class="cal-main"><div class="cal-t">${c[2]}</div><div class="cal-s">${c[3]}</div></div><span class="pill ${c[4]}">${c[4]==='crit'?'HIGH':c[4]==='warn'?'MED':'INFO'}</span></div>`).join('');
-  const catalysts=`<div class="card"><div class="card-h"><h3>Upcoming catalysts</h3><span class="sp"></span><span class="tag">portfolio-aware</span></div><div class="card-b flush" style="padding:4px 15px">${catHtml}</div></div>`;
+  const catalysts=`<div class="card"><div class="card-h"><h3>Upcoming catalysts</h3><span class="sp"></span><span class="tag">portfolio-aware</span></div><div class="card-b flush" style="padding:2px 13px">${catHtml}</div></div>`;
 
-  // movers
+  // movers — gains grow from the left, losses from the right
   const mv=positions().slice().map(p=>({tk:p[0],v:p[6]})).sort((a,b)=>Math.abs(b.v)-Math.abs(a.v)).slice(0,8);
   const mvMax=Math.max(...mv.map(m=>Math.abs(m.v)));
-  const mvHtml=mv.map(m=>{const w=Math.abs(m.v)/mvMax*48, pos=m.v>=0;
-    return `<div class="mover"><span class="tk">${m.tk}</span><div class="mv-track"><span class="mv-mid"></span><span class="mv-b" style="${pos?'left:50%':'right:50%'};width:${w}%;background:${pos?'var(--pos)':'var(--crit)'}"></span></div><span class="pnl ${cls(m.v)}">${sgn(m.v)}M</span></div>`;}).join('');
-  const movers=`<div class="card"><div class="card-h"><h3>Portfolio movers · today</h3><span class="sp"></span><span class="tag">$ PnL</span></div><div class="card-b">${mvHtml}</div></div>`;
+  const mvHtml=mv.map(m=>{const w=Math.abs(m.v)/mvMax*86, pos=m.v>=0;
+    return `<div class="mvr" data-pos="${m.tk}"><span class="tk">${m.tk}</span><div class="mvr-track"><span class="mvr-b" style="${pos?'left:0':'right:0'};width:${w}%;background:${pos?'var(--pos)':'var(--crit)'}"></span></div><span class="pnl ${cls(m.v)}">${sgn(m.v)}M</span></div>`;}).join('');
+  const movers=`<div class="card"><div class="card-h"><h3>Portfolio movers · today</h3><span class="sp"></span><span class="tag">$ PnL</span></div><div class="card-b" style="padding:12px 13px">${mvHtml}</div></div>`;
 
   // morning brief
-  const brief=`<div class="card"><div class="card-h"><h3>Point Morning Brief</h3><span class="sp"></span><span class="tag">composed 05:58 ET</span><button class="btn gh sm">Export</button></div><div class="card-b">
-    <div style="font-size:13px;line-height:1.6;color:var(--ink-2)">
-      <p style="margin:0 0 10px"><b>Overnight.</b> Semiconductor beta drifted higher as NVDA (+4.2%) and AVGO extended; net exposure rose 38% → 42%. Tokenized-equity venues traded semis −2.3% into the weekend. CPI prints tomorrow 08:30 ET — the dominant near-term risk.</p>
-      <p style="margin:0 0 10px"><b>Portfolio risk.</b> VaR 7.1% → 7.4%. Semiconductor concentration 24.8% vs 27% internal cap — projected 28.3% on current drift (<span class="neg">63% 1-day breach</span>). Beta-adjusted net and technology exposure both moved SAFE → WARNING.</p>
-      <p style="margin:0 0 10px"><b>Thesis.</b> AMD alignment fell 86% → 61% (margin + capex + pricing); position uses 98% of its risk budget for −4% return — flagged TRIM. UNH and CRM also show new contradicting evidence.</p>
-      <p style="margin:0"><b>Opportunities.</b> META ranks Alpha 84 with HIGH portfolio fit — adds non-semiconductor upside. TSMC read-across is positive for NVDA and AVGO.</p>
+  const brief=`<div class="card"><div class="card-h"><h3>Point Morning Brief</h3><span class="sp"></span><button class="btn gh sm">Export</button></div><div class="card-b">
+    <div class="brief">
+      <p><b>Overnight.</b> Semiconductor beta drifted higher as NVDA (+4.2%) and AVGO extended; net exposure rose 38% → 42%. Tokenized-equity venues traded semis −2.3% into the weekend. CPI prints tomorrow 08:30 ET — the dominant near-term risk.</p>
+      <p><b>Portfolio risk.</b> VaR 7.1% → 7.4%. Semiconductor concentration 24.8% vs 27% internal cap — projected 28.3% on current drift (<span class="neg">63% 1-day breach</span>). Beta-adjusted net and technology exposure both moved SAFE → WARNING.</p>
+      <p><b>Thesis.</b> AMD alignment fell 86% → 61% (margin + capex + pricing); position uses 98% of its risk budget for −4% return — flagged TRIM. UNH and CRM also show new contradicting evidence.</p>
+      <p><b>Opportunities.</b> META ranks Alpha 84 with HIGH portfolio fit — adds non-semiconductor upside. TSMC read-across is positive for NVDA and AVGO.</p>
     </div></div></div>`;
 
   Q('#view-command').innerHTML=`
-    <div class="pg-head"><div><div class="pg-title">Command Center</div><div class="pg-sub">${f.name} · the fund in ten seconds</div></div>
-      <div class="filters"><button class="btn gh sm" data-goto="ask">Ask the book</button><button class="btn gh sm" data-goto="scenarios">Scenario studio</button><button class="btn pri sm" data-goto="decisions">Decision queue</button></div></div>
+    <div class="pg-head"><div><div class="pg-eyebrow">${ICO.cmd}<span>Decision workspace</span></div><div class="pg-title">Command center</div><div class="pg-sub">${f.name} · the fund in ten seconds</div></div>
+      <div class="pg-acts"><button class="btn gh sm" data-goto="ask">${ICO.book}Ask the book</button><button class="btn gh sm" data-goto="scenarios">Scenario studio</button><button class="btn pri sm" data-goto="decisions">${ICO.zap}Decision queue</button></div></div>
     ${strip}
     <div class="grid g-3">${healthCard}${topRisk}${topOpp}</div>
     <div class="grid g-2b">${whatChanged}${actionCards}</div>
     <div class="grid g-2b">${headroom}${catalysts}</div>
-    <div class="grid g-2">${movers}${brief}</div>
+    <div class="grid g-2c">${movers}${brief}</div>
     <div class="foot-note">Point Fund Intelligence · all quantitative values from the deterministic Quant Engine v2.4 · AI narrates, ranks and explains — it does not compute official values. <a href="landing.html">Back to site</a></div>`;
 }
 
 function acardMarkup(c){
   const sevl={crit:'CRITICAL',warn:'WARNING',opp:'OPPORTUNITY',info:'INFO'};
   return `<div class="acard ${c.sev}" data-card="${c.id}">
-    <div class="ac-h"><span class="pill ${c.sev==='opp'?'info':c.sev}">${sevl[c.sev]}</span><span class="tag">${c.agent} · ${c.ts}</span><span class="sp"></span><span class="tag">#${c.id}</span></div>
+    <div class="ac-h"><span class="pill ${c.sev==='opp'?'info':c.sev}">${sevl[c.sev]}</span><span class="tag">${c.agent} · ${c.ts} · #${c.id}</span></div>
     <div class="ac-ttl">${c.title}</div>
     <div class="ac-m">${c.m.map(x=>`<div class="ac-mi"><div class="v num">${x[0]}</div><div class="l">${x[1]}</div></div>`).join('')}</div>
     <div class="ac-foot"><button class="btn pri sm" data-approve>Approve</button><button class="btn gh sm" data-goto="scenarios">What-if</button><button class="btn gh sm">Dismiss</button><span class="meta">Conf ${c.conf} · ${c.fresh}</span></div>
