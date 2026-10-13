@@ -1,0 +1,12 @@
+{
+  "name": "point-agentic-platform",
+  "version": "1.7.0",
+  "private": true,
+  "description": "Point Agentic Solutions — static marketing site + fund-intelligence platform demo",
+  "scripts": {
+    "build": "node build.js",
+    "start": "node build.js && npx -y serve dist -l 4178",
+    "serve": "npx -y serve dist -l 4178",
+    "dev": "node build.js && npx -y serve dist -l 4178"
+  }
+}
