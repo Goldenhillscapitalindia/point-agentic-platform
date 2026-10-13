@@ -641,10 +641,110 @@
     vfill('digital-bridge', d.bridge);
   }
 
+  /* ---- per-fund secondary panels ---- */
+  const panelData = {
+    alpha:{
+      whatifSelect:'Trim NVDA 12% + SMH Nov 215/205 put spread',
+      whatif:[['Beta-net','62.1% → <b class="good">55.4%</b>'],['Gross','184% → 172%'],['VaR 99%','$14.3M → $11.1M'],['Alpha cost','6 bps'],['Carry cost','0.4 bps/mo'],['Breach prob 1d','<b class="good">9%</b>']],
+      stress:[['−5% equities · +50bp 10Y','−$ 23.4 M'],['Semis −8%','−$ 11.6 M'],['BTC −15% + funding spike','−$ 6.1 M'],['USD +3% DXY','−$ 2.9 M'],['Vol regime (VIX >30)','−$ 18.0 M']],
+      pnlStats:[['Hit rate','62%'],['W/L ratio','1.84'],['Alpha half-life','14d']],
+      cal:[['Tue Oct 8','CPI 08:30 · <span class="red">macro</span>'],['Wed Oct 9','JPM Q3 earnings pre-mkt'],['Thu Oct 10','LMRX coverage initiations'],['Thu Oct 10','Fed minutes 14:00'],['Fri Oct 11','UNH Q3 · PPI 08:30'],['Mon Oct 14','WFC + C earnings'],['Wed Oct 16','NVDA GTC keynote']],
+      news:[['05:12','Bloomberg','<b>Nvidia</b> insider sales total $220M over 10 days','pill red','neg'],['04:48','Reuters','<b>Meta</b> secures EU AI compliance ruling','pill good','pos'],['03:21','13D filing','<b>Elliott</b> discloses 1.9% in NVDA','pill orange','watch'],['22:40','Semafor','Semi tariffs: Treasury eases TSMC carve-outs','pill good','pos'],['20:11','8-K','<b>SNOW</b> CFO transition, reaffirms guide','pill ghost','neutral']],
+      explainName:'UBER (long)',
+      explain:[['Quality',84,'0.84'],['Momentum',78,'0.78'],['Revisions',71,'0.71'],['Sentiment',68,'0.68'],['Macro fit',62,'0.62']],
+      explainTxt:'Model attributes <b>0.89</b> to: free-cash-flow inflection, autonomous optionality now partially priced, CFO insider buying ($2.1M on 09/22), and positive EBITDA revisions. Risk: delivery-margin compression if GLP-1 demand drag persists.',
+      divergence:[['<b>META</b> — Point long · 4 of top-10 funds trimming','pill orange','divergent'],['<b>UBER</b> — Point long · Lone Pine, Tiger initiations','pill good','aligned'],['<b>MSFT</b> — Point long · Viking cut 40% QoQ','pill orange','divergent'],['<b>UNH</b> — Point short · Berkshire added','pill red','counter'],['<b>CRM</b> — Point long · ValueAct topped up','pill good','aligned']],
+      etf:[['SPY',70,'','+$ 3.1 B'],['QQQ',52,'','+$ 1.8 B'],['SMH',28,'','+$ 0.7 B'],['IWM',34,'bad','−$ 0.9 B'],['XLE',14,'','+$ 0.3 B'],['IBIT (BTC)',46,'gold','+$ 1.4 B'],['ETHA (ETH)',12,'gold','+$ 0.2 B']],
+      social:[['NVDA',22,58,'58/22'],['TSLA',38,42,'42/38'],['META',14,68,'68/14'],['COIN',20,60,'60/20'],['AMD',28,48,'48/28']],
+      scenario:[['Base case','<b class="good">+$ 1.2 M</b>'],['Hot CPI (+0.4% MoM core)','<b class="dn">−$ 4.78 M · −38 bps</b>'],['Cold CPI (0.1%)','<b class="up">+$ 6.1 M · +49 bps</b>'],['Fed +25 surprise','<b class="dn">−$ 7.9 M</b>'],['10Y +50 bp','<b class="dn">−$ 9.4 M</b>'],['Risk-off (VIX >30)','<b class="dn">−$ 18.0 M</b>']]
+    },
+    global:{
+      whatifSelect:'Add 0.6× ZN DV01 ladder + trim JPY short',
+      whatif:[['DV01','0.9× → <b class="good">0.4×</b>'],['Net','38% → 34%'],['VaR 99%','$9.8M → $7.1M'],['Carry','1.8 bps/mo'],['Hot-CPI PnL','−$4.78M → −$1.4M'],['Breach prob 1d','<b class="good">11%</b>']],
+      stress:[['10Y +50bp','−$ 9.4 M'],['Hot CPI (+0.4% core)','−$ 4.78 M'],['USD +3% DXY','−$ 6.2 M'],['Oil −10%','−$ 3.1 M'],['Risk-off (VIX >30)','−$ 12.4 M']],
+      pnlStats:[['Hit rate','57%'],['W/L ratio','1.41'],['Avg hold','9d']],
+      cal:[['Tue Oct 8','CPI 08:30 · <span class="red">key print</span>'],['Thu Oct 10','Fed minutes 14:00'],['Thu Oct 10','3Y / 10Y auctions'],['Fri Oct 11','PPI 08:30'],['Wed Oct 16','ECB minutes'],['Thu Oct 17','China GDP'],['Fri Oct 18','OPEC+ monthly report']],
+      news:[['05:30','Bloomberg','China unveils <b>stimulus</b> package; FXI bid','pill good','pos'],['04:10','Reuters','<b>BOJ</b> signals intervention risk above 158','pill orange','watch'],['02:50','WSJ','Services <b>PPI</b> runs hot — rate-vol bid','pill red','neg'],['22:05','FT','<b>OPEC+</b> holds output; crude backwardation','pill good','pos'],['19:40','Fed wire','Treasury hints slower <b>QT</b> taper','pill good','pos']],
+      explainName:'Gold (long)',
+      explain:[['Momentum',88,'0.88'],['Real-rate fit',82,'0.82'],['CB demand',76,'0.76'],['Flow',71,'0.71'],['Macro regime',69,'0.69']],
+      explainTxt:'Model attributes <b>0.91</b> to: falling real rates into the cut cycle, persistent central-bank buying, ETF inflows (+$1.9B 5d), and a weakening USD. Risk: a hot CPI that reprices the Fed path and lifts real yields.',
+      divergence:[['<b>Gold</b> — Point long · specs crowded same side','pill orange','crowded'],['<b>10Y</b> — Point short · rate-vol sellers aligned','pill good','aligned'],['<b>USD</b> — Point short · CTAs flipping short','pill good','aligned'],['<b>EM</b> — Point long · inflows turning positive','pill good','aligned'],['<b>JPY</b> — Point short · intervention counter-risk','pill red','counter']],
+      etf:[['TLT (bonds)',40,'bad','−$ 1.2 B'],['GLD (gold)',66,'gold','+$ 1.9 B'],['UUP (USD)',24,'bad','−$ 0.5 B'],['FXI (China)',58,'','+$ 1.6 B'],['EEM (EM)',44,'','+$ 1.1 B'],['USO (oil)',30,'','+$ 0.6 B'],['DBC (commod)',22,'','+$ 0.4 B']],
+      social:[['Gold',16,62,'62/16'],['Crude',30,50,'50/30'],['USD',34,40,'40/34'],['China/FXI',22,58,'58/22'],['Rates',44,32,'32/44']],
+      scenario:[['Base case','<b class="good">+$ 2.1 M</b>'],['Hot CPI (+0.4% core)','<b class="up">+$ 2.4 M · short rates win</b>'],['Cold CPI (0.1%)','<b class="dn">−$ 3.2 M</b>'],['Fed +25 surprise','<b class="up">+$ 3.8 M</b>'],['10Y +50 bp','<b class="up">+$ 2.1 M</b>'],['Risk-off (VIX >30)','<b class="dn">−$ 12.4 M</b>']]
+    },
+    neutral:{
+      whatifSelect:'Add 15% to PG/CL pair (beta-neutral)',
+      whatif:[['Net beta','0.04 → <b class="good">0.02</b>'],['Gross','210% → 212%'],['VaR 99%','$6.1M → $6.0M'],['Pair z','+2.1σ add'],['Carry','0.2 bps/mo'],['Breach prob 1d','<b class="good">1%</b>']],
+      stress:[['−5% equities (beta-hedged)','−$ 1.8 M'],['Pair divergence +1σ','−$ 2.4 M'],['Borrow +100bp','−$ 0.9 M'],['Factor shock (momentum)','−$ 1.1 M'],['Vol regime (VIX >30)','−$ 2.0 M']],
+      pnlStats:[['Hit rate','64%'],['W/L ratio','1.22'],['Pair conv.','11d']],
+      cal:[['Tue Oct 8','CPI (low book impact)'],['Wed Oct 9','LLY / NVO both report +12d'],['Fri Oct 11','V / MA both +6d'],['Mon Oct 14','COST / WMT pair events'],['Wed Oct 16','PG / CL pair +14d'],['Thu Oct 17','index rebalance preview'],['Fri Oct 18','borrow-rate review']],
+      news:[['05:20','Bloomberg','<b>Novo</b> borrow fee spikes to 180bp','pill orange','watch'],['04:30','Reuters','<b>Lilly</b> GLP-1 share gains confirmed','pill good','pos'],['03:00','8-K','<b>Visa</b> volume data ahead of MA','pill good','pos'],['21:30','WSJ','Staples valuation spread at 60-day wide','pill ghost','neutral'],['18:15','filing','Index rebalance preview — pair flows','pill ghost','neutral']],
+      explainName:'LLY/NVO (pair)',
+      explain:[['Pair z-score',88,'0.88'],['Fundamental gap',74,'0.74'],['Borrow avail',71,'0.71'],['Revisions',66,'0.66'],['Beta neutrality',92,'0.92']],
+      explainTxt:'Model attributes <b>0.88</b> to the long-LLY / short-NVO spread: GLP-1 share shift to LLY, a 2.1σ valuation dislocation with no catalyst, ample borrow, and near-zero net beta. Risk: a surprise NVO trial read-out.',
+      divergence:[['<b>LLY/NVO</b> — pair · smart money tilts LLY','pill good','aligned'],['<b>V/MA</b> — pair · consensus favors V','pill good','aligned'],['<b>GOOG/META</b> — pair · crowded both legs','pill orange','crowded'],['<b>PG/CL</b> — pair · no smart-money signal','pill ghost','neutral'],['<b>NVO</b> — short leg · borrow pressure building','pill orange','watch']],
+      etf:[['XLP staples',38,'','+$ 0.5 B'],['XLV health',52,'','+$ 0.9 B'],['XLY discr',30,'bad','−$ 0.4 B'],['XLK tech',46,'','+$ 0.8 B'],['XLF fins',34,'','+$ 0.6 B'],['Momentum ETF',20,'bad','−$ 0.3 B'],['Low-vol ETF',28,'','+$ 0.4 B']],
+      social:[['LLY',14,66,'66/14'],['NVO',38,40,'40/38'],['V',18,60,'60/18'],['MA',24,52,'52/24'],['COST',16,64,'64/16']],
+      scenario:[['Base case','<b class="good">+$ 0.4 M</b>'],['Hot CPI (+0.4% core)','<b class="dn">−$ 0.3 M · < ±8 bps</b>'],['Cold CPI (0.1%)','<b class="up">+$ 0.5 M</b>'],['Fed +25 surprise','<b class="dn">−$ 0.6 M</b>'],['10Y +50 bp','<b class="dn">−$ 0.4 M</b>'],['Risk-off (VIX >30)','<b class="dn">−$ 2.0 M</b>']]
+    },
+    digital:{
+      whatifSelect:'Buy MSTR/COIN put spread ($0.6M premium)',
+      whatif:[['Crypto-β','71% → <b class="good">58%</b>'],['Net','71% → 61%'],['24/7 VaR','$11.2M → $8.4M'],['Premium','$0.6M'],['Carry','n/a'],['Breach prob 1d','<b class="good">22%</b>']],
+      stress:[['BTC −15% + funding spike','−$ 6.1 M'],['Alt −25% (SOL/CLSK)','−$ 7.8 M'],['Exchange outage / depeg','−$ 4.2 M'],['Risk-off (VIX >30)','−$ 9.0 M'],['Tokenized gap −5%','−$ 1.4 M']],
+      pnlStats:[['Hit rate','51%'],['W/L ratio','1.96'],['Avg hold','6d']],
+      cal:[['Sat / Sun','24/7 — weekend coverage'],['Mon Oct 7','COIN pre-announce 16:30'],['Tue Oct 8','CPI 08:30 (BTC-rate β)'],['Wed Oct 9','token unlock · ARB'],['Thu Oct 10','spot ETH ETF flow data'],['Fri Oct 11','SEC crypto roundtable'],['Ongoing','on-chain whale alerts']],
+      news:[['Sat 02:14','on-chain','<b>BTC</b> funding +0.082%, OI +18%','pill red','neg'],['Sat 06:40','Glassnode','Stablecoin mint <b>+$1.4B</b> — risk-on','pill good','pos'],['Sun 11:20','exchange','<b>CLSK</b> breaks 200-day on thin volume','pill red','neg'],['Sun 19:05','SEC','Crypto roundtable scheduled Fri','pill orange','watch'],['Mon 04:30','venue','<b>tNVDA</b> basis −2.8% vs NYSE close','pill orange','watch']],
+      explainName:'SOL (long)',
+      explain:[['Momentum',90,'0.90'],['ETF optionality',78,'0.78'],['On-chain flow',74,'0.74'],['Sentiment',70,'0.70'],['Liquidity',64,'0.64']],
+      explainTxt:'Model attributes <b>0.90</b> to: accelerating price momentum (+22% MTD), spot-ETF optionality, rising on-chain activity and stablecoin inflows. Risk: a broad risk-off that hits high-beta alts first.',
+      divergence:[['<b>BTC</b> — Point long · ETF flows crowded long','pill orange','crowded'],['<b>SOL</b> — Point long · momentum funds aligned','pill good','aligned'],['<b>MSTR</b> — Point long · premium to NAV elevated','pill orange','watch'],['<b>CLSK</b> — Point long · miners being sold','pill red','counter'],['<b>COIN</b> — Point long · funding crowded','pill orange','watch']],
+      etf:[['IBIT (BTC)',70,'gold','+$ 1.4 B'],['ETHA (ETH)',24,'gold','+$ 0.2 B'],['Spot SOL fund',40,'gold','+$ 0.3 B'],['Stablecoin mint',66,'','+$ 1.4 B'],['Exchange outflow',48,'','bullish'],['Miner ETF',28,'bad','−$ 0.2 B'],['Tokenized RWA',18,'','+$ 0.1 B']],
+      social:[['BTC',28,56,'56/28'],['SOL',14,72,'72/14'],['ETH',22,58,'58/22'],['COIN',20,60,'60/20'],['CLSK',46,34,'34/46']],
+      scenario:[['Base case','<b class="good">+$ 1.8 M</b>'],['Hot CPI (+0.4% core)','<b class="dn">−$ 3.4 M · BTC-rate β</b>'],['Cold CPI (0.1%)','<b class="up">+$ 4.2 M</b>'],['BTC −15%','<b class="dn">−$ 6.1 M</b>'],['Alt −25%','<b class="dn">−$ 7.8 M</b>'],['Risk-off (VIX >30)','<b class="dn">−$ 9.0 M</b>']]
+    }
+  };
+  function renderPanels(fund){
+    const d=panelData[fund]||panelData.alpha;
+    // what-if
+    const sel=document.getElementById('risk-whatif-select');
+    if(sel) sel.options[0] ? (sel.options[0].text=d.whatifSelect) : null;
+    const wi=document.getElementById('risk-whatif');
+    if(wi) wi.innerHTML=d.whatif.map(c=>`<div class="wi-cell"><div class="wi-k">${c[0]}</div><div class="wi-v">${c[1]}</div></div>`).join('');
+    // stress
+    const st=document.getElementById('risk-stress');
+    if(st) st.innerHTML='<div class="st-head">Stress tests</div>'+d.stress.map(r=>`<div class="st-row"><span>${r[0]}</span><b class="dn">${r[1]}</b></div>`).join('');
+    // pnl stats
+    const ps=document.getElementById('pnl-stats');
+    if(ps) ps.innerHTML=d.pnlStats.map(k=>`<div><div class="kv-k">${k[0]}</div><div class="kv-v">${k[1]}</div></div>`).join('');
+    // catalyst calendar
+    const cal=document.getElementById('pos-cal');
+    if(cal) cal.innerHTML=d.cal.map(c=>`<li><b>${c[0]}</b><span>${c[1]}</span></li>`).join('');
+    // news
+    const nw=document.getElementById('pos-news');
+    if(nw) nw.innerHTML=d.news.map(n=>`<li><span class="t">${n[0]}</span><span class="src">${n[1]}</span><div>${n[2]}</div><span class="${n[3]}">${n[4]}</span></li>`).join('');
+    // research explain
+    const exName=document.getElementById('research-explain-name'); if(exName) exName.textContent=d.explainName;
+    const ex=document.getElementById('research-explain');
+    if(ex) ex.innerHTML=d.explain.map(r=>`<div class="ex-row"><div class="ex-k">${r[0]}</div><div class="ex-bar"><div class="ex-fill" style="width:${r[1]}%"></div></div><div class="ex-v">${r[2]}</div></div>`).join('')+`<div class="ex-txt">${d.explainTxt}</div>`;
+    // flows divergence
+    const dv=document.getElementById('flows-divergence');
+    if(dv) dv.innerHTML=d.divergence.map(r=>`<li><div>${r[0]}</div><span class="${r[1]}">${r[2]}</span></li>`).join('');
+    // etf flows
+    const etf=document.getElementById('flows-etf');
+    if(etf) etf.innerHTML=d.etf.map(r=>`<div class="etf-row"><span>${r[0]}</span><div class="bar"><div class="fill ${r[2]}" style="width:${r[1]}%"></div></div><b class="${r[3].includes('−')?'dn':''}">${r[3]}</b></div>`).join('');
+    // social
+    const soc=document.getElementById('earnings-social');
+    if(soc) soc.innerHTML=d.social.map(s=>`<div class="s-row"><span>${s[0]}</span><div class="sent"><div class="sent-neg" style="width:${s[1]}%"></div><div class="sent-pos" style="width:${s[2]}%"></div></div><b>${s[3]}</b></div>`).join('');
+    // macro scenario
+    const sc=document.getElementById('macro-scenario');
+    if(sc) sc.innerHTML=d.scenario.map(r=>`<div class="sc-row"><span>${r[0]}</span>${r[1]}</div>`).join('');
+  }
+
   function renderDetail(id){
     renderPositions(id); renderPnl(id);
     renderExposure(id); renderFeed(id); renderPnlMeta(id); renderTopCard(id);
-    renderAISummary(id); renderViews(id);
+    renderAISummary(id); renderViews(id); renderPanels(id);
   }
 
   /* ---- line chart (reusable) ---- */

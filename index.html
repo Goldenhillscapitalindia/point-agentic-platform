@@ -557,9 +557,9 @@
           <div class="whatif">
             <div class="wi-row">
               <div class="wi-lab">Scenario</div>
-              <select><option>Trim NVDA 12% + SMH Nov 215/205 put spread</option><option>Halve META + SPY hedge</option><option>Hot CPI (+0.4% MoM core)</option></select>
+              <select id="risk-whatif-select"><option>Trim NVDA 12% + SMH Nov 215/205 put spread</option><option>Halve META + SPY hedge</option><option>Hot CPI (+0.4% MoM core)</option></select>
             </div>
-            <div class="wi-grid">
+            <div class="wi-grid" id="risk-whatif">
               <div class="wi-cell"><div class="wi-k">Beta-net</div><div class="wi-v">62.1% → <b class="good">55.4%</b></div></div>
               <div class="wi-cell"><div class="wi-k">Gross</div><div class="wi-v">184% → 172%</div></div>
               <div class="wi-cell"><div class="wi-k">VaR 99%</div><div class="wi-v">$14.3M → $11.1M</div></div>
@@ -573,7 +573,7 @@
               <button class="btn dark">Export audit</button>
             </div>
           </div>
-          <div class="stress">
+          <div class="stress" id="risk-stress">
             <div class="st-head">Stress tests</div>
             <div class="st-row"><span>−5% equities · +50bp 10Y</span><b class="dn">−$ 23.4 M</b></div>
             <div class="st-row"><span>Semis −8%</span><b class="dn">−$ 11.6 M</b></div>
@@ -647,7 +647,7 @@
               <div><i class="sq grey"></i>Residual <b>16%</b></div>
             </div>
           </div>
-          <div class="kv-row">
+          <div class="kv-row" id="pnl-stats">
             <div><div class="kv-k">Hit rate</div><div class="kv-v">62%</div></div>
             <div><div class="kv-k">W/L ratio</div><div class="kv-v">1.84</div></div>
             <div><div class="kv-k">Alpha half-life</div><div class="kv-v">14d</div></div>
@@ -725,7 +725,7 @@
       <div class="grid-2">
         <div class="card">
           <div class="card-head"><h3 class="card-title">Catalyst calendar · next 10 days</h3></div>
-          <ul class="cal big">
+          <ul class="cal big" id="pos-cal">
             <li><b>Tue Oct 8</b><span>CPI 08:30 · <span class="red">macro</span></span></li>
             <li><b>Wed Oct 9</b><span>JPM Q3 earnings pre-mkt</span></li>
             <li><b>Thu Oct 10</b><span>Lumen Robotics (LMRX) coverage initiations</span></li>
@@ -738,7 +738,7 @@
         </div>
         <div class="card">
           <div class="card-head"><h3 class="card-title">News & sentiment · last 24h</h3></div>
-          <ul class="news">
+          <ul class="news" id="pos-news">
             <li><span class="t">05:12</span><span class="src">Bloomberg</span><div><b>Nvidia</b> insider sales total $220M over 10 trading days</div><span class="pill red">neg</span></li>
             <li><span class="t">04:48</span><span class="src">Reuters</span><div><b>Meta</b> secures EU AI compliance ruling</div><span class="pill good">pos</span></li>
             <li><span class="t">03:21</span><span class="src">13D filing</span><div><b>Elliott</b> discloses 1.9% in NVDA, pushing capital return</div><span class="pill orange">watch</span></li>
@@ -791,8 +791,8 @@
       </div>
 
       <div class="card">
-        <div class="card-head"><h3 class="card-title">AI explanation · UBER (long)</h3><span class="chip ghost">explainable</span></div>
-        <div class="explain">
+        <div class="card-head"><h3 class="card-title">AI explanation · <span id="research-explain-name">UBER (long)</span></h3><span class="chip ghost">explainable</span></div>
+        <div class="explain" id="research-explain">
           <div class="ex-row"><div class="ex-k">Quality</div><div class="ex-bar"><div class="ex-fill" style="width:84%"></div></div><div class="ex-v">0.84</div></div>
           <div class="ex-row"><div class="ex-k">Momentum</div><div class="ex-bar"><div class="ex-fill" style="width:78%"></div></div><div class="ex-v">0.78</div></div>
           <div class="ex-row"><div class="ex-k">Revisions</div><div class="ex-bar"><div class="ex-fill" style="width:71%"></div></div><div class="ex-v">0.71</div></div>
@@ -826,7 +826,7 @@
         </div>
         <div class="card">
           <div class="card-head"><h3 class="card-title">Smart-money divergence</h3><span class="chip ghost">top-tier funds vs. you</span></div>
-          <ul class="div-list">
+          <ul class="div-list" id="flows-divergence">
             <li><div><b>META</b> — Point long · 4 of top-10 funds trimming</div><span class="pill orange">divergent</span></li>
             <li><div><b>UBER</b> — Point long · Lone Pine, Tiger Cub initiations</div><span class="pill good">aligned</span></li>
             <li><div><b>MSFT</b> — Point long · Viking cut 40% QoQ</div><span class="pill orange">divergent</span></li>
@@ -837,7 +837,7 @@
       </div>
       <div class="card">
         <div class="card-head"><h3 class="card-title">ETF flows · 5-day</h3></div>
-        <div class="etf">
+        <div class="etf" id="flows-etf">
           <div class="etf-row"><span>SPY</span><div class="bar"><div class="fill" style="width:70%"></div></div><b>+$ 3.1 B</b></div>
           <div class="etf-row"><span>QQQ</span><div class="bar"><div class="fill" style="width:52%"></div></div><b>+$ 1.8 B</b></div>
           <div class="etf-row"><span>SMH</span><div class="bar"><div class="fill" style="width:28%"></div></div><b>+$ 0.7 B</b></div>
@@ -871,7 +871,7 @@
         </div>
         <div class="card">
           <div class="card-head"><h3 class="card-title">Social sentiment · bot-filtered</h3></div>
-          <div class="social">
+          <div class="social" id="earnings-social">
             <div class="s-row"><span>NVDA</span><div class="sent"><div class="sent-neg" style="width:22%"></div><div class="sent-pos" style="width:58%"></div></div><b>58/22</b></div>
             <div class="s-row"><span>TSLA</span><div class="sent"><div class="sent-neg" style="width:38%"></div><div class="sent-pos" style="width:42%"></div></div><b>42/38</b></div>
             <div class="s-row"><span>META</span><div class="sent"><div class="sent-neg" style="width:14%"></div><div class="sent-pos" style="width:68%"></div></div><b>68/14</b></div>
@@ -910,7 +910,7 @@
         </div>
         <div class="card">
           <div class="card-head"><h3 class="card-title">Scenario PnL</h3><span class="chip ghost">whole book</span></div>
-          <div class="scenario">
+          <div class="scenario" id="macro-scenario">
             <div class="sc-row"><span>Base case</span><b class="good">+$ 1.2 M</b></div>
             <div class="sc-row"><span>Hot CPI (+0.4% MoM core)</span><b class="dn">−$ 4.78 M · −38 bps</b></div>
             <div class="sc-row"><span>Cold CPI (0.1%)</span><b class="up">+$ 6.1 M · +49 bps</b></div>
