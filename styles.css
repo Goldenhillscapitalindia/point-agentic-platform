@@ -714,3 +714,10 @@ a.brand:hover{background:var(--panel)}
 .ais-pt .pm{color:var(--orange);font-weight:700;flex:none;margin-top:1px}
 .ais-pt.gold .pm{color:var(--gold-2)}
 .ais-pt b{color:var(--txt);font-weight:600}
+
+/* ============ sortable table headers ============ */
+.tbl th.th-sort{cursor:pointer;user-select:none;position:relative;padding-right:18px;transition:color .12s}
+.tbl th.th-sort:hover{color:var(--txt)}
+.tbl th.th-sort:after{content:"⇅";position:absolute;right:5px;opacity:.32;font-size:10px}
+.tbl th.sorted-asc:after{content:"↑";opacity:1;color:var(--orange)}
+.tbl th.sorted-desc:after{content:"↓";opacity:1;color:var(--orange)}

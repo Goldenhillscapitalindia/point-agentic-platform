@@ -704,8 +704,89 @@
       scenario:[['Base case','<b class="good">+$ 1.8 M</b>'],['Hot CPI (+0.4% core)','<b class="dn">−$ 3.4 M · BTC-rate β</b>'],['Cold CPI (0.1%)','<b class="up">+$ 4.2 M</b>'],['BTC −15%','<b class="dn">−$ 6.1 M</b>'],['Alt −25%','<b class="dn">−$ 7.8 M</b>'],['Risk-off (VIX >30)','<b class="dn">−$ 9.0 M</b>']]
     }
   };
+  const marketData = {
+    alpha:{
+      macroKpis:[['CPI YoY','3.1%','+0.1 vs. prior'],['Core PCE','2.8%','target 2.0'],['Fed funds','4.75%','market: 2 cuts by Mar'],['Book stance','Risk-on tilt','net 62% · semis-led']],
+      events:[
+        ['06:11:42','Macro','CPI nowcast → 3.12% YoY · re-ran Risk, PnL, Flows'],
+        ['06:11:08','Digital','tNVDA basis −2.81% · triggered Risk gap-check'],
+        ['06:10:51','Risk','Beta-net 63.1% · breach prob 71% · Action Card composed'],
+        ['06:10:40','Flows','META crowding 92 → de-gross alert to Risk'],
+        ['06:10:22','Technical','TSLA RSI divergence 5d · stop proximity 0.3 ATR'],
+        ['06:09:58','PosIntel','NVDA 13D (Elliott) ingested · thesis-drift ↑'],
+        ['06:09:30','Earnings','JPM transcript primed · tone −0.21 forecast'],
+        ['06:09:04','Research','Universe re-ranked · UBER #1 · 12 new ideas'],
+        ['06:08:41','Conductor','De-duplicated 4 semis alerts → 1 ranked card']],
+      irLetter:[
+        '<b>Dear Partner,</b>',
+        'October brought a two-sided tape. The Alpha fund delivered a <b>+1.82% net return</b> for the month and <b>+18.4% YTD</b>, ahead of the benchmark’s <b>+9.7%</b>. Attribution was dominated by stock-specific wins in Communications and Semiconductors, offset by a drag from large-cap software where our Microsoft thesis has entered a resting phase.',
+        'We tightened net exposure after the agent team flagged <b>beta-adjusted net drifting toward the IMA cap</b>; a defined-risk hedge on the semi-complex preserves the long thesis while restoring headroom. On digital assets, we continue the 24/7 monitor on tokenized equities — our edge is being awake before the Monday open…',
+        '<span class="muted">[auto-generated · 2 citations pending · 4 compliance soft-flags resolved]</span>']
+    },
+    global:{
+      macroKpis:[['CPI YoY','3.1%','+0.1 vs. prior'],['Core PCE','2.8%','target 2.0'],['Fed funds','4.75%','market: 2 cuts by Mar'],['Book stance','Duration short','curve steepener']],
+      events:[
+        ['06:11:42','Macro','CPI nowcast → 3.12% YoY · re-ran rate-book DV01'],
+        ['06:11:08','Macro','10Y through 4.40% · hedge ladder sized'],
+        ['06:10:51','Flows','CoT: specs crowded long gold & crude'],
+        ['06:10:22','Technical','Gold RSI 74 · take-partial signal'],
+        ['06:09:58','Macro','BOJ intervention risk > 158 · trim JPY short'],
+        ['06:09:30','Research','Cross-asset re-rank · gold #1 · EM #2'],
+        ['06:09:04','PosIntel','China stimulus headline ingested · FXI bid'],
+        ['06:08:41','Conductor','Merged 3 rate alerts → 1 DV01 card'],
+        ['06:08:12','Macro','3Y auction 13:00 · calendar flagged']],
+      irLetter:[
+        '<b>Dear Partner,</b>',
+        'The Global Macro fund returned <b>−0.12% on the day</b> but remains <b>+11.2% YTD</b>. Gains were led by a long-gold position and a short-duration expression in the rate complex; FX detracted modestly as the yen stayed resilient on intervention risk.',
+        'Into tomorrow’s CPI we run a <b>0.6× DV01 hedge ladder</b> that caps a hot-print drawdown for under two basis points of monthly carry, while retaining most of the cold-print upside. We added to EM on the China-stimulus headline and trimmed the yen short ahead of potential BOJ action.',
+        '<span class="muted">[auto-generated · derivatives-use disclosure updated · scenario-PnL exhibit attached]</span>']
+    },
+    neutral:{
+      macroKpis:[['CPI YoY','3.1%','+0.1 vs. prior'],['Core PCE','2.8%','target 2.0'],['Fed funds','4.75%','market: 2 cuts by Mar'],['Book stance','Beta-neutral','net 4% · pairs']],
+      events:[
+        ['06:11:42','PnL','PG/CL spread +2.1σ · mean-rev add flagged'],
+        ['06:11:08','Flows','NVO borrow fee 180bp · short-leg watch'],
+        ['06:10:51','Research','Pair re-rank · LLY/NVO #1 by score spread'],
+        ['06:10:22','Risk','Net beta 0.04 · beta-neutral confirmed'],
+        ['06:09:58','Earnings','LLY/NVO earnings aligned +12d · event-neutral'],
+        ['06:09:30','Technical','V/MA spread tightening · tilt V'],
+        ['06:09:04','PosIntel','Index rebalance preview · pair flows'],
+        ['06:08:41','Conductor','No single-name drift · 44 pairs balanced'],
+        ['06:08:12','Risk','Factor net style-neutral · low momentum tilt']],
+      irLetter:[
+        '<b>Dear Partner,</b>',
+        'The Market Neutral fund compounded <b>+0.09% on the day</b> and <b>+7.8% YTD</b> with a realized net beta of <b>0.04</b>. Returns came almost entirely from pair convergence — pharma (LLY/NVO) and staples (PG/CL) led, while a tech pair was the sole detractor.',
+        'We added 15% to the PG/CL pair as its spread reached a <b>2.1σ</b> dislocation with no catalyst, and flagged a rising borrow cost on the NVO short leg. Factor and market-beta exposures remain neutral by construction; a 1-day VaR of <b>0.39%</b> of NAV keeps the book inside every risk band.',
+        '<span class="muted">[auto-generated · factor-neutrality attestation included · Sharpe exhibit attached]</span>']
+    },
+    digital:{
+      macroKpis:[['CPI YoY','3.1%','+0.1 vs. prior'],['Core PCE','2.8%','target 2.0'],['Fed funds','4.75%','market: 2 cuts by Mar'],['Book stance','High-beta','crypto-β 71%']],
+      events:[
+        ['Sat 02:14','Digital','BTC funding +0.082% · OI +18% · put-spread queued'],
+        ['Sat 06:40','Flows','Stablecoin mint +$1.4B · risk-on gauge'],
+        ['Sun 11:20','Technical','CLSK breaks 200-day · stop hit'],
+        ['Sun 19:05','PosIntel','SEC crypto roundtable scheduled Fri'],
+        ['Mon 04:30','Digital','tNVDA basis −2.8% · weekend gap-check'],
+        ['Mon 05:10','Research','Coin re-rank · SOL #1 on momentum'],
+        ['Mon 05:40','Risk','Crypto-β 71% near 75% cap · hedge queued'],
+        ['Mon 06:02','Conductor','Weekend events → 2 ranked cards for open'],
+        ['Mon 06:11','Digital','MSTR 1.42× BTC-β · exposure mapped']],
+      irLetter:[
+        '<b>Dear Partner,</b>',
+        'The Digital Assets fund fell <b>−2.1% on the day</b> but holds a <b>+34.1% YTD</b> — the strongest of the complex and, predictably, the most volatile. Solana led the book higher this month while the mining complex (CleanSpark) was the principal drag after breaking its 200-day average.',
+        'Our 24/7 monitor caught a weekend funding spike (+0.082%, OI +18%) and queued a defined-risk MSTR/COIN put spread for the Monday open, sized to budget and pre-checked by the Risk agent. Crypto-β sits at <b>71%</b> of a 75% cap; custody and tokenized-asset disclosures are front-loaded in this letter.',
+        '<span class="muted">[auto-generated · digital-asset governance Q&A expanded · on-chain transparency exhibit attached]</span>']
+    }
+  };
   function renderPanels(fund){
     const d=panelData[fund]||panelData.alpha;
+    const md=marketData[fund]||marketData.alpha;
+    const mk=document.getElementById('macro-kpis');
+    if(mk) mk.innerHTML=md.macroKpis.map(k=>`<div class="kpi"><div class="k-lab">${k[0]}</div><div class="k-val">${k[1]}</div><div class="k-sub">${k[2]}</div></div>`).join('');
+    const elog=document.getElementById('eventlog');
+    if(elog) elog.innerHTML=md.events.map(e=>`<li><span class="et">${e[0]}</span><span class="ea">${e[1]}</span><span class="em">${e[2]}</span></li>`).join('');
+    const ir=document.getElementById('ir-letter');
+    if(ir) ir.innerHTML=md.irLetter.map(p=>`<p>${p}</p>`).join('');
     // what-if
     const sel=document.getElementById('risk-whatif-select');
     if(sel) sel.options[0] ? (sel.options[0].text=d.whatifSelect) : null;
@@ -745,6 +826,7 @@
     renderPositions(id); renderPnl(id);
     renderExposure(id); renderFeed(id); renderPnlMeta(id); renderTopCard(id);
     renderAISummary(id); renderViews(id); renderPanels(id);
+    if(window.__tagRows) window.__tagRows();
   }
 
   /* ---- line chart (reusable) ---- */
@@ -1045,7 +1127,7 @@
   fundCards.forEach(c=>cardIndex[c.id]=c);
 
   function cardMarkup(c,critClass){
-    return `<div class="card clickable ${c.lvl==='CRIT'&&critClass!==false?'critical':''}" data-card="${c.id}">
+    return `<div class="card clickable ${c.lvl==='CRIT'&&critClass!==false?'critical':''}" data-card="${c.id}" data-lvl="${c.lvl}">
         <div class="card-head">
           <span class="${lvlCls[c.lvl]}">${c.lvl}</span>
           <span class="chip-meta">${c.agent}${c.ts?' · '+c.ts:''}</span>
@@ -1133,22 +1215,7 @@
   });
 
   /* ---- event log (live sim) ---- */
-  const evts = [
-    ['06:11:42','Macro','CPI nowcast updated → 3.12% YoY · re-ran Risk, PnL, Flows'],
-    ['06:11:08','Digital','tNVDA basis −2.81% · triggered Risk gap-check'],
-    ['06:10:51','Risk','Beta-net projection 63.1% · breach prob 71% · Action Card composed'],
-    ['06:10:40','Flows','META crowding 92 → de-gross alert to Risk'],
-    ['06:10:22','Technical','TSLA RSI divergence 5d · stop proximity 0.3 ATR'],
-    ['06:09:58','PosIntel','NVDA 13D (Elliott) ingested · thesis-drift ↑'],
-    ['06:09:30','Earnings','JPM transcript model primed · tone −0.21 forecast'],
-    ['06:09:04','Research','Universe re-ranked · UBER #1 · 12 new ideas'],
-    ['06:08:41','Conductor','De-duplicated 4 semis alerts → 1 ranked card'],
-    ['06:08:12','Digital','BTC funding +0.082% · OI +18% · put-spread queued'],
-  ];
-  const log = document.getElementById('eventlog');
-  if(log){
-    log.innerHTML = evts.map(e=>`<li><span class="et">${e[0]}</span><span class="ea">${e[1]}</span><span class="em">${e[2]}</span></li>`).join('');
-  }
+  /* event log is rendered per-fund via renderPanels */
 
   /* ---- search focus with ⌘K ---- */
   document.addEventListener('keydown', e=>{
@@ -1158,18 +1225,109 @@
     }
   });
 
-  /* ---- segmented + filter button toggles (visual only) ---- */
+  /* ---- row tagging for filters ---- */
+  const cryptoSet=['COIN','MSTR','HOOD','CLSK','BTC','ETH','SOL','USDC','TNVDA','TAAPL','TTSLA','TSPY','TMETA'];
+  const futSet=['TY','ES','GC','6E','CL','DX','JPY','HG','BTP'];
+  function tagPositions(){
+    document.querySelectorAll('#pos-rows tr').forEach(tr=>{
+      const tk=(tr.children[0]?.textContent||'').toUpperCase();
+      const side=(tr.children[2]?.textContent||'').toLowerCase().includes('short')?'short':'long';
+      let kind='equity';
+      if(cryptoSet.includes(tk)) kind='crypto';
+      else if(futSet.includes(tk)) kind='future';
+      else if(tk.includes('/')) kind='pair';
+      if(tk==='USDC') kind='cash';
+      tr.dataset.tags=side+' '+kind;
+    });
+  }
+  function tagTech(){
+    document.querySelectorAll('#tech-rows tr').forEach(tr=>{
+      const rsi=parseFloat(tr.children[3]?.textContent)||0;
+      const macd=(tr.children[4]?.textContent||'').toLowerCase();
+      const volz=parseFloat((tr.children[5]?.textContent||'').replace('σ','').replace('−','-').replace('+',''))||0;
+      const atr=(tr.children[6]?.textContent||'').toLowerCase();
+      const sig=(tr.children[8]?.textContent||'').toLowerCase();
+      const t=[];
+      if(atr.includes('stop')||sig.includes('stop')||sig.includes('cut')||sig.includes('crit')) t.push('stops');
+      if(rsi>=70||rsi<=35||/div|cross|bear|break|neg/.test(macd)) t.push('rsi');
+      if(Math.abs(volz)>=2) t.push('volume');
+      if(sig.includes('earn')||/gap|basis/.test(sig)) t.push('earnings');
+      tr.dataset.tags=t.join(' ')||'other';
+    });
+  }
+  function tagUniverse(){
+    document.querySelectorAll('#research-universe tr').forEach(tr=>{
+      const tk=(tr.children[1]?.textContent||'').toUpperCase();
+      const fit=(tr.children[9]?.textContent||'').toLowerCase();
+      let cat='long';
+      if(/short|unwind|exit/.test(fit)) cat='short';
+      if(tk.includes('IPO')) cat='ipo';
+      tr.dataset.tags=cat;
+    });
+  }
+  window.__tagRows=function(){
+    tagPositions(); tagTech(); tagUniverse();
+    document.querySelectorAll('.seg').forEach(seg=>{ seg.querySelectorAll('.seg-btn').forEach((x,i)=>x.classList.toggle('active',i===0)); });
+  };
+
+  /* ---- functional segmented filters ---- */
+  const segKeyMap={'all':'','long':'long','short':'short','options':'option','crypto':'crypto',
+    'stops':'stops','rsi/macd':'rsi','volume':'volume','earnings move':'earnings',
+    'long ideas':'long','short ideas':'short','ipo/lock-ups':'ipo','ipo':'ipo'};
   document.querySelectorAll('.seg').forEach(seg=>{
+    const card=seg.closest('.card'); const tbody=card?card.querySelector('tbody'):null;
     seg.querySelectorAll('.seg-btn').forEach(b=>b.addEventListener('click',()=>{
       seg.querySelectorAll('.seg-btn').forEach(x=>x.classList.remove('active'));
       b.classList.add('active');
+      if(!tbody) return;
+      const key=segKeyMap[b.textContent.trim().toLowerCase()];
+      [...tbody.querySelectorAll('tr')].forEach(tr=>{
+        tr.style.display=(!key||(tr.dataset.tags||'').indexOf(key)>=0)?'':'none';
+      });
     }));
   });
+
+  /* ---- functional Action-Cards filters ---- */
   document.querySelectorAll('.filters').forEach(f=>{
+    const grid=document.getElementById('cards-grid');
     f.querySelectorAll('.chip-btn').forEach(b=>b.addEventListener('click',()=>{
       f.querySelectorAll('.chip-btn').forEach(x=>x.classList.remove('active'));
       b.classList.add('active');
+      if(!grid) return;
+      const label=b.textContent.trim().toLowerCase();
+      const lvl=label.startsWith('critical')?'CRIT':label.startsWith('warning')?'WARN':label.startsWith('idea')?'IDEA':'';
+      [...grid.querySelectorAll('[data-lvl]')].forEach(c=>{
+        c.style.display=(!lvl||c.dataset.lvl===lvl)?'':'none';
+      });
     }));
+  });
+
+  /* ---- click-to-sort on all data tables ---- */
+  function cellVal(td){
+    if(!td) return '';
+    const t=td.textContent.trim();
+    const m=t.replace(/[,$%×σ]/g,'').replace(/−/g,'-').match(/-?\d+(\.\d+)?/);
+    return (m && /^[\s$+\-−]*[\d.,]/.test(t)) ? parseFloat(m[0]) : t.toLowerCase();
+  }
+  document.querySelectorAll('.tbl').forEach(table=>{
+    const ths=table.querySelectorAll('thead th'); if(!ths.length) return;
+    ths.forEach((th,i)=>{
+      th.classList.add('th-sort');
+      th.addEventListener('click',()=>{
+        const tbody=table.querySelector('tbody'); if(!tbody) return;
+        const rows=[...tbody.querySelectorAll('tr')].filter(r=>r.style.display!=='none');
+        const asc=th.dataset.asc!=='asc';
+        ths.forEach(t=>{t.removeAttribute('data-asc');t.classList.remove('sorted-asc','sorted-desc');});
+        th.dataset.asc=asc?'asc':'desc';
+        th.classList.add(asc?'sorted-asc':'sorted-desc');
+        rows.sort((a,b)=>{
+          const av=cellVal(a.children[i]), bv=cellVal(b.children[i]);
+          if(typeof av==='number'&&typeof bv==='number') return asc?av-bv:bv-av;
+          return asc?String(av).localeCompare(String(bv)):String(bv).localeCompare(String(av));
+        });
+        rows.forEach(r=>tbody.appendChild(r));
+      });
+    });
   });
   document.querySelectorAll('.auto-opt').forEach(o=>o.addEventListener('click',()=>{
     document.querySelectorAll('.auto-opt').forEach(x=>x.classList.remove('active'));
@@ -1293,6 +1451,8 @@
     try{ localStorage.setItem('point-theme', next); }catch(e){}
   });
 
+
+  if(window.__tagRows) window.__tagRows();
 
   /* open from hash */
   const h = (location.hash||'').replace('#','');
