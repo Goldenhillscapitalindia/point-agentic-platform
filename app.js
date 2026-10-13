@@ -839,6 +839,141 @@
     try{ localStorage.setItem('point-theme', next); }catch(e){}
   });
 
+  /* ---- AI summary at the top of each agent view ---- */
+  const agentMeta = {
+    risk:{n:'Risk & Guideline Agent',i:'🛡',sq:'red'},
+    tech:{n:'Technical Signals Agent',i:'📈',sq:'red'},
+    pnl:{n:'PnL Attribution Agent',i:'⚖︎',sq:'red'},
+    ir:{n:'IR & Reporting Agent',i:'📝',sq:'red'},
+    pos:{n:'Position Intelligence Agent',i:'📰',sq:'red'},
+    research:{n:'Research & Alpha Agent',i:'🔍',sq:'gold'},
+    flows:{n:'Fund Flows & Positioning Agent',i:'≋',sq:'gold'},
+    earnings:{n:'Earnings & Sentiment Agent',i:'💬',sq:'gold'},
+    macro:{n:'Macro & Regime Agent',i:'🌍',sq:'gold'},
+    digital:{n:'Digital Assets & Tokenization Agent',i:'◉',sq:'gold'}
+  };
+  const aiSummaries = {
+    risk:[
+      'Beta-adjusted net projected <b>63.1%</b> vs. the <b>60% IMA cap</b> — breach probability <b>71%</b> at Monday open.',
+      'Smallest restoring trade set: trim <b>NVDA 12%</b> + SMH put spread; alpha cost just <b>6 bps</b>.',
+      'VaR 99% <b>$14.3M</b> (1.15% NAV), CVaR $21.8M — comfortably inside the 1.75% limit.',
+      'Semis sector <b>28% vs 30% cap</b> (watch); crypto-β 17% vs 20% cap.',
+      'Stress: −5% equities / +50bp 10Y = <b>−$23.4M</b>; a VIX>30 shock = −$18.0M.',
+      'Days-to-liquidate <b>2.4</b> at 20% ADV — well within the 5-day limit.',
+      '9 IMA rules monitored: <b>1 projected breach</b>, 3 on watch, 5 clear.',
+      'Recommended action is queued with a full timestamped audit trail for compliance.'
+    ],
+    tech:[
+      '<b>1 critical, 4 warnings</b> across the book — ranked by $ at risk and de-duplicated.',
+      'NVDA RSI <b>72</b> with bearish MACD divergence — trim signal, ATR stop 175.4 (−5%).',
+      'TSLA sits <b>0.3 ATR</b> from its trailing stop with a 5-day RSI divergence.',
+      'MSFT 50-DMA fading below the 200 — a bearish cross is forming (trim flag).',
+      'MSTR volume z-score <b>+2.9σ</b>; momentum extended, divergence building.',
+      'COIN and MSTR carry elevated short-squeeze risk on crypto-β names.',
+      'AAPL, GOOGL and AMZN trends remain intact — no action required.',
+      'Alerts are tiered Critical/Warning and routed to both PM and CIO.'
+    ],
+    pnl:[
+      'Day <b>+34 bps</b> ($4.24M); MTD +1.82%; YTD <b>+18.4%</b> vs. benchmark +9.7%.',
+      'Return is <b>60% stock-specific</b>, 24% factor, 16% residual.',
+      'Top contributors NVDA, META, UBER; main drags MSTR, COIN, TSLA.',
+      'Hit rate <b>62%</b>, win/loss 1.84, alpha half-life 14 days.',
+      'MSFT alpha half-life <b>expired</b> (−24 bps MTD) — flagged as a trim candidate.',
+      'PEP short underperforming — cover 50% ahead of its earnings.',
+      'Factor tilt: positive momentum & quality, low value exposure.',
+      'Risk-budget check: MSFT at <b>18% usage</b> flagged for reallocation.'
+    ],
+    ir:[
+      'October LP letter drafted (v3, <b>92% ready</b>) — 2 citations pending.',
+      'SEC Marketing-Rule pre-check: 4 soft flags resolved, <b>2 remaining</b>.',
+      'Performance narrative: +1.82% MTD, +18.4% YTD — ahead of benchmark.',
+      'DDQ library holds <b>142 Q&A</b>; 3 answers refreshed this week.',
+      'Q3 risk-transparency report scheduled for <b>Oct 15</b>.',
+      'Tear sheets: September sent to 142 LPs; October draft in review.',
+      'Castle Peak prospect DDQ (68 questions) approved.',
+      'Every output carries an approval trail for compliance and LPs.'
+    ],
+    pos:[
+      '<b>3 thesis-drift alerts</b>: NVDA (medium), MSFT (high), UNH (medium).',
+      'NVDA: Elliott 13D + <b>$220M insider sales</b> — thesis drift rising.',
+      'MSFT: Azure deceleration contradicts the original growth thesis (high drift).',
+      'Catalyst calendar: CPI (Tue), JPM (Wed), LMRX coverage (Thu).',
+      '24h news sentiment: META positive (EU ruling), NVDA negative (insiders).',
+      'Short-report & litigation scan: no new material items.',
+      'Analyst revisions: UBER and ANET positive; WBA negative.',
+      'Sentiment is tracked per holding vs. the analyst’s original thesis.'
+    ],
+    research:[
+      'Universe re-ranked — <b>503 names scored</b>, 12 new ideas today.',
+      'Top long <b>UBER (0.89)</b>: FCF inflection, CFO insider buy, positive revisions.',
+      '#2 SPOT, #3 ANET; new IPO <b>LMRX ranked #4</b> of 38 new issues.',
+      'Lowest-ranked shorts: WBA (0.14), HOG (0.13).',
+      'Scoring is explainable: quality, momentum, revisions, sentiment, macro-fit.',
+      'Trading ranges modeled — UBER 1d 82.4–85.1, 5d <b>80.0–89.2</b>.',
+      'Ideas are tuned to the fund’s thesis and risk budget.',
+      'CLSK (0.78) flagged — a crypto-β long with accelerating momentum.'
+    ],
+    flows:[
+      'META crowding <b>92</b> (top decile) — de-grossing risk if VIX breaks 22.',
+      'NVDA crowding 88; HF ownership 18.4%, <b>+3 pts QoQ</b>.',
+      'Smart-money divergence: Viking cut MSFT 40%; Berkshire added UNH.',
+      '5-day ETF flows: SPY +$3.1B, QQQ +$1.8B, <b>IWM −$0.9B</b>.',
+      'IBIT (BTC ETF) <b>+$1.4B</b> — crypto inflows accelerating.',
+      'Short interest: WBA 12.4%, COIN 3.6%.',
+      'Aligned with you: UBER (Lone Pine/Tiger) and CRM (ValueAct).',
+      'Crowding and smart-money divergence are scored per holding.'
+    ],
+    earnings:[
+      '<b>6 prints this week</b>; 112 transcripts parsed with bot-filtered social.',
+      'JPM Thursday: tone <b>−0.21</b> forecast (71% conf) — cautious consumer guide.',
+      'Read-across chain: JPM → <b>V, MA, AXP</b>.',
+      'NFLX tone +0.34 (guidance raised); MSFT tone −0.42 (hedging up).',
+      'Social sentiment: META <b>68/14</b> positive; TSLA mixed 42/38.',
+      'Guidance-change detector flags demand, pricing and capex mentions.',
+      'Supplier/customer read-across is summarized for fast consumption.',
+      'Quarter-over-quarter tone shift is tracked per name.'
+    ],
+    macro:[
+      'Regime: <b>late-cycle, tightening</b> bias; CPI 3.1%, core PCE 2.8%.',
+      'CPI tomorrow 08:30 — a hot print (+0.4% core) maps to <b>−38 bps NAV</b>.',
+      'Fed funds 4.75%; market pricing <b>2 cuts by March</b>.',
+      '10Y 4.38% (+6bp); DXY 101.6; WTI $78.2.',
+      'Position-level macro betas computed across 10Y, DXY, WTI and VIX.',
+      'Scenario PnL: 10Y +50bp = <b>−$9.4M</b>; risk-off (VIX>30) = −$18.0M.',
+      'Hedge ladder (0.6× DV01) queued ahead of CPI for 1.8 bps carry.',
+      'A regime shift auto-reruns Risk, PnL and Flows on the live book.'
+    ],
+    digital:[
+      '24/7/365 monitor: BTC <b>$101,842</b> (−2.1%), ETH $3,842 (−3.4%).',
+      'BTC perp funding <b>+0.082%</b>, OI +18% — crowded longs.',
+      'Tokenized basis: tNVDA −2.81%, tAAPL −1.86% vs. NYSE close.',
+      'Weekend gap-risk mapped to the book <b>before Monday open</b>.',
+      'Crypto-β bridge: COIN 0.86, MSTR 1.42, HOOD 0.44 (to BTC).',
+      'MSTR/COIN put-spread queued, sized to budget, checked by Risk.',
+      'Liquidation clusters 98–99k; stablecoin mint +$1.4B (risk-on).',
+      'Defined-risk structures on top-10 coins; 24/7 VaR within limit.'
+    ]
+  };
+  Object.keys(aiSummaries).forEach(k=>{
+    const view=document.getElementById('view-'+k); if(!view) return;
+    const head=view.querySelector('.view-head'); if(!head) return;
+    const m=agentMeta[k]||{n:'Point Agent',i:'✦',sq:'red'};
+    const gold=m.sq==='gold';
+    const el=document.createElement('div');
+    el.className='ai-summary'+(gold?' gold':'');
+    el.innerHTML=`
+      <div class="ais-head">
+        <div class="ais-icon${gold?' gold':''}">${m.i}</div>
+        <div>
+          <div class="ais-title"><span class="ais-spark">✦</span> AI Summary</div>
+          <div class="ais-sub">Synthesized by the ${m.n} · 8 key points · updated just now</div>
+        </div>
+        <div class="ais-badge"><span class="ais-dot"></span>live</div>
+      </div>
+      <div class="ais-points">${aiSummaries[k].map(p=>`<div class="ais-pt${gold?' gold':''}"><span class="pm">▸</span><span>${p}</span></div>`).join('')}</div>`;
+    head.insertAdjacentElement('afterend', el);
+  });
+
   /* open from hash */
   const h = (location.hash||'').replace('#','');
   if(h && titles[h]) go(h);
