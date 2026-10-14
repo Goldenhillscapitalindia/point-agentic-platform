@@ -309,22 +309,42 @@ async function main() {
     ];
   });
 
-  const divergence = packed.slice(0, 6).map(p => {
-    const dir = (p.ret21 || 0) > 0 ? 'added' : 'cut';
-    const pts = Math.abs((p.ret21 || 0) * 10).toFixed(1);
-    const aligned = (p.ret21 || 0) * ((p.revisionsPct || 0) >= 0 ? 1 : -1) > 0;
-    return [`<b>${p.sym}</b> — research ${(p.ret21 || 0) > 0 ? 'long' : 'short'} · 13F proxy ${dir} ${pts} pts`,
-      aligned ? 'pill good' : 'pill orange', aligned ? 'aligned' : 'divergent'];
+  // ---- 13F divergence vs research · for the 10 names ----
+  // Research signal: long if finalScore ≥ 0.55, short if < 0.45, neutral between.
+  // Flow proxy: revisions direction + recent analyst upgrades. Aligned if same side; divergent if opposite.
+  const divergence = packed.map(p => {
+    const researchLong = p.finalScore >= 0.55;
+    const researchShort = p.finalScore < 0.45;
+    const flowUp = (p.upRev || 0) > (p.dnRev || 0) || (p.revisionsPct || 0) > 0.001;
+    const flowDown = (p.dnRev || 0) > (p.upRev || 0) || (p.revisionsPct || 0) < -0.001;
+    const aligned = (researchLong && flowUp) || (researchShort && flowDown);
+    const divergent = (researchLong && flowDown) || (researchShort && flowUp);
+    const label = aligned ? 'aligned' : divergent ? 'divergent' : 'mixed';
+    const cls = aligned ? 'pill good' : divergent ? 'pill red' : 'pill orange';
+    const rside = researchLong ? 'long' : researchShort ? 'short' : 'neutral';
+    const fside = flowUp ? `${p.upRev}↑ / ${p.dnRev}↓ revisions` : flowDown ? `${p.upRev}↑ / ${p.dnRev}↓ revisions` : 'flat revisions';
+    return [`<b>${p.sym}</b> — research ${rside} (score ${p.finalScore.toFixed(2)}) · flow ${fside}`, cls, label];
   });
 
-  const etf = [
-    ['SPY', Math.round(Math.abs((factorRet['SPY']?.slice(-5)?.reduce((a, b) => a + b, 0) || 0) * 2000)), '', fmtPct((factorRet['SPY']?.slice(-5)?.reduce((a, b) => a + b, 0) || 0) * 100, 1)],
-    ['Gold', Math.round(Math.abs((factorRet['Gold']?.slice(-5)?.reduce((a, b) => a + b, 0) || 0) * 2000)), 'gold', fmtPct((factorRet['Gold']?.slice(-5)?.reduce((a, b) => a + b, 0) || 0) * 100, 1)],
-    ['10Y UST', Math.round(Math.abs((factorRet['10Y UST']?.slice(-5)?.reduce((a, b) => a + b, 0) || 0) * 500)), '', fmtPct((factorRet['10Y UST']?.slice(-5)?.reduce((a, b) => a + b, 0) || 0) * 100, 1)],
-    ['WTI', Math.round(Math.abs((factorRet['WTI']?.slice(-5)?.reduce((a, b) => a + b, 0) || 0) * 2000)), '', fmtPct((factorRet['WTI']?.slice(-5)?.reduce((a, b) => a + b, 0) || 0) * 100, 1)],
-    ['DXY', Math.round(Math.abs((factorRet['DXY']?.slice(-5)?.reduce((a, b) => a + b, 0) || 0) * 2000)), '', fmtPct((factorRet['DXY']?.slice(-5)?.reduce((a, b) => a + b, 0) || 0) * 100, 1)],
-    ['VIX', Math.round(Math.abs((factorRet['VIX']?.slice(-5)?.reduce((a, b) => a + b, 0) || 0) * 500)), 'bad', fmtPct((factorRet['VIX']?.slice(-5)?.reduce((a, b) => a + b, 0) || 0) * 100, 1)]
-  ];
+  // ---- 5-day price tape · the 10 names (replaces old sector-ETF tape) ----
+  const etf = packed.map(p => {
+    const b = p.bars || [];
+    const ret5 = b.length >= 6 ? (b[b.length - 1].c / b[b.length - 6].c - 1) : 0;
+    const pct = ret5 * 100;
+    const barW = Math.round(Math.min(100, Math.abs(pct) * 10)); // 10% move = full bar
+    const cls = pct >= 0 ? '' : 'bad';
+    const lbl = fmtPct(pct, 1);
+    return [p.sym, barW, cls, lbl];
+  }).sort((a, b) => parseFloat(b[3]) - parseFloat(a[3]));
+
+  // ---- Social sentiment proxy · top 5 names (derived from analyst mix, since no real feed) ----
+  // Row shape expected by renderer: [ticker, neg%, pos%, '<pos>/<neg>']
+  const social = packed.slice(0, 5).map(p => {
+    const total = (p.recBuy || 0) + (p.recHold || 0) + (p.recSell || 0);
+    const posPct = total > 0 ? Math.round(100 * p.recBuy / total) : 50;
+    const negPct = total > 0 ? Math.round(100 * p.recSell / total) : 20;
+    return [p.sym, negPct, posPct, `${posPct}/${negPct}`];
+  });
 
   // ---- EARNINGS & SENTIMENT ----
   const upcoming = packed.filter(p => p.nextEarningsTs).map(p => [
@@ -777,6 +797,7 @@ async function main() {
       rows: flows,
       divergence,
       etf,
+      social,
       chip: '10 recent S&P 500 adds · 13F proxy · short interest · 12 Oct'
     },
     earnings: {

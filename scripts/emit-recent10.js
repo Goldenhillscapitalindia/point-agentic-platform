@@ -78,6 +78,32 @@ app = replaceArrayValue(app, '      betas:', betasInner);
 const scenarioInner = EOL + block(j.macro.scenarios, 8, EOL) + EOL + '      ';
 app = replaceArrayValue(app, '      scenario:', scenarioInner);
 
+// 5b. Replace EVERY panelData.{fund}.divergence with the 10-name divergence rows
+const divergenceInner = EOL + block(j.flows.divergence, 8, EOL) + EOL + '      ';
+app = replaceArrayValue(app, '      divergence:', divergenceInner);
+
+// 5c. Replace EVERY panelData.{fund}.etf with the 10-name 5-day price tape
+const etfInner = EOL + block(j.flows.etf, 8, EOL) + EOL + '      ';
+app = replaceArrayValue(app, '      etf:', etfInner);
+
+// 5d. Replace EVERY panelData.{fund}.social with the 10-name social-proxy
+const socialInner = EOL + block(j.flows.social || [], 8, EOL) + EOL + '      ';
+app = replaceArrayValue(app, '      social:', socialInner);
+
+// 5e. Replace EVERY panelData.{fund}.explain / explainName / explainTxt with the top-10 research-explain
+if (j.research && j.research.explain) {
+  const e = j.research.explain;
+  const explainArr = e.bars.map(r => [r[0], r[1], (r[1] / 100).toFixed(2)]);
+  const explainInner = EOL + block(explainArr, 8, EOL) + EOL + '      ';
+  app = replaceArrayValue(app, '      explain:', explainInner);
+  // Replace explainName across funds (string literal replace, per fund)
+  const nameRe = /(      explainName:')([^']*)(')/g;
+  app = app.replace(nameRe, (_, pre, _old, post) => `${pre}${e.name.replace(/'/g, "\\'")}${post}`);
+  // Replace explainTxt across funds (string literal replace)
+  const txtRe = /(      explainTxt:')((?:\\'|[^'])*)(')/g;
+  app = app.replace(txtRe, (_, pre, _old, post) => `${pre}${e.text.replace(/'/g, "\\'")}${post}`);
+}
+
 // 6. Replace EVERY earningsData.{fund} entire object by first finding each
 //    `    {fund}:{\r\n      chip:` block and replacing the full object.
 const e = j.earnings;
