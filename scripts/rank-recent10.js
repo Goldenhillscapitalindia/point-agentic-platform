@@ -585,8 +585,23 @@ async function main() {
           <div class="fbar"><span class="fbar-k">Quality</span><div class="fbar-track"><div class="fbar-fill" style="width:60%"></div></div><span class="fbar-v">Mixed — ROE strong, FY-growth softer</span></div>
         </div>
       </div>
+      <div class="memo-section">
+        <div class="memo-s-head">③ &nbsp; 5-DAY TAPE — how the ranked names actually traded</div>
+        <div class="memo-cat">
+          ${(() => {
+            const tape = packed.map(p => {
+              const b = p.bars || [];
+              const ret5 = b.length >= 6 ? (b[b.length - 1].c / b[b.length - 6].c - 1) * 100 : 0;
+              return { sym: p.sym, ret5 };
+            }).sort((a, b) => b.ret5 - a.ret5);
+            const lead = tape[0], laggard = tape[tape.length - 1];
+            const greenCount = tape.filter(t => t.ret5 > 0).length;
+            return `<b>${lead.sym} ${sgn(lead.ret5)}${lead.ret5.toFixed(1)}%</b> leads the tape; <b>${laggard.sym} ${laggard.ret5.toFixed(1)}%</b> is the worst. <b>${greenCount} of 10</b> finished positive over the last 5 sessions — read as light risk-off beneath the surface. Confirm each pick against the 1-day / 5-day range in the table before adding.`;
+          })()}
+        </div>
+      </div>
       <div class="memo-section memo-footer">
-        <div class="memo-s-head">③ &nbsp; CATALYST WATCH</div>
+        <div class="memo-s-head">④ &nbsp; CATALYST WATCH</div>
         <div class="memo-cat">
           <b>Near-term:</b> ${nextPrints.slice(0, 3).map(p => `${p.sym} ${dayLabel(p.nextEarningsTs).split(' ').slice(0, 3).join(' ')}`).join(' · ')} · FOMC minutes <b>15 Oct</b>.
           <br/>
@@ -655,6 +670,22 @@ async function main() {
         </div>
       </div>
       <div class="posmap-alerts">
+        ${(() => {
+          const alignedN = divergence.filter(r => r[2] === 'aligned').length;
+          const mixedN = divergence.filter(r => r[2] === 'mixed').length;
+          const divergentN = divergence.filter(r => r[2] === 'divergent').length;
+          return `<div class="pm-alert"><span class="pm-alt-tag">RESEARCH ∩ FLOW</span><b>${alignedN} aligned</b> / ${mixedN} mixed / ${divergentN} divergent. Where research says long and revisions are rising, the flow signal is confirming the model — safer side of the trade. Divergent names are the ones to pressure-test.</div>`;
+        })()}
+        ${(() => {
+          const tape = packed.map(p => {
+            const b = p.bars || [];
+            const ret5 = b.length >= 6 ? (b[b.length - 1].c / b[b.length - 6].c - 1) * 100 : 0;
+            return { sym: p.sym, ret5 };
+          }).sort((a, b) => b.ret5 - a.ret5);
+          const greenCount = tape.filter(t => t.ret5 > 0).length;
+          const laggard = tape[tape.length - 1];
+          return `<div class="pm-alert"><span class="pm-alt-tag">5-DAY TAPE</span>Only <b>${greenCount} of 10</b> finished positive over the last week. <b>${laggard.sym}</b> at ${laggard.ret5.toFixed(1)}% is leading the pullback — crowding + weak tape is a de-grossing combination; size accordingly.</div>`;
+        })()}
         <div class="pm-alert"><span class="pm-alt-tag">OPTIONS</span>${putSkewNames.length} put-skew (${putSkewNames.join(', ') || 'none'}) · ${callSkewNames.length} call-skew (${callSkewNames.join(', ') || 'none'}). Put-skew ≠ short — it's a hedging bid.</div>
         <div class="pm-alert"><span class="pm-alt-tag">13F</span>Reporting cutoff <b>30 Jun 2026</b>. Any flow conclusion after that is price-action inference, not an actual holder report.</div>
         <div class="pm-alert"><span class="pm-alt-tag">INSIDER</span>${packed.filter(p => (p.insiderPct || 0) * 100 >= 1).length} name${packed.filter(p => (p.insiderPct || 0) * 100 >= 1).length === 1 ? '' : 's'} with material insider ownership ≥1% — constructive but non-urgent signal.</div>
@@ -710,6 +741,16 @@ async function main() {
       <div class="ernplay-section ernplay-pattern">
         <div class="ep-s-head">PATTERN READ</div>
         <p>Last cycle the tape paid for beats — ${beatRate2}% hit rate with average +${avgMax1d.toFixed(1)}% max 1-day post-earnings move. ${biggestBeat ? `Standout was <b>${biggestBeat[0]} ${biggestBeat[3][1]}</b>.` : ''} ${biggestMiss ? `Standout miss was <b>${biggestMiss[0]} ${biggestMiss[3][1]}</b> — guide-cut language usually rhymes next quarter, so plan to hedge.` : 'No material misses — unusually clean cycle.'}</p>
+        ${(() => {
+          const sent = packed.map(p => {
+            const total = (p.recBuy || 0) + (p.recHold || 0) + (p.recSell || 0);
+            const posPct = total > 0 ? Math.round(100 * p.recBuy / total) : 0;
+            return { sym: p.sym, posPct };
+          }).sort((a, b) => b.posPct - a.posPct);
+          const top = sent.slice(0, 3).map(s => `<b>${s.sym}</b> ${s.posPct}% buy`).join(' · ');
+          const bottom = sent[sent.length - 1];
+          return `<p><b>Street sentiment:</b> ${top} lead the universe on analyst buy-mix. <b>${bottom.sym}</b> is the laggard at ${bottom.posPct}% — pre-print setups work best where sentiment and revisions are both pointing up.</p>`;
+        })()}
         <p><b>Watch:</b> Hedging-score (transcript language) &gt; 0.35 is cut-risk until proven otherwise. 4 names cluster in one week — size positions accordingly.</p>
       </div>
     </div>
@@ -769,6 +810,16 @@ async function main() {
         <div class="mn-h-body">
           <div class="mn-h-primary"><span class="mn-h-tag">PRIMARY</span>If 10Y breaks <b>${(parseFloat(macroKpis[0][1]) + 0.1).toFixed(2)}%</b> around FOMC minutes (Oct 15), trim DXY-long exposure by 25% and buy a 1-month put spread on <b>${dollarLosers[0] || packed[0].sym}</b>.</div>
           <div class="mn-h-secondary"><span class="mn-h-tag">SECONDARY</span>Hold a 5–8% cash buffer through the FOMC window. No additions to high-β-VIX positions before Oct 15.</div>
+          ${(() => {
+            const tape = packed.map(p => {
+              const b = p.bars || [];
+              const ret5 = b.length >= 6 ? (b[b.length - 1].c / b[b.length - 6].c - 1) * 100 : 0;
+              return { sym: p.sym, ret5 };
+            }).sort((a, b) => a.ret5 - b.ret5);
+            const laggard = tape[0];
+            const leader = tape[tape.length - 1];
+            return `<div class="mn-h-watch"><span class="mn-h-tag">TAPE</span>Last 5 sessions: <b>${laggard.sym} ${laggard.ret5.toFixed(1)}%</b> worst, <b>${leader.sym} ${sgn(leader.ret5)}${leader.ret5.toFixed(1)}%</b> best. Semis leading the pullback = macro turning; watch the DXY response at the Oct 15 print.</div>`;
+          })()}
           <div class="mn-h-watch"><span class="mn-h-tag">WATCH</span>FOMC minutes <b>15 Oct 14:00</b> · China GDP <b>16 Oct 22:00</b>. Either print has the potential to invert the regime.</div>
         </div>
       </div>
