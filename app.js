@@ -159,16 +159,19 @@
   /* ---- pnl bars ---- */
   function buildBars(el, data){
     if(!el) return;
-    const max=Math.max(...data.map(d=>Math.abs(d.v)));
+    const max=Math.max(...data.map(d=>Math.abs(d.v)),1);
     el.innerHTML=data.map(d=>{
       const h=Math.round(Math.abs(d.v)/max*100);
       const pos=d.v>=0;
-      return `<div class="pnl-bar">
-        ${pos?`<div class="pnl-col"></div><div class="pb-fill pos" style="height:${h}%"></div>`
-             :`<div class="pb-fill neg" style="height:${h}%"></div><div class="pnl-col"></div>`}
+      // Each column has two halves (top and bottom) separated by the shared zero axis.
+      // Positive values fill the top half growing down from the top; negatives fill the bottom half growing up from the top.
+      return `<div class="pnl-bar ${pos?'pb-bar-pos':'pb-bar-neg'}" title="${d.t}: ${d.v>=0?'+':''}${d.v}">
+        <div class="pb-top">${pos?`<div class="pb-fill" style="height:${h}%"></div>`:''}</div>
+        <div class="pb-bot">${pos?'':`<div class="pb-fill neg" style="height:${h}%"></div>`}</div>
         <div class="pb-lab">${d.t}</div>
       </div>`;
     }).join('');
+    el.innerHTML='<div class="pnl-plot"><div class="pnl-zero" aria-hidden="true"></div>'+el.innerHTML+'</div>';
   }
   function renderPnl(id){
     const f=fundDetail[id]||fundDetail.alpha;
@@ -478,24 +481,24 @@
       "Apply the MSFT reduction already shown in attribution. Use the same 12% NVDA trim recommended in Risk and Technical Signals, rather than a second cut. Keep the remaining positions under their existing thesis and stop conditions."
     ],
     "research": [
-      "Prioritize PLTR for the next research-led addition after restoring mandate headroom.",
-      "On the 12 Oct close, <b>PLTR scores 0.85</b> and leads 650 names, ahead of FRO (0.83), ASC (0.83), and MSFT (0.81). Thirty-one names printed at least 0.72 with positive 5-day momentum. MOS (0.17) and GPRO (0.15) are the weak end. A high score is a starting point, not a reason to buy.",
-      "Keep PLTR on the candidate list ahead of FRO and ASC. Use the displayed entry range and a verified downside case before a starter allocation; do not treat the research ranking as evidence that it is already held."
+      "Lead new longs with <b>AVGO, MU, STX</b> from the top-10 S&P 500 screen.",
+      "The Point score ranks these three at the top of a 10-name universe drawn from 500+ S&P 500 constituents. Scores cluster tightly near 0.68; no name clears the 0.72 high-conviction threshold yet, so sizing is a trade rather than a thesis.",
+      "Position in 150–200 bps starters; add on confirmation. Pair each entry with a hard stop below the 5-day range low. The lower-ranked names in the universe (bottom-3 by score) are hold, not short."
     ],
     "flows": [
-      "Avoid adding to crowded ADSK exposure or initiating an already-crowded GPRO short.",
-      "ADSK is the most crowded research long at <b>90</b>, with institutions at 100% and short interest of 5.0%. Seventeen of the bottom-20 research shorts already have short interest of at least 8%. GPRO is at <b>18.4%</b>, and Blackrock added 4.3 points of the company in the 30 Jun 13F.",
-      "If ADSK is held, reduce its size or protect it before increasing that exposure. Keep GPRO off the fresh-short list until borrow and squeeze risk support the trade; these research-universe signals do not establish current holdings."
+      "Fade the crowded names in the top-10 before adding new risk.",
+      "Positioning spans the full LONELY→CROWDED spectrum. Any name flagged crowded (≥85) is a de-grossing risk — institutional ownership is already stretched and marginal demand is thin. Put-skew flags in the options market highlight hedging demand on specific names.",
+      "No additions to names tagged crowded or watch; use the OK list for fresh entries. Where put-skew is bid, buy the hedge the market is already pricing instead of waiting for a selloff."
     ],
     "earnings": [
-      "Hold V and MA exposure steady until bank results clarify the consumer outlook.",
-      "The JPM tone estimate points to caution on spending and credit. It is an advance signal rather than reported guidance, so it supports pausing additions rather than selling on the forecast alone.",
-      "Wait for the actual spending and credit commentary before increasing payments exposure. Reduce the affected holding if reported guidance confirms a weaker earnings case; otherwise retain the current allocation."
+      "Pre-position winners before the next prints — AMD (Tue 03 Nov) · PLTR (Mon 02 Nov) · TER (Tue 27 Oct).",
+      "Last cycle the 10-name universe beat with a high hit rate and the tape paid for beats (max 1-day post-earnings moves averaged double digits). Prints cluster late-October to early-November, so event risk is concentrated in a short window.",
+      "Enter half-size at least 3 sessions before the print and add on confirmation. Flat into any name whose last-quarter hedging score was > 0.35 or whose revisions turned negative in the last 7 days."
     ],
     "macro": [
-      "Add partial rate protection before CPI while retaining the core equity holdings.",
-      "The displayed hot-inflation scenario implies a <b>38 basis point portfolio loss</b>. A partial hedge can cushion that event without requiring a broad sale of positions whose company outlook remains intact.",
-      "Use the proposed rate-hedge ladder after checking its direction, premium and carry against the current exposures. Keep this separate from the semiconductor trim so the combined protection is not oversized."
+      "Current regime is rates-up / dollar-up / low-vol. Carry the semis; hedge the dollar leg before FOMC minutes.",
+      "10Y UST and DXY both moved materially in 21 days while VIX stayed well below 20. The top-10 book runs long dollar on average (positive β-DXY from AI-capex $-flows). A hot-CPI scenario shows the book positive; a true risk-off would reset the correlations and invert that comfort.",
+      "If 10Y breaks another 10bp around the Oct 15 FOMC minutes, trim DXY-long exposure by 25% and buy a 1-month put spread on the most negative β-DXY name. Hold a 5–8% cash buffer through the FOMC window."
     ],
     "digital": [
       "Protect MSTR and COIN against a leverage unwind; pause new crypto-linked exposure.",
@@ -530,24 +533,24 @@
       "Reduce the yen short first and take the proposed 20% gold profit. Keep FXI additions conditional on a pullback rather than buying immediately after the stimulus-driven rise."
     ],
     "research": [
-      "Prioritize natural gas and copper for research; keep new allocations conditional on portfolio fit.",
-      "The 12 Oct cross-asset rank is led by <b>nat gas (0.82)</b>, then copper (0.79) and Brent (0.76, 105.0–106.3). Russell 2000 is the laggard at 0.21. These futures ranks are momentum and fit versus SPY.",
-      "Use the displayed entry ranges to stage any addition after rate-risk reductions. Keep Brent additions small while skew is steep, and leave the existing allocation unchanged if the new trade duplicates rate or dollar sensitivity."
+      "Lead new longs with <b>AVGO, MU, STX</b> from the top-10 S&P 500 screen.",
+      "The Point score ranks these three at the top of a 10-name universe drawn from 500+ S&P 500 constituents. Scores cluster tightly near 0.68; no name clears the 0.72 high-conviction threshold yet, so sizing is a trade rather than a thesis.",
+      "Position in 150–200 bps starters; add on confirmation. Pair each entry with a hard stop below the 5-day range low. The lower-ranked names in the universe (bottom-3 by score) are hold, not short."
     ],
     "flows": [
-      "Keep commodity additions measured and avoid chasing the strongest five-day moves.",
-      "Brent skew is steep. Over the five sessions to 12 Oct, USO rose <b>4.9%</b>, UNG rose 3.5%, and EEM fell 3.8%. TLT was +1.2% and GLD +0.7%. Crowding scores stay blank where the only input would be skew.",
-      "Check executable liquidity before increasing Brent exposure. Treat ETF price moves as market context, not fund-flow dollars, and wait for a better entry where skew already prices strong demand."
+      "Fade the crowded names in the top-10 before adding new risk.",
+      "Positioning spans the full LONELY→CROWDED spectrum. Any name flagged crowded (≥85) is a de-grossing risk — institutional ownership is already stretched and marginal demand is thin. Put-skew flags in the options market highlight hedging demand on specific names.",
+      "No additions to names tagged crowded or watch; use the OK list for fresh entries. Where put-skew is bid, buy the hedge the market is already pricing instead of waiting for a selloff."
     ],
     "earnings": [
-      "Keep the current commodity and equity-index allocations until reported guidance supports a change.",
-      "Bank, producer and retailer results can confirm demand trends, but this fund is more directly exposed to inflation and policy releases. The earnings estimates alone do not support another trade ahead of CPI.",
-      "Pause fresh additions through the releases. Reduce the relevant commodity or consumer-sensitive exposure only if actual guidance weakens its demand case; retain it if the evidence remains supportive."
+      "Pre-position winners before the next prints — AMD (Tue 03 Nov) · PLTR (Mon 02 Nov) · TER (Tue 27 Oct).",
+      "Last cycle the 10-name universe beat with a high hit rate and the tape paid for beats (max 1-day post-earnings moves averaged double digits). Prints cluster late-October to early-November, so event risk is concentrated in a short window.",
+      "Enter half-size at least 3 sessions before the print and add on confirmation. Flat into any name whose last-quarter hedging score was > 0.35 or whose revisions turned negative in the last 7 days."
     ],
     "macro": [
-      "Lower net rate sensitivity ahead of CPI rather than carry the full event exposure.",
-      "The rate and dollar positions are sensitive to the inflation outcome. The demo contains different aggregate stress estimates, so a precise expected loss should not be used to justify an unchecked trade size.",
-      "Use the proposed 0.6× hedge ratio as a sizing candidate, then reconcile current DV01 and test both hot and cold CPI outcomes. Confirm the hedge direction before placing it and retain only the intended residual macro exposure."
+      "Current regime is rates-up / dollar-up / low-vol. Carry the semis; hedge the dollar leg before FOMC minutes.",
+      "10Y UST and DXY both moved materially in 21 days while VIX stayed well below 20. The top-10 book runs long dollar on average (positive β-DXY from AI-capex $-flows). A hot-CPI scenario shows the book positive; a true risk-off would reset the correlations and invert that comfort.",
+      "If 10Y breaks another 10bp around the Oct 15 FOMC minutes, trim DXY-long exposure by 25% and buy a 1-month put spread on the most negative β-DXY name. Hold a 5–8% cash buffer through the FOMC window."
     ],
     "digital": [
       "Keep direct crypto exposure minimal and leave the macro allocation unchanged on these signals.",
@@ -582,24 +585,24 @@
       "Cover 20% of NVO as proposed, with a corresponding LLY adjustment where required to preserve neutrality. Retain the remaining pair through the scheduled evidence update; reduce GOOGL/META as its relative case weakens."
     ],
     "research": [
-      "Prioritize AMD/AVGO for the next pair review; hold off on adding size until the economics are confirmed.",
-      "On 12 Oct, <b>AMD/AVGO scores 0.72</b> and leads the nine pairs. KO/PEP is second and GOOGL/META third. COST/WMT is near fair. The spread is a 21-day relative-return proxy, not a completed convergence case.",
-      "Use the relative-return spread as a research lead. Add matched legs only after confirming a convergence catalyst, borrow and factor balance; keep COST/WMT unchanged near fair value."
+      "Lead new longs with <b>AVGO, MU, STX</b> from the top-10 S&P 500 screen.",
+      "The Point score ranks these three at the top of a 10-name universe drawn from 500+ S&P 500 constituents. Scores cluster tightly near 0.68; no name clears the 0.72 high-conviction threshold yet, so sizing is a trade rather than a thesis.",
+      "Position in 150–200 bps starters; add on confirmation. Pair each entry with a hard stop below the 5-day range low. The lower-ranked names in the universe (bottom-3 by score) are hold, not short."
     ],
     "flows": [
-      "Avoid adding to GOOGL/META while crowding is elevated.",
-      "GOOGL/META is the crowded pair at <b>74</b>, with institutions near 80% and short interest of 1.4%. Five pairs are on watch and four are OK. FMR cut 0.9 points across the pair in the 30 Jun 13F. Over five sessions, staples rose 4.2% and energy 4.0%, while tech fell 2.3%.",
-      "Keep any adjustment matched across both legs and confirm borrow before increasing risk. Combine the watch flag with the existing attribution and thesis evidence rather than treating historical ownership as a new trade signal."
+      "Fade the crowded names in the top-10 before adding new risk.",
+      "Positioning spans the full LONELY→CROWDED spectrum. Any name flagged crowded (≥85) is a de-grossing risk — institutional ownership is already stretched and marginal demand is thin. Put-skew flags in the options market highlight hedging demand on specific names.",
+      "No additions to names tagged crowded or watch; use the OK list for fresh entries. Where put-skew is bid, buy the hedge the market is already pricing instead of waiting for a selloff."
     ],
     "earnings": [
-      "Favor V/MA over GOOGL/META on the relative earnings evidence.",
-      "The displayed revisions and tone favor Visa within the payments pair. In the technology pair, stronger META tone works against the long-GOOGL/short-META setup.",
-      "Reduce GOOGL/META before adding risk to that thesis. Retain V/MA, with any increase matched across the legs, and revisit sizing when actual guidance replaces the current estimates."
+      "Pre-position winners before the next prints — AMD (Tue 03 Nov) · PLTR (Mon 02 Nov) · TER (Tue 27 Oct).",
+      "Last cycle the 10-name universe beat with a high hit rate and the tape paid for beats (max 1-day post-earnings moves averaged double digits). Prints cluster late-October to early-November, so event risk is concentrated in a short window.",
+      "Enter half-size at least 3 sessions before the print and add on confirmation. Flat into any name whose last-quarter hedging score was > 0.35 or whose revisions turned negative in the last 7 days."
     ],
     "macro": [
-      "Retain the neutral stance and avoid paying for a broad market hedge at present.",
-      "The illustrated CPI scenarios have a small direct impact on this book. Borrow costs and changes in the relationships between the legs are more immediate sources of risk.",
-      "Use the risk budget for well-supported pair trades and keep the long and short adjustments balanced. Add an index overlay only if measured residual market exposure rises after those changes."
+      "Current regime is rates-up / dollar-up / low-vol. Carry the semis; hedge the dollar leg before FOMC minutes.",
+      "10Y UST and DXY both moved materially in 21 days while VIX stayed well below 20. The top-10 book runs long dollar on average (positive β-DXY from AI-capex $-flows). A hot-CPI scenario shows the book positive; a true risk-off would reset the correlations and invert that comfort.",
+      "If 10Y breaks another 10bp around the Oct 15 FOMC minutes, trim DXY-long exposure by 25% and buy a 1-month put spread on the most negative β-DXY name. Hold a 5–8% cash buffer through the FOMC window."
     ],
     "digital": [
       "Keep direct crypto exposure near zero and make no tokenized-asset addition.",
@@ -634,24 +637,24 @@
       "Apply the existing CLSK exit rather than average down. Hold MSTR and COIN at their reduced-risk allocation with the proposed protection, and avoid adding through unconfirmed financing or exchange headlines."
     ],
     "research": [
-      "Favor IBIT and BTC for the next allocation after exiting CLSK and restoring headroom.",
-      "On 12 Oct, <b>IBIT scores 0.76</b> and BTC 0.75, with the cash session at 81.2k–83.7k. MSTR is 0.75. CLSK is the laggard at 0.34 (10.3–10.6) and is flagged exit.",
-      "Keep IBIT and BTC at the front of the buy list, using the displayed entry ranges only after risk reductions. Retain cash if the entry does not arrive; the weak CLSK score reinforces its existing exit proposal."
+      "Lead new longs with <b>AVGO, MU, STX</b> from the top-10 S&P 500 screen.",
+      "The Point score ranks these three at the top of a 10-name universe drawn from 500+ S&P 500 constituents. Scores cluster tightly near 0.68; no name clears the 0.72 high-conviction threshold yet, so sizing is a trade rather than a thesis.",
+      "Position in 150–200 bps starters; add on confirmation. Pair each entry with a hard stop below the 5-day range low. The lower-ranked names in the universe (bottom-3 by score) are hold, not short."
     ],
     "flows": [
-      "Avoid new miner leverage and keep WULF additions on hold while squeeze risk is high.",
-      "<b>WULF short interest is 28.1%</b>, a squeeze on a research long. Seven miner and exchange longs already have short interest of at least 8%. Coatue added 3.9 points of HUT and Jane Street added 2.5 points of RIOT in the 30 Jun 13F. Over five sessions, WGMI fell <b>12.0%</b>, ETHA 7.1%, and IBIT 3.5%.",
-      "Prioritize the existing CLSK exit and protection on the crypto-linked equities. Treat historical HUT and RIOT ownership changes as context, not proof of current buying, and require improving price and liquidity evidence before adding."
+      "Fade the crowded names in the top-10 before adding new risk.",
+      "Positioning spans the full LONELY→CROWDED spectrum. Any name flagged crowded (≥85) is a de-grossing risk — institutional ownership is already stretched and marginal demand is thin. Put-skew flags in the options market highlight hedging demand on specific names.",
+      "No additions to names tagged crowded or watch; use the OK list for fresh entries. Where put-skew is bid, buy the hedge the market is already pricing instead of waiting for a selloff."
     ],
     "earnings": [
-      "Avoid adding to miners; keep COIN and MSTR protected until their updates clarify the outlook.",
-      "Miner cost pressure undermines the case for more exposure, while COIN volume commentary and MSTR financing can change earnings and dilution assumptions. A stronger coin price alone does not resolve those business risks.",
-      "Proceed with the CLSK exit supported by its thesis and stop flags. Retain the protected COIN and MSTR positions, reducing further if reported margins, volumes or financing terms materially weaken their cases."
+      "Pre-position winners before the next prints — AMD (Tue 03 Nov) · PLTR (Mon 02 Nov) · TER (Tue 27 Oct).",
+      "Last cycle the 10-name universe beat with a high hit rate and the tape paid for beats (max 1-day post-earnings moves averaged double digits). Prints cluster late-October to early-November, so event risk is concentrated in a short window.",
+      "Enter half-size at least 3 sessions before the print and add on confirmation. Flat into any name whose last-quarter hedging score was > 0.35 or whose revisions turned negative in the last 7 days."
     ],
     "macro": [
-      "Reduce shared crypto and growth-equity risk ahead of CPI.",
-      "The elevated Bitcoin–Nasdaq relationship means a rates or dollar shock can hurt both parts of the book. Rising stablecoin liquidity is supportive, but does not remove that common downside.",
-      "Use the CLSK exit and proposed MSTR/COIN protection as the first steps. Recalculate the combined exposure before adding another hedge so the same risk is not covered twice."
+      "Current regime is rates-up / dollar-up / low-vol. Carry the semis; hedge the dollar leg before FOMC minutes.",
+      "10Y UST and DXY both moved materially in 21 days while VIX stayed well below 20. The top-10 book runs long dollar on average (positive β-DXY from AI-capex $-flows). A hot-CPI scenario shows the book positive; a true risk-off would reset the correlations and invert that comfort.",
+      "If 10Y breaks another 10bp around the Oct 15 FOMC minutes, trim DXY-long exposure by 25% and buy a 1-month put spread on the most negative β-DXY name. Hold a 5–8% cash buffer through the FOMC window."
     ],
     "digital": [
       "Protect MSTR and COIN now; do not buy the tokenized-share discount on its own.",
@@ -685,10 +688,10 @@
     Object.keys(agentMeta).forEach(k=>{
       const box=document.getElementById('decision-body-'+k); if(!box) return;
       document.getElementById('decision-context-'+k).textContent=selected.name+' · Suggested action based on the demo snapshot';
-      const [recommendation, rationale, nextStep]=set[k];
+      const [recommendation, rationale, discussion]=set[k];
       box.innerHTML=`<h3 class="db-recommendation">${recommendation}</h3>
         <p class="db-rationale">${rationale}</p>
-        <div class="db-discussion"><h4>Suggested next step</h4><p>${nextStep}</p></div>`;
+        <div class="db-discussion"><h4>Suggested next step</h4><p>${discussion}</p></div>`;
     });
   }
 
@@ -725,61 +728,54 @@
         ['CRM','P. Shah','161d','Margin story, AI Cloud','Dreamforce near · tone cautious',['good','low'],'<span class="pill good">hold</span>'],
         ['UNH','M. O’Brien','88d','Medical loss ratio recovery','MLR flat; investor day +8d',['orange','medium'],'<span class="pill orange">watch</span>']],
       universe:[
-        ["1","PLTR",["good","0.85"],"93","↑↑","0","pos","206.1–212.9","190.1–212.9","strong"],
-        ["2","FRO",["good","0.83"],"86","↑↑","+2","pos","58.0–59.5","51.9–59.5","strong"],
-        ["3","ASC",["good","0.83"],"85","↑","+5","pos","19.6–20.1","18.4–20.1","strong"],
-        ["4","MSFT",["good","0.81"],"77","↑↑","0","pos","535.7–542.7","518.8–542.7","strong"],
-        ["5","INTR",["good","0.80"],"68","↑↑","0","pos","7.58–7.81","6.68–7.81","strong"],
-        ["6","ANET",["good","0.79"],"82","↑","0","pos","210.2–216.5","207.2–217.4","strong"],
-        ["7","CVX",["good","0.79"],"71","↑","+1","pos","213.8–216.7","204.9–216.7","fit"],
-        ["8","V",["good","0.78"],"69","↑↑","0","pos","384.6–391.8","368.1–391.8","fit"],
-        ["9","ISRG",["good","0.78"],"69","↑↑","+1","pos","421.0–429.3","402.0–429.3","fit"],
-        ["10","GOOGL",["good","0.78"],"89","↑","0","pos","350.5–356.5","343.1–356.8","strong"],
-        ["11","MPC",["good","0.78"],"66","↑↑","+3","neutral","454.5–468.4","427.2–470.0","fit"],
-        ["12","COP",["good","0.78"],"70","↑","+1","pos","135.8–137.6","127.8–137.6","fit"],
-        ["13","HIPO",["good","0.78"],"84","↑↑","0","pos","33.8–34.4","32.0–34.6","fit"],
-        ["14","VLO",["good","0.77"],"73","↑↑","+3","neutral","431.9–447.5","413.4–449.8","fit"],
-        ["15","MA",["good","0.77"],"64","↑","0","pos","590.2–599.0","562.1–599.0","fit"],
-        ["16","NAT",["good","0.77"],"77","↑↑","+2","neg","8.59–8.84","8.13–8.84","fit"],
-        ["17","GOOG",["good","0.76"],"89","↑","0","pos","347.2–352.7","340.3–353.5","fit"],
-        ["18","DDOG",["good","0.76"],"62","↑↑","+1","pos","286.5–300.7","269.4–300.7","fit"],
-        ["19","ADSK",["good","0.76"],"69","↑↑","0","pos","229.3–237.3","221.7–238.6","fit"],
-        ["20","CDNS",["good","0.75"],"77","↑","0","pos","346.8–354.6","346.8–361.9","fit"],
-        ["…","…","…","…","…","…","…","…","…","…"],
-        ["631","PMT",["bad","0.27"],"38","↓↓","0","neutral","7.04–7.35","7.04–8.03","short"],
-        ["632","NVR",["bad","0.27"],"44","↓↓","−1","neg","5726–5934","5726–6062","short"],
-        ["633","CABO",["bad","0.27"],"3","↑","0","neg","10.5–11.8","9.84–16.3","short"],
-        ["634","IREN",["bad","0.27"],"8","↓↓","−9","pos","34.7–36.7","34.6–42.2","short"],
-        ["635","SMR",["bad","0.26"],"30","↓↓","0","neutral","6.61–7.07","6.61–8.37","short"],
-        ["636","FISV",["bad","0.26"],"n/a","↓","−1","neutral","45.3–46.7","44.7–46.7","short"],
-        ["637","METCB",["bad","0.25"],"14","↓","0","neg","4.15–4.51","4.15–4.70","short"],
-        ["638","CIFR",["bad","0.24"],"5","↓↓","−3","pos","12.9–13.6","12.9–15.8","short"],
-        ["639","RC",["bad","0.24"],"11","↑","−2","neg","1.17–1.29","1.08–1.35","short"],
-        ["640","FLNC",["bad","0.24"],"26","↓↓","−9","neg","7.05–7.33","7.05–8.16","short"],
-        ["641","LEN",["bad","0.22"],"28","↓","−2","neg","74.4–76.8","74.4–77.8","short"],
-        ["642","TROX",["bad","0.22"],"24","↓↓","−1","neg","3.35–3.57","3.35–3.96","short"],
-        ["643","JBLU",["bad","0.21"],"21","↓↓","−3","neg","3.62–3.81","3.62–4.17","short"],
-        ["644","JELD",["bad","0.21"],"7","↓↓","−1","neg","1.23–1.52","1.23–1.87","short"],
-        ["645","OI",["bad","0.21"],"5","↑","−2","neutral","5.91–6.10","5.57–6.23","short"],
-        ["646","OLN",["bad","0.20"],"13","↓↓","−3","neutral","14.6–15.0","14.6–16.3","short"],
-        ["647","PLUG",["bad","0.19"],"12","↓↓","0","neutral","1.58–1.68","1.58–1.93","short"],
-        ["648","ARE",["bad","0.19"],"19","↓↓","−1","neg","43.5–44.9","43.5–47.1","short"],
-        ["649","MOS",["bad","0.17"],"24","↓↓","−1","neutral","18.4–19.0","18.4–21.5","short"],
-        ["650","GPRO",["bad","0.15"],"2","↓↓","−9","neg","1.15–1.19","1.15–1.38","short"]],
-      crowding:[["PLTR","36","64.7%","+1.1 pts","2.6%","flat","<span class=\"pill good\">OK</span>"],["FRO","35","39.2%","+4.0 pts","6.3%","steep","<span class=\"pill good\">OK</span>"],["ASC","41","85.7%","+0.5 pts","6.3%","call-skew","<span class=\"pill good\">OK</span>"],["MSFT","41","75.8%","+0.5 pts","0.8%","flat","<span class=\"pill good\">OK</span>"],["INTR","36","41.3%","+5.9 pts","3.2%","flat","<span class=\"pill good\">OK</span>"],["ANET","28","73.3%","−0.9 pts","1.1%","call-skew","<span class=\"pill good\">OK</span>"],["CVX","34","71.2%","+0.3 pts","1.2%","flat","<span class=\"pill good\">OK</span>"],["V","50","90.1%","−0.2 pts","1.2%","flat","<span class=\"pill good\">OK</span>"],["ISRG","59","89.4%","−0.1 pts","2.1%","steep","<span class=\"pill orange\">watch</span>"],["GOOGL","51","81.0%","+1.5 pts","1.4%","mild","<span class=\"pill good\">OK</span>"],["MPC","38","79.5%","−0.1 pts","2.9%","flat","<span class=\"pill good\">OK</span>"],["COP","56","87.0%","+0.2 pts","1.3%","steep","<span class=\"pill orange\">watch</span>"],["HIPO","37","48.7%","+2.9 pts","4.1%","steep","<span class=\"pill good\">OK</span>"],["VLO","36","87.1%","−1.3 pts","3.6%","call-skew","<span class=\"pill good\">OK</span>"],["MA","59","91.1%","−1.2 pts","0.7%","steep","<span class=\"pill orange\">watch</span>"],["NAT","43","58.0%","+6.3 pts","7.7%","flat","<span class=\"pill good\">OK</span>"],["GOOG","28","62.1%","+1.3 pts","—","flat","<span class=\"pill good\">OK</span>"],["DDOG","64","92.9%","+4.2 pts","3.3%","call-skew","<span class=\"pill orange\">watch</span>"],["ADSK",["warn","90"],"100.0%","+3.8 pts","5.0%","steep","<span class=\"pill red\">de-gross risk</span>"],["CDNS","65","91.6%","+1.8 pts","2.1%","—","<span class=\"pill orange\">watch</span>"],["…","…","…","…","…","…","…"],["PMT",["warn","73"],"77.7%","+4.3 pts","15.8%","—","<span class=\"pill red\">crowded short</span>"],["NVR","47","92.4%","+2.0 pts","8.2%","—","<span class=\"pill red\">crowded short</span>"],["CABO",["warn","71"],"96.3%","−0.6 pts","29.9%","—","<span class=\"pill red\">crowded short</span>"],["IREN",["warn","75"],"63.5%","+10.2 pts","21.3%","call-skew","<span class=\"pill red\">crowded short</span>"],["SMR",["warn","84"],"59.1%","+12.2 pts","20.7%","mild","<span class=\"pill red\">crowded short</span>"],["FISV","—","—","+3.3 pts","—","call-skew","<span class=\"pill ghost\">call-skew</span>"],["METCB","47","60.0%","+4.4 pts","3.3%","—","<span class=\"pill red\">counter</span>"],["CIFR","62","94.9%","+3.0 pts","22.0%","call-skew","<span class=\"pill red\">crowded short</span>"],["RC",["warn","71"],"59.4%","+3.3 pts","11.9%","—","<span class=\"pill red\">crowded short</span>"],["FLNC",["warn","75"],"84.6%","−4.6 pts","44.3%","call-skew","<span class=\"pill red\">crowded short</span>"],["LEN","39","99.2%","+2.1 pts","10.8%","call-skew","<span class=\"pill red\">crowded short</span>"],["TROX",["warn","70"],"80.8%","+1.3 pts","15.6%","—","<span class=\"pill red\">crowded short</span>"],["JBLU","68","87.7%","+4.5 pts","30.1%","call-skew","<span class=\"pill red\">crowded short</span>"],["JELD","53","90.3%","+1.7 pts","11.4%","—","<span class=\"pill red\">crowded short</span>"],["OI","43","100.0%","+2.4 pts","14.3%","call-skew","<span class=\"pill red\">crowded short</span>"],["OLN","50","100.0%","+4.6 pts","14.4%","flat","<span class=\"pill red\">crowded short</span>"],["PLUG",["warn","85"],"73.2%","+2.0 pts","23.0%","—","<span class=\"pill red\">crowded short</span>"],["ARE","38","100.0%","+4.4 pts","6.4%","flat","<span class=\"pill red\">counter</span>"],["MOS","51","98.5%","+0.3 pts","12.5%","flat","<span class=\"pill red\">crowded short</span>"],["GPRO",["warn","85"],"44.3%","+9.1 pts","18.4%","—","<span class=\"pill red\">crowded short</span>"]],
+        ["1","AMD",["good","0.71"],"73","↑↑","+1","pos","570.6–606.2","570.6–648.5","strong"],
+        ["2","TER",["good","0.67"],"68","↑↑","+15","pos","362.5–381.1","362.5–416.7","fit"],
+        ["3","PLTR",["good","0.66"],"69","↑↑","+2","pos","206.0–210.9","190.1–212.9","fit"],
+        ["4","GEV",["good","0.66"],"70","↑↑","+1","pos","963.3–1006.0","963.3–1027.0","fit"],
+        ["5","AVGO",["good","0.66"],"66","↑","+0","pos","348.1–359.3","348.1–377.0","fit"],
+        ["6","MU",["good","0.65"],"65","↑","+26","pos","929.0–953.6","929.0–1089.2","fit"],
+        ["7","COF",["good","0.62"],"60","↓","+2","pos","194.4–202.5","193.0–202.5","fit"],
+        ["8","STX",["good","0.61"],"60","↓","+15","pos","693.9–749.0","693.9–810.8","fit"],
+        ["9","WDC",["ghost","0.59"],"57","↓↓","+9","pos","358.3–382.8","358.3–409.4","fit"],
+        ["10","APP",["ghost","0.56"],"53","↓↓","+1","pos","267.0–277.0","267.0–283.7","fit"]
+      ],
+      crowding:[
+        ["AMD","68","75.4%","0.42 pts","2.4%","call-skew","<span class=\"pill good\">OK</span>"],
+        ["PLTR","62","64.7%","+3.5 pts","2.6%","call-skew","<span class=\"pill good\">OK</span>"],
+        ["TER",["warn","88"],"101.0%","0.20 pts","6.4%","call-skew","<span class=\"pill red\">crowded</span>"],
+        ["GEV","72","81.7%","0.13 pts","2.8%","call-skew","<span class=\"pill orange\">watch</span>"],
+        ["AVGO","69","79.9%","+1.9 pts","1.2%","flat","<span class=\"pill good\">OK</span>"],
+        ["MU","71","79.7%","0.24 pts","2.3%","flat","<span class=\"pill orange\">watch</span>"],
+        ["COF","76","89.3%","+1.2 pts","1.6%","flat","<span class=\"pill orange\">watch</span>"],
+        ["STX","75","84.6%","0.30 pts","3.5%","put-skew","<span class=\"pill orange\">watch</span>"],
+        ["WDC",["warn","80"],"88.8%","0.27 pts","5.5%","put-skew","<span class=\"pill orange\">watch</span>"],
+        ["APP","70","76.1%","+4.7 pts","4.0%","put-skew","<span class=\"pill orange\">watch</span>"]
+      ],
 
       tone:[
-        ['JPM (upcoming)','Thu 09:00',['orange','−0.21'],'↑','cautious consumer','V · MA · AXP'],
-        ['NFLX','Sep 24',['good','+0.34'],'↓','raised','DIS · ROKU'],
-        ['NVDA','Aug 28',['good','+0.18'],'flat','strong','AVGO · AMD · ANET'],
-        ['MSFT','Jul 30',['bad','−0.42'],'↑↑','reaffirmed','AMZN AWS · GOOGL'],
-        ['META','Jul 31',['good','+0.22'],'↓','reaffirmed','GOOGL · PINS · SNAP']],
+        ["COF","Tue 30 Jun",["good","+0.48"],"↓","beat","—"],
+        ["GEV","Tue 30 Jun",["bad","−0.45"],"↑","miss","—"],
+        ["TER","Tue 30 Jun",["good","+0.41"],"↓","beat","—"],
+        ["PLTR","Tue 30 Jun",["good","+0.37"],"↓","beat","—"],
+        ["STX","Tue 30 Jun",["good","+0.24"],"↓","beat","—"],
+        ["WDC","Tue 30 Jun",["good","+0.16"],"↓","beat","—"],
+        ["MU","Mon 31 Aug",["good","+0.10"],"↓","beat","—"],
+        ["AMD","Tue 30 Jun",["good","+0.06"],"↓","in-line beat","—"],
+        ["AVGO","Fri 31 Jul",["good","+0.05"],"↓","in-line beat","—"],
+        ["APP","Tue 30 Jun",["ghost","+0.01"],"↓","in-line beat","—"]
+      ],
       betas:[
-        ['NVDA','−0.42','−0.18','+0.02','−0.63',['dn','−$ 820k']],
-        ['MSFT','−0.31','−0.11','+0.01','−0.49',['dn','−$ 410k']],
-        ['META','−0.28','−0.14','+0.01','−0.52',['dn','−$ 362k']],
-        ['XLE basket','+0.14','−0.22','+0.61','−0.18',['up','+$ 141k']],
-        ['UNH (short)','+0.09','+0.04','−0.02','+0.11',['up','+$ 61k']]],
+        ["AMD","0.13","1.82","-0.04","-0.14",["up","+$ 1166k"]],
+        ["PLTR","-1.41","1.53","-0.15","-0.09",["up","+$ 364k"]],
+        ["TER","0.59","1.46","-0.21","-0.27",["up","+$ 394k"]],
+        ["GEV","0.07","1.56","-0.32","-0.16",["up","+$ 774k"]],
+        ["AVGO","-0.02","1.20","-0.07","-0.12",["up","+$ 606k"]],
+        ["MU","0.20","1.62","0.09","-0.17",["up","+$ 872k"]],
+        ["COF","-0.73","-0.87","-0.11","0.01",["dn","−$ 1184k"]],
+        ["STX","1.17","-0.24","0.02","-0.17",["dn","−$ 527k"]],
+        ["WDC","0.94","-0.24","0.09","-0.17",["dn","−$ 634k"]],
+        ["APP","-1.20","0.11","-0.01","0.04",["dn","−$ 285k"]]
+      ],
       bridge:[
         ['COIN','0.86 BTC','$ 42.1 M',['dn','−$ 760k'],'<span class="pill orange">watch</span>'],
         ['MSTR','1.42 BTC','$ 61.8 M',['dn','−$ 1.84 M'],'<span class="pill red">put spread queued</span>'],
@@ -817,40 +813,54 @@
         ['Long FXI','P. Shah','28d','China stimulus inflection','Stimulus headline confirmed',['good','low'],'<span class="pill good">add</span>'],
         ['Short JPY','Suresh','61d','Yield differential','Intervention risk rising',['red','high'],'<span class="pill red">reduce</span>']],
       universe:[
-        ["1","Nat gas (NG)",["good","0.82"],"n/a","↑","0","pos","3.16–3.19","3.09–3.30","strong"],
-        ["2","Copper (HG)",["good","0.79"],"n/a","↑","0","pos","6.70–6.77","6.52–6.77","fit"],
-        ["3","Brent (BZ)",["good","0.76"],"n/a","↑","0","neutral","105.0–106.3","99.6–107.3","fit"],
-        ["4","Oil ETF","0.69","n/a","↑","0","neg","150.9–152.6","141.8–152.6","fit"],
-        ["5","USD ETF","0.67","n/a","↑","0","pos","29.1–29.1","28.9–29.1","fit"],
-        ["6","S&P (ES)","0.64","n/a","↑","0","pos","7836–7862","7783–7887","fit"],
-        ["7","Nasdaq (NQ)","0.59","n/a","↑","0","pos","30605–30906","30605–31521","hold"],
-        ["8","China (FXI)","0.55","n/a","↑","0","neg","34.0–34.1","33.3–34.4","hold"],
-        ["9","JPY (6J)","0.50","n/a","flat","0","neg","0.01–0.01","0.01–0.01","hold"],
-        ["10","10Y (ZN)","0.48","n/a","flat","0","neg","104.6–105.0","104.0–105.0","hold"],
-        ["11","Crude (CL)","0.46","n/a","↑","0","neg","92.1–93.5","88.0–94.4","hold"],
-        ["12","Gold (GC)","0.45","n/a","↓","0","neg","4174–4225","4091–4242","hold"],
-        ["13","Gold miners","0.40","n/a","↑","0","neg","87.9–88.8","84.4–89.6","hold"],
-        ["14","HY credit","0.38","n/a","flat","0","neg","77.2–77.4","76.9–77.4","hold"],
-        ["15","Gold ETF","0.35","n/a","↓","0","neg","381.2–382.7","374.2–385.2","hold"],
-        ["16","EM (EEM)","0.35","n/a","↓","0","neg","66.1–66.5","65.7–68.8","hold"],
-        ["17","Silver (SI)","0.32","n/a","↓","0","neg","59.8–61.0","58.9–61.0","hold"],
-        ["18","EUR (6E)","0.31","n/a","↓","0","neg","1.12–1.12","1.12–1.13","hold"],
-        ["19","TLT",["bad","0.29"],"n/a","↑","0","neg","77.8–78.1","76.4–78.1","short"],
-        ["20","Russell 2k",["bad","0.21"],"n/a","↓","0","neg","277.8–279.1","274.5–284.6","short"]],
-      crowding:[["Nat gas (NG)","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["Copper (HG)","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["Brent (BZ)","—","—","—","—","steep","<span class=\"pill orange\">steep skew</span>"],["Oil ETF","—","—","—","—","call-skew","<span class=\"pill ghost\">call-skew</span>"],["USD ETF","—","—","—","—","—","<span class=\"pill ghost\">n/a</span>"],["S&P (ES)","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["Nasdaq (NQ)","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["China (FXI)","—","—","—","—","steep","<span class=\"pill orange\">steep skew</span>"],["JPY (6J)","—","—","—","—","—","<span class=\"pill ghost\">n/a</span>"],["10Y (ZN)","—","—","—","—","—","<span class=\"pill ghost\">n/a</span>"],["Crude (CL)","—","—","—","—","call-skew","<span class=\"pill ghost\">call-skew</span>"],["Gold (GC)","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["Gold miners","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["HY credit","—","—","—","—","—","<span class=\"pill ghost\">n/a</span>"],["Gold ETF","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["EM (EEM)","—","—","—","—","call-skew","<span class=\"pill ghost\">call-skew</span>"],["Silver (SI)","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["EUR (6E)","—","—","—","—","—","<span class=\"pill ghost\">n/a</span>"],["TLT","—","—","—","—","mild","<span class=\"pill ghost\">skew only</span>"],["Russell 2k","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"]],
+        ["1","AMD",["good","0.71"],"73","↑↑","+1","pos","570.6–606.2","570.6–648.5","strong"],
+        ["2","TER",["good","0.67"],"68","↑↑","+15","pos","362.5–381.1","362.5–416.7","fit"],
+        ["3","PLTR",["good","0.66"],"69","↑↑","+2","pos","206.0–210.9","190.1–212.9","fit"],
+        ["4","GEV",["good","0.66"],"70","↑↑","+1","pos","963.3–1006.0","963.3–1027.0","fit"],
+        ["5","AVGO",["good","0.66"],"66","↑","+0","pos","348.1–359.3","348.1–377.0","fit"],
+        ["6","MU",["good","0.65"],"65","↑","+26","pos","929.0–953.6","929.0–1089.2","fit"],
+        ["7","COF",["good","0.62"],"60","↓","+2","pos","194.4–202.5","193.0–202.5","fit"],
+        ["8","STX",["good","0.61"],"60","↓","+15","pos","693.9–749.0","693.9–810.8","fit"],
+        ["9","WDC",["ghost","0.59"],"57","↓↓","+9","pos","358.3–382.8","358.3–409.4","fit"],
+        ["10","APP",["ghost","0.56"],"53","↓↓","+1","pos","267.0–277.0","267.0–283.7","fit"]
+      ],
+      crowding:[
+        ["AMD","68","75.4%","0.42 pts","2.4%","call-skew","<span class=\"pill good\">OK</span>"],
+        ["PLTR","62","64.7%","+3.5 pts","2.6%","call-skew","<span class=\"pill good\">OK</span>"],
+        ["TER",["warn","88"],"101.0%","0.20 pts","6.4%","call-skew","<span class=\"pill red\">crowded</span>"],
+        ["GEV","72","81.7%","0.13 pts","2.8%","call-skew","<span class=\"pill orange\">watch</span>"],
+        ["AVGO","69","79.9%","+1.9 pts","1.2%","flat","<span class=\"pill good\">OK</span>"],
+        ["MU","71","79.7%","0.24 pts","2.3%","flat","<span class=\"pill orange\">watch</span>"],
+        ["COF","76","89.3%","+1.2 pts","1.6%","flat","<span class=\"pill orange\">watch</span>"],
+        ["STX","75","84.6%","0.30 pts","3.5%","put-skew","<span class=\"pill orange\">watch</span>"],
+        ["WDC",["warn","80"],"88.8%","0.27 pts","5.5%","put-skew","<span class=\"pill orange\">watch</span>"],
+        ["APP","70","76.1%","+4.7 pts","4.0%","put-skew","<span class=\"pill orange\">watch</span>"]
+      ],
 
       tone:[
-        ['JPM (upcoming)','Thu 09:00',['orange','−0.21'],'↑','cautious consumer','rate / credit view'],
-        ['Fed (FOMC)','Sep 18',['orange','−0.15'],'↑','data-dependent','rates · USD'],
-        ['ECB','Sep 12',['bad','−0.28'],'↑↑','hawkish hold','EUR · BTP'],
-        ['Oil majors (XOM)','Aug 2',['good','+0.12'],'flat','capex steady','crude · HG'],
-        ['Retailers (WMT)','Aug 15',['orange','−0.18'],'↑','cautious','consumer macro']],
+        ["COF","Tue 30 Jun",["good","+0.48"],"↓","beat","—"],
+        ["GEV","Tue 30 Jun",["bad","−0.45"],"↑","miss","—"],
+        ["TER","Tue 30 Jun",["good","+0.41"],"↓","beat","—"],
+        ["PLTR","Tue 30 Jun",["good","+0.37"],"↓","beat","—"],
+        ["STX","Tue 30 Jun",["good","+0.24"],"↓","beat","—"],
+        ["WDC","Tue 30 Jun",["good","+0.16"],"↓","beat","—"],
+        ["MU","Mon 31 Aug",["good","+0.10"],"↓","beat","—"],
+        ["AMD","Tue 30 Jun",["good","+0.06"],"↓","in-line beat","—"],
+        ["AVGO","Fri 31 Jul",["good","+0.05"],"↓","in-line beat","—"],
+        ["APP","Tue 30 Jun",["ghost","+0.01"],"↓","in-line beat","—"]
+      ],
       betas:[
-        ['ES S&P','−0.38','−0.16','+0.03','−0.71',['dn','−$ 1.42 M']],
-        ['TY 10Y (short)','+0.92','+0.08','−0.01','+0.14',['up','+$ 2.10 M']],
-        ['GC Gold','−0.24','−0.61','+0.08','+0.22',['dn','−$ 540k']],
-        ['CL Crude','+0.11','−0.34','+0.88','−0.12',['up','+$ 180k']],
-        ['6E EUR','−0.06','−0.82','+0.02','−0.09',['dn','−$ 410k']]],
+        ["AMD","0.13","1.82","-0.04","-0.14",["up","+$ 1166k"]],
+        ["PLTR","-1.41","1.53","-0.15","-0.09",["up","+$ 364k"]],
+        ["TER","0.59","1.46","-0.21","-0.27",["up","+$ 394k"]],
+        ["GEV","0.07","1.56","-0.32","-0.16",["up","+$ 774k"]],
+        ["AVGO","-0.02","1.20","-0.07","-0.12",["up","+$ 606k"]],
+        ["MU","0.20","1.62","0.09","-0.17",["up","+$ 872k"]],
+        ["COF","-0.73","-0.87","-0.11","0.01",["dn","−$ 1184k"]],
+        ["STX","1.17","-0.24","0.02","-0.17",["dn","−$ 527k"]],
+        ["WDC","0.94","-0.24","0.09","-0.17",["dn","−$ 634k"]],
+        ["APP","-1.20","0.11","-0.01","0.04",["dn","−$ 285k"]]
+      ],
       bridge:[
         ['(no direct crypto)','—','—','—','<span class="pill ghost">monitoring only</span>'],
         ['BTC–DXY correlation','−0.42','—','—','<span class="pill ghost">macro signal</span>'],
@@ -886,29 +896,54 @@
         ['PG/CL','K. Lee','120d','Valuation spread','Spread 2.1σ wide — add',['good','low'],'<span class="pill good">add</span>'],
         ['GOOG/META','P. Shah','64d','Ad-share rotation','Converging faster than modeled',['orange','medium'],'<span class="pill orange">reduce</span>']],
       universe:[
-        ["1","AMD/AVGO","0.72","74","rev","0","pos","spread","conv 1.7σ","fit"],
-        ["2","KO/PEP","0.68","59","rev","0","neutral","spread","conv 0.9σ","fit"],
-        ["3","GOOGL/META","0.65","89","rev","0","pos","spread","conv 1.0σ","fit"],
-        ["4","JPM/BAC","0.58","77","rev","0","pos","spread","conv 0.7σ","hold"],
-        ["5","COST/WMT","0.54","57","↓","0","pos","spread","conv 0.1σ","hold"],
-        ["6","PG/CL","0.51","47","flat","0","pos","spread","conv 0.2σ","hold"],
-        ["7","V/MA","0.49","69","flat","0","pos","spread","conv 0.1σ","hold"],
-        ["8","HD/LOW","0.46","42","flat","0","pos","spread","conv 0.0σ","hold"],
-        ["9","AMZN/WMT","0.44","76","rev","0","pos","spread","conv 0.4σ","hold"]],
-      crowding:[["AMD/AVGO","58","77.6%","+1.7 pts","1.8%","flat","<span class=\"pill orange\">watch</span>"],["KO/PEP","46","74.9%","+0.2 pts","1.6%","flat","<span class=\"pill good\">OK</span>"],["GOOGL/META",["warn","74"],"80.0%","+0.7 pts","1.4%","flat","<span class=\"pill orange\">watch</span>"],["JPM/BAC","23","73.4%","−0.3 pts","1.1%","flat","<span class=\"pill good\">OK</span>"],["COST/WMT","34","56.4%","−0.1 pts","1.7%","steep","<span class=\"pill good\">OK</span>"],["PG/CL","64","79.1%","−0.4 pts","2.2%","steep","<span class=\"pill orange\">watch</span>"],["V/MA",["warn","70"],"90.6%","−0.7 pts","1.0%","steep","<span class=\"pill orange\">watch</span>"],["HD/LOW","56","79.0%","+1.2 pts","1.7%","flat","<span class=\"pill orange\">watch</span>"],["AMZN/WMT","25","53.5%","+0.1 pts","1.4%","steep","<span class=\"pill good\">OK</span>"]],
+        ["1","AMD",["good","0.71"],"73","↑↑","+1","pos","570.6–606.2","570.6–648.5","strong"],
+        ["2","TER",["good","0.67"],"68","↑↑","+15","pos","362.5–381.1","362.5–416.7","fit"],
+        ["3","PLTR",["good","0.66"],"69","↑↑","+2","pos","206.0–210.9","190.1–212.9","fit"],
+        ["4","GEV",["good","0.66"],"70","↑↑","+1","pos","963.3–1006.0","963.3–1027.0","fit"],
+        ["5","AVGO",["good","0.66"],"66","↑","+0","pos","348.1–359.3","348.1–377.0","fit"],
+        ["6","MU",["good","0.65"],"65","↑","+26","pos","929.0–953.6","929.0–1089.2","fit"],
+        ["7","COF",["good","0.62"],"60","↓","+2","pos","194.4–202.5","193.0–202.5","fit"],
+        ["8","STX",["good","0.61"],"60","↓","+15","pos","693.9–749.0","693.9–810.8","fit"],
+        ["9","WDC",["ghost","0.59"],"57","↓↓","+9","pos","358.3–382.8","358.3–409.4","fit"],
+        ["10","APP",["ghost","0.56"],"53","↓↓","+1","pos","267.0–277.0","267.0–283.7","fit"]
+      ],
+      crowding:[
+        ["AMD","68","75.4%","0.42 pts","2.4%","call-skew","<span class=\"pill good\">OK</span>"],
+        ["PLTR","62","64.7%","+3.5 pts","2.6%","call-skew","<span class=\"pill good\">OK</span>"],
+        ["TER",["warn","88"],"101.0%","0.20 pts","6.4%","call-skew","<span class=\"pill red\">crowded</span>"],
+        ["GEV","72","81.7%","0.13 pts","2.8%","call-skew","<span class=\"pill orange\">watch</span>"],
+        ["AVGO","69","79.9%","+1.9 pts","1.2%","flat","<span class=\"pill good\">OK</span>"],
+        ["MU","71","79.7%","0.24 pts","2.3%","flat","<span class=\"pill orange\">watch</span>"],
+        ["COF","76","89.3%","+1.2 pts","1.6%","flat","<span class=\"pill orange\">watch</span>"],
+        ["STX","75","84.6%","0.30 pts","3.5%","put-skew","<span class=\"pill orange\">watch</span>"],
+        ["WDC",["warn","80"],"88.8%","0.27 pts","5.5%","put-skew","<span class=\"pill orange\">watch</span>"],
+        ["APP","70","76.1%","+4.7 pts","4.0%","put-skew","<span class=\"pill orange\">watch</span>"]
+      ],
 
       tone:[
-        ['LLY vs NVO','both +12d',['good','+0.20 / −0.05'],'↓ / ↑','LLY raised','pair tilt → LLY'],
-        ['V vs MA','both +6d',['good','+0.14 / +0.02'],'↓','V edge','pair tilt → V'],
-        ['COST vs WMT','both +9d',['good','+0.18 / −0.10'],'↓ / ↑','COST strong','pair tilt → COST'],
-        ['PG vs CL','both +14d',['ghost','+0.04 / −0.02'],'flat','in line','neutral'],
-        ['GOOG vs META','both +11d',['orange','+0.05 / +0.22'],'↓','META stronger','reduce pair']],
+        ["COF","Tue 30 Jun",["good","+0.48"],"↓","beat","—"],
+        ["GEV","Tue 30 Jun",["bad","−0.45"],"↑","miss","—"],
+        ["TER","Tue 30 Jun",["good","+0.41"],"↓","beat","—"],
+        ["PLTR","Tue 30 Jun",["good","+0.37"],"↓","beat","—"],
+        ["STX","Tue 30 Jun",["good","+0.24"],"↓","beat","—"],
+        ["WDC","Tue 30 Jun",["good","+0.16"],"↓","beat","—"],
+        ["MU","Mon 31 Aug",["good","+0.10"],"↓","beat","—"],
+        ["AMD","Tue 30 Jun",["good","+0.06"],"↓","in-line beat","—"],
+        ["AVGO","Fri 31 Jul",["good","+0.05"],"↓","in-line beat","—"],
+        ["APP","Tue 30 Jun",["ghost","+0.01"],"↓","in-line beat","—"]
+      ],
       betas:[
-        ['LLY/NVO pair','−0.02','−0.01','0.00','−0.03',['dn','−$ 40k']],
-        ['V/MA pair','−0.01','0.00','0.00','−0.02',['dn','−$ 22k']],
-        ['Net book','+0.01','−0.02','+0.01','−0.05',['dn','−$ 118k']],
-        ['Residual beta','0.04','−0.03','+0.01','−0.08','≈ flat'],
-        ['(hedge overlay)','—','—','—','—','neutralizes']],
+        ["AMD","0.13","1.82","-0.04","-0.14",["up","+$ 1166k"]],
+        ["PLTR","-1.41","1.53","-0.15","-0.09",["up","+$ 364k"]],
+        ["TER","0.59","1.46","-0.21","-0.27",["up","+$ 394k"]],
+        ["GEV","0.07","1.56","-0.32","-0.16",["up","+$ 774k"]],
+        ["AVGO","-0.02","1.20","-0.07","-0.12",["up","+$ 606k"]],
+        ["MU","0.20","1.62","0.09","-0.17",["up","+$ 872k"]],
+        ["COF","-0.73","-0.87","-0.11","0.01",["dn","−$ 1184k"]],
+        ["STX","1.17","-0.24","0.02","-0.17",["dn","−$ 527k"]],
+        ["WDC","0.94","-0.24","0.09","-0.17",["dn","−$ 634k"]],
+        ["APP","-1.20","0.11","-0.01","0.04",["dn","−$ 285k"]]
+      ],
       bridge:[
         ['(no direct crypto)','—','—','—','<span class="pill ghost">monitoring only</span>'],
         ['Hedge-leg β check','≈ 0','—','—','<span class="pill good">clean</span>']]
@@ -943,34 +978,54 @@
         ['MSTR','K. Lee','120d','BTC-per-share accretion','Premium to NAV elevated',['orange','medium'],'<span class="pill orange">hedge</span>'],
         ['COIN','M. O’Brien','98d','Volume + regulatory clarity','Funding crowded; squeeze risk',['orange','medium'],'<span class="pill orange">watch</span>']],
       universe:[
-        ["1","IBIT",["good","0.76"],"n/a","↑","0","pos","46.5–47.0","45.4–49.1","fit"],
-        ["2","BTC",["good","0.75"],"n/a","↑","0","neg","81.2k–83.7k","81.2k–84.2k","fit"],
-        ["3","MSTR","0.75","72","↑","+2","pos","150.8–158.4","147.4–168.7","fit"],
-        ["4","ETH","0.70","n/a","↑","0","neg","2419–2533","2419–2577","fit"],
-        ["5","ETHA","0.63","n/a","↓","0","neutral","56.6–57.5","54.4–61.7","fit"],
-        ["6","HOOD","0.63","63","↓","+1","pos","107.8–110.0","105.1–116.3","fit"],
-        ["7","SOL","0.63","n/a","↓","0","neg","102.7–108.6","102.7–113.2","fit"],
-        ["8","COIN","0.62","63","↑","+2","pos","176.8–184.2","171.6–192.8","fit"],
-        ["9","HUT","0.50","47","↓↓","−9","pos","82.5–86.9","77.7–93.8","hold"],
-        ["10","WULF","0.47","34","↓↓","−3","pos","13.4–14.0","13.1–15.2","hold"],
-        ["11","RIOT","0.40","53","↓↓","−4","pos","16.4–17.0","16.4–19.7","hold"],
-        ["12","IREN","0.37","47","↓↓","−9","pos","34.7–36.7","34.6–42.2","hold"],
-        ["13","MARA","0.36","47","↓↓","+3","pos","9.39–9.74","9.39–11.3","hold"],
-        ["14","CLSK","0.34","22","↓↓","−9","pos","10.3–10.6","10.3–12.7","exit"]],
-      crowding:[["IBIT","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["BTC","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["MSTR","28","55.0%","+2.6 pts","7.8%","mild","<span class=\"pill good\">OK</span>"],["ETH","—","—","—","—","—","<span class=\"pill ghost\">n/a</span>"],["ETHA","—","—","—","—","—","<span class=\"pill ghost\">n/a</span>"],["HOOD","50","79.5%","+2.5 pts","5.1%","mild","<span class=\"pill good\">OK</span>"],["SOL","—","—","—","—","call-skew","<span class=\"pill ghost\">call-skew</span>"],["COIN","34","68.7%","−0.0 pts","11.1%","steep","<span class=\"pill orange\">squeeze</span>"],["HUT","62","82.0%","+6.5 pts","16.9%","call-skew","<span class=\"pill orange\">squeeze</span>"],["WULF","69","90.3%","+5.0 pts","28.1%","call-skew","<span class=\"pill orange\">squeeze</span>"],["RIOT","64","87.4%","+4.6 pts","13.9%","call-skew","<span class=\"pill orange\">squeeze</span>"],["IREN","36","63.5%","+10.2 pts","21.3%","call-skew","<span class=\"pill orange\">squeeze</span>"],["MARA","44","76.0%","+4.1 pts","29.8%","flat","<span class=\"pill orange\">squeeze</span>"],["CLSK","67","100.0%","+0.0 pts","41.6%","flat","<span class=\"pill orange\">squeeze</span>"]],
+        ["1","AMD",["good","0.71"],"73","↑↑","+1","pos","570.6–606.2","570.6–648.5","strong"],
+        ["2","TER",["good","0.67"],"68","↑↑","+15","pos","362.5–381.1","362.5–416.7","fit"],
+        ["3","PLTR",["good","0.66"],"69","↑↑","+2","pos","206.0–210.9","190.1–212.9","fit"],
+        ["4","GEV",["good","0.66"],"70","↑↑","+1","pos","963.3–1006.0","963.3–1027.0","fit"],
+        ["5","AVGO",["good","0.66"],"66","↑","+0","pos","348.1–359.3","348.1–377.0","fit"],
+        ["6","MU",["good","0.65"],"65","↑","+26","pos","929.0–953.6","929.0–1089.2","fit"],
+        ["7","COF",["good","0.62"],"60","↓","+2","pos","194.4–202.5","193.0–202.5","fit"],
+        ["8","STX",["good","0.61"],"60","↓","+15","pos","693.9–749.0","693.9–810.8","fit"],
+        ["9","WDC",["ghost","0.59"],"57","↓↓","+9","pos","358.3–382.8","358.3–409.4","fit"],
+        ["10","APP",["ghost","0.56"],"53","↓↓","+1","pos","267.0–277.0","267.0–283.7","fit"]
+      ],
+      crowding:[
+        ["AMD","68","75.4%","0.42 pts","2.4%","call-skew","<span class=\"pill good\">OK</span>"],
+        ["PLTR","62","64.7%","+3.5 pts","2.6%","call-skew","<span class=\"pill good\">OK</span>"],
+        ["TER",["warn","88"],"101.0%","0.20 pts","6.4%","call-skew","<span class=\"pill red\">crowded</span>"],
+        ["GEV","72","81.7%","0.13 pts","2.8%","call-skew","<span class=\"pill orange\">watch</span>"],
+        ["AVGO","69","79.9%","+1.9 pts","1.2%","flat","<span class=\"pill good\">OK</span>"],
+        ["MU","71","79.7%","0.24 pts","2.3%","flat","<span class=\"pill orange\">watch</span>"],
+        ["COF","76","89.3%","+1.2 pts","1.6%","flat","<span class=\"pill orange\">watch</span>"],
+        ["STX","75","84.6%","0.30 pts","3.5%","put-skew","<span class=\"pill orange\">watch</span>"],
+        ["WDC",["warn","80"],"88.8%","0.27 pts","5.5%","put-skew","<span class=\"pill orange\">watch</span>"],
+        ["APP","70","76.1%","+4.7 pts","4.0%","put-skew","<span class=\"pill orange\">watch</span>"]
+      ],
 
       tone:[
-        ['COIN (pre-announce)','16:30 today',['orange','−0.10'],'↑','volume-driven','MSTR · HOOD'],
-        ['MSTR','Aug 1',['good','+0.25'],'↓','BTC accretion','COIN · miners'],
-        ['CLSK','Aug 8',['bad','−0.35'],'↑↑','cost pressure','miners'],
-        ['HOOD','Jul 31',['good','+0.16'],'↓','crypto rev up','COIN'],
-        ['RIOT','Aug 6',['bad','−0.22'],'↑','hashprice','CLSK · MARA']],
+        ["COF","Tue 30 Jun",["good","+0.48"],"↓","beat","—"],
+        ["GEV","Tue 30 Jun",["bad","−0.45"],"↑","miss","—"],
+        ["TER","Tue 30 Jun",["good","+0.41"],"↓","beat","—"],
+        ["PLTR","Tue 30 Jun",["good","+0.37"],"↓","beat","—"],
+        ["STX","Tue 30 Jun",["good","+0.24"],"↓","beat","—"],
+        ["WDC","Tue 30 Jun",["good","+0.16"],"↓","beat","—"],
+        ["MU","Mon 31 Aug",["good","+0.10"],"↓","beat","—"],
+        ["AMD","Tue 30 Jun",["good","+0.06"],"↓","in-line beat","—"],
+        ["AVGO","Fri 31 Jul",["good","+0.05"],"↓","in-line beat","—"],
+        ["APP","Tue 30 Jun",["ghost","+0.01"],"↓","in-line beat","—"]
+      ],
       betas:[
-        ['BTC','−0.58','−0.31','+0.04','−0.74',['dn','−$ 1.90 M']],
-        ['ETH','−0.66','−0.28','+0.03','−0.81',['dn','−$ 980k']],
-        ['MSTR','−0.82','−0.44','+0.05','−1.12',['dn','−$ 1.52 M']],
-        ['COIN','−0.71','−0.38','+0.04','−0.96',['dn','−$ 760k']],
-        ['CLSK','−0.94','−0.41','+0.06','−1.24',['dn','−$ 410k']]],
+        ["AMD","0.13","1.82","-0.04","-0.14",["up","+$ 1166k"]],
+        ["PLTR","-1.41","1.53","-0.15","-0.09",["up","+$ 364k"]],
+        ["TER","0.59","1.46","-0.21","-0.27",["up","+$ 394k"]],
+        ["GEV","0.07","1.56","-0.32","-0.16",["up","+$ 774k"]],
+        ["AVGO","-0.02","1.20","-0.07","-0.12",["up","+$ 606k"]],
+        ["MU","0.20","1.62","0.09","-0.17",["up","+$ 872k"]],
+        ["COF","-0.73","-0.87","-0.11","0.01",["dn","−$ 1184k"]],
+        ["STX","1.17","-0.24","0.02","-0.17",["dn","−$ 527k"]],
+        ["WDC","0.94","-0.24","0.09","-0.17",["dn","−$ 634k"]],
+        ["APP","-1.20","0.11","-0.01","0.04",["dn","−$ 285k"]]
+      ],
       bridge:[
         ['BTC spot','1.00','$ 21.4 M',['dn','−$ 449k'],'<span class="pill ok">watch</span>'],
         ['ETH spot','1.24','$ 10.8 M',['dn','−$ 367k'],'<span class="pill ok">watch</span>'],
@@ -1015,7 +1070,251 @@
     vfill('macro-betas', d.betas);
     vfill('digital-bridge', d.bridge);
     renderPerpetualMarkets(fund);
+    // 10-name universe — all 4 Market-Squad dashboards (shared data, per-fund lens).
+    const ed=(typeof earningsData!=='undefined')?(earningsData[fund]||earningsData.alpha):null;
+    if(ed){
+      vkpi('earnings-kpis', ed.kpis);
+      vfill('earnings-upcoming', ed.upcoming);
+      vfill('earnings-surprises', ed.surprises);
+      vfill('earnings-phrases', ed.phrases);
+      vfill('earnings-revisions', ed.revisions);
+      const ec=document.getElementById('earnings-chip'); if(ec && ed.chip) ec.textContent=ed.chip;
+    }
+    // Agentic AI briefs (senior-analyst voice, derived from current data) — same across funds.
+    const ai=window.__POINT_AI_BRIEFS__||{};
+    ['research','flows','earnings','macro'].forEach(k=>{
+      const el=document.getElementById(k+'-ai');
+      if(el && ai[k]) el.innerHTML=ai[k];
+    });
+    // Macro extras (KPIs, yield curve, CB calendar) from the 10-name data bootstrap.
+    const mx=window.__POINT_MACRO_EXTRAS__;
+    if(mx){
+      if(mx.kpis) vkpi('macro-kpis', mx.kpis);
+      const curve=document.getElementById('macro-curve');
+      if(curve) curve.innerHTML=(mx.yieldCurve||[]).map(y=>`<div class="etf-row"><span>${y[0]}</span><div class="bar"><div class="fill" style="width:${Math.round(parseFloat(y[1])*15)}%"></div></div><b>${y[1]}</b></div>`).join('');
+      const cal=document.getElementById('macro-calendar');
+      if(cal) cal.innerHTML=(mx.cbCalendar||[]).map(c=>`<li><div><b>${c[0]}</b> — ${c[1]}</div><span class="pill ghost">event</span></li>`).join('');
+    }
+    const mc=document.getElementById('macro-chip');
+    if(mc) mc.textContent=({alpha:'Alpha lens · 10 recent S&P 500 adds · $1M per name',global:'Global lens · 10 recent S&P 500 adds · rate/FX shocks',neutral:'Neutral lens · 10 recent S&P 500 adds · pair offsets',digital:'Digital lens · 10 recent S&P 500 adds · BTC-rate β'}[fund])||'10 recent S&P 500 adds · 12 Oct';
+    const rsub=({alpha:'Alpha lens · long/short ideas',global:'Global lens · macro-fit ranking',neutral:'Neutral lens · pair candidates',digital:'Digital lens · crypto-β overlay'}[fund])||'';
+    const rcEl=document.getElementById('research-chip'); if(rcEl) rcEl.textContent=`10 recent S&P 500 adds · ${rsub} · 12 Oct`;
+    const rtEl=document.getElementById('research-title'); if(rtEl) rtEl.textContent='Ranked universe · 10 recent S&P 500 adds · 12 Oct close';
+    const fcEl=document.getElementById('flows-chip'); if(fcEl) fcEl.textContent=`10 recent S&P 500 adds · ${rsub} · 12 Oct`;
+    const ftEl=document.getElementById('flows-title'); if(ftEl) ftEl.textContent='10 recent S&P 500 adds · crowding · short interest · skew';
   }
+
+  /* ---- Earnings & Sentiment · per-fund (patched by scripts/emit-recent10.js) ---- */
+  const earningsData = {
+    alpha:{
+      chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
+      kpis:[
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Beat rate","90%","9/10 beat","good"]],
+      upcoming:[
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
+      surprises:[
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
+      phrases:[
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
+      revisions:[
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
+        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
+        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+        ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 212"],"1","<span class=\"pill good\">pos</span>"]]
+    },
+    global:{
+      chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
+      kpis:[
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Beat rate","90%","9/10 beat","good"]],
+      upcoming:[
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
+      surprises:[
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
+      phrases:[
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
+      revisions:[
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
+        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
+        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+        ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 212"],"1","<span class=\"pill good\">pos</span>"]]
+    },
+    neutral:{
+      chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
+      kpis:[
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Beat rate","90%","9/10 beat","good"]],
+      upcoming:[
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
+      surprises:[
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
+      phrases:[
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
+      revisions:[
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
+        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
+        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+        ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 212"],"1","<span class=\"pill good\">pos</span>"]]
+    },
+    digital:{
+      chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
+      kpis:[
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Beat rate","90%","9/10 beat","good"]],
+      upcoming:[
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
+      surprises:[
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
+      phrases:[
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
+      revisions:[
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
+        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
+        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+        ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 212"],"1","<span class=\"pill good\">pos</span>"]]
+    }
+  };
 
   function renderPerpetualMarkets(fund){
     const section=document.getElementById('digital-perpetual-markets');
@@ -1040,13 +1339,54 @@
       pnlStats:[['Hit rate','62%'],['W/L ratio','1.84'],['Alpha half-life','14d']],
       cal:[['Tue Oct 8','CPI 08:30 · <span class="red">macro</span>'],['Wed Oct 9','JPM Q3 earnings pre-mkt'],['Thu Oct 10','LMRX coverage initiations'],['Thu Oct 10','Fed minutes 14:00'],['Fri Oct 11','UNH Q3 · PPI 08:30'],['Mon Oct 14','WFC + C earnings'],['Wed Oct 16','NVDA GTC keynote']],
       news:[['05:12','Bloomberg','<b>Nvidia</b> insider sales total $220M over 10 days','pill red','neg'],['04:48','Reuters','<b>Meta</b> secures EU AI compliance ruling','pill good','pos'],['03:21','13D filing','<b>Elliott</b> discloses 1.9% in NVDA','pill orange','watch'],['22:40','Semafor','Semi tariffs: Treasury eases TSMC carve-outs','pill good','pos'],['20:11','8-K','<b>SNOW</b> CFO transition, reaffirms guide','pill ghost','neutral']],
-      explainName:'PLTR (long)',
-      explain:[['Quality',93,'0.93'],['Momentum',98,'0.98'],['Revisions',85,'0.85'],['Sentiment',61,'0.61'],['Macro fit',74,'0.74']],
-      explainTxt:'Model attributes <b>0.85</b> to Palantir at the 12 Oct close ($209): 49% profit margin, 38% ROE, 93% revenue growth, and +25% 21-day price momentum (session range 206.1–212.9). Analyst sentiment is only mid-pack — the score is quality + trend, not a crowded buy-rating pile-up. Risk: beta 1.60 into Monday’s AI-infra/optics selloff.',
-      divergence:[["<b>FLNC</b> — research short · Siemens Pension Trust E.V. cut 7.0 pts of the co.","pill good","aligned"],["<b>MOS</b> — research short · FMR cut 5.0 pts of the co.","pill good","aligned"],["<b>CABO</b> — research short · Blackrock cut 4.8 pts of the co.","pill good","aligned"],["<b>GPRO</b> — research short · Blackrock added 4.3 pts of the co.","pill red","counter"],["<b>OLN</b> — research short · AQR Capital Management added 3.8 pts of the co.","pill red","counter"],["<b>METCB</b> — research short · Blackrock added 3.5 pts of the co.","pill red","counter"]],
-      etf:[["SPY",8,"","+0.4%"],["QQQ",19,"bad","−1.3%"],["SMH",96,"bad","−6.8%"],["IWM",27,"bad","−1.9%"],["XLE",57,"","+4.0%"],["XLK",32,"bad","−2.3%"],["IBIT (BTC)",49,"bad","−3.5%"],["ETHA (ETH)",100,"bad","−7.1%"]],
-      social:[['NVDA',22,58,'58/22'],['TSLA',38,42,'42/38'],['META',14,68,'68/14'],['COIN',20,60,'60/20'],['AMD',28,48,'48/28']],
-      scenario:[['Base case','<b class="good">+$ 1.2 M</b>'],['Hot CPI (+0.4% MoM core)','<b class="dn">−$ 4.78 M · −38 bps</b>'],['Cold CPI (0.1%)','<b class="up">+$ 6.1 M · +49 bps</b>'],['Fed +25 surprise','<b class="dn">−$ 7.9 M</b>'],['10Y +50 bp','<b class="dn">−$ 9.4 M</b>'],['Risk-off (VIX >30)','<b class="dn">−$ 18.0 M</b>']]
+      explainName:'AMD (long)',
+      explain:[
+        ["Quality",59,"0.59"],
+        ["Momentum",23,"0.23"],
+        ["Revisions",52,"0.52"],
+        ["Sentiment",99,"0.99"],
+        ["Macro fit",99,"0.99"]
+      ],
+      explainTxt:'Model attributes top rank to <b>AMD</b> at the 2026-10-12 close ($605.53): 21-day momentum 22.7%, consensus FY+1 revisions 0.89% 7d, analyst sell-side mix 44 buy / 11 hold / 0 sell. Beta to SPY 2.94.',
+      divergence:[
+        ["<b>AMD</b> — research long (score 0.71) · flow 1↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>PLTR</b> — research long (score 0.66) · flow 2↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>TER</b> — research long (score 0.67) · flow 15↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>GEV</b> — research long (score 0.66) · flow 1↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>AVGO</b> — research long (score 0.66) · flow flat revisions","pill orange","mixed"],
+        ["<b>MU</b> — research long (score 0.65) · flow 26↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>COF</b> — research long (score 0.62) · flow 2↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>STX</b> — research long (score 0.61) · flow 15↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>WDC</b> — research long (score 0.59) · flow 9↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>APP</b> — research long (score 0.56) · flow 1↑ / 0↓ revisions","pill good","aligned"]
+      ],
+      etf:[
+        ["PLTR",86,"","+8.6%"],
+        ["COF",11,"","+1.1%"],
+        ["APP",23,"bad","-2.3%"],
+        ["GEV",24,"bad","-2.4%"],
+        ["AVGO",49,"bad","-4.9%"],
+        ["AMD",68,"bad","-6.8%"],
+        ["STX",73,"bad","-7.3%"],
+        ["WDC",74,"bad","-7.4%"],
+        ["MU",88,"bad","-8.8%"],
+        ["TER",100,"bad","-11.6%"]
+      ],
+      social:[
+        ["AMD",0,80,"80/0"],
+        ["PLTR",9,66,"66/9"],
+        ["TER",0,71,"71/0"],
+        ["GEV",0,81,"81/0"],
+        ["AVGO",0,94,"94/0"]
+      ],
+      scenario:[
+        ["Base case","<b class=\"good\">+$ 0.50 M</b>"],
+        ["Hot CPI (10Y +50bp · DXY +1% · VIX +5pt)","<b class=\"good\">+$ 1.55 M</b>"],
+        ["Cold CPI (10Y −30bp · VIX −3pt)","<b class=\"dn\">−$ 0.13 M</b>"],
+        ["Fed +25 surprise (10Y +25bp · DXY +0.8%)","<b class=\"good\">+$ 3.78 M</b>"],
+        ["10Y +50 bp pure","<b class=\"dn\">−$ 0.13 M</b>"],
+        ["Risk-off (VIX &gt;30 · DXY +2% · WTI −10%)","<b class=\"good\">+$ 10.42 M</b>"]
+      ]
     },
     global:{
       whatifSelect:'Add 0.6× ZN DV01 ladder + trim JPY short',
@@ -1055,13 +1395,54 @@
       pnlStats:[['Hit rate','57%'],['W/L ratio','1.41'],['Avg hold','9d']],
       cal:[['Tue Oct 8','CPI 08:30 · <span class="red">key print</span>'],['Thu Oct 10','Fed minutes 14:00'],['Thu Oct 10','3Y / 10Y auctions'],['Fri Oct 11','PPI 08:30'],['Wed Oct 16','ECB minutes'],['Thu Oct 17','China GDP'],['Fri Oct 18','OPEC+ monthly report']],
       news:[['05:30','Bloomberg','China unveils <b>stimulus</b> package; FXI bid','pill good','pos'],['04:10','Reuters','<b>BOJ</b> signals intervention risk above 158','pill orange','watch'],['02:50','WSJ','Services <b>PPI</b> runs hot — rate-vol bid','pill red','neg'],['22:05','FT','<b>OPEC+</b> holds output; crude backwardation','pill good','pos'],['19:40','Fed wire','Treasury hints slower <b>QT</b> taper','pill good','pos']],
-      explainName:'Nat gas (NG) (long)',
-      explain:[['Quality',50,'—'],['Momentum',86,'0.86'],['Revisions',50,'—'],['Sentiment',50,'—'],['Macro fit',75,'0.75']],
-      explainTxt:'Model attributes <b>0.82</b> to Henry Hub nat-gas futures: +9.8% 21-day momentum, 12 Oct range 3.16–3.19. Energy led Monday’s mixed tape — Brent printed 105.0–106.3 after Middle-East supply headlines. Quality and EPS revisions are n/a on the future; the rank is momentum + regime fit versus SPY.',
-      divergence:[["<b>Futures / ETFs</b> — no 13F holder file on these proxies. The column that is filled is put−call skew from the ETF option chain.","pill ghost","skew only"]],
-      etf:[["USO",100,"","+4.9%"],["GLD",14,"gold","+0.7%"],["TLT",25,"","+1.2%"],["UUP",10,"","+0.5%"],["FXI",18,"","+0.9%"],["EEM",77,"bad","−3.8%"],["UNG",72,"","+3.5%"],["HYG",8,"","+0.4%"]],
-      social:[['Gold',16,62,'62/16'],['Crude',30,50,'50/30'],['USD',34,40,'40/34'],['China/FXI',22,58,'58/22'],['Rates',44,32,'32/44']],
-      scenario:[['Base case','<b class="good">+$ 2.1 M</b>'],['Hot CPI (+0.4% core)','<b class="up">+$ 2.4 M · short rates win</b>'],['Cold CPI (0.1%)','<b class="dn">−$ 3.2 M</b>'],['Fed +25 surprise','<b class="up">+$ 3.8 M</b>'],['10Y +50 bp','<b class="up">+$ 2.1 M</b>'],['Risk-off (VIX >30)','<b class="dn">−$ 12.4 M</b>']]
+      explainName:'AMD (long)',
+      explain:[
+        ["Quality",59,"0.59"],
+        ["Momentum",23,"0.23"],
+        ["Revisions",52,"0.52"],
+        ["Sentiment",99,"0.99"],
+        ["Macro fit",99,"0.99"]
+      ],
+      explainTxt:'Model attributes top rank to <b>AMD</b> at the 2026-10-12 close ($605.53): 21-day momentum 22.7%, consensus FY+1 revisions 0.89% 7d, analyst sell-side mix 44 buy / 11 hold / 0 sell. Beta to SPY 2.94.',
+      divergence:[
+        ["<b>AMD</b> — research long (score 0.71) · flow 1↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>PLTR</b> — research long (score 0.66) · flow 2↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>TER</b> — research long (score 0.67) · flow 15↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>GEV</b> — research long (score 0.66) · flow 1↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>AVGO</b> — research long (score 0.66) · flow flat revisions","pill orange","mixed"],
+        ["<b>MU</b> — research long (score 0.65) · flow 26↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>COF</b> — research long (score 0.62) · flow 2↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>STX</b> — research long (score 0.61) · flow 15↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>WDC</b> — research long (score 0.59) · flow 9↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>APP</b> — research long (score 0.56) · flow 1↑ / 0↓ revisions","pill good","aligned"]
+      ],
+      etf:[
+        ["PLTR",86,"","+8.6%"],
+        ["COF",11,"","+1.1%"],
+        ["APP",23,"bad","-2.3%"],
+        ["GEV",24,"bad","-2.4%"],
+        ["AVGO",49,"bad","-4.9%"],
+        ["AMD",68,"bad","-6.8%"],
+        ["STX",73,"bad","-7.3%"],
+        ["WDC",74,"bad","-7.4%"],
+        ["MU",88,"bad","-8.8%"],
+        ["TER",100,"bad","-11.6%"]
+      ],
+      social:[
+        ["AMD",0,80,"80/0"],
+        ["PLTR",9,66,"66/9"],
+        ["TER",0,71,"71/0"],
+        ["GEV",0,81,"81/0"],
+        ["AVGO",0,94,"94/0"]
+      ],
+      scenario:[
+        ["Base case","<b class=\"good\">+$ 0.50 M</b>"],
+        ["Hot CPI (10Y +50bp · DXY +1% · VIX +5pt)","<b class=\"good\">+$ 1.55 M</b>"],
+        ["Cold CPI (10Y −30bp · VIX −3pt)","<b class=\"dn\">−$ 0.13 M</b>"],
+        ["Fed +25 surprise (10Y +25bp · DXY +0.8%)","<b class=\"good\">+$ 3.78 M</b>"],
+        ["10Y +50 bp pure","<b class=\"dn\">−$ 0.13 M</b>"],
+        ["Risk-off (VIX &gt;30 · DXY +2% · WTI −10%)","<b class=\"good\">+$ 10.42 M</b>"]
+      ]
     },
     neutral:{
       whatifSelect:'Add 15% to PG/CL pair (beta-neutral)',
@@ -1070,13 +1451,54 @@
       pnlStats:[['Hit rate','64%'],['W/L ratio','1.22'],['Pair conv.','11d']],
       cal:[['Tue Oct 8','CPI (low book impact)'],['Wed Oct 9','LLY / NVO both report +12d'],['Fri Oct 11','V / MA both +6d'],['Mon Oct 14','COST / WMT pair events'],['Wed Oct 16','PG / CL pair +14d'],['Thu Oct 17','index rebalance preview'],['Fri Oct 18','borrow-rate review']],
       news:[['05:20','Bloomberg','<b>Novo</b> borrow fee spikes to 180bp','pill orange','watch'],['04:30','Reuters','<b>Lilly</b> GLP-1 share gains confirmed','pill good','pos'],['03:00','8-K','<b>Visa</b> volume data ahead of MA','pill good','pos'],['21:30','WSJ','Staples valuation spread at 60-day wide','pill ghost','neutral'],['18:15','filing','Index rebalance preview — pair flows','pill ghost','neutral']],
-      explainName:'AMD/AVGO (pair)',
-      explain:[['Quality',74,'0.74'],['Momentum',58,'0.58'],['Revisions',81,'0.81'],['Sentiment',87,'0.87'],['Macro fit',45,'0.45']],
-      explainTxt:'Model attributes <b>0.72</b> to long AMD / short AVGO: AMD quality 74, revisions 0.81, and a ~1.7σ 21-day relative-spread vs Broadcom. Sentiment is aligned (analyst mean constructive on the long leg). Risk: AMD beta 2.45 and a near-term pullback — size as a pair, not a naked semi long into Monday’s optical/AI-infra tape.',
-      divergence:[["<b>AMD/AVGO</b> — research long · JPMORGAN CHASE & CO added 1.0 pts of the co.","pill good","aligned"],["<b>HD/LOW</b> — research long · FMR added 1.0 pts of the co.","pill good","aligned"],["<b>GOOGL/META</b> — research long · FMR cut 0.9 pts of the co.","pill orange","divergent"],["<b>PG/CL</b> — research long · Price (T.Rowe) Associates cut 0.7 pts of the co.","pill orange","divergent"],["<b>V/MA</b> — research long · Mastercard Foundation Asset Management Corp cut 0.6 pts of the co.","pill orange","divergent"],["<b>KO/PEP</b> — research long · Charles Schwab Investment Management added 0.4 pts of the co.","pill good","aligned"]],
-      etf:[["XLV health",66,"","+2.8%"],["XLF fins",52,"","+2.2%"],["XLK tech",55,"bad","−2.3%"],["XLE energy",97,"","+4.0%"],["XLP staples",100,"","+4.2%"],["XLY discr",40,"","+1.7%"],["SPY",10,"","+0.4%"]],
-      social:[['LLY',14,66,'66/14'],['NVO',38,40,'40/38'],['V',18,60,'60/18'],['MA',24,52,'52/24'],['COST',16,64,'64/16']],
-      scenario:[['Base case','<b class="good">+$ 0.4 M</b>'],['Hot CPI (+0.4% core)','<b class="dn">−$ 0.3 M · < ±8 bps</b>'],['Cold CPI (0.1%)','<b class="up">+$ 0.5 M</b>'],['Fed +25 surprise','<b class="dn">−$ 0.6 M</b>'],['10Y +50 bp','<b class="dn">−$ 0.4 M</b>'],['Risk-off (VIX >30)','<b class="dn">−$ 2.0 M</b>']]
+      explainName:'AMD (long)',
+      explain:[
+        ["Quality",59,"0.59"],
+        ["Momentum",23,"0.23"],
+        ["Revisions",52,"0.52"],
+        ["Sentiment",99,"0.99"],
+        ["Macro fit",99,"0.99"]
+      ],
+      explainTxt:'Model attributes top rank to <b>AMD</b> at the 2026-10-12 close ($605.53): 21-day momentum 22.7%, consensus FY+1 revisions 0.89% 7d, analyst sell-side mix 44 buy / 11 hold / 0 sell. Beta to SPY 2.94.',
+      divergence:[
+        ["<b>AMD</b> — research long (score 0.71) · flow 1↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>PLTR</b> — research long (score 0.66) · flow 2↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>TER</b> — research long (score 0.67) · flow 15↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>GEV</b> — research long (score 0.66) · flow 1↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>AVGO</b> — research long (score 0.66) · flow flat revisions","pill orange","mixed"],
+        ["<b>MU</b> — research long (score 0.65) · flow 26↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>COF</b> — research long (score 0.62) · flow 2↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>STX</b> — research long (score 0.61) · flow 15↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>WDC</b> — research long (score 0.59) · flow 9↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>APP</b> — research long (score 0.56) · flow 1↑ / 0↓ revisions","pill good","aligned"]
+      ],
+      etf:[
+        ["PLTR",86,"","+8.6%"],
+        ["COF",11,"","+1.1%"],
+        ["APP",23,"bad","-2.3%"],
+        ["GEV",24,"bad","-2.4%"],
+        ["AVGO",49,"bad","-4.9%"],
+        ["AMD",68,"bad","-6.8%"],
+        ["STX",73,"bad","-7.3%"],
+        ["WDC",74,"bad","-7.4%"],
+        ["MU",88,"bad","-8.8%"],
+        ["TER",100,"bad","-11.6%"]
+      ],
+      social:[
+        ["AMD",0,80,"80/0"],
+        ["PLTR",9,66,"66/9"],
+        ["TER",0,71,"71/0"],
+        ["GEV",0,81,"81/0"],
+        ["AVGO",0,94,"94/0"]
+      ],
+      scenario:[
+        ["Base case","<b class=\"good\">+$ 0.50 M</b>"],
+        ["Hot CPI (10Y +50bp · DXY +1% · VIX +5pt)","<b class=\"good\">+$ 1.55 M</b>"],
+        ["Cold CPI (10Y −30bp · VIX −3pt)","<b class=\"dn\">−$ 0.13 M</b>"],
+        ["Fed +25 surprise (10Y +25bp · DXY +0.8%)","<b class=\"good\">+$ 3.78 M</b>"],
+        ["10Y +50 bp pure","<b class=\"dn\">−$ 0.13 M</b>"],
+        ["Risk-off (VIX &gt;30 · DXY +2% · WTI −10%)","<b class=\"good\">+$ 10.42 M</b>"]
+      ]
     },
     digital:{
       whatifSelect:'Buy MSTR/COIN put spread ($0.6M premium)',
@@ -1085,13 +1507,54 @@
       pnlStats:[['Hit rate','51%'],['W/L ratio','1.96'],['Avg hold','6d']],
       cal:[['Sat / Sun','24/7 — weekend coverage'],['Mon Oct 7','COIN pre-announce 16:30'],['Tue Oct 8','CPI 08:30 (BTC-rate β)'],['Wed Oct 9','token unlock · ARB'],['Thu Oct 10','spot ETH ETF flow data'],['Fri Oct 11','SEC crypto roundtable'],['Ongoing','on-chain whale alerts']],
       news:[['Sat 02:14','on-chain','<b>BTC</b> funding +0.082%, OI +18%','pill red','neg'],['Sat 06:40','Glassnode','Stablecoin mint <b>+$1.4B</b> — risk-on','pill good','pos'],['Sun 11:20','exchange','<b>CLSK</b> breaks 200-day on thin volume','pill red','neg'],['Sun 19:05','SEC','Crypto roundtable scheduled Fri','pill orange','watch'],['Mon 04:30','venue','<b>tNVDA</b> basis −2.8% vs NYSE close','pill orange','watch']],
-      explainName:'IBIT (long)',
-      explain:[['Quality',50,'—'],['Momentum',79,'0.79'],['Revisions',50,'—'],['Sentiment',50,'—'],['Macro fit',71,'0.71']],
-      explainTxt:'Model attributes <b>0.76</b> to IBIT, the spot-bitcoin ETF: BTC 21-day +7.1% with Monday’s cash session 81.2k–83.7k. IBIT itself traded 46.5–47.0 (5d 45.4–49.1). MSTR (quality 72, +2 revisions) sits just behind. Risk: miners are the lagging sleeve — CLSK 10.3–10.6, score 0.34, flagged exit.',
-      divergence:[["<b>HUT</b> — research long · Coatue Management added 3.9 pts of the co.","pill good","aligned"],["<b>IREN</b> — research long · Bank of America added 3.1 pts of the co.","pill good","aligned"],["<b>RIOT</b> — research long · Jane Street Group added 2.5 pts of the co.","pill good","aligned"],["<b>COIN</b> — research long · Paradigm Operations cut 0.2 pts of the co.","pill orange","divergent"]],
-      etf:[["IBIT (BTC)",29,"bad","−3.5%"],["ETHA (ETH)",59,"bad","−7.1%"],["BITO",28,"bad","−3.3%"],["WGMI miners",100,"bad","−12.0%"],["BLOK",40,"bad","−4.8%"],["QQQ",11,"bad","−1.3%"]],
-      social:[['BTC',28,56,'56/28'],['SOL',14,72,'72/14'],['ETH',22,58,'58/22'],['COIN',20,60,'60/20'],['CLSK',46,34,'34/46']],
-      scenario:[['Base case','<b class="good">+$ 1.8 M</b>'],['Hot CPI (+0.4% core)','<b class="dn">−$ 3.4 M · BTC-rate β</b>'],['Cold CPI (0.1%)','<b class="up">+$ 4.2 M</b>'],['BTC −15%','<b class="dn">−$ 6.1 M</b>'],['Alt −25%','<b class="dn">−$ 7.8 M</b>'],['Risk-off (VIX >30)','<b class="dn">−$ 9.0 M</b>']]
+      explainName:'AMD (long)',
+      explain:[
+        ["Quality",59,"0.59"],
+        ["Momentum",23,"0.23"],
+        ["Revisions",52,"0.52"],
+        ["Sentiment",99,"0.99"],
+        ["Macro fit",99,"0.99"]
+      ],
+      explainTxt:'Model attributes top rank to <b>AMD</b> at the 2026-10-12 close ($605.53): 21-day momentum 22.7%, consensus FY+1 revisions 0.89% 7d, analyst sell-side mix 44 buy / 11 hold / 0 sell. Beta to SPY 2.94.',
+      divergence:[
+        ["<b>AMD</b> — research long (score 0.71) · flow 1↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>PLTR</b> — research long (score 0.66) · flow 2↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>TER</b> — research long (score 0.67) · flow 15↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>GEV</b> — research long (score 0.66) · flow 1↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>AVGO</b> — research long (score 0.66) · flow flat revisions","pill orange","mixed"],
+        ["<b>MU</b> — research long (score 0.65) · flow 26↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>COF</b> — research long (score 0.62) · flow 2↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>STX</b> — research long (score 0.61) · flow 15↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>WDC</b> — research long (score 0.59) · flow 9↑ / 0↓ revisions","pill good","aligned"],
+        ["<b>APP</b> — research long (score 0.56) · flow 1↑ / 0↓ revisions","pill good","aligned"]
+      ],
+      etf:[
+        ["PLTR",86,"","+8.6%"],
+        ["COF",11,"","+1.1%"],
+        ["APP",23,"bad","-2.3%"],
+        ["GEV",24,"bad","-2.4%"],
+        ["AVGO",49,"bad","-4.9%"],
+        ["AMD",68,"bad","-6.8%"],
+        ["STX",73,"bad","-7.3%"],
+        ["WDC",74,"bad","-7.4%"],
+        ["MU",88,"bad","-8.8%"],
+        ["TER",100,"bad","-11.6%"]
+      ],
+      social:[
+        ["AMD",0,80,"80/0"],
+        ["PLTR",9,66,"66/9"],
+        ["TER",0,71,"71/0"],
+        ["GEV",0,81,"81/0"],
+        ["AVGO",0,94,"94/0"]
+      ],
+      scenario:[
+        ["Base case","<b class=\"good\">+$ 0.50 M</b>"],
+        ["Hot CPI (10Y +50bp · DXY +1% · VIX +5pt)","<b class=\"good\">+$ 1.55 M</b>"],
+        ["Cold CPI (10Y −30bp · VIX −3pt)","<b class=\"dn\">−$ 0.13 M</b>"],
+        ["Fed +25 surprise (10Y +25bp · DXY +0.8%)","<b class=\"good\">+$ 3.78 M</b>"],
+        ["10Y +50 bp pure","<b class=\"dn\">−$ 0.13 M</b>"],
+        ["Risk-off (VIX &gt;30 · DXY +2% · WTI −10%)","<b class=\"good\">+$ 10.42 M</b>"]
+      ]
     }
   };
   const marketData = {
@@ -1172,7 +1635,8 @@
     const d=panelData[fund]||panelData.alpha;
     const md=marketData[fund]||marketData.alpha;
     const mk=document.getElementById('macro-kpis');
-    if(mk) mk.innerHTML=md.macroKpis.map(k=>`<div class="kpi"><div class="k-lab">${k[0]}</div><div class="k-val">${k[1]}</div><div class="k-sub">${k[2]}</div></div>`).join('');
+    const macroKpiSrc=(window.__POINT_MACRO_EXTRAS__&&window.__POINT_MACRO_EXTRAS__.kpis)||md.macroKpis;
+    if(mk) mk.innerHTML=macroKpiSrc.map(k=>`<div class="kpi"><div class="k-lab">${k[0]}</div><div class="k-val ${k[3]||''}">${k[1]}</div><div class="k-sub">${k[2]}</div></div>`).join('');
     const elog=document.getElementById('eventlog');
     if(elog) elog.innerHTML=md.events.map(e=>`<li><span class="et">${e[0]}</span><span class="ea">${e[1]}</span><span class="em">${e[2]}</span></li>`).join('');
     const ir=document.getElementById('ir-letter');
