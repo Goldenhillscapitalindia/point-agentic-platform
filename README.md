@@ -77,6 +77,15 @@ After an ambiguous network failure, inspect OpenAI Storage before retrying.
 
 ### Data and verification
 
+Digital Assets Fund → Market Squad → Digital Assets includes CEX and DEX perpetual
+asset rankings below the existing cross-asset holdings bridge. These are a fixed
+14 October 2026 research snapshot, not a live feed or fund recommendations.
+`data/perpetual-markets.js` is the shared source for the rendered tables and the
+fund's trusted Digital chat context. It retains numeric USD volumes, sources,
+coverage and exclusions. Refresh both rankings and the snapshot timestamp together
+after researching a new window, then run `npm run build`. Other funds do not receive
+these rankings. The page's Sources & methodology disclosure explains the coverage.
+
 The platform and terminal share a fund roster but have separate datasets. Only Alpha has detailed terminal
 holdings; other terminal funds get their own headline figures. Positions are
 partial and some example figures conflict. Answers must identify conflicts,

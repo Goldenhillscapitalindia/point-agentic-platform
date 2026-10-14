@@ -28,6 +28,7 @@ const css = fs.readFileSync(r('styles.css'), 'utf8');
 const js  = fs.readFileSync(r('app.js'), 'utf8');
 app = app.replace('<link rel="stylesheet" href="styles.css">', () => '<style>\n' + css + '\n</style>');
 app = app.replace('<script src="app.js"></script>', () => '<script>\n' + js + '\n</script>');
+app = app.replace('<script src="data/perpetual-markets.js"></script>', () => '<script>\n' + fs.readFileSync(r('data/perpetual-markets.js'), 'utf8') + '\n</script>');
 
 // 2. Inline institutional.js into institutional.html -> self-contained terminal
 let inst = fs.readFileSync(r('institutional.html'), 'utf8');

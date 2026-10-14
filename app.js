@@ -1,6 +1,7 @@
 /* ============ Point — static app ============ */
 (function(){
   'use strict';
+  const perpetualMarkets = window.PointPerpetualMarkets;
 
   /* ---- view routing ---- */
   const items = document.querySelectorAll('[data-view]');
@@ -1013,6 +1014,21 @@
     vfill('earnings-tone', d.tone);
     vfill('macro-betas', d.betas);
     vfill('digital-bridge', d.bridge);
+    renderPerpetualMarkets(fund);
+  }
+
+  function renderPerpetualMarkets(fund){
+    const section=document.getElementById('digital-perpetual-markets');
+    section.hidden=fund!=='digital';
+    if(section.hidden) return;
+    document.getElementById('perp-snapshot-date').textContent=perpetualMarkets.asOfLabel;
+    ['cex','dex'].forEach(kind=>{
+      const body=document.getElementById('perp-'+kind+'-rows');
+      body.innerHTML=perpetualMarkets[kind].map(row=>{
+        const volume=row.volumeUsd>=1e9 ? '$'+(row.volumeUsd/1e9).toFixed(2)+'B' : '$'+(row.volumeUsd/1e6).toFixed(1)+'M';
+        return `<tr><td class="perp-rank">${row.rank}</td><td><a class="perp-asset" href="${row.source}" target="_blank" rel="noopener noreferrer">${row.name}<span>${row.symbol} ↗</span></a></td><td><span class="pill ghost">${row.assetType}</span></td><td class="perp-volume">${volume}</td><td class="perp-venues">${row.venues.join(' · ')}</td></tr>`;
+      }).join('');
+    });
   }
 
   /* ---- per-fund secondary panels ---- */
@@ -2031,7 +2047,8 @@
     const m=t.replace(/[,$%×σ]/g,'').replace(/−/g,'-').match(/-?\d+(\.\d+)?/);
     return (m && /^[\s$+\-−]*[\d.,]/.test(t)) ? parseFloat(m[0]) : t.toLowerCase();
   }
-  document.querySelectorAll('.tbl').forEach(table=>{
+  // Research rankings retain their published volume order and rank numbers.
+  document.querySelectorAll('.tbl:not(.perp-table)').forEach(table=>{
     const ths=table.querySelectorAll('thead th'); if(!ths.length) return;
     ths.forEach((th,i)=>{
       th.classList.add('th-sort');
@@ -2574,7 +2591,7 @@
         Flows:{crowding:table('flows-crowding',tables.crowding),divergence:panels.divergence,etf:panels.etf},
         Earnings:{tone:table('earnings-tone',tables.tone),social:panels.social},
         Macro:{metrics:marketData[id].macroKpis,betas:table('macro-betas',tables.betas),scenarios:panels.scenario},
-        Digital:{bridge:table('digital-bridge',tables.bridge)},
+        Digital:{bridge:table('digital-bridge',tables.bridge),...(id==='digital'?{perpetualMarkets}: {})},
         Reporting:{letter:marketData[id].irLetter},
         Briefs:{decisionBriefs:decisionBriefs[id],morningBrief:briefs[id],actionCards:cardsByFund[id],activity:fundExtra[id].feed}
       }});
