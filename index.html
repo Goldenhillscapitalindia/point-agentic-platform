@@ -1143,6 +1143,41 @@
           <li><b>24h impact</b> — sample dollar change on that line for the move shown in the tiles.</li>
         </ul>
       </div></details>
+      <section id="digital-perpetual-markets" class="perp-markets" aria-labelledby="perp-markets-title" hidden>
+        <div class="perp-intro">
+          <div class="eyebrow">Market research · Perpetual futures</div>
+          <h2 id="perp-markets-title" class="h2">Where perpetuals are trading</h2>
+          <p>Assets ranked by reported 24-hour USD trading volume, separately for centralized and decentralized venues. Includes crypto, stocks, ETFs, commodities and indices.</p>
+          <div class="perp-meta"><span class="chip ghost">Research snapshot · Not live</span><time id="perp-snapshot-date" datetime="2026-10-14T07:05:05Z"></time></div>
+          <p class="perp-context">Market activity for the fund's research universe; these rankings do not represent fund holdings or buy recommendations.</p>
+        </div>
+        <article class="card">
+          <div class="card-head perp-card-head"><h3 class="card-title" id="perp-cex-title">Top 10 Centralized Exchange Perpetual Futures</h3><span class="chip ghost">CEX · 13 venues</span></div>
+          <p class="perp-description">Company-operated exchanges. Volume is summed across the covered centralized venues for each asset.</p>
+          <div class="tbl-wrap" role="region" aria-labelledby="perp-cex-title" tabindex="0">
+            <table class="tbl perp-table" aria-labelledby="perp-cex-title">
+              <thead><tr><th scope="col">Rank</th><th scope="col">Underlying asset</th><th scope="col">Asset type</th><th scope="col" class="perp-volume">24h volume · USD</th><th scope="col">Leading venues</th></tr></thead>
+              <tbody id="perp-cex-rows"></tbody>
+            </table>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-head perp-card-head"><h3 class="card-title" id="perp-dex-title">Top 10 Decentralized Exchange Perpetual Futures</h3><span class="chip ghost">DEX · 29 venue feeds</span></div>
+          <p class="perp-description">Decentralized and hybrid non-custodial venues. Their degree of decentralization varies.</p>
+          <div class="tbl-wrap" role="region" aria-labelledby="perp-dex-title" tabindex="0">
+            <table class="tbl perp-table" aria-labelledby="perp-dex-title">
+              <thead><tr><th scope="col">Rank</th><th scope="col">Underlying asset</th><th scope="col">Asset type</th><th scope="col" class="perp-volume">24h volume · USD</th><th scope="col">Leading venues</th></tr></thead>
+              <tbody id="perp-dex-rows"></tbody>
+            </table>
+          </div>
+        </article>
+        <details class="card perp-methodology">
+          <summary>Sources &amp; methodology</summary>
+          <p>Source: <a href="https://loris.tools/markets/perps" target="_blank" rel="noopener noreferrer">Loris Tools exchange-level market data ↗</a>. Each asset links to its market breakdown. B = billion; M = million. Leading venues are the three largest contributors in the snapshot, not the complete listing.</p>
+          <p>The source's 50 largest asset markets were screened, with volume summed separately across 13 CEX and 29 decentralized or hybrid venue feeds. Rankings describe the covered markets, not every exchange worldwide. Volumes are reported, not independently audited; source symbol groupings are retained.</p>
+          <p>Coinbase US perpetual-style contracts with expiry and QFEX, whose classification was not independently confirmed, were excluded. Options and ordinary expiring futures are outside this comparison. Trade[XYZ] and EntropyIO are separate Hyperliquid market deployments; their volume is counted separately from its core markets.</p>
+        </details>
+      </section>
     </section>
 
     <!-- ======== VIEW: MCP ======== -->
@@ -1355,6 +1390,7 @@
 
 <script src="chat-core.js"></script>
 <script src="chat-ui.js"></script>
+<script src="data/perpetual-markets.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

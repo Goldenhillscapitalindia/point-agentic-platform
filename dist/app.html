@@ -371,6 +371,24 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .tbl tbody tr.tbl-sep td{color:var(--txt-3);font-weight:400;letter-spacing:.4em;text-align:center;padding:6px 12px;background:var(--panel-2)}
 .tbl tbody tr.tbl-sep:hover{background:var(--panel-2)}
 
+/* Fund-specific perpetual market research */
+.perp-markets[hidden]{display:none}
+.perp-intro{margin:30px 0 20px}
+.perp-intro .h2{margin:6px 0 10px}
+.perp-intro p,.perp-description,.perp-methodology p{color:var(--txt-2);font-size:13px;line-height:1.6}
+.perp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:14px;font-size:12px;color:var(--txt-2)}
+.perp-intro .perp-context{font-size:12px;color:var(--txt-3);margin-top:10px}
+.perp-card-head{flex-wrap:wrap;justify-content:space-between}
+.perp-description{margin:0 0 14px}
+.perp-asset{display:flex;flex-direction:column;gap:4px;color:var(--txt);text-decoration:none;font-weight:600}
+.perp-asset span{color:var(--txt-3);font-family:var(--mono);font-size:11px;font-weight:400}
+.perp-asset:hover,.perp-methodology a{color:var(--orange);text-decoration:underline}
+.perp-table .perp-volume{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.perp-table .perp-rank{color:var(--txt-3);width:48px}
+.perp-table .perp-venues{white-space:normal;min-width:190px;line-height:1.6}
+.perp-methodology summary{cursor:pointer;font-size:13px;font-weight:600}
+.perp-markets a:focus-visible,.perp-markets summary:focus-visible,.perp-markets .tbl-wrap:focus-visible{outline:2px solid var(--orange);outline-offset:4px}
+
 /* kpi */
 .kpi{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
 .k-lab{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--txt-3)}
@@ -2317,6 +2335,41 @@ window.__POINT_AI_BRIEFS__ = {"research":"\n    <div class=\"memo\">\n      <div
           <li><b>24h impact</b> — sample dollar change on that line for the move shown in the tiles.</li>
         </ul>
       </div></details>
+      <section id="digital-perpetual-markets" class="perp-markets" aria-labelledby="perp-markets-title" hidden>
+        <div class="perp-intro">
+          <div class="eyebrow">Market research · Perpetual futures</div>
+          <h2 id="perp-markets-title" class="h2">Where perpetuals are trading</h2>
+          <p>Assets ranked by reported 24-hour USD trading volume, separately for centralized and decentralized venues. Includes crypto, stocks, ETFs, commodities and indices.</p>
+          <div class="perp-meta"><span class="chip ghost">Research snapshot · Not live</span><time id="perp-snapshot-date" datetime="2026-10-14T07:05:05Z"></time></div>
+          <p class="perp-context">Market activity for the fund's research universe; these rankings do not represent fund holdings or buy recommendations.</p>
+        </div>
+        <article class="card">
+          <div class="card-head perp-card-head"><h3 class="card-title" id="perp-cex-title">Top 10 Centralized Exchange Perpetual Futures</h3><span class="chip ghost">CEX · 13 venues</span></div>
+          <p class="perp-description">Company-operated exchanges. Volume is summed across the covered centralized venues for each asset.</p>
+          <div class="tbl-wrap" role="region" aria-labelledby="perp-cex-title" tabindex="0">
+            <table class="tbl perp-table" aria-labelledby="perp-cex-title">
+              <thead><tr><th scope="col">Rank</th><th scope="col">Underlying asset</th><th scope="col">Asset type</th><th scope="col" class="perp-volume">24h volume · USD</th><th scope="col">Leading venues</th></tr></thead>
+              <tbody id="perp-cex-rows"></tbody>
+            </table>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-head perp-card-head"><h3 class="card-title" id="perp-dex-title">Top 10 Decentralized Exchange Perpetual Futures</h3><span class="chip ghost">DEX · 29 venue feeds</span></div>
+          <p class="perp-description">Decentralized and hybrid non-custodial venues. Their degree of decentralization varies.</p>
+          <div class="tbl-wrap" role="region" aria-labelledby="perp-dex-title" tabindex="0">
+            <table class="tbl perp-table" aria-labelledby="perp-dex-title">
+              <thead><tr><th scope="col">Rank</th><th scope="col">Underlying asset</th><th scope="col">Asset type</th><th scope="col" class="perp-volume">24h volume · USD</th><th scope="col">Leading venues</th></tr></thead>
+              <tbody id="perp-dex-rows"></tbody>
+            </table>
+          </div>
+        </article>
+        <details class="card perp-methodology">
+          <summary>Sources &amp; methodology</summary>
+          <p>Source: <a href="https://loris.tools/markets/perps" target="_blank" rel="noopener noreferrer">Loris Tools exchange-level market data ↗</a>. Each asset links to its market breakdown. B = billion; M = million. Leading venues are the three largest contributors in the snapshot, not the complete listing.</p>
+          <p>The source's 50 largest asset markets were screened, with volume summed separately across 13 CEX and 29 decentralized or hybrid venue feeds. Rankings describe the covered markets, not every exchange worldwide. Volumes are reported, not independently audited; source symbol groupings are retained.</p>
+          <p>Coinbase US perpetual-style contracts with expiry and QFEX, whose classification was not independently confirmed, were excluded. Options and ordinary expiring futures are outside this comparison. Trade[XYZ] and EntropyIO are separate Hyperliquid market deployments; their volume is counted separately from its core markets.</p>
+        </details>
+      </section>
     </section>
 
     <!-- ======== VIEW: MCP ======== -->
@@ -2768,9 +2821,348 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
 
 </script>
 <script>
+// Researched market snapshot; update explicitly, never presented as a live feed.
+(function(root){
+  const snapshot = {
+  "asOf": "2026-10-14T07:05:05Z",
+  "asOfLabel": "14 Oct 2026, 12:35 p.m. IST / 07:05 UTC",
+  "metric": "Reported rolling 24-hour perpetual trading volume in USD",
+  "coverage": {
+    "cex": 13,
+    "dex": 29
+  },
+  "source": "https://loris.tools/markets/perps",
+  "methodology": {
+    "metric": "Reported rolling 24-hour USD notional perpetual volume",
+    "source": "https://loris.tools/markets/perps",
+    "candidate_screen": "50 largest symbols from https://loris.tools/volume/coin",
+    "excluded": {
+      "coinbaseus": "Perpetual-style contracts with expiry",
+      "qfex": "Classification not independently confirmed"
+    },
+    "centralized_venues": [
+      "binance",
+      "bingx",
+      "bitget",
+      "bybit",
+      "cryptocom",
+      "deribit",
+      "gateio",
+      "huobi",
+      "kalshi",
+      "kucoin",
+      "mexc",
+      "okx",
+      "phemex"
+    ],
+    "decentralized_or_hybrid_non_custodial_venues": [
+      "arcus",
+      "aster",
+      "bluefin",
+      "bullet",
+      "decibel",
+      "edgex",
+      "entropyio",
+      "extended",
+      "grvt",
+      "hibachi",
+      "hyperliquid",
+      "kinetiq",
+      "lighter",
+      "nado",
+      "ondo",
+      "ostium",
+      "pacifica",
+      "paradex",
+      "phoenix",
+      "polymarket",
+      "reya",
+      "rhlighter",
+      "risex",
+      "tradexyz",
+      "txflow",
+      "variational",
+      "vest",
+      "woofipro",
+      "zo"
+    ],
+    "limitations": "Covered venues only, not exhaustive global coverage. Reported volumes are not independently audited. Source symbol normalization retained."
+  },
+  "cex": [
+    {
+      "rank": 1,
+      "symbol": "BTC",
+      "name": "Bitcoin",
+      "assetType": "Crypto",
+      "volumeUsd": 39233745987.1861,
+      "venues": [
+        "Binance",
+        "Deribit",
+        "OKX"
+      ],
+      "source": "https://loris.tools/markets/perps/btc"
+    },
+    {
+      "rank": 2,
+      "symbol": "ETH",
+      "name": "Ether",
+      "assetType": "Crypto",
+      "volumeUsd": 26134879977.10298,
+      "venues": [
+        "Binance",
+        "OKX",
+        "Gate"
+      ],
+      "source": "https://loris.tools/markets/perps/eth"
+    },
+    {
+      "rank": 3,
+      "symbol": "SOL",
+      "name": "Solana",
+      "assetType": "Crypto",
+      "volumeUsd": 5111097691.4991455,
+      "venues": [
+        "Binance",
+        "OKX",
+        "MEXC"
+      ],
+      "source": "https://loris.tools/markets/perps/sol"
+    },
+    {
+      "rank": 4,
+      "symbol": "ZEC",
+      "name": "Zcash",
+      "assetType": "Crypto",
+      "volumeUsd": 5021349019.51625,
+      "venues": [
+        "Binance",
+        "MEXC",
+        "OKX"
+      ],
+      "source": "https://loris.tools/markets/perps/zec"
+    },
+    {
+      "rank": 5,
+      "symbol": "XAU",
+      "name": "Gold",
+      "assetType": "Commodity",
+      "volumeUsd": 3949013943.1765003,
+      "venues": [
+        "Binance",
+        "BingX",
+        "Gate"
+      ],
+      "source": "https://loris.tools/markets/perps/xau"
+    },
+    {
+      "rank": 6,
+      "symbol": "SOXL",
+      "name": "SOXL",
+      "assetType": "Semiconductor ETF",
+      "volumeUsd": 3823053151.2454,
+      "venues": [
+        "Binance",
+        "OKX",
+        "Bybit"
+      ],
+      "source": "https://loris.tools/markets/perps/soxl"
+    },
+    {
+      "rank": 7,
+      "symbol": "SNDK",
+      "name": "Sandisk",
+      "assetType": "Stock",
+      "volumeUsd": 3208446824.84439,
+      "venues": [
+        "Binance",
+        "OKX",
+        "Bitget"
+      ],
+      "source": "https://loris.tools/markets/perps/sndk"
+    },
+    {
+      "rank": 8,
+      "symbol": "XRP",
+      "name": "XRP",
+      "assetType": "Crypto",
+      "volumeUsd": 2220088966.9522605,
+      "venues": [
+        "MEXC",
+        "Binance",
+        "Bybit"
+      ],
+      "source": "https://loris.tools/markets/perps/xrp"
+    },
+    {
+      "rank": 9,
+      "symbol": "NEAR",
+      "name": "NEAR",
+      "assetType": "Crypto",
+      "volumeUsd": 1990716780.2579148,
+      "venues": [
+        "Binance",
+        "Bybit",
+        "OKX"
+      ],
+      "source": "https://loris.tools/markets/perps/near"
+    },
+    {
+      "rank": 10,
+      "symbol": "SKHX",
+      "name": "SK Hynix",
+      "assetType": "Stock-linked market",
+      "volumeUsd": 1625364353.10716,
+      "venues": [
+        "Binance",
+        "OKX",
+        "MEXC"
+      ],
+      "source": "https://loris.tools/markets/perps/skhx"
+    }
+  ],
+  "dex": [
+    {
+      "rank": 1,
+      "symbol": "BTC",
+      "name": "Bitcoin",
+      "assetType": "Crypto",
+      "volumeUsd": 4897780621.861482,
+      "venues": [
+        "Hyperliquid",
+        "Lighter",
+        "Pacifica"
+      ],
+      "source": "https://loris.tools/markets/perps/btc"
+    },
+    {
+      "rank": 2,
+      "symbol": "ETH",
+      "name": "Ether",
+      "assetType": "Crypto",
+      "volumeUsd": 2488715925.3375764,
+      "venues": [
+        "Hyperliquid",
+        "Lighter",
+        "Variational"
+      ],
+      "source": "https://loris.tools/markets/perps/eth"
+    },
+    {
+      "rank": 3,
+      "symbol": "NASDAQ100",
+      "name": "Nasdaq-100",
+      "assetType": "Equity index",
+      "volumeUsd": 1212187870.210736,
+      "venues": [
+        "Variational",
+        "Lighter",
+        "Ondo Perps"
+      ],
+      "source": "https://loris.tools/markets/perps/nasdaq100"
+    },
+    {
+      "rank": 4,
+      "symbol": "SOL",
+      "name": "Solana",
+      "assetType": "Crypto",
+      "volumeUsd": 641695676.1615753,
+      "venues": [
+        "Hyperliquid",
+        "EdgeX",
+        "Pacifica"
+      ],
+      "source": "https://loris.tools/markets/perps/sol"
+    },
+    {
+      "rank": 5,
+      "symbol": "SP500",
+      "name": "S&P 500",
+      "assetType": "Equity index",
+      "volumeUsd": 626699911.3061547,
+      "venues": [
+        "Variational",
+        "Trade[XYZ]",
+        "Ondo Perps"
+      ],
+      "source": "https://loris.tools/markets/perps/sp500"
+    },
+    {
+      "rank": 6,
+      "symbol": "XAU",
+      "name": "Gold",
+      "assetType": "Commodity",
+      "volumeUsd": 605125679.4188439,
+      "venues": [
+        "Aster",
+        "Ondo Perps",
+        "EdgeX"
+      ],
+      "source": "https://loris.tools/markets/perps/xau"
+    },
+    {
+      "rank": 7,
+      "symbol": "SNDK",
+      "name": "Sandisk",
+      "assetType": "Stock",
+      "volumeUsd": 522567499.8657938,
+      "venues": [
+        "Trade[XYZ]",
+        "Aster",
+        "EntropyIO"
+      ],
+      "source": "https://loris.tools/markets/perps/sndk"
+    },
+    {
+      "rank": 8,
+      "symbol": "HYPE",
+      "name": "Hyperliquid token",
+      "assetType": "Crypto",
+      "volumeUsd": 475145181.1890703,
+      "venues": [
+        "Hyperliquid",
+        "Variational",
+        "GRVT"
+      ],
+      "source": "https://loris.tools/markets/perps/hype"
+    },
+    {
+      "rank": 9,
+      "symbol": "ZEC",
+      "name": "Zcash",
+      "assetType": "Crypto",
+      "volumeUsd": 394899162.656095,
+      "venues": [
+        "Hyperliquid",
+        "Aster",
+        "Lighter"
+      ],
+      "source": "https://loris.tools/markets/perps/zec"
+    },
+    {
+      "rank": 10,
+      "symbol": "SKHX",
+      "name": "SK Hynix",
+      "assetType": "Stock-linked market",
+      "volumeUsd": 392669622.5692692,
+      "venues": [
+        "Trade[XYZ]",
+        "Aster",
+        "Lighter"
+      ],
+      "source": "https://loris.tools/markets/perps/skhx"
+    }
+  ]
+};
+  if(typeof module === "object" && module.exports) module.exports=snapshot;
+  else root.PointPerpetualMarkets=snapshot;
+})(typeof window !== "undefined" ? window : globalThis);
+
+</script>
+<script>
 /* ============ Point — static app ============ */
 (function(){
   'use strict';
+  const perpetualMarkets = window.PointPerpetualMarkets;
 
   /* ---- view routing ---- */
   const items = document.querySelectorAll('[data-view]');
@@ -3838,6 +4230,7 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
     vfill('earnings-tone', d.tone);
     vfill('macro-betas', d.betas);
     vfill('digital-bridge', d.bridge);
+    renderPerpetualMarkets(fund);
     // 10-name universe — all 4 Market-Squad dashboards (shared data, per-fund lens).
     const ed=(typeof earningsData!=='undefined')?(earningsData[fund]||earningsData.alpha):null;
     if(ed){
@@ -4083,6 +4476,20 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
         ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 212"],"1","<span class=\"pill good\">pos</span>"]]
     }
   };
+
+  function renderPerpetualMarkets(fund){
+    const section=document.getElementById('digital-perpetual-markets');
+    section.hidden=fund!=='digital';
+    if(section.hidden) return;
+    document.getElementById('perp-snapshot-date').textContent=perpetualMarkets.asOfLabel;
+    ['cex','dex'].forEach(kind=>{
+      const body=document.getElementById('perp-'+kind+'-rows');
+      body.innerHTML=perpetualMarkets[kind].map(row=>{
+        const volume=row.volumeUsd>=1e9 ? '$'+(row.volumeUsd/1e9).toFixed(2)+'B' : '$'+(row.volumeUsd/1e6).toFixed(1)+'M';
+        return `<tr><td class="perp-rank">${row.rank}</td><td><a class="perp-asset" href="${row.source}" target="_blank" rel="noopener noreferrer">${row.name}<span>${row.symbol} ↗</span></a></td><td><span class="pill ghost">${row.assetType}</span></td><td class="perp-volume">${volume}</td><td class="perp-venues">${row.venues.join(' · ')}</td></tr>`;
+      }).join('');
+    });
+  }
 
   /* ---- per-fund secondary panels ---- */
   const panelData = {
@@ -5265,7 +5672,8 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
     const m=t.replace(/[,$%×σ]/g,'').replace(/−/g,'-').match(/-?\d+(\.\d+)?/);
     return (m && /^[\s$+\-−]*[\d.,]/.test(t)) ? parseFloat(m[0]) : t.toLowerCase();
   }
-  document.querySelectorAll('.tbl').forEach(table=>{
+  // Research rankings retain their published volume order and rank numbers.
+  document.querySelectorAll('.tbl:not(.perp-table)').forEach(table=>{
     const ths=table.querySelectorAll('thead th'); if(!ths.length) return;
     ths.forEach((th,i)=>{
       th.classList.add('th-sort');
@@ -5808,7 +6216,7 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
         Flows:{crowding:table('flows-crowding',tables.crowding),divergence:panels.divergence,etf:panels.etf},
         Earnings:{tone:table('earnings-tone',tables.tone),social:panels.social},
         Macro:{metrics:marketData[id].macroKpis,betas:table('macro-betas',tables.betas),scenarios:panels.scenario},
-        Digital:{bridge:table('digital-bridge',tables.bridge)},
+        Digital:{bridge:table('digital-bridge',tables.bridge),...(id==='digital'?{perpetualMarkets}: {})},
         Reporting:{letter:marketData[id].irLetter},
         Briefs:{decisionBriefs:decisionBriefs[id],morningBrief:briefs[id],actionCards:cardsByFund[id],activity:fundExtra[id].feed}
       }});

@@ -29,7 +29,7 @@ function generate() {
       .map(m => ({textContent: core.clean(m[1]).trim()}));
   }
   const names = ['fundDetail','fundExtra','fundCards','decisionBriefs','viewTables','panelData','marketData','cards','cardsByFund','briefs','funds'];
-  const context = vm.createContext({PointChatCore:core, document:{getElementById(id) {
+  const context = vm.createContext({PointChatCore:core, perpetualMarkets:require('./data/perpetual-markets'), document:{getElementById(id) {
     if (!columns[id]?.length) throw new Error('Missing table headings: ' + id);
     return {closest:()=>({querySelectorAll:()=>columns[id]})};
   }}});

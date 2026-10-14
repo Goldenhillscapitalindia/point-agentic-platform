@@ -361,6 +361,24 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .tbl tbody tr.tbl-sep td{color:var(--txt-3);font-weight:400;letter-spacing:.4em;text-align:center;padding:6px 12px;background:var(--panel-2)}
 .tbl tbody tr.tbl-sep:hover{background:var(--panel-2)}
 
+/* Fund-specific perpetual market research */
+.perp-markets[hidden]{display:none}
+.perp-intro{margin:30px 0 20px}
+.perp-intro .h2{margin:6px 0 10px}
+.perp-intro p,.perp-description,.perp-methodology p{color:var(--txt-2);font-size:13px;line-height:1.6}
+.perp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:14px;font-size:12px;color:var(--txt-2)}
+.perp-intro .perp-context{font-size:12px;color:var(--txt-3);margin-top:10px}
+.perp-card-head{flex-wrap:wrap;justify-content:space-between}
+.perp-description{margin:0 0 14px}
+.perp-asset{display:flex;flex-direction:column;gap:4px;color:var(--txt);text-decoration:none;font-weight:600}
+.perp-asset span{color:var(--txt-3);font-family:var(--mono);font-size:11px;font-weight:400}
+.perp-asset:hover,.perp-methodology a{color:var(--orange);text-decoration:underline}
+.perp-table .perp-volume{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.perp-table .perp-rank{color:var(--txt-3);width:48px}
+.perp-table .perp-venues{white-space:normal;min-width:190px;line-height:1.6}
+.perp-methodology summary{cursor:pointer;font-size:13px;font-weight:600}
+.perp-markets a:focus-visible,.perp-markets summary:focus-visible,.perp-markets .tbl-wrap:focus-visible{outline:2px solid var(--orange);outline-offset:4px}
+
 /* kpi */
 .kpi{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
 .k-lab{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--txt-3)}
