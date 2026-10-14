@@ -153,6 +153,8 @@
 
     <!-- ======== VIEW: DASHBOARD ======== -->
     <section class="view active" id="view-dashboard">
+      <!-- SECTION 1 · GOLD — Greeting + today's priority -->
+      <div class="section-band gold"><div class="section-inner">
       <div class="hero">
         <div>
           <div class="eyebrow">Monday · October 7, 2026 · 06:12 ET</div>
@@ -185,17 +187,21 @@
           </div>
         </div>
       </div>
-
-      <!-- Critical card at top -->
+      <div class="section-head">
+        <div><div class="section-eyebrow">Today's priority</div><div class="section-title">Critical action card</div></div>
+        <div class="section-note">Signed by Risk & Guideline Agent · audit logged</div>
+      </div>
       <div class="section-row">
         <div class="card critical clickable" id="top-card" data-card="AC-20261007-003"><!-- rendered by JS --></div>
       </div>
+      </div></div>
 
-      <!-- 10 agent tiles -->
-      <div class="grid-head">
+      <!-- Agents -->
+      <div class="section-band slate"><div class="section-inner">
+      <div class="section-head">
         <div>
-          <div class="h-eyebrow">The Agent Team</div>
-          <h2 class="h2">Ten specialist agents · one coordinated book</h2>
+          <div class="section-eyebrow">The agent team</div>
+          <div class="section-title">Ten specialist agents · one coordinated book</div>
         </div>
         <div class="legend">
           <span><i class="sq red"></i>Portfolio Squad</span>
@@ -270,7 +276,14 @@
         </a>
       </div>
 
-      <!-- Three-up panels -->
+      </div></div>
+
+      <!-- Market pulse + live tape -->
+      <div class="section-band gold"><div class="section-inner">
+      <div class="section-head">
+        <div><div class="section-eyebrow">Market pulse</div><div class="section-title">PnL · Exposure · Regime</div></div>
+        <div class="section-note">Live snapshot · 06:12 ET</div>
+      </div>
       <div class="grid-3">
         <div class="card">
           <div class="card-head"><h3 class="card-title">PnL Attribution · Day</h3><span class="chip ghost" id="pnl-ytd">YTD +18.4%</span></div>
@@ -305,7 +318,10 @@
         </div>
       </div>
 
-      <!-- Action feed + Digital assets strip -->
+      <div class="section-head">
+        <div><div class="section-eyebrow">Live tape</div><div class="section-title">Activity feed · 24/7 tokenized market</div></div>
+        <div class="section-note">Ranked by $ at risk</div>
+      </div>
       <div class="grid-2">
         <div class="card">
           <div class="card-head"><h3 class="card-title">Live Action Feed</h3><span class="chip ghost">Point Conductor · ranked by $ at risk</span></div>
@@ -329,10 +345,17 @@
         </div>
       </div>
 
-      <!-- Positions table preview -->
+      </div></div>
+
+      <!-- SECTION 6 · SLATE — The book -->
+      <div class="section-band slate"><div class="section-inner">
+      <div class="section-head">
+        <div><div class="section-eyebrow">The book</div><div class="section-title">Top positions</div></div>
+        <div class="section-note" id="section-pos-note">38 of 142 shown</div>
+      </div>
       <div class="card">
         <div class="card-head">
-          <h3 class="card-title">Top positions</h3>
+          <h3 class="card-title">Positions overview</h3>
           <span class="chip ghost" id="pos-count">38 of 142 shown</span>
           <span class="spacer"></span>
           <div class="seg">
@@ -354,6 +377,7 @@
           </table>
         </div>
       </div>
+      </div></div>
     </section>
 
     <!-- ======== VIEW: MORNING BRIEF ======== -->
@@ -822,16 +846,16 @@
         <table class="tbl">
           <thead><tr><th>Rank</th><th>Ticker</th><th>Score</th><th>Quality</th><th>Momentum</th><th>Revisions</th><th>Sentiment</th><th>1d range</th><th>5d range</th><th>Thesis fit</th></tr></thead>
           <tbody id="research-universe">
-            <tr><td>1</td><td>AMD</td><td class="good">0.68</td><td>70</td><td>↑↑</td><td>+1</td><td>pos</td><td>586.5–601.8</td><td>586.5–658.5</td><td>fit</td></tr>
-            <tr><td>2</td><td>PLTR</td><td class="good">0.68</td><td>71</td><td>↑↑</td><td>+2</td><td>pos</td><td>206.1–212.9</td><td>190.1–212.9</td><td>fit</td></tr>
-            <tr><td>3</td><td>MU</td><td class="good">0.64</td><td>64</td><td>flat</td><td>+26</td><td>pos</td><td>978.5–1002.7</td><td>978.5–1089.2</td><td>fit</td></tr>
-            <tr><td>4</td><td>AVGO</td><td class="good">0.63</td><td>63</td><td>↓</td><td>+0</td><td>pos</td><td>354.2–360.7</td><td>354.2–380.8</td><td>fit</td></tr>
-            <tr><td>5</td><td>GEV</td><td class="good">0.63</td><td>64</td><td>↑</td><td>+1</td><td>pos</td><td>991.0–1004.3</td><td>973.4–1052.8</td><td>fit</td></tr>
-            <tr><td>6</td><td>COF</td><td class="good">0.63</td><td>60</td><td>↓</td><td>+2</td><td>pos</td><td>199.2–202.4</td><td>193.0–202.4</td><td>fit</td></tr>
-            <tr><td>7</td><td>TER</td><td class="good">0.60</td><td>60</td><td>flat</td><td>+15</td><td>pos</td><td>381.7–394.7</td><td>381.7–448.0</td><td>fit</td></tr>
-            <tr><td>8</td><td>STX</td><td class="good">0.60</td><td>59</td><td>↓↓</td><td>+15</td><td>pos</td><td>750.7–770.0</td><td>750.7–863.5</td><td>fit</td></tr>
-            <tr><td>9</td><td>WDC</td><td class="ghost">0.58</td><td>55</td><td>↓↓</td><td>+9</td><td>pos</td><td>385.9–392.6</td><td>385.9–430.3</td><td>fit</td></tr>
-            <tr><td>10</td><td>APP</td><td class="ghost">0.57</td><td>54</td><td>↓↓</td><td>+1</td><td>pos</td><td>270.1–283.7</td><td>269.4–283.8</td><td>fit</td></tr>
+            <tr><td>1</td><td>AMD</td><td class="good">0.71</td><td>73</td><td>↑↑</td><td>+1</td><td>pos</td><td>570.6–606.2</td><td>570.6–648.5</td><td>strong</td></tr>
+            <tr><td>2</td><td>TER</td><td class="good">0.67</td><td>68</td><td>↑↑</td><td>+15</td><td>pos</td><td>362.5–381.1</td><td>362.5–416.7</td><td>fit</td></tr>
+            <tr><td>3</td><td>PLTR</td><td class="good">0.66</td><td>69</td><td>↑↑</td><td>+2</td><td>pos</td><td>206.0–210.9</td><td>190.1–212.9</td><td>fit</td></tr>
+            <tr><td>4</td><td>GEV</td><td class="good">0.66</td><td>70</td><td>↑↑</td><td>+1</td><td>pos</td><td>963.3–1006.0</td><td>963.3–1027.0</td><td>fit</td></tr>
+            <tr><td>5</td><td>AVGO</td><td class="good">0.66</td><td>66</td><td>↑</td><td>+0</td><td>pos</td><td>348.1–359.3</td><td>348.1–377.0</td><td>fit</td></tr>
+            <tr><td>6</td><td>MU</td><td class="good">0.65</td><td>65</td><td>↑</td><td>+26</td><td>pos</td><td>929.0–953.6</td><td>929.0–1089.2</td><td>fit</td></tr>
+            <tr><td>7</td><td>COF</td><td class="good">0.62</td><td>60</td><td>↓</td><td>+2</td><td>pos</td><td>194.4–202.5</td><td>193.0–202.5</td><td>fit</td></tr>
+            <tr><td>8</td><td>STX</td><td class="good">0.61</td><td>60</td><td>↓</td><td>+15</td><td>pos</td><td>693.9–749.0</td><td>693.9–810.8</td><td>fit</td></tr>
+            <tr><td>9</td><td>WDC</td><td class="ghost">0.59</td><td>57</td><td>↓↓</td><td>+9</td><td>pos</td><td>358.3–382.8</td><td>358.3–409.4</td><td>fit</td></tr>
+            <tr><td>10</td><td>APP</td><td class="ghost">0.56</td><td>53</td><td>↓↓</td><td>+1</td><td>pos</td><td>267.0–277.0</td><td>267.0–283.7</td><td>fit</td></tr>
           </tbody>
         </table>
         </div>
@@ -879,12 +903,12 @@
           <table class="tbl">
             <thead><tr><th>Ticker</th><th>Crowding</th><th>Inst. %</th><th>13F Δ · 30 Jun</th><th>Short % · 30 Sep</th><th>Put−call skew</th><th>Flag</th></tr></thead>
             <tbody id="flows-crowding">
-              <tr><td>PLTR</td><td>62</td><td>64.7%</td><td>+3.5 pts</td><td>2.6%</td><td>call-skew</td><td><span class="pill good">OK</span></td></tr>
               <tr><td>AMD</td><td>68</td><td>75.4%</td><td>0.42 pts</td><td>2.4%</td><td>call-skew</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>GEV</td><td>72</td><td>81.7%</td><td>0.13 pts</td><td>2.8%</td><td>flat</td><td><span class="pill orange">watch</span></td></tr>
-              <tr><td>MU</td><td>71</td><td>79.7%</td><td>0.24 pts</td><td>2.3%</td><td>flat</td><td><span class="pill orange">watch</span></td></tr>
-              <tr><td>TER</td><td class="warn">88</td><td>101.0%</td><td>0.20 pts</td><td>6.4%</td><td>flat</td><td><span class="pill red">crowded</span></td></tr>
+              <tr><td>PLTR</td><td>62</td><td>64.7%</td><td>+3.5 pts</td><td>2.6%</td><td>call-skew</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>TER</td><td class="warn">88</td><td>101.0%</td><td>0.20 pts</td><td>6.4%</td><td>call-skew</td><td><span class="pill red">crowded</span></td></tr>
+              <tr><td>GEV</td><td>72</td><td>81.7%</td><td>0.13 pts</td><td>2.8%</td><td>call-skew</td><td><span class="pill orange">watch</span></td></tr>
               <tr><td>AVGO</td><td>69</td><td>79.9%</td><td>+1.9 pts</td><td>1.2%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>MU</td><td>71</td><td>79.7%</td><td>0.24 pts</td><td>2.3%</td><td>flat</td><td><span class="pill orange">watch</span></td></tr>
               <tr><td>COF</td><td>76</td><td>89.3%</td><td>+1.2 pts</td><td>1.6%</td><td>flat</td><td><span class="pill orange">watch</span></td></tr>
               <tr><td>STX</td><td>75</td><td>84.6%</td><td>0.30 pts</td><td>3.5%</td><td>put-skew</td><td><span class="pill orange">watch</span></td></tr>
               <tr><td>WDC</td><td class="warn">80</td><td>88.8%</td><td>0.27 pts</td><td>5.5%</td><td>put-skew</td><td><span class="pill orange">watch</span></td></tr>
@@ -895,7 +919,7 @@
       </div>
       <div class="grid-2">
         <div class="card">
-          <div class="card-head"><h3 class="card-title">13F divergence vs research</h3><span class="chip ghost">largest holder move · 30 Jun</span></div>
+          <div class="card-head"><h3 class="card-title">Research vs flow signal</h3><span class="chip ghost">top 10 · aligned / divergent</span></div>
           <ul class="div-list" id="flows-divergence">
             <li><div><b>FLNC</b> — research short · Siemens Pension Trust E.V. cut 7.0 pts of the co.</div><span class="pill good">aligned</span></li>
             <li><div><b>MOS</b> — research short · FMR cut 5.0 pts of the co.</div><span class="pill good">aligned</span></li>
@@ -906,7 +930,7 @@
           </ul>
         </div>
         <div class="card">
-          <div class="card-head"><h3 class="card-title">Sector tape · 5 sessions to 12 Oct</h3><span class="chip ghost">price change, not creations</span></div>
+          <div class="card-head"><h3 class="card-title">5-day price tape · top 10 names</h3><span class="chip ghost">to 12 Oct close</span></div>
           <div class="etf" id="flows-etf">
             <div class="etf-row"><span>SPY</span><div class="bar"><div class="fill" style="width:8%"></div></div><b>+0.4%</b></div>
             <div class="etf-row"><span>QQQ</span><div class="bar"><div class="fill bad" style="width:19%"></div></div><b class="dn">−1.3%</b></div>
