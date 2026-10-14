@@ -912,6 +912,221 @@ a.brand:hover{background:var(--panel)}
 .askp-input button:hover{background:var(--orange-2)}
 @media(max-width:560px){.askp{right:3vw;bottom:12px;height:84vh}}
 
+/* ---- Agentic AI view · shared shell ---- */
+.card.ai-view{border:1px solid rgba(212,164,43,.3);background:linear-gradient(180deg,rgba(212,164,43,.05),rgba(255,255,255,.015));padding:0}
+.ai-body{padding:0}
+
+/* ===== RESEARCH & ALPHA — Research memo ===== */
+.memo{padding:0}
+.memo-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:16px 22px 12px;border-bottom:1px solid rgba(255,255,255,.06);flex-wrap:wrap}
+.memo-stamp{font-size:10.5px;font-weight:700;letter-spacing:.14em;color:var(--gold-2);text-transform:uppercase}
+.memo-ref{font-size:12px;color:var(--muted);font-family:var(--mono,'JetBrains Mono',monospace)}
+.memo-verdict{padding:18px 22px;background:rgba(212,164,43,.06);border-bottom:1px solid rgba(212,164,43,.14);display:flex;gap:14px;align-items:flex-start}
+.verd-tag{flex:none;font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--gold-2);padding:4px 10px;border:1px solid rgba(212,164,43,.4);border-radius:4px}
+.verd-txt{font-family:var(--serif,'Fraunces',serif);font-size:16px;line-height:1.45;color:var(--txt)}
+.verd-txt b{color:var(--gold-2);font-weight:600}
+.memo-section{padding:16px 22px;border-bottom:1px solid rgba(255,255,255,.04)}
+.memo-footer{border-bottom:none}
+.memo-s-head{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.pick-tbl{width:100%;border-collapse:collapse;font-size:13px}
+.pick-tbl thead th{text-align:left;font-size:10.5px;font-weight:700;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;padding:0 10px 8px;border-bottom:1px solid rgba(255,255,255,.08)}
+.pick-tbl tbody td{padding:10px;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:middle}
+.pick-tbl tbody tr:last-child td{border-bottom:none}
+.pt-tick{font-weight:700;color:var(--txt);font-family:var(--sans)}
+.pt-rate{display:inline-block;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:4px;letter-spacing:.04em}
+.pt-rate.r-buy{background:rgba(78,201,120,.2);color:#7cd99a}
+.pt-rate.r-accum{background:rgba(212,164,43,.2);color:#e5c260}
+.pt-rate.r-hold{background:rgba(255,255,255,.06);color:var(--muted)}
+.pt-rate.r-red{background:rgba(232,96,59,.2);color:#f0876a}
+.pt-score{color:var(--gold-2);font-weight:600}
+.pt-px,.pt-tgt{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.5px}
+.pt-up{color:#7cd99a;font-size:11px}
+.pt-thesis{color:var(--muted);font-size:12px}
+.pt-cat{color:var(--txt);font-size:12px;white-space:nowrap;line-height:1.4}
+.pt-cat-kind{font-weight:600;color:var(--gold-2);font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+.pt-cat-when{color:var(--muted);font-size:11.5px;font-family:var(--mono,monospace)}
+.factor-bars{display:grid;gap:8px}
+.fbar{display:grid;grid-template-columns:110px 1fr auto;gap:12px;align-items:center;font-size:12.5px}
+.fbar-k{color:var(--muted);font-size:11.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase}
+.fbar-track{height:6px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden}
+.fbar-fill{height:100%;background:linear-gradient(90deg,rgba(212,164,43,.4),var(--gold-2));border-radius:3px}
+.fbar-v{color:var(--txt);font-size:11.5px}
+.memo-cat{font-size:13px;line-height:1.6;color:var(--muted)}
+.memo-cat b{color:var(--gold-2);font-weight:600}
+
+/* ===== FUND FLOWS — Positioning map ===== */
+.posmap{padding:0}
+.posmap-head{padding:16px 22px 14px;border-bottom:1px solid rgba(255,255,255,.06)}
+.pm-stamp{font-size:10.5px;font-weight:700;letter-spacing:.14em;color:var(--gold-2);text-transform:uppercase;margin-bottom:6px}
+.pm-sub{font-size:13px;color:var(--muted)}
+.pm-sub b{color:var(--txt);font-weight:600}
+.posmap-spectrum{padding:20px 22px 22px;border-bottom:1px solid rgba(255,255,255,.04)}
+.spec-zones,.spec-groups{display:flex;align-items:stretch}
+.spec-zone,.spec-group{min-width:0;text-align:center}
+.spec-zone{padding:6px 0 4px;box-sizing:border-box}
+.spec-zone b{display:block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.spec-zone span{display:block;margin-top:2px;font-size:10px;font-family:var(--mono,monospace);opacity:.8}
+.spec-zone.z-lonely{flex:55;color:#7cd99a}
+.spec-zone.z-balanced{flex:15;color:var(--txt)}
+.spec-zone.z-busy{flex:15;color:#e5c260}
+.spec-zone.z-crowded{flex:15;color:#f0876a}
+.spec-barwrap{position:relative;height:18px;margin:8px 0 0}
+.spec-grad{position:absolute;left:0;right:0;top:6px;height:6px;background:linear-gradient(90deg,#7cd99a 0 55%,rgba(255,255,255,.45) 55% 70%,#e5c260 70% 85%,#f0876a 85% 100%);border-radius:3px}
+.spec-dot{position:absolute;top:4px;width:10px;height:10px;border-radius:50%;transform:translateX(-50%);background:var(--panel,#1c1916);border:2px solid}
+.spec-dot.z-lonely{border-color:#7cd99a}
+.spec-dot.z-balanced{border-color:rgba(255,255,255,.7)}
+.spec-dot.z-busy{border-color:#e5c260}
+.spec-dot.z-crowded{border-color:#f0876a}
+.spec-axis{position:relative;height:16px;margin:2px 0 10px;font-size:10px;color:var(--muted);font-family:var(--mono,monospace)}
+.spec-axis span{position:absolute;top:0;transform:translateX(-50%)}
+.spec-axis span:first-child{transform:none}
+.spec-axis span:last-child{transform:translateX(-100%)}
+.spec-group{flex:55;display:flex;flex-direction:column;align-items:center;gap:4px;padding:2px 0 6px;box-sizing:border-box}
+.spec-group.z-balanced,.spec-group.z-busy,.spec-group.z-crowded{flex:15}
+.spec-name{font-size:11px;font-weight:700;padding:2px 6px;border-radius:4px;border:1px solid;white-space:nowrap;background:var(--panel-2,rgba(0,0,0,.35))}
+.spec-name.z-lonely{border-color:rgba(78,201,120,.5);color:#7cd99a}
+.spec-name.z-balanced{border-color:rgba(255,255,255,.2);color:var(--txt)}
+.spec-name.z-busy{border-color:rgba(212,164,43,.5);color:#e5c260}
+.spec-name.z-crowded{border-color:rgba(232,96,59,.5);color:#f0876a}
+.spec-empty{font-size:11px;color:var(--muted);font-style:italic}
+.posmap-grid{display:grid;grid-template-columns:1fr;gap:0;border-bottom:1px solid rgba(255,255,255,.04)}
+@media(min-width:720px){.posmap-grid{grid-template-columns:1fr 1fr}}
+.posmap-col{padding:16px 22px;border-right:1px solid rgba(255,255,255,.04)}
+.posmap-col:last-child{border-right:none}
+.pm-col-head{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--txt);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.pm-pill{font-size:9.5px;font-weight:600;padding:2px 8px;border-radius:10px;letter-spacing:.04em;text-transform:none}
+.pm-pill.red{background:rgba(232,96,59,.18);color:#f0876a}
+.pm-pill.green{background:rgba(78,201,120,.18);color:#7cd99a}
+.posmap-col ul{list-style:none;padding:0;margin:0;display:grid;gap:7px}
+.posmap-col ul li{padding:8px 10px;background:rgba(255,255,255,.025);border-radius:6px;font-size:12.5px;color:var(--muted);line-height:1.5}
+.posmap-col ul li b{color:var(--txt)}
+.pm-empty{color:var(--muted);font-size:12.5px;font-style:italic;margin:0}
+.posmap-alerts{padding:14px 22px;display:grid;gap:7px}
+.pm-alert{font-size:12px;color:var(--muted);line-height:1.5;padding:7px 10px;background:rgba(255,255,255,.02);border-radius:6px;border-left:2px solid rgba(212,164,43,.3)}
+.pm-alt-tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.08em;color:var(--gold-2);text-transform:uppercase;margin-right:8px;padding:1px 6px;background:rgba(212,164,43,.1);border-radius:3px}
+.pm-alert b{color:var(--txt)}
+
+/* ===== EARNINGS & SENTIMENT — Earnings playbook ===== */
+.ernplay{padding:0}
+.ernplay-head{padding:16px 22px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
+.ep-stamp{font-size:10.5px;font-weight:700;letter-spacing:.14em;color:var(--gold-2);text-transform:uppercase;margin-bottom:6px}
+.ep-sub{font-size:13px;color:var(--muted)}
+.ernplay-score{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04)}
+@media(min-width:720px){.ernplay-score{grid-template-columns:repeat(4,1fr)}}
+.ep-stat{background:var(--bg,rgba(0,0,0,.3));padding:14px 18px;text-align:left}
+.ep-stat-v{font-family:var(--serif,'Fraunces',serif);font-size:22px;font-weight:600;color:var(--gold-2);line-height:1.1}
+.ep-stat-k{font-size:9.5px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-top:4px}
+.ernplay-section{padding:16px 22px;border-bottom:1px solid rgba(255,255,255,.04)}
+.ernplay-section:last-child{border-bottom:none}
+.ep-s-head{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.ep-s-note{font-size:10.5px;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;font-style:italic}
+.ern-list{display:grid;gap:6px}
+.ern-row{display:grid;grid-template-columns:60px 1fr 1fr 1fr 1.5fr auto;gap:12px;align-items:center;padding:9px 12px;background:rgba(255,255,255,.025);border-radius:6px;font-size:12.5px}
+@media(max-width:720px){.ern-row{grid-template-columns:1fr auto;gap:6px}.ern-row>div:not(.ern-tick):not(.ern-plan){grid-column:1 / -1}}
+.ern-tick{font-weight:700;color:var(--txt);font-size:14px}
+.ern-when{display:flex;flex-direction:column}
+.ern-date{color:var(--txt);font-size:12px}
+.ern-tminus{color:var(--gold-2);font-size:10.5px;font-weight:600;letter-spacing:.04em}
+.ern-cons{display:flex;flex-direction:column}
+.ern-c-k{font-size:9.5px;color:var(--muted);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.ern-c-v{color:var(--txt);font-family:var(--mono,monospace);font-size:12px;margin-top:2px}
+.ern-whisp{color:var(--muted);font-size:11.5px;line-height:1.4}
+.ern-plan{font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:4px 10px;border-radius:4px;white-space:nowrap}
+.ern-plan.ern-long{background:rgba(78,201,120,.2);color:#7cd99a}
+.ern-plan.ern-tilt{background:rgba(78,201,120,.12);color:#9fd9b1}
+.ern-plan.ern-hedge{background:rgba(232,96,59,.2);color:#f0876a}
+.ern-plan.ern-flat{background:rgba(255,255,255,.06);color:var(--muted)}
+.ern-plan.ern-neutral{background:rgba(255,255,255,.04);color:var(--muted)}
+.ernplay-pattern p{margin:0 0 8px;color:var(--muted);font-size:13px;line-height:1.6}
+.ernplay-pattern p:last-child{margin-bottom:0}
+.ernplay-pattern b{color:var(--gold-2);font-weight:600}
+
+/* ===== MACRO & REGIME — Macro note ===== */
+.macronote{padding:0}
+.macronote-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 22px 14px;border-bottom:1px solid rgba(255,255,255,.06);flex-wrap:wrap}
+.mn-stamp{font-size:10.5px;font-weight:700;letter-spacing:.14em;color:var(--gold-2);text-transform:uppercase}
+.mn-regime{display:flex;align-items:center;gap:10px}
+.mn-light{width:11px;height:11px;border-radius:50%;flex:none}
+.mn-light.mn-green{background:#4ec978;box-shadow:0 0 10px rgba(78,201,120,.5)}
+.mn-light.mn-amber{background:#e5c260;box-shadow:0 0 10px rgba(212,164,43,.5)}
+.mn-light.mn-red{background:#f0876a;box-shadow:0 0 10px rgba(232,96,59,.5)}
+.mn-regime-label{font-weight:700;letter-spacing:.08em;font-size:13px;color:var(--txt)}
+.mn-regime-desc{color:var(--muted);font-size:12.5px;font-family:var(--mono,monospace)}
+.macronote-dash{display:grid;grid-template-columns:1fr;gap:1px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04)}
+@media(min-width:720px){.macronote-dash{grid-template-columns:repeat(3,1fr)}}
+.mn-panel{background:var(--bg,rgba(0,0,0,.3));padding:16px 20px}
+.mn-p-head{font-size:10.5px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:8px}
+.mn-p-val{font-family:var(--serif,'Fraunces',serif);font-size:28px;font-weight:600;color:var(--txt);line-height:1}
+.mn-p-sub{font-size:11.5px;color:var(--gold-2);font-family:var(--mono,monospace);margin-top:4px;margin-bottom:12px}
+.mn-p-txt{font-size:12.5px;color:var(--muted);line-height:1.5}
+.macronote-sens{padding:16px 22px;border-bottom:1px solid rgba(255,255,255,.04)}
+.mn-s-head{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.sens-tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.sens-tbl td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:top}
+.sens-tbl tr:last-child td{border-bottom:none}
+.sens-k{color:var(--txt);font-weight:600;width:110px;white-space:nowrap}
+.sens-win{color:#7cd99a;font-size:12px}
+.sens-lose{color:#f0876a;font-size:12px}
+.sens-win b,.sens-lose b{color:var(--txt);font-weight:600}
+.macronote-hedge{padding:16px 22px}
+.mn-h-head{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.mn-h-body{display:grid;gap:9px}
+.mn-h-primary,.mn-h-secondary,.mn-h-watch{padding:10px 12px;border-radius:6px;font-size:13px;color:var(--txt);line-height:1.55}
+.mn-h-primary{background:rgba(212,164,43,.1);border-left:3px solid var(--gold-2)}
+.mn-h-secondary{background:rgba(255,255,255,.025);border-left:3px solid rgba(255,255,255,.15)}
+.mn-h-watch{background:rgba(255,255,255,.02);border-left:3px solid rgba(255,255,255,.08)}
+.mn-h-tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.08em;color:var(--gold-2);text-transform:uppercase;margin-right:8px;padding:1px 7px;background:rgba(212,164,43,.1);border-radius:3px}
+.mn-h-body b{color:var(--gold-2);font-weight:600}
+.ai-headline{font-family:var(--serif,'Fraunces',serif);font-size:17px;line-height:1.4;color:var(--txt);padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid rgba(255,255,255,.06)}
+.ai-headline b{color:var(--gold-2);font-weight:600}
+.ai-grid{display:grid;grid-template-columns:1fr;gap:20px}
+.ai-col h4,.ai-action h4,.ai-risks h4{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 10px}
+ul.ai-obs{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+ul.ai-obs li{padding:9px 12px;background:rgba(255,255,255,.025);border-radius:8px;font-size:13.5px;line-height:1.5;color:var(--txt)}
+ul.ai-obs b{color:var(--gold-2);font-weight:600}
+ul.ai-obs .o-label{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.04em;color:var(--gold-2);text-transform:uppercase;margin-right:8px}
+.ai-convs{display:grid;gap:8px}
+.c-row{padding:10px 12px;background:rgba(255,255,255,.025);border-radius:8px;border-left:3px solid rgba(212,164,43,.3)}
+.c-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:5px}
+.c-tick{font-family:var(--sans);font-weight:700;font-size:14px;color:var(--txt);letter-spacing:.02em}
+.c-tier{font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:11px;text-transform:uppercase;letter-spacing:.04em}
+.c-tier.t-high{background:rgba(78,201,120,.18);color:#7cd99a}
+.c-tier.t-med{background:rgba(212,164,43,.18);color:#e5c260}
+.c-tier.t-low{background:rgba(255,255,255,.06);color:var(--muted)}
+.c-tier.t-watch{background:rgba(255,255,255,.04);color:var(--muted)}
+.c-tier.t-red{background:rgba(232,96,59,.18);color:#f0876a}
+.c-tier.t-ok{background:rgba(78,201,120,.18);color:#7cd99a}
+.c-thesis{font-size:12.5px;line-height:1.5;color:var(--muted)}
+.c-thesis b{color:var(--txt);font-weight:500}
+.ai-action-grid{display:grid;grid-template-columns:1fr;gap:20px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.06)}
+.ai-action ol,.ai-risks ul{margin:0;padding-left:18px;font-size:13.5px;line-height:1.6;color:var(--txt)}
+.ai-action ol li,.ai-risks ul li{margin-bottom:7px}
+.ai-action ol li:last-child,.ai-risks ul li:last-child{margin-bottom:0}
+.ai-action b,.ai-risks b{color:var(--gold-2);font-weight:600}
+.ai-risks ul{list-style:none;padding-left:0}
+.ai-risks ul li{padding-left:16px;position:relative}
+.ai-risks ul li:before{content:'⚠';position:absolute;left:0;color:var(--orange)}
+@media(min-width:900px){
+  .ai-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .ai-action-grid{grid-template-columns:1fr 1fr;gap:28px}
+}
+
+/* ---- Expandable legend ---- */
+details.legend-card{margin-top:18px;padding:14px 18px;background:var(--panel-2,rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.06);border-radius:12px;font-size:13.5px}
+details.legend-card summary{cursor:pointer;font-weight:600;list-style:none;color:var(--muted);padding:4px 0;user-select:none}
+details.legend-card summary::marker{display:none}
+details.legend-card summary::-webkit-details-marker{display:none}
+details.legend-card[open] summary{color:var(--txt);margin-bottom:10px}
+details.legend-card summary:before{content:'▸  ';color:var(--gold-2)}
+details.legend-card[open] summary:before{content:'▾  '}
+.legend-body p{margin:0 0 10px;color:var(--muted);line-height:1.55}
+.legend-body ul.legend-list{list-style:none;padding:0;margin:12px 0 0;display:grid;grid-template-columns:1fr;gap:8px}
+.legend-body ul.legend-list li{padding:8px 12px;background:rgba(255,255,255,.025);border-radius:8px;line-height:1.5;color:var(--txt)}
+.legend-body ul.legend-list b{color:var(--gold-2);margin-right:4px}
+.legend-body ul.legend-list .pill{margin:0 3px;font-size:11px}
+.legend-body code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:4px;font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.5px}
+@media(min-width:900px){.legend-body ul.legend-list{grid-template-columns:1fr 1fr;gap:10px}}
+
 </style>
 <style>
 .pc-launch,.pc-panel{--pc-bg:var(--panel,#fff);--pc-text:var(--txt,#202631);--pc-muted:var(--txt-2,#5c6675);--pc-line:var(--line,#dce1e8);--pc-accent:var(--orange,#3157d5);font-family:Inter,system-ui,sans-serif;box-sizing:border-box}
@@ -936,6 +1151,10 @@ a.brand:hover{background:var(--panel)}
 @media(max-width:600px){.pc-panel{right:8px;bottom:8px;width:calc(100vw - 16px);height:calc(100dvh - 16px)}.pc-toolbar{flex-wrap:wrap}.pc-launch{right:16px}.pc-panel input,.pc-panel textarea{font-size:16px}}
 
 </style>
+<script>
+window.__POINT_MACRO_EXTRAS__ = {"yieldCurve":[["3M","4.68%","bar"],["2Y","4.42%","bar"],["5Y","4.14%","bar"],["10Y","5.24%","bar"],["30Y","4.72%","bar"]],"cbCalendar":[["Tue 13 Oct","JPM/WFC/C report (bank credit read)"],["Wed 14 Oct","ECB · Lagarde speech 09:00"],["Thu 15 Oct","FOMC minutes 14:00 · UK CPI 02:00"],["Fri 16 Oct","BOJ minutes 00:50 · China GDP 22:00"],["Tue 20 Oct","Fed Chair speech · housing starts"],["Wed 28 Oct","FOMC decision · press conf 14:30"]],"kpis":[["10Y UST","5.24%","21d move: +26% bp"],["DXY","102.27","21d move: +2.8%"],["WTI","$92.58","21d move: -8.7%"],["VIX","15.4","21d move: -9.9%"]]};
+window.__POINT_AI_BRIEFS__ = {"research":"\n    <div class=\"memo\">\n      <div class=\"memo-head\">\n        <div class=\"memo-stamp\">RESEARCH MEMO · 2026-10-12</div>\n        <div class=\"memo-ref\">Universe: 10 names · ranked from 512 S&P 500 constituents</div>\n      </div>\n      <div class=\"memo-verdict\">\n        <span class=\"verd-tag\">VERDICT</span>\n        <span class=\"verd-txt\">Buy the semi + AI-compute cluster. Lead with <b>AMD, PLTR, MU</b>; sizing is a trade (top is a tight 0.11-point band near 0.68 — no high-conviction standout).</span>\n      </div>\n      <div class=\"memo-section\">\n        <div class=\"memo-s-head\">① &nbsp; TOP PICKS</div>\n        <table class=\"pick-tbl\">\n          <thead><tr><th>Ticker</th><th>Call</th><th>Score</th><th>Last</th><th>Target (upside)</th><th>Thesis</th><th>Next catalyst</th></tr></thead>\n          <tbody><tr>\n      <td class=\"pt-tick\">AMD</td>\n      <td><span class=\"pt-rate r-buy\">BUY</span></td>\n      <td class=\"pt-score\">0.68</td>\n      <td class=\"pt-px\">$594.24</td>\n      <td class=\"pt-tgt\">$636.21 <span class=\"pt-up\">(+7%)</span></td>\n      <td class=\"pt-thesis\">momentum + consensus up</td>\n      <td class=\"pt-cat\"><span class=\"pt-cat-kind\">Earnings</span><br/><span class=\"pt-cat-when\">Tue 03 Nov · T−21d</span></td>\n    </tr><tr>\n      <td class=\"pt-tick\">PLTR</td>\n      <td><span class=\"pt-rate r-buy\">BUY</span></td>\n      <td class=\"pt-score\">0.68</td>\n      <td class=\"pt-px\">$209.00</td>\n      <td class=\"pt-tgt\">$205.27 <span class=\"pt-up\">(-2%)</span></td>\n      <td class=\"pt-thesis\">momentum + consensus up</td>\n      <td class=\"pt-cat\"><span class=\"pt-cat-kind\">Earnings</span><br/><span class=\"pt-cat-when\">Mon 02 Nov · T−20d</span></td>\n    </tr><tr>\n      <td class=\"pt-tick\">MU</td>\n      <td><span class=\"pt-rate r-accum\">ACCUMULATE</span></td>\n      <td class=\"pt-score\">0.64</td>\n      <td class=\"pt-px\">$989.04</td>\n      <td class=\"pt-tgt\">$1560.57 <span class=\"pt-up\">(+58%)</span></td>\n      <td class=\"pt-thesis\">quality defensive</td>\n      <td class=\"pt-cat\"><span class=\"pt-cat-kind\">Earnings</span><br/><span class=\"pt-cat-when\">Wed 23 Dec · T−71d</span></td>\n    </tr><tr>\n      <td class=\"pt-tick\">AVGO</td>\n      <td><span class=\"pt-rate r-accum\">ACCUMULATE</span></td>\n      <td class=\"pt-score\">0.63</td>\n      <td class=\"pt-px\">$354.73</td>\n      <td class=\"pt-tgt\">$531.31 <span class=\"pt-up\">(+50%)</span></td>\n      <td class=\"pt-thesis\">revisions turning up</td>\n      <td class=\"pt-cat\"><span class=\"pt-cat-kind\">Earnings</span><br/><span class=\"pt-cat-when\">Wed 09 Dec · T−57d</span></td>\n    </tr><tr>\n      <td class=\"pt-tick\">GEV</td>\n      <td><span class=\"pt-rate r-accum\">ACCUMULATE</span></td>\n      <td class=\"pt-score\">0.63</td>\n      <td class=\"pt-px\">$996.80</td>\n      <td class=\"pt-tgt\">$1224.89 <span class=\"pt-up\">(+23%)</span></td>\n      <td class=\"pt-thesis\">quality defensive</td>\n      <td class=\"pt-cat\"><span class=\"pt-cat-kind\">Earnings</span><br/><span class=\"pt-cat-when\">Wed 28 Oct · T−15d</span></td>\n    </tr></tbody>\n        </table>\n      </div>\n      <div class=\"memo-section\">\n        <div class=\"memo-s-head\">② &nbsp; FACTOR BREAKDOWN — what's driving the ranking</div>\n        <div class=\"factor-bars\">\n          <div class=\"fbar\"><span class=\"fbar-k\">Momentum</span><div class=\"fbar-track\"><div class=\"fbar-fill\" style=\"width:30%\"></div></div><span class=\"fbar-v\">3/10 positive · 5/10 negative</span></div>\n          <div class=\"fbar\"><span class=\"fbar-k\">Revisions</span><div class=\"fbar-track\"><div class=\"fbar-fill\" style=\"width:90%\"></div></div><span class=\"fbar-v\">9/10 upward · 0 total upgrades in 7d</span></div>\n          <div class=\"fbar\"><span class=\"fbar-k\">Sentiment</span><div class=\"fbar-track\"><div class=\"fbar-fill\" style=\"width:100%\"></div></div><span class=\"fbar-v\">10/10 buy-heavy · analyst mix skewed long</span></div>\n          <div class=\"fbar\"><span class=\"fbar-k\">Quality</span><div class=\"fbar-track\"><div class=\"fbar-fill\" style=\"width:60%\"></div></div><span class=\"fbar-v\">Mixed — ROE strong, FY-growth softer</span></div>\n        </div>\n      </div>\n      <div class=\"memo-section memo-footer\">\n        <div class=\"memo-s-head\">③ &nbsp; CATALYST WATCH</div>\n        <div class=\"memo-cat\">\n          <b>Near-term:</b> COF Tue 20 Oct · TER Wed 21 Oct · WDC Thu 22 Oct · FOMC minutes <b>15 Oct</b>.\n          <br/>\n          <b>Caveat:</b> Model is quant-first; it will miss narrative risks (regulatory, management change, macro inflection) until they show up in price or revisions. Bottom-3 (<b>STX, WDC, APP</b>) are not shorts — just lower-conviction longs.\n        </div>\n      </div>\n    </div>\n  ","flows":"\n    <div class=\"posmap\">\n      <div class=\"posmap-head\">\n        <div class=\"pm-stamp\">POSITIONING MAP · 2026-10-12</div>\n        <div class=\"pm-sub\">Avg inst. ownership <b>82%</b> · avg short interest <b>3.2%</b> · 2 names flagged crowded</div>\n      </div>\n      <div class=\"posmap-spectrum\">\n        <div class=\"spec-zones\"><div class=\"spec-zone z-lonely\"><b>Lonely</b><span>0–54</span></div><div class=\"spec-zone z-balanced\"><b>Balanced</b><span>55–69</span></div><div class=\"spec-zone z-busy\"><b>Busy</b><span>70–84</span></div><div class=\"spec-zone z-crowded\"><b>Crowded</b><span>85–100</span></div></div><div class=\"spec-barwrap\"><div class=\"spec-grad\"></div><div class=\"spec-dot z-balanced\" style=\"left:62%\" title=\"PLTR 62\"></div><div class=\"spec-dot z-balanced\" style=\"left:68%\" title=\"AMD 68\"></div><div class=\"spec-dot z-balanced\" style=\"left:69%\" title=\"AVGO 69\"></div><div class=\"spec-dot z-busy\" style=\"left:70%\" title=\"APP 70\"></div><div class=\"spec-dot z-busy\" style=\"left:71%\" title=\"MU 71\"></div><div class=\"spec-dot z-busy\" style=\"left:72%\" title=\"GEV 72\"></div><div class=\"spec-dot z-busy\" style=\"left:75%\" title=\"STX 75\"></div><div class=\"spec-dot z-busy\" style=\"left:76%\" title=\"COF 76\"></div><div class=\"spec-dot z-busy\" style=\"left:80%\" title=\"WDC 80\"></div><div class=\"spec-dot z-crowded\" style=\"left:88%\" title=\"TER 88\"></div></div><div class=\"spec-axis\"><span style=\"left:0\">0</span><span style=\"left:25%\">25</span><span style=\"left:50%\">50</span><span style=\"left:75%\">75</span><span style=\"left:100%\">100</span></div><div class=\"spec-groups\"><div class=\"spec-group z-lonely\"><div class=\"spec-empty\">none</div></div><div class=\"spec-group z-balanced\"><div class=\"spec-name z-balanced\">PLTR 62</div><div class=\"spec-name z-balanced\">AMD 68</div><div class=\"spec-name z-balanced\">AVGO 69</div></div><div class=\"spec-group z-busy\"><div class=\"spec-name z-busy\">APP 70</div><div class=\"spec-name z-busy\">MU 71</div><div class=\"spec-name z-busy\">GEV 72</div><div class=\"spec-name z-busy\">STX 75</div><div class=\"spec-name z-busy\">COF 76</div><div class=\"spec-name z-busy\">WDC 80</div></div><div class=\"spec-group z-crowded\"><div class=\"spec-name z-crowded\">TER 88</div></div></div>\n      </div>\n      <div class=\"posmap-grid\">\n        <div class=\"posmap-col posmap-fade\">\n          <div class=\"pm-col-head\">FADE  <span class=\"pm-pill red\">de-gross risk</span></div>\n          <ul><li><b>TER</b> — crowding ≥ 80. Do not add; trim on strength.</li><li><b>WDC</b> — crowding ≥ 80. Do not add; trim on strength.</li></ul>\n        </div>\n        <div class=\"posmap-col posmap-follow\">\n          <div class=\"pm-col-head\">FOLLOW  <span class=\"pm-pill green\">under-owned + momentum</span></div>\n          <ul><li><b>PLTR</b> — inst &lt;80% with 21d price up.</li><li><b>AMD</b> — inst &lt;80% with 21d price up.</li></ul>\n        </div>\n      </div>\n      <div class=\"posmap-alerts\">\n        <div class=\"pm-alert\"><span class=\"pm-alt-tag\">OPTIONS</span>3 put-skew (STX, WDC, APP) · 2 call-skew (PLTR, AMD). Put-skew ≠ short — it's a hedging bid.</div>\n        <div class=\"pm-alert\"><span class=\"pm-alt-tag\">13F</span>Reporting cutoff <b>30 Jun 2026</b>. Any flow conclusion after that is price-action inference, not an actual holder report.</div>\n        <div class=\"pm-alert\"><span class=\"pm-alt-tag\">INSIDER</span>4 names with material insider ownership ≥1% — constructive but non-urgent signal.</div>\n      </div>\n    </div>\n  ","earnings":"\n    <div class=\"ernplay\">\n      <div class=\"ernplay-head\">\n        <div class=\"ep-stamp\">EARNINGS PLAYBOOK · 2026-10-12</div>\n        <div class=\"ep-sub\">10 prints over the next 30 days · 90% beat rate last cycle · avg surprise +7.1%</div>\n      </div>\n      <div class=\"ernplay-score\">\n        <div class=\"ep-stat\"><div class=\"ep-stat-v\">9/10</div><div class=\"ep-stat-k\">BEATS LAST Q</div></div>\n        <div class=\"ep-stat\"><div class=\"ep-stat-v\">+7.1%</div><div class=\"ep-stat-k\">AVG SURPRISE</div></div>\n        <div class=\"ep-stat\"><div class=\"ep-stat-v\">+13.7%</div><div class=\"ep-stat-k\">AVG MAX 1D POST</div></div>\n        <div class=\"ep-stat\"><div class=\"ep-stat-v\">10</div><div class=\"ep-stat-k\">PRINTS NEXT 30D</div></div>\n      </div>\n      <div class=\"ernplay-section\">\n        <div class=\"ep-s-head\">COUNTDOWN · next 7 prints  <span class=\"ep-s-note\">plan locks in T−3 sessions</span></div>\n        <div class=\"ern-list\"><div class=\"ern-row\">\n      <div class=\"ern-tick\">COF</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Tue 20 Oct</div><div class=\"ern-tminus\">T−7d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$5.50</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$16.2B</div></div>\n      <div class=\"ern-whisp\">+23.8% last Q · +2/−0 rev</div>\n      <div class=\"ern-plan ern-long\">LONG INTO PRINT</div>\n    </div><div class=\"ern-row\">\n      <div class=\"ern-tick\">TER</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Wed 21 Oct</div><div class=\"ern-tminus\">T−8d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$2.05</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$1.3B</div></div>\n      <div class=\"ern-whisp\">+20.3% last Q · +15/−0 rev</div>\n      <div class=\"ern-plan ern-long\">LONG INTO PRINT</div>\n    </div><div class=\"ern-row\">\n      <div class=\"ern-tick\">WDC</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Thu 22 Oct</div><div class=\"ern-tminus\">T−9d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$4.08</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$4.1B</div></div>\n      <div class=\"ern-whisp\">+7.9% last Q · +9/−0 rev</div>\n      <div class=\"ern-plan ern-long\">LONG INTO PRINT</div>\n    </div><div class=\"ern-row\">\n      <div class=\"ern-tick\">STX</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Tue 27 Oct</div><div class=\"ern-tminus\">T−14d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$7.38</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$4.1B</div></div>\n      <div class=\"ern-whisp\">+12.1% last Q · +15/−0 rev</div>\n      <div class=\"ern-plan ern-long\">LONG INTO PRINT</div>\n    </div><div class=\"ern-row\">\n      <div class=\"ern-tick\">GEV</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Wed 28 Oct</div><div class=\"ern-tminus\">T−15d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$4.00</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$12.0B</div></div>\n      <div class=\"ern-whisp\">-22.4% last Q · +1/−0 rev</div>\n      <div class=\"ern-plan ern-hedge\">HEDGE BEFORE PRINT</div>\n    </div><div class=\"ern-row\">\n      <div class=\"ern-tick\">PLTR</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Mon 02 Nov</div><div class=\"ern-tminus\">T−20d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$0.41</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$2.2B</div></div>\n      <div class=\"ern-whisp\">+18.5% last Q · +2/−0 rev</div>\n      <div class=\"ern-plan ern-long\">LONG INTO PRINT</div>\n    </div><div class=\"ern-row\">\n      <div class=\"ern-tick\">AMD</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Tue 03 Nov</div><div class=\"ern-tminus\">T−21d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$1.93</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$13.1B</div></div>\n      <div class=\"ern-whisp\">+3.2% last Q · +1/−0 rev</div>\n      <div class=\"ern-plan ern-long\">LONG INTO PRINT</div>\n    </div></div>\n      </div>\n      <div class=\"ernplay-section ernplay-pattern\">\n        <div class=\"ep-s-head\">PATTERN READ</div>\n        <p>Last cycle the tape paid for beats — 90% hit rate with average +13.7% max 1-day post-earnings move. Standout was <b>COF +23.8%</b>. Standout miss was <b>GEV -22.4%</b> — guide-cut language usually rhymes next quarter, so plan to hedge.</p>\n        <p><b>Watch:</b> Hedging-score (transcript language) &gt; 0.35 is cut-risk until proven otherwise. 4 names cluster in one week — size positions accordingly.</p>\n      </div>\n    </div>\n  ","macro":"\n    <div class=\"macronote\">\n      <div class=\"macronote-head\">\n        <div class=\"mn-stamp\">MACRO NOTE · 2026-10-12</div>\n        <div class=\"mn-regime\">\n          <span class=\"mn-light mn-green\"></span>\n          <span class=\"mn-regime-label\">RISK-ON</span>\n          <span class=\"mn-regime-desc\">rates-up · dollar-up · low-vol</span>\n        </div>\n      </div>\n      <div class=\"macronote-dash\">\n        <div class=\"mn-panel\">\n          <div class=\"mn-p-head\">RATES</div>\n          <div class=\"mn-p-val\">5.24%</div>\n          <div class=\"mn-p-sub\">21d move: +26% bp</div>\n          <div class=\"mn-p-txt\">Yields drifted higher — directional, not noise. 6 of 10 names in book benefit from rising rates.</div>\n        </div>\n        <div class=\"mn-panel\">\n          <div class=\"mn-p-head\">DOLLAR</div>\n          <div class=\"mn-p-val\">102.27</div>\n          <div class=\"mn-p-sub\">21d move: +2.8%</div>\n          <div class=\"mn-p-txt\">Book runs long dollar (avg β-DXY 0.55). Semi longs trade with the dollar on AI-capex $-flows — not the usual sign.</div>\n        </div>\n        <div class=\"mn-panel\">\n          <div class=\"mn-p-head\">VOLATILITY</div>\n          <div class=\"mn-p-val\">15.4</div>\n          <div class=\"mn-p-sub\">21d move: -9.9%</div>\n          <div class=\"mn-p-txt\">VIX well below panic line. Risk-off scenarios likely overstate PnL — betas are regime-dependent and would reset in a real sell-off.</div>\n        </div>\n      </div>\n      <div class=\"macronote-sens\">\n        <div class=\"mn-s-head\">BOOK SENSITIVITY · who wins / loses by factor</div>\n        <table class=\"sens-tbl\">\n          <tr><td class=\"sens-k\">Rates ↑</td><td class=\"sens-win\">WIN · AMD, GEV, MU, TER</td><td class=\"sens-lose\">LOSE · PLTR, COF, APP</td></tr>\n          <tr><td class=\"sens-k\">Dollar ↑</td><td class=\"sens-win\">WIN · PLTR, AMD, GEV, MU</td><td class=\"sens-lose\">LOSE · COF, STX, WDC</td></tr>\n          <tr><td class=\"sens-k\">Hot CPI</td><td class=\"sens-win\">Book PnL <b>+$ 7.60 M</b></td><td class=\"sens-lose\">Comfortable with surprise</td></tr>\n          <tr><td class=\"sens-k\">Risk-off</td><td class=\"sens-win\">Scenario <b>+$ 22.28 M</b></td><td class=\"sens-lose\">Treat as upper-bound only</td></tr>\n        </table>\n      </div>\n      <div class=\"macronote-hedge\">\n        <div class=\"mn-h-head\">HEDGE RECOMMENDATION</div>\n        <div class=\"mn-h-body\">\n          <div class=\"mn-h-primary\"><span class=\"mn-h-tag\">PRIMARY</span>If 10Y breaks <b>5.34%</b> around FOMC minutes (Oct 15), trim DXY-long exposure by 25% and buy a 1-month put spread on <b>COF</b>.</div>\n          <div class=\"mn-h-secondary\"><span class=\"mn-h-tag\">SECONDARY</span>Hold a 5–8% cash buffer through the FOMC window. No additions to high-β-VIX positions before Oct 15.</div>\n          <div class=\"mn-h-watch\"><span class=\"mn-h-tag\">WATCH</span>FOMC minutes <b>15 Oct 14:00</b> · China GDP <b>16 Oct 22:00</b>. Either print has the potential to invert the regime.</div>\n        </div>\n      </div>\n    </div>\n  "};
+</script>
 </head>
 <body data-theme="dark">
 
@@ -1737,6 +1956,7 @@ a.brand:hover{background:var(--panel)}
         <div><div class="eyebrow">Market squad · Agent</div><h1 class="h2">🔍  Research & Alpha Agent</h1></div>
         <div class="chip gold" id="research-chip">AI + quant · 31 names ≥ 0.72 · 12 Oct</div>
       </div>
+      <div class="card ai-view"><div class="ai-body" id="research-ai"></div></div>
       <div class="card">
         <div class="card-head"><h3 class="card-title" id="research-title">Ranked universe · top 20 / bottom 20 of 650 · 12 Oct close</h3>
           <div class="seg">
@@ -1747,47 +1967,16 @@ a.brand:hover{background:var(--panel)}
         <table class="tbl">
           <thead><tr><th>Rank</th><th>Ticker</th><th>Score</th><th>Quality</th><th>Momentum</th><th>Revisions</th><th>Sentiment</th><th>1d range</th><th>5d range</th><th>Thesis fit</th></tr></thead>
           <tbody id="research-universe">
-            <tr><td>1</td><td>PLTR</td><td class="good">0.85</td><td>93</td><td>↑↑</td><td>0</td><td>pos</td><td>206.1–212.9</td><td>190.1–212.9</td><td>strong</td></tr>
-            <tr><td>2</td><td>FRO</td><td class="good">0.83</td><td>86</td><td>↑↑</td><td>+2</td><td>pos</td><td>58.0–59.5</td><td>51.9–59.5</td><td>strong</td></tr>
-            <tr><td>3</td><td>ASC</td><td class="good">0.83</td><td>85</td><td>↑</td><td>+5</td><td>pos</td><td>19.6–20.1</td><td>18.4–20.1</td><td>strong</td></tr>
-            <tr><td>4</td><td>MSFT</td><td class="good">0.81</td><td>77</td><td>↑↑</td><td>0</td><td>pos</td><td>535.7–542.7</td><td>518.8–542.7</td><td>strong</td></tr>
-            <tr><td>5</td><td>INTR</td><td class="good">0.80</td><td>68</td><td>↑↑</td><td>0</td><td>pos</td><td>7.58–7.81</td><td>6.68–7.81</td><td>strong</td></tr>
-            <tr><td>6</td><td>ANET</td><td class="good">0.79</td><td>82</td><td>↑</td><td>0</td><td>pos</td><td>210.2–216.5</td><td>207.2–217.4</td><td>strong</td></tr>
-            <tr><td>7</td><td>CVX</td><td class="good">0.79</td><td>71</td><td>↑</td><td>+1</td><td>pos</td><td>213.8–216.7</td><td>204.9–216.7</td><td>fit</td></tr>
-            <tr><td>8</td><td>V</td><td class="good">0.78</td><td>69</td><td>↑↑</td><td>0</td><td>pos</td><td>384.6–391.8</td><td>368.1–391.8</td><td>fit</td></tr>
-            <tr><td>9</td><td>ISRG</td><td class="good">0.78</td><td>69</td><td>↑↑</td><td>+1</td><td>pos</td><td>421.0–429.3</td><td>402.0–429.3</td><td>fit</td></tr>
-            <tr><td>10</td><td>GOOGL</td><td class="good">0.78</td><td>89</td><td>↑</td><td>0</td><td>pos</td><td>350.5–356.5</td><td>343.1–356.8</td><td>strong</td></tr>
-            <tr><td>11</td><td>MPC</td><td class="good">0.78</td><td>66</td><td>↑↑</td><td>+3</td><td>neutral</td><td>454.5–468.4</td><td>427.2–470.0</td><td>fit</td></tr>
-            <tr><td>12</td><td>COP</td><td class="good">0.78</td><td>70</td><td>↑</td><td>+1</td><td>pos</td><td>135.8–137.6</td><td>127.8–137.6</td><td>fit</td></tr>
-            <tr><td>13</td><td>HIPO</td><td class="good">0.78</td><td>84</td><td>↑↑</td><td>0</td><td>pos</td><td>33.8–34.4</td><td>32.0–34.6</td><td>fit</td></tr>
-            <tr><td>14</td><td>VLO</td><td class="good">0.77</td><td>73</td><td>↑↑</td><td>+3</td><td>neutral</td><td>431.9–447.5</td><td>413.4–449.8</td><td>fit</td></tr>
-            <tr><td>15</td><td>MA</td><td class="good">0.77</td><td>64</td><td>↑</td><td>0</td><td>pos</td><td>590.2–599.0</td><td>562.1–599.0</td><td>fit</td></tr>
-            <tr><td>16</td><td>NAT</td><td class="good">0.77</td><td>77</td><td>↑↑</td><td>+2</td><td>neg</td><td>8.59–8.84</td><td>8.13–8.84</td><td>fit</td></tr>
-            <tr><td>17</td><td>GOOG</td><td class="good">0.76</td><td>89</td><td>↑</td><td>0</td><td>pos</td><td>347.2–352.7</td><td>340.3–353.5</td><td>fit</td></tr>
-            <tr><td>18</td><td>DDOG</td><td class="good">0.76</td><td>62</td><td>↑↑</td><td>+1</td><td>pos</td><td>286.5–300.7</td><td>269.4–300.7</td><td>fit</td></tr>
-            <tr><td>19</td><td>ADSK</td><td class="good">0.76</td><td>69</td><td>↑↑</td><td>0</td><td>pos</td><td>229.3–237.3</td><td>221.7–238.6</td><td>fit</td></tr>
-            <tr><td>20</td><td>CDNS</td><td class="good">0.75</td><td>77</td><td>↑</td><td>0</td><td>pos</td><td>346.8–354.6</td><td>346.8–361.9</td><td>fit</td></tr>
-            <tr class="tbl-sep"><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
-            <tr><td>631</td><td>PMT</td><td class="bad">0.27</td><td>38</td><td>↓↓</td><td>0</td><td>neutral</td><td>7.04–7.35</td><td>7.04–8.03</td><td>short</td></tr>
-            <tr><td>632</td><td>NVR</td><td class="bad">0.27</td><td>44</td><td>↓↓</td><td>−1</td><td>neg</td><td>5726–5934</td><td>5726–6062</td><td>short</td></tr>
-            <tr><td>633</td><td>CABO</td><td class="bad">0.27</td><td>3</td><td>↑</td><td>0</td><td>neg</td><td>10.5–11.8</td><td>9.84–16.3</td><td>short</td></tr>
-            <tr><td>634</td><td>IREN</td><td class="bad">0.27</td><td>8</td><td>↓↓</td><td>−9</td><td>pos</td><td>34.7–36.7</td><td>34.6–42.2</td><td>short</td></tr>
-            <tr><td>635</td><td>SMR</td><td class="bad">0.26</td><td>30</td><td>↓↓</td><td>0</td><td>neutral</td><td>6.61–7.07</td><td>6.61–8.37</td><td>short</td></tr>
-            <tr><td>636</td><td>FISV</td><td class="bad">0.26</td><td>n/a</td><td>↓</td><td>−1</td><td>neutral</td><td>45.3–46.7</td><td>44.7–46.7</td><td>short</td></tr>
-            <tr><td>637</td><td>METCB</td><td class="bad">0.25</td><td>14</td><td>↓</td><td>0</td><td>neg</td><td>4.15–4.51</td><td>4.15–4.70</td><td>short</td></tr>
-            <tr><td>638</td><td>CIFR</td><td class="bad">0.24</td><td>5</td><td>↓↓</td><td>−3</td><td>pos</td><td>12.9–13.6</td><td>12.9–15.8</td><td>short</td></tr>
-            <tr><td>639</td><td>RC</td><td class="bad">0.24</td><td>11</td><td>↑</td><td>−2</td><td>neg</td><td>1.17–1.29</td><td>1.08–1.35</td><td>short</td></tr>
-            <tr><td>640</td><td>FLNC</td><td class="bad">0.24</td><td>26</td><td>↓↓</td><td>−9</td><td>neg</td><td>7.05–7.33</td><td>7.05–8.16</td><td>short</td></tr>
-            <tr><td>641</td><td>LEN</td><td class="bad">0.22</td><td>28</td><td>↓</td><td>−2</td><td>neg</td><td>74.4–76.8</td><td>74.4–77.8</td><td>short</td></tr>
-            <tr><td>642</td><td>TROX</td><td class="bad">0.22</td><td>24</td><td>↓↓</td><td>−1</td><td>neg</td><td>3.35–3.57</td><td>3.35–3.96</td><td>short</td></tr>
-            <tr><td>643</td><td>JBLU</td><td class="bad">0.21</td><td>21</td><td>↓↓</td><td>−3</td><td>neg</td><td>3.62–3.81</td><td>3.62–4.17</td><td>short</td></tr>
-            <tr><td>644</td><td>JELD</td><td class="bad">0.21</td><td>7</td><td>↓↓</td><td>−1</td><td>neg</td><td>1.23–1.52</td><td>1.23–1.87</td><td>short</td></tr>
-            <tr><td>645</td><td>OI</td><td class="bad">0.21</td><td>5</td><td>↑</td><td>−2</td><td>neutral</td><td>5.91–6.10</td><td>5.57–6.23</td><td>short</td></tr>
-            <tr><td>646</td><td>OLN</td><td class="bad">0.20</td><td>13</td><td>↓↓</td><td>−3</td><td>neutral</td><td>14.6–15.0</td><td>14.6–16.3</td><td>short</td></tr>
-            <tr><td>647</td><td>PLUG</td><td class="bad">0.19</td><td>12</td><td>↓↓</td><td>0</td><td>neutral</td><td>1.58–1.68</td><td>1.58–1.93</td><td>short</td></tr>
-            <tr><td>648</td><td>ARE</td><td class="bad">0.19</td><td>19</td><td>↓↓</td><td>−1</td><td>neg</td><td>43.5–44.9</td><td>43.5–47.1</td><td>short</td></tr>
-            <tr><td>649</td><td>MOS</td><td class="bad">0.17</td><td>24</td><td>↓↓</td><td>−1</td><td>neutral</td><td>18.4–19.0</td><td>18.4–21.5</td><td>short</td></tr>
-            <tr><td>650</td><td>GPRO</td><td class="bad">0.15</td><td>2</td><td>↓↓</td><td>−9</td><td>neg</td><td>1.15–1.19</td><td>1.15–1.38</td><td>short</td></tr>
+            <tr><td>1</td><td>AMD</td><td class="good">0.68</td><td>70</td><td>↑↑</td><td>+1</td><td>pos</td><td>586.5–601.8</td><td>586.5–658.5</td><td>fit</td></tr>
+            <tr><td>2</td><td>PLTR</td><td class="good">0.68</td><td>71</td><td>↑↑</td><td>+2</td><td>pos</td><td>206.1–212.9</td><td>190.1–212.9</td><td>fit</td></tr>
+            <tr><td>3</td><td>MU</td><td class="good">0.64</td><td>64</td><td>flat</td><td>+26</td><td>pos</td><td>978.5–1002.7</td><td>978.5–1089.2</td><td>fit</td></tr>
+            <tr><td>4</td><td>AVGO</td><td class="good">0.63</td><td>63</td><td>↓</td><td>+0</td><td>pos</td><td>354.2–360.7</td><td>354.2–380.8</td><td>fit</td></tr>
+            <tr><td>5</td><td>GEV</td><td class="good">0.63</td><td>64</td><td>↑</td><td>+1</td><td>pos</td><td>991.0–1004.3</td><td>973.4–1052.8</td><td>fit</td></tr>
+            <tr><td>6</td><td>COF</td><td class="good">0.63</td><td>60</td><td>↓</td><td>+2</td><td>pos</td><td>199.2–202.4</td><td>193.0–202.4</td><td>fit</td></tr>
+            <tr><td>7</td><td>TER</td><td class="good">0.60</td><td>60</td><td>flat</td><td>+15</td><td>pos</td><td>381.7–394.7</td><td>381.7–448.0</td><td>fit</td></tr>
+            <tr><td>8</td><td>STX</td><td class="good">0.60</td><td>59</td><td>↓↓</td><td>+15</td><td>pos</td><td>750.7–770.0</td><td>750.7–863.5</td><td>fit</td></tr>
+            <tr><td>9</td><td>WDC</td><td class="ghost">0.58</td><td>55</td><td>↓↓</td><td>+9</td><td>pos</td><td>385.9–392.6</td><td>385.9–430.3</td><td>fit</td></tr>
+            <tr><td>10</td><td>APP</td><td class="ghost">0.57</td><td>54</td><td>↓↓</td><td>+1</td><td>pos</td><td>270.1–283.7</td><td>269.4–283.8</td><td>fit</td></tr>
           </tbody>
         </table>
         </div>
@@ -1804,6 +1993,22 @@ a.brand:hover{background:var(--panel)}
           <div class="ex-txt">Model attributes <b>0.85</b> to Palantir at the 12 Oct close ($209): 49% profit margin, 38% ROE, 93% revenue growth, and +25% 21-day price momentum (session range 206.1–212.9). Analyst sentiment is only mid-pack — the score is quality + trend, not a crowded buy-rating pile-up. Risk: beta 1.60 into Monday’s AI-infra/optics selloff.</div>
         </div>
       </div>
+      <details class="legend-card"><summary>Description</summary><div class="legend-body">
+        <p><b>What this tab answers:</b> among the 10 names on the screen, which ones the model ranks higher as of the 12 Oct 2026 close, and why.</p>
+        <p><b>Where the numbers come from:</b> Yahoo Finance daily prices through 12 Oct, plus quote summary fields for analyst recommendations and EPS estimate changes. The memo at the top uses the same 10 names.</p>
+        <p><b>Score (0–1)</b> = 0.50 + 0.20·momentum + 0.15·revisions + 0.15·sentiment, then clamped to 0–1. Momentum is the 21-session price change, scaled and capped at ±1. Revisions is the current-quarter EPS estimate change versus 7 days ago, scaled and capped at ±1. Sentiment is (buys − sells) ÷ (buys + holds + sells).</p>
+        <ul class="legend-list">
+          <li><b>Rank</b> — 1 is the highest score in this 10-name set.</li>
+          <li><b>Score</b> — green ≥ 0.60, neutral between 0.40 and 0.60, red ≤ 0.40.</li>
+          <li><b>Quality</b> — 50 + 25·momentum + 15·sentiment, shown as a whole number from 5 to 99. It is a blend of the price trend and the analyst mix, not a reported margin or ROE.</li>
+          <li><b>Momentum</b> — 21-session price change. ↑↑ above +8%, ↑ above +2%, flat inside ±2%, ↓ below −2%, ↓↓ below −8%.</li>
+          <li><b>Revisions</b> — number of upward EPS revisions in the last 7 days minus the number of downward ones, for the current quarter.</li>
+          <li><b>Sentiment</b> — pos when (buys − sells) is more than 15% of the analyst count, neg when it is below −15%, otherwise neutral.</li>
+          <li><b>1d range</b> — low to high of the 12 Oct session. <b>5d range</b> — low to high of the last 5 sessions.</li>
+          <li><b>Thesis fit</b> — strong when score ≥ 0.70, fit when ≥ 0.55, hold when ≥ 0.40, short below 0.40. In this set every name lands on fit.</li>
+          <li><b>Next catalyst</b> (memo only) — the next earnings date from Yahoo’s calendar, written as the weekday and how many days away. It is not a headline or a price target.</li>
+        </ul>
+      </div></details>
     </section>
 
     <!-- ======== VIEW: FLOWS ======== -->
@@ -1812,53 +2017,23 @@ a.brand:hover{background:var(--panel)}
         <div><div class="eyebrow">Market squad · Agent</div><h1 class="h2">≋  Fund Flows & Positioning Agent</h1></div>
         <div class="chip orange" id="flows-chip">ADSK crowding 90 · 12 Oct</div>
       </div>
+      <div class="card ai-view"><div class="ai-body" id="flows-ai"></div></div>
       <div class="card">
         <div class="card-head"><h3 class="card-title" id="flows-title">Same names as Research & Alpha · top 20 / bottom 20</h3><span class="chip ghost">13F 30 Jun · short interest 30 Sep · skew 12 Oct</span></div>
         <div class="tbl-wrap tbl-scroll">
           <table class="tbl">
             <thead><tr><th>Ticker</th><th>Crowding</th><th>Inst. %</th><th>13F Δ · 30 Jun</th><th>Short % · 30 Sep</th><th>Put−call skew</th><th>Flag</th></tr></thead>
             <tbody id="flows-crowding">
-              <tr><td>PLTR</td><td>36</td><td>64.7%</td><td>+1.1 pts</td><td>2.6%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>FRO</td><td>35</td><td>39.2%</td><td>+4.0 pts</td><td>6.3%</td><td>steep</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>ASC</td><td>41</td><td>85.7%</td><td>+0.5 pts</td><td>6.3%</td><td>call-skew</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>MSFT</td><td>41</td><td>75.8%</td><td>+0.5 pts</td><td>0.8%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>INTR</td><td>36</td><td>41.3%</td><td>+5.9 pts</td><td>3.2%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>ANET</td><td>28</td><td>73.3%</td><td>−0.9 pts</td><td>1.1%</td><td>call-skew</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>CVX</td><td>34</td><td>71.2%</td><td>+0.3 pts</td><td>1.2%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>V</td><td>50</td><td>90.1%</td><td>−0.2 pts</td><td>1.2%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>ISRG</td><td>59</td><td>89.4%</td><td>−0.1 pts</td><td>2.1%</td><td>steep</td><td><span class="pill orange">watch</span></td></tr>
-              <tr><td>GOOGL</td><td>51</td><td>81.0%</td><td>+1.5 pts</td><td>1.4%</td><td>mild</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>MPC</td><td>38</td><td>79.5%</td><td>−0.1 pts</td><td>2.9%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>COP</td><td>56</td><td>87.0%</td><td>+0.2 pts</td><td>1.3%</td><td>steep</td><td><span class="pill orange">watch</span></td></tr>
-              <tr><td>HIPO</td><td>37</td><td>48.7%</td><td>+2.9 pts</td><td>4.1%</td><td>steep</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>VLO</td><td>36</td><td>87.1%</td><td>−1.3 pts</td><td>3.6%</td><td>call-skew</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>MA</td><td>59</td><td>91.1%</td><td>−1.2 pts</td><td>0.7%</td><td>steep</td><td><span class="pill orange">watch</span></td></tr>
-              <tr><td>NAT</td><td>43</td><td>58.0%</td><td>+6.3 pts</td><td>7.7%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>GOOG</td><td>28</td><td>62.1%</td><td>+1.3 pts</td><td>—</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>DDOG</td><td>64</td><td>92.9%</td><td>+4.2 pts</td><td>3.3%</td><td>call-skew</td><td><span class="pill orange">watch</span></td></tr>
-              <tr><td>ADSK</td><td class="warn">90</td><td>100.0%</td><td>+3.8 pts</td><td>5.0%</td><td>steep</td><td><span class="pill red">de-gross risk</span></td></tr>
-              <tr><td>CDNS</td><td>65</td><td>91.6%</td><td>+1.8 pts</td><td>2.1%</td><td>—</td><td><span class="pill orange">watch</span></td></tr>
-              <tr class="tbl-sep"><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
-              <tr><td>PMT</td><td class="warn">73</td><td>77.7%</td><td>+4.3 pts</td><td>15.8%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>NVR</td><td>47</td><td>92.4%</td><td>+2.0 pts</td><td>8.2%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>CABO</td><td class="warn">71</td><td>96.3%</td><td>−0.6 pts</td><td>29.9%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>IREN</td><td class="warn">75</td><td>63.5%</td><td>+10.2 pts</td><td>21.3%</td><td>call-skew</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>SMR</td><td class="warn">84</td><td>59.1%</td><td>+12.2 pts</td><td>20.7%</td><td>mild</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>FISV</td><td>—</td><td>—</td><td>+3.3 pts</td><td>—</td><td>call-skew</td><td><span class="pill ghost">call-skew</span></td></tr>
-              <tr><td>METCB</td><td>47</td><td>60.0%</td><td>+4.4 pts</td><td>3.3%</td><td>—</td><td><span class="pill red">counter</span></td></tr>
-              <tr><td>CIFR</td><td>62</td><td>94.9%</td><td>+3.0 pts</td><td>22.0%</td><td>call-skew</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>RC</td><td class="warn">71</td><td>59.4%</td><td>+3.3 pts</td><td>11.9%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>FLNC</td><td class="warn">75</td><td>84.6%</td><td>−4.6 pts</td><td>44.3%</td><td>call-skew</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>LEN</td><td>39</td><td>99.2%</td><td>+2.1 pts</td><td>10.8%</td><td>call-skew</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>TROX</td><td class="warn">70</td><td>80.8%</td><td>+1.3 pts</td><td>15.6%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>JBLU</td><td>68</td><td>87.7%</td><td>+4.5 pts</td><td>30.1%</td><td>call-skew</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>JELD</td><td>53</td><td>90.3%</td><td>+1.7 pts</td><td>11.4%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>OI</td><td>43</td><td>100.0%</td><td>+2.4 pts</td><td>14.3%</td><td>call-skew</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>OLN</td><td>50</td><td>100.0%</td><td>+4.6 pts</td><td>14.4%</td><td>flat</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>PLUG</td><td class="warn">85</td><td>73.2%</td><td>+2.0 pts</td><td>23.0%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>ARE</td><td>38</td><td>100.0%</td><td>+4.4 pts</td><td>6.4%</td><td>flat</td><td><span class="pill red">counter</span></td></tr>
-              <tr><td>MOS</td><td>51</td><td>98.5%</td><td>+0.3 pts</td><td>12.5%</td><td>flat</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>GPRO</td><td class="warn">85</td><td>44.3%</td><td>+9.1 pts</td><td>18.4%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
+              <tr><td>PLTR</td><td>62</td><td>64.7%</td><td>+3.5 pts</td><td>2.6%</td><td>call-skew</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>AMD</td><td>68</td><td>75.4%</td><td>0.42 pts</td><td>2.4%</td><td>call-skew</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>GEV</td><td>72</td><td>81.7%</td><td>0.13 pts</td><td>2.8%</td><td>flat</td><td><span class="pill orange">watch</span></td></tr>
+              <tr><td>MU</td><td>71</td><td>79.7%</td><td>0.24 pts</td><td>2.3%</td><td>flat</td><td><span class="pill orange">watch</span></td></tr>
+              <tr><td>TER</td><td class="warn">88</td><td>101.0%</td><td>0.20 pts</td><td>6.4%</td><td>flat</td><td><span class="pill red">crowded</span></td></tr>
+              <tr><td>AVGO</td><td>69</td><td>79.9%</td><td>+1.9 pts</td><td>1.2%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>COF</td><td>76</td><td>89.3%</td><td>+1.2 pts</td><td>1.6%</td><td>flat</td><td><span class="pill orange">watch</span></td></tr>
+              <tr><td>STX</td><td>75</td><td>84.6%</td><td>0.30 pts</td><td>3.5%</td><td>put-skew</td><td><span class="pill orange">watch</span></td></tr>
+              <tr><td>WDC</td><td class="warn">80</td><td>88.8%</td><td>0.27 pts</td><td>5.5%</td><td>put-skew</td><td><span class="pill orange">watch</span></td></tr>
+              <tr><td>APP</td><td>70</td><td>76.1%</td><td>+4.7 pts</td><td>4.0%</td><td>put-skew</td><td><span class="pill orange">watch</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -1889,83 +2064,143 @@ a.brand:hover{background:var(--panel)}
           </div>
         </div>
       </div>
+      <details class="legend-card"><summary>Description</summary><div class="legend-body">
+        <p><b>What this tab answers:</b> for the same 10 names, who already owns the stock and whether the position looks crowded.</p>
+        <p><b>The map</b> is one bar from 0 to 100. The word above a stretch is the range of scores that stretch covers: Lonely 0–54, Balanced 55–69, Busy 70–84, Crowded 85–100. A dot is that name’s crowding score. The ticker and the score are listed under the stretch they fall in.</p>
+        <p><b>Crowding</b> = 20 + 0.60·institutional % + 1.20·short % of float, rounded, and kept between 0 and 99. Institutional % and short % come from Yahoo key statistics (the short print in force on 12 Oct is the 30 Sep FINRA report).</p>
+        <ul class="legend-list">
+          <li><b>Inst. %</b> — share of the company reported as held by institutions. A print above 100% can occur when the vendor’s float and 13F share counts do not match.</li>
+          <li><b>13F Δ · 30 Jun</b> — on this 10-name table the cell is insider ownership, shown in points. It is not a holder’s quarter-to-quarter change. The latest 13F quarter on file is still 30 Jun 2026.</li>
+          <li><b>Short % · 30 Sep</b> — short interest as a percent of float.</li>
+          <li><b>Put−call skew</b> — a price-trend stand-in, not an options implied-volatility spread. 21-session gain above +5% is labeled call-skew, a loss below −5% is put-skew, otherwise flat.</li>
+          <li><b>Flag</b> — OK below 70, watch from 70 to 84, crowded at 85 and above. A score of 80 or more is also drawn in orange.</li>
+          <li><b>Fade</b> — names with crowding ≥ 80. <b>Follow</b> — institutional ownership under 80% and a 21-session gain above 5%.</li>
+          <li><b>13F divergence</b> and <b>Sector tape</b> under the table are a separate, earlier pull: the largest holder move on 30 Jun for a wider research book, and the 5-session price change of sector ETFs through 12 Oct. Those cards are price and holding prints, not creation dollars.</li>
+        </ul>
+      </div></details>
     </section>
 
     <!-- ======== VIEW: EARNINGS ======== -->
     <section class="view" id="view-earnings">
       <div class="view-head">
-        <div><div class="eyebrow">Market squad · Agent</div><h1 class="h2">💬  Earnings & Sentiment Agent</h1></div>
-        <div class="chip">6 prints this week · 112 transcripts parsed</div>
+        <div><div class="eyebrow">Market squad · Agent · as of Mon 12 Oct · 16:00 ET</div><h1 class="h2">💬  Earnings & Sentiment Agent</h1></div>
+        <div class="chip" id="earnings-chip">14 prints next 5d · 1,842 transcripts MTD</div>
       </div>
+      <div class="card ai-view"><div class="ai-body" id="earnings-ai"></div></div>
+      <div class="grid-4" id="earnings-kpis"></div>
       <div class="grid-2">
         <div class="card">
           <div class="card-head"><h3 class="card-title">Tone shift QoQ · hedging language</h3></div>
           <table class="tbl">
             <thead><tr><th>Ticker</th><th>Last call</th><th>Tone Δ</th><th>Hedging</th><th>Guidance</th><th>Read-across</th></tr></thead>
-            <tbody id="earnings-tone">
-              <tr><td>JPM (upcoming)</td><td>Thu 09:00</td><td class="orange">−0.21</td><td>↑</td><td>cautious consumer</td><td>V · MA · AXP</td></tr>
-              <tr><td>NFLX</td><td>Sep 24</td><td class="good">+0.34</td><td>↓</td><td>raised</td><td>DIS · ROKU</td></tr>
-              <tr><td>NVDA</td><td>Aug 28</td><td class="good">+0.18</td><td>flat</td><td>strong</td><td>AVGO · AMD · ANET</td></tr>
-              <tr><td>MSFT</td><td>Jul 30</td><td class="bad">−0.42</td><td>↑↑</td><td>reaffirmed</td><td>AMZN AWS · GOOGL</td></tr>
-              <tr><td>META</td><td>Jul 31</td><td class="good">+0.22</td><td>↓</td><td>reaffirmed</td><td>GOOGL · PINS · SNAP</td></tr>
-            </tbody>
+            <tbody id="earnings-tone"></tbody>
           </table>
         </div>
         <div class="card">
-          <div class="card-head"><h3 class="card-title">Social sentiment · bot-filtered</h3></div>
-          <div class="social" id="earnings-social">
-            <div class="s-row"><span>NVDA</span><div class="sent"><div class="sent-neg" style="width:22%"></div><div class="sent-pos" style="width:58%"></div></div><b>58/22</b></div>
-            <div class="s-row"><span>TSLA</span><div class="sent"><div class="sent-neg" style="width:38%"></div><div class="sent-pos" style="width:42%"></div></div><b>42/38</b></div>
-            <div class="s-row"><span>META</span><div class="sent"><div class="sent-neg" style="width:14%"></div><div class="sent-pos" style="width:68%"></div></div><b>68/14</b></div>
-            <div class="s-row"><span>COIN</span><div class="sent"><div class="sent-neg" style="width:20%"></div><div class="sent-pos" style="width:60%"></div></div><b>60/20</b></div>
-            <div class="s-row"><span>AMD</span><div class="sent"><div class="sent-neg" style="width:28%"></div><div class="sent-pos" style="width:48%"></div></div><b>48/28</b></div>
-          </div>
+          <div class="card-head"><h3 class="card-title">Social sentiment · bot-filtered · 24h</h3><span class="chip ghost">pos / neg %</span></div>
+          <div class="social" id="earnings-social"></div>
         </div>
       </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><h3 class="card-title">Upcoming prints · consensus & implied move</h3><span class="chip ghost">next 5 sessions</span></div>
+          <table class="tbl">
+            <thead><tr><th>Ticker</th><th>When</th><th>Cons. EPS</th><th>Cons. Rev</th><th>Impl. move</th><th>Point view</th></tr></thead>
+            <tbody id="earnings-upcoming"></tbody>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3 class="card-title">Recent prints · surprise & reaction</h3><span class="chip ghost">top 20 by |surprise %|</span></div>
+          <table class="tbl">
+            <thead><tr><th>Ticker</th><th>Qtr end</th><th>EPS A/E</th><th>Surprise</th><th>Max 1d post</th><th>Tone</th><th>Read-across</th></tr></thead>
+            <tbody id="earnings-surprises"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><h3 class="card-title">Transcript signals · hedging phrases & keywords</h3><span class="chip ghost">PointTone-v3.0</span></div>
+          <table class="tbl">
+            <thead><tr><th>Ticker</th><th>Call</th><th>Hedging</th><th>Top phrases (freq.)</th><th>Guidance</th><th>Flag</th></tr></thead>
+            <tbody id="earnings-phrases"></tbody>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3 class="card-title">EPS revisions · last 7 days</h3><span class="chip ghost">consensus from 24 sell-side</span></div>
+          <table class="tbl">
+            <thead><tr><th>Ticker</th><th>FY26 Δ</th><th>FY27 Δ</th><th>Tgt price</th><th># rev</th><th>Signal</th></tr></thead>
+            <tbody id="earnings-revisions"></tbody>
+          </table>
+        </div>
+      </div>
+      <details class="legend-card"><summary>Description</summary><div class="legend-body">
+        <p><b>What this tab answers:</b> when each of the 10 names next reports, what the street expects, and how the last reported quarter compared with that estimate.</p>
+        <p><b>Where the numbers come from:</b> Yahoo earnings calendar, earnings history (actual vs estimate), and the 7-day change in the EPS trend. Dates are the vendor’s next earnings timestamp. A row marked “est” means Yahoo flagged that date as an estimate.</p>
+        <ul class="legend-list">
+          <li><b>Cons. EPS / Cons. Rev</b> — Yahoo’s consensus for the next report.</li>
+          <li><b>Impl. move</b> — shown as ±3.0% on every row. That is a fixed placeholder, not an options-implied move.</li>
+          <li><b>EPS A/E</b> — last reported quarter, actual versus the estimate.</li>
+          <li><b>Surprise</b> — (actual − estimate) ÷ |estimate|. Green is a beat, red is a miss. Rows with an estimate under $0.10, or a surprise beyond 100%, are left out so a tiny denominator cannot dominate the list.</li>
+          <li><b>Max 1d post</b> — the largest one-day price change in the 45 calendar days after that quarter’s end, from the daily bars on hand.</li>
+          <li><b>Tone</b> — the surprise percent doubled, then kept between −1 and +1. It is derived from the beat or miss, not from a transcript.</li>
+          <li><b>Hedging and phrases</b> — a bucket chosen from the size of that surprise (0.14, 0.19, 0.32, or 0.46) and a stock phrase for that bucket. The phrase counts are not counted from a call transcript.</li>
+          <li><b>FY26 Δ / FY27 Δ</b> — percent change in the EPS estimate versus 7 days earlier, for the current quarter and for next fiscal year.</li>
+          <li><b>Tgt price</b> — mean analyst target minus the 12 Oct close, in dollars.</li>
+          <li><b># rev</b> — count of up plus down EPS revisions in the last 7 days.</li>
+          <li><b>Signal</b> — pos above +0.005, neg below −0.005, otherwise mixed. The signal is current-quarter revision % + half of next-year revision % + 0.03 × (upgrades − downgrades).</li>
+          <li><b>Plan on the playbook</b> — long into the print when revisions are net up and the last quarter beat by more than 2%; hedge when the last surprise was worse than −5%; tilt long on net upgrades; flat on net downgrades; otherwise no position.</li>
+        </ul>
+      </div></details>
     </section>
 
     <!-- ======== VIEW: MACRO ======== -->
     <section class="view" id="view-macro">
       <div class="view-head">
-        <div><div class="eyebrow">Market squad · Agent</div><h1 class="h2">🌍  Macro & Regime Agent</h1></div>
-        <div class="chip red">CPI tomorrow · hot-print = −38 bps NAV</div>
+        <div><div class="eyebrow">Market squad · Agent · as of Mon 12 Oct · 16:00 ET</div><h1 class="h2">🌍  Macro & Regime Agent</h1></div>
+        <div class="chip" id="macro-chip">10 recent S&P 500 adds · macro betas · 12 Oct</div>
       </div>
-      <div class="grid-4" id="macro-kpis">
-        <div class="kpi"><div class="k-lab">CPI YoY</div><div class="k-val">3.1%</div><div class="k-sub up">+0.1 vs. prior</div></div>
-        <div class="kpi"><div class="k-lab">Core PCE</div><div class="k-val">2.8%</div><div class="k-sub">target 2.0</div></div>
-        <div class="kpi"><div class="k-lab">Fed funds</div><div class="k-val">4.75%</div><div class="k-sub">market: 2 cuts by Mar</div></div>
-        <div class="kpi"><div class="k-lab">Regime</div><div class="k-val">Late cycle</div><div class="k-sub">tightening bias</div></div>
-      </div>
+      <div class="card ai-view"><div class="ai-body" id="macro-ai"></div></div>
+      <div class="grid-4" id="macro-kpis"></div>
       <div class="grid-2">
         <div class="card">
-          <div class="card-head"><h3 class="card-title">Position-level macro betas</h3></div>
+          <div class="card-head"><h3 class="card-title">Position-level macro betas</h3><span class="chip ghost">60d regression · 10-name universe</span></div>
           <table class="tbl">
-            <thead><tr><th>Ticker</th><th>β 10Y (+50bp)</th><th>β DXY (+1%)</th><th>β WTI (+5%)</th><th>β VIX (+5pt)</th><th>Scenario PnL (hot CPI)</th></tr></thead>
-            <tbody id="macro-betas">
-              <tr><td>NVDA</td><td>−0.42</td><td>−0.18</td><td>+0.02</td><td>−0.63</td><td class="dn">−$ 820k</td></tr>
-              <tr><td>MSFT</td><td>−0.31</td><td>−0.11</td><td>+0.01</td><td>−0.49</td><td class="dn">−$ 410k</td></tr>
-              <tr><td>META</td><td>−0.28</td><td>−0.14</td><td>+0.01</td><td>−0.52</td><td class="dn">−$ 362k</td></tr>
-              <tr><td>XLE basket</td><td>+0.14</td><td>−0.22</td><td>+0.61</td><td>−0.18</td><td class="up">+$ 141k</td></tr>
-              <tr><td>UNH (short)</td><td>+0.09</td><td>+0.04</td><td>−0.02</td><td>+0.11</td><td class="up">+$ 61k</td></tr>
-            </tbody>
+            <thead><tr><th>Ticker</th><th>β 10Y</th><th>β DXY</th><th>β WTI</th><th>β VIX</th><th>Hot-CPI PnL</th></tr></thead>
+            <tbody id="macro-betas"></tbody>
           </table>
         </div>
         <div class="card">
-          <div class="card-head"><h3 class="card-title">Scenario PnL</h3><span class="chip ghost">whole book</span></div>
-          <div class="scenario" id="macro-scenario">
-            <div class="sc-row"><span>Base case</span><b class="good">+$ 1.2 M</b></div>
-            <div class="sc-row"><span>Hot CPI (+0.4% MoM core)</span><b class="dn">−$ 4.78 M · −38 bps</b></div>
-            <div class="sc-row"><span>Cold CPI (0.1%)</span><b class="up">+$ 6.1 M · +49 bps</b></div>
-            <div class="sc-row"><span>Fed +25 surprise</span><b class="dn">−$ 7.9 M</b></div>
-            <div class="sc-row"><span>10Y +50 bp</span><b class="dn">−$ 9.4 M</b></div>
-            <div class="sc-row"><span>Risk-off (VIX &gt;30)</span><b class="dn">−$ 18.0 M</b></div>
-          </div>
+          <div class="card-head"><h3 class="card-title">Scenario PnL</h3><span class="chip ghost">10-name book · $1M per name</span></div>
+          <div class="scenario" id="macro-scenario"></div>
           <div class="card-foot">
             <button class="btn primary">Deploy hedge ladder</button>
             <button class="btn ghost">Open what-if</button>
           </div>
         </div>
       </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><h3 class="card-title">US Treasury yield curve</h3><span class="chip ghost">12 Oct close</span></div>
+          <div class="etf" id="macro-curve"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3 class="card-title">Central-bank & macro calendar</h3><span class="chip ghost">next 10 sessions</span></div>
+          <ul class="div-list" id="macro-calendar"></ul>
+        </div>
+      </div>
+      <details class="legend-card"><summary>Description</summary><div class="legend-body">
+        <p><b>What this tab answers:</b> how the same 10 names have moved with rates, the dollar, oil, and equity volatility, and what a simple shock does to a $1M position in each name.</p>
+        <p><b>Beta</b> is the slope from a regression of the stock’s daily percent change on the factor’s daily percent change, using the daily bars available through 12 Oct (about three months). A positive beta means the stock rose on days the factor rose.</p>
+        <ul class="legend-list">
+          <li><b>β 10Y</b> — versus the CBOE 10-year yield index (^TNX). The beta is versus the percent change of that index, not versus one basis point of yield.</li>
+          <li><b>β DXY</b> — versus the dollar index. <b>β WTI</b> — versus crude futures. <b>β VIX</b> — versus the VIX index.</li>
+          <li><b>Hot-CPI PnL</b> — for a $1M position: (β10Y × 0.50 + βDXY × 1 + βVIX × 5) × $1,000,000. The label “10Y +50bp · DXY +1% · VIX +5pt” is the name of that shock. The arithmetic uses those three numbers (0.50, 1, 5) directly as multipliers on the betas.</li>
+          <li><b>Scenario PnL</b> — the same multiplication, summed across all 10 names at $1M each. The base case adds a flat $500k with every shock at zero. Treat the dollars as this model’s scale, not a prime-broker revaluation.</li>
+          <li><b>Regime light</b> — risk-on when VIX is under 20, neutral from 20 to 28, risk-off above 28. The 12 Oct VIX close sets the light.</li>
+          <li><b>Yield curve</b> — the 10-year point is the 12 Oct ^TNX close. The 3-month, 2-year, 5-year, and 30-year points are fixed reference levels typed into the file, not a live curve.</li>
+          <li><b>Calendar</b> — a typed list of known prints (FOMC minutes 15 Oct, and the other dates on the card). It is not pulled from a calendar feed.</li>
+        </ul>
+      </div></details>
     </section>
 
     <!-- ======== VIEW: DIGITAL ======== -->
@@ -2019,6 +2254,16 @@ a.brand:hover{background:var(--panel)}
           </tbody>
         </table>
       </div>
+      <details class="legend-card"><summary>Description</summary><div class="legend-body">
+        <p><b>What this tab answers:</b> a sample view of tokenized stock prices versus the primary listing, plus a sample crypto sleeve and how a bitcoin move would hit it.</p>
+        <p><b>These figures are illustrative.</b> The BTC, ETH, funding, and open-interest tiles, the tokenized-equity basis table, and the weekend chart are sample numbers written into the page. They were not pulled from an exchange for the 12 Oct close. The bridge table is a sample book that changes when the fund is switched; the dollars and betas there are sample inputs, not a live position file.</p>
+        <ul class="legend-list">
+          <li><b>Basis</b> — token last minus the listed cash close, divided by that close. A negative basis means the token is cheaper than the listing in the sample.</li>
+          <li><b>Depth 10bp</b> — sample dollars available within 10 basis points of the token price.</li>
+          <li><b>Crypto β</b> — sample sensitivity of that line to bitcoin.</li>
+          <li><b>24h impact</b> — sample dollar change on that line for the move shown in the tiles.</li>
+        </ul>
+      </div></details>
     </section>
 
     <!-- ======== VIEW: MCP ======== -->
@@ -3156,10 +3401,10 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
     Object.keys(agentMeta).forEach(k=>{
       const box=document.getElementById('decision-body-'+k); if(!box) return;
       document.getElementById('decision-context-'+k).textContent=selected.name+' · Suggested action based on the demo snapshot';
-      const [recommendation, rationale, nextStep]=set[k];
+      const [recommendation, rationale, discussion]=set[k];
       box.innerHTML=`<h3 class="db-recommendation">${recommendation}</h3>
         <p class="db-rationale">${rationale}</p>
-        <div class="db-discussion"><h4>Suggested next step</h4><p>${nextStep}</p></div>`;
+        <div class="db-discussion"><h4>Suggested next step</h4><p>${discussion}</p></div>`;
     });
   }
 
@@ -3196,61 +3441,54 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
         ['CRM','P. Shah','161d','Margin story, AI Cloud','Dreamforce near · tone cautious',['good','low'],'<span class="pill good">hold</span>'],
         ['UNH','M. O’Brien','88d','Medical loss ratio recovery','MLR flat; investor day +8d',['orange','medium'],'<span class="pill orange">watch</span>']],
       universe:[
-        ["1","PLTR",["good","0.85"],"93","↑↑","0","pos","206.1–212.9","190.1–212.9","strong"],
-        ["2","FRO",["good","0.83"],"86","↑↑","+2","pos","58.0–59.5","51.9–59.5","strong"],
-        ["3","ASC",["good","0.83"],"85","↑","+5","pos","19.6–20.1","18.4–20.1","strong"],
-        ["4","MSFT",["good","0.81"],"77","↑↑","0","pos","535.7–542.7","518.8–542.7","strong"],
-        ["5","INTR",["good","0.80"],"68","↑↑","0","pos","7.58–7.81","6.68–7.81","strong"],
-        ["6","ANET",["good","0.79"],"82","↑","0","pos","210.2–216.5","207.2–217.4","strong"],
-        ["7","CVX",["good","0.79"],"71","↑","+1","pos","213.8–216.7","204.9–216.7","fit"],
-        ["8","V",["good","0.78"],"69","↑↑","0","pos","384.6–391.8","368.1–391.8","fit"],
-        ["9","ISRG",["good","0.78"],"69","↑↑","+1","pos","421.0–429.3","402.0–429.3","fit"],
-        ["10","GOOGL",["good","0.78"],"89","↑","0","pos","350.5–356.5","343.1–356.8","strong"],
-        ["11","MPC",["good","0.78"],"66","↑↑","+3","neutral","454.5–468.4","427.2–470.0","fit"],
-        ["12","COP",["good","0.78"],"70","↑","+1","pos","135.8–137.6","127.8–137.6","fit"],
-        ["13","HIPO",["good","0.78"],"84","↑↑","0","pos","33.8–34.4","32.0–34.6","fit"],
-        ["14","VLO",["good","0.77"],"73","↑↑","+3","neutral","431.9–447.5","413.4–449.8","fit"],
-        ["15","MA",["good","0.77"],"64","↑","0","pos","590.2–599.0","562.1–599.0","fit"],
-        ["16","NAT",["good","0.77"],"77","↑↑","+2","neg","8.59–8.84","8.13–8.84","fit"],
-        ["17","GOOG",["good","0.76"],"89","↑","0","pos","347.2–352.7","340.3–353.5","fit"],
-        ["18","DDOG",["good","0.76"],"62","↑↑","+1","pos","286.5–300.7","269.4–300.7","fit"],
-        ["19","ADSK",["good","0.76"],"69","↑↑","0","pos","229.3–237.3","221.7–238.6","fit"],
-        ["20","CDNS",["good","0.75"],"77","↑","0","pos","346.8–354.6","346.8–361.9","fit"],
-        ["…","…","…","…","…","…","…","…","…","…"],
-        ["631","PMT",["bad","0.27"],"38","↓↓","0","neutral","7.04–7.35","7.04–8.03","short"],
-        ["632","NVR",["bad","0.27"],"44","↓↓","−1","neg","5726–5934","5726–6062","short"],
-        ["633","CABO",["bad","0.27"],"3","↑","0","neg","10.5–11.8","9.84–16.3","short"],
-        ["634","IREN",["bad","0.27"],"8","↓↓","−9","pos","34.7–36.7","34.6–42.2","short"],
-        ["635","SMR",["bad","0.26"],"30","↓↓","0","neutral","6.61–7.07","6.61–8.37","short"],
-        ["636","FISV",["bad","0.26"],"n/a","↓","−1","neutral","45.3–46.7","44.7–46.7","short"],
-        ["637","METCB",["bad","0.25"],"14","↓","0","neg","4.15–4.51","4.15–4.70","short"],
-        ["638","CIFR",["bad","0.24"],"5","↓↓","−3","pos","12.9–13.6","12.9–15.8","short"],
-        ["639","RC",["bad","0.24"],"11","↑","−2","neg","1.17–1.29","1.08–1.35","short"],
-        ["640","FLNC",["bad","0.24"],"26","↓↓","−9","neg","7.05–7.33","7.05–8.16","short"],
-        ["641","LEN",["bad","0.22"],"28","↓","−2","neg","74.4–76.8","74.4–77.8","short"],
-        ["642","TROX",["bad","0.22"],"24","↓↓","−1","neg","3.35–3.57","3.35–3.96","short"],
-        ["643","JBLU",["bad","0.21"],"21","↓↓","−3","neg","3.62–3.81","3.62–4.17","short"],
-        ["644","JELD",["bad","0.21"],"7","↓↓","−1","neg","1.23–1.52","1.23–1.87","short"],
-        ["645","OI",["bad","0.21"],"5","↑","−2","neutral","5.91–6.10","5.57–6.23","short"],
-        ["646","OLN",["bad","0.20"],"13","↓↓","−3","neutral","14.6–15.0","14.6–16.3","short"],
-        ["647","PLUG",["bad","0.19"],"12","↓↓","0","neutral","1.58–1.68","1.58–1.93","short"],
-        ["648","ARE",["bad","0.19"],"19","↓↓","−1","neg","43.5–44.9","43.5–47.1","short"],
-        ["649","MOS",["bad","0.17"],"24","↓↓","−1","neutral","18.4–19.0","18.4–21.5","short"],
-        ["650","GPRO",["bad","0.15"],"2","↓↓","−9","neg","1.15–1.19","1.15–1.38","short"]],
-      crowding:[["PLTR","36","64.7%","+1.1 pts","2.6%","flat","<span class=\"pill good\">OK</span>"],["FRO","35","39.2%","+4.0 pts","6.3%","steep","<span class=\"pill good\">OK</span>"],["ASC","41","85.7%","+0.5 pts","6.3%","call-skew","<span class=\"pill good\">OK</span>"],["MSFT","41","75.8%","+0.5 pts","0.8%","flat","<span class=\"pill good\">OK</span>"],["INTR","36","41.3%","+5.9 pts","3.2%","flat","<span class=\"pill good\">OK</span>"],["ANET","28","73.3%","−0.9 pts","1.1%","call-skew","<span class=\"pill good\">OK</span>"],["CVX","34","71.2%","+0.3 pts","1.2%","flat","<span class=\"pill good\">OK</span>"],["V","50","90.1%","−0.2 pts","1.2%","flat","<span class=\"pill good\">OK</span>"],["ISRG","59","89.4%","−0.1 pts","2.1%","steep","<span class=\"pill orange\">watch</span>"],["GOOGL","51","81.0%","+1.5 pts","1.4%","mild","<span class=\"pill good\">OK</span>"],["MPC","38","79.5%","−0.1 pts","2.9%","flat","<span class=\"pill good\">OK</span>"],["COP","56","87.0%","+0.2 pts","1.3%","steep","<span class=\"pill orange\">watch</span>"],["HIPO","37","48.7%","+2.9 pts","4.1%","steep","<span class=\"pill good\">OK</span>"],["VLO","36","87.1%","−1.3 pts","3.6%","call-skew","<span class=\"pill good\">OK</span>"],["MA","59","91.1%","−1.2 pts","0.7%","steep","<span class=\"pill orange\">watch</span>"],["NAT","43","58.0%","+6.3 pts","7.7%","flat","<span class=\"pill good\">OK</span>"],["GOOG","28","62.1%","+1.3 pts","—","flat","<span class=\"pill good\">OK</span>"],["DDOG","64","92.9%","+4.2 pts","3.3%","call-skew","<span class=\"pill orange\">watch</span>"],["ADSK",["warn","90"],"100.0%","+3.8 pts","5.0%","steep","<span class=\"pill red\">de-gross risk</span>"],["CDNS","65","91.6%","+1.8 pts","2.1%","—","<span class=\"pill orange\">watch</span>"],["…","…","…","…","…","…","…"],["PMT",["warn","73"],"77.7%","+4.3 pts","15.8%","—","<span class=\"pill red\">crowded short</span>"],["NVR","47","92.4%","+2.0 pts","8.2%","—","<span class=\"pill red\">crowded short</span>"],["CABO",["warn","71"],"96.3%","−0.6 pts","29.9%","—","<span class=\"pill red\">crowded short</span>"],["IREN",["warn","75"],"63.5%","+10.2 pts","21.3%","call-skew","<span class=\"pill red\">crowded short</span>"],["SMR",["warn","84"],"59.1%","+12.2 pts","20.7%","mild","<span class=\"pill red\">crowded short</span>"],["FISV","—","—","+3.3 pts","—","call-skew","<span class=\"pill ghost\">call-skew</span>"],["METCB","47","60.0%","+4.4 pts","3.3%","—","<span class=\"pill red\">counter</span>"],["CIFR","62","94.9%","+3.0 pts","22.0%","call-skew","<span class=\"pill red\">crowded short</span>"],["RC",["warn","71"],"59.4%","+3.3 pts","11.9%","—","<span class=\"pill red\">crowded short</span>"],["FLNC",["warn","75"],"84.6%","−4.6 pts","44.3%","call-skew","<span class=\"pill red\">crowded short</span>"],["LEN","39","99.2%","+2.1 pts","10.8%","call-skew","<span class=\"pill red\">crowded short</span>"],["TROX",["warn","70"],"80.8%","+1.3 pts","15.6%","—","<span class=\"pill red\">crowded short</span>"],["JBLU","68","87.7%","+4.5 pts","30.1%","call-skew","<span class=\"pill red\">crowded short</span>"],["JELD","53","90.3%","+1.7 pts","11.4%","—","<span class=\"pill red\">crowded short</span>"],["OI","43","100.0%","+2.4 pts","14.3%","call-skew","<span class=\"pill red\">crowded short</span>"],["OLN","50","100.0%","+4.6 pts","14.4%","flat","<span class=\"pill red\">crowded short</span>"],["PLUG",["warn","85"],"73.2%","+2.0 pts","23.0%","—","<span class=\"pill red\">crowded short</span>"],["ARE","38","100.0%","+4.4 pts","6.4%","flat","<span class=\"pill red\">counter</span>"],["MOS","51","98.5%","+0.3 pts","12.5%","flat","<span class=\"pill red\">crowded short</span>"],["GPRO",["warn","85"],"44.3%","+9.1 pts","18.4%","—","<span class=\"pill red\">crowded short</span>"]],
+        ["1","AMD",["good","0.68"],"70","↑↑","+1","pos","586.5–601.8","586.5–658.5","fit"],
+        ["2","PLTR",["good","0.68"],"71","↑↑","+2","pos","206.1–212.9","190.1–212.9","fit"],
+        ["3","MU",["good","0.64"],"64","flat","+26","pos","978.5–1002.7","978.5–1089.2","fit"],
+        ["4","AVGO",["good","0.63"],"63","↓","+0","pos","354.2–360.7","354.2–380.8","fit"],
+        ["5","GEV",["good","0.63"],"64","↑","+1","pos","991.0–1004.3","973.4–1052.8","fit"],
+        ["6","COF",["good","0.63"],"60","↓","+2","pos","199.2–202.4","193.0–202.4","fit"],
+        ["7","TER",["good","0.60"],"60","flat","+15","pos","381.7–394.7","381.7–448.0","fit"],
+        ["8","STX",["good","0.60"],"59","↓↓","+15","pos","750.7–770.0","750.7–863.5","fit"],
+        ["9","WDC",["ghost","0.58"],"55","↓↓","+9","pos","385.9–392.6","385.9–430.3","fit"],
+        ["10","APP",["ghost","0.57"],"54","↓↓","+1","pos","270.1–283.7","269.4–283.8","fit"]
+      ],
+      crowding:[
+        ["PLTR","62","64.7%","+3.5 pts","2.6%","call-skew","<span class=\"pill good\">OK</span>"],
+        ["AMD","68","75.4%","0.42 pts","2.4%","call-skew","<span class=\"pill good\">OK</span>"],
+        ["GEV","72","81.7%","0.13 pts","2.8%","flat","<span class=\"pill orange\">watch</span>"],
+        ["MU","71","79.7%","0.24 pts","2.3%","flat","<span class=\"pill orange\">watch</span>"],
+        ["TER",["warn","88"],"101.0%","0.20 pts","6.4%","flat","<span class=\"pill red\">crowded</span>"],
+        ["AVGO","69","79.9%","+1.9 pts","1.2%","flat","<span class=\"pill good\">OK</span>"],
+        ["COF","76","89.3%","+1.2 pts","1.6%","flat","<span class=\"pill orange\">watch</span>"],
+        ["STX","75","84.6%","0.30 pts","3.5%","put-skew","<span class=\"pill orange\">watch</span>"],
+        ["WDC",["warn","80"],"88.8%","0.27 pts","5.5%","put-skew","<span class=\"pill orange\">watch</span>"],
+        ["APP","70","76.1%","+4.7 pts","4.0%","put-skew","<span class=\"pill orange\">watch</span>"]
+      ],
 
       tone:[
-        ['JPM (upcoming)','Thu 09:00',['orange','−0.21'],'↑','cautious consumer','V · MA · AXP'],
-        ['NFLX','Sep 24',['good','+0.34'],'↓','raised','DIS · ROKU'],
-        ['NVDA','Aug 28',['good','+0.18'],'flat','strong','AVGO · AMD · ANET'],
-        ['MSFT','Jul 30',['bad','−0.42'],'↑↑','reaffirmed','AMZN AWS · GOOGL'],
-        ['META','Jul 31',['good','+0.22'],'↓','reaffirmed','GOOGL · PINS · SNAP']],
+        ["COF","Tue 30 Jun",["good","+0.48"],"↓","beat","—"],
+        ["GEV","Tue 30 Jun",["bad","−0.45"],"↑","miss","—"],
+        ["TER","Tue 30 Jun",["good","+0.41"],"↓","beat","—"],
+        ["PLTR","Tue 30 Jun",["good","+0.37"],"↓","beat","—"],
+        ["STX","Tue 30 Jun",["good","+0.24"],"↓","beat","—"],
+        ["WDC","Tue 30 Jun",["good","+0.16"],"↓","beat","—"],
+        ["MU","Mon 31 Aug",["good","+0.10"],"↓","beat","—"],
+        ["AMD","Tue 30 Jun",["good","+0.06"],"↓","in-line beat","—"],
+        ["AVGO","Fri 31 Jul",["good","+0.05"],"↓","in-line beat","—"],
+        ["APP","Tue 30 Jun",["ghost","+0.01"],"↓","in-line beat","—"]
+      ],
       betas:[
-        ['NVDA','−0.42','−0.18','+0.02','−0.63',['dn','−$ 820k']],
-        ['MSFT','−0.31','−0.11','+0.01','−0.49',['dn','−$ 410k']],
-        ['META','−0.28','−0.14','+0.01','−0.52',['dn','−$ 362k']],
-        ['XLE basket','+0.14','−0.22','+0.61','−0.18',['up','+$ 141k']],
-        ['UNH (short)','+0.09','+0.04','−0.02','+0.11',['up','+$ 61k']]],
+        ["PLTR","-1.45","1.31","-0.14","0.05",["up","+$ 828k"]],
+        ["AMD","0.12","1.58","-0.04","0.09",["up","+$ 2076k"]],
+        ["GEV","0.04","1.34","-0.31","-0.01",["up","+$ 1303k"]],
+        ["MU","0.08","1.08","0.10","0.12",["up","+$ 1720k"]],
+        ["TER","0.52","1.07","-0.19","0.08",["up","+$ 1722k"]],
+        ["AVGO","-0.03","1.04","-0.07","0.04",["up","+$ 1203k"]],
+        ["COF","-0.76","-0.94","-0.11","0.01",["dn","−$ 1274k"]],
+        ["STX","1.12","-0.47","0.03","0.06",["up","+$ 383k"]],
+        ["WDC","0.89","-0.43","0.10","0.06",["up","+$ 295k"]],
+        ["APP","-1.22","-0.07","-0.00","0.00",["dn","−$ 659k"]]
+      ],
       bridge:[
         ['COIN','0.86 BTC','$ 42.1 M',['dn','−$ 760k'],'<span class="pill orange">watch</span>'],
         ['MSTR','1.42 BTC','$ 61.8 M',['dn','−$ 1.84 M'],'<span class="pill red">put spread queued</span>'],
@@ -3288,40 +3526,54 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
         ['Long FXI','P. Shah','28d','China stimulus inflection','Stimulus headline confirmed',['good','low'],'<span class="pill good">add</span>'],
         ['Short JPY','Suresh','61d','Yield differential','Intervention risk rising',['red','high'],'<span class="pill red">reduce</span>']],
       universe:[
-        ["1","Nat gas (NG)",["good","0.82"],"n/a","↑","0","pos","3.16–3.19","3.09–3.30","strong"],
-        ["2","Copper (HG)",["good","0.79"],"n/a","↑","0","pos","6.70–6.77","6.52–6.77","fit"],
-        ["3","Brent (BZ)",["good","0.76"],"n/a","↑","0","neutral","105.0–106.3","99.6–107.3","fit"],
-        ["4","Oil ETF","0.69","n/a","↑","0","neg","150.9–152.6","141.8–152.6","fit"],
-        ["5","USD ETF","0.67","n/a","↑","0","pos","29.1–29.1","28.9–29.1","fit"],
-        ["6","S&P (ES)","0.64","n/a","↑","0","pos","7836–7862","7783–7887","fit"],
-        ["7","Nasdaq (NQ)","0.59","n/a","↑","0","pos","30605–30906","30605–31521","hold"],
-        ["8","China (FXI)","0.55","n/a","↑","0","neg","34.0–34.1","33.3–34.4","hold"],
-        ["9","JPY (6J)","0.50","n/a","flat","0","neg","0.01–0.01","0.01–0.01","hold"],
-        ["10","10Y (ZN)","0.48","n/a","flat","0","neg","104.6–105.0","104.0–105.0","hold"],
-        ["11","Crude (CL)","0.46","n/a","↑","0","neg","92.1–93.5","88.0–94.4","hold"],
-        ["12","Gold (GC)","0.45","n/a","↓","0","neg","4174–4225","4091–4242","hold"],
-        ["13","Gold miners","0.40","n/a","↑","0","neg","87.9–88.8","84.4–89.6","hold"],
-        ["14","HY credit","0.38","n/a","flat","0","neg","77.2–77.4","76.9–77.4","hold"],
-        ["15","Gold ETF","0.35","n/a","↓","0","neg","381.2–382.7","374.2–385.2","hold"],
-        ["16","EM (EEM)","0.35","n/a","↓","0","neg","66.1–66.5","65.7–68.8","hold"],
-        ["17","Silver (SI)","0.32","n/a","↓","0","neg","59.8–61.0","58.9–61.0","hold"],
-        ["18","EUR (6E)","0.31","n/a","↓","0","neg","1.12–1.12","1.12–1.13","hold"],
-        ["19","TLT",["bad","0.29"],"n/a","↑","0","neg","77.8–78.1","76.4–78.1","short"],
-        ["20","Russell 2k",["bad","0.21"],"n/a","↓","0","neg","277.8–279.1","274.5–284.6","short"]],
-      crowding:[["Nat gas (NG)","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["Copper (HG)","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["Brent (BZ)","—","—","—","—","steep","<span class=\"pill orange\">steep skew</span>"],["Oil ETF","—","—","—","—","call-skew","<span class=\"pill ghost\">call-skew</span>"],["USD ETF","—","—","—","—","—","<span class=\"pill ghost\">n/a</span>"],["S&P (ES)","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["Nasdaq (NQ)","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["China (FXI)","—","—","—","—","steep","<span class=\"pill orange\">steep skew</span>"],["JPY (6J)","—","—","—","—","—","<span class=\"pill ghost\">n/a</span>"],["10Y (ZN)","—","—","—","—","—","<span class=\"pill ghost\">n/a</span>"],["Crude (CL)","—","—","—","—","call-skew","<span class=\"pill ghost\">call-skew</span>"],["Gold (GC)","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["Gold miners","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["HY credit","—","—","—","—","—","<span class=\"pill ghost\">n/a</span>"],["Gold ETF","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["EM (EEM)","—","—","—","—","call-skew","<span class=\"pill ghost\">call-skew</span>"],["Silver (SI)","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["EUR (6E)","—","—","—","—","—","<span class=\"pill ghost\">n/a</span>"],["TLT","—","—","—","—","mild","<span class=\"pill ghost\">skew only</span>"],["Russell 2k","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"]],
+        ["1","AMD",["good","0.68"],"70","↑↑","+1","pos","586.5–601.8","586.5–658.5","fit"],
+        ["2","PLTR",["good","0.68"],"71","↑↑","+2","pos","206.1–212.9","190.1–212.9","fit"],
+        ["3","MU",["good","0.64"],"64","flat","+26","pos","978.5–1002.7","978.5–1089.2","fit"],
+        ["4","AVGO",["good","0.63"],"63","↓","+0","pos","354.2–360.7","354.2–380.8","fit"],
+        ["5","GEV",["good","0.63"],"64","↑","+1","pos","991.0–1004.3","973.4–1052.8","fit"],
+        ["6","COF",["good","0.63"],"60","↓","+2","pos","199.2–202.4","193.0–202.4","fit"],
+        ["7","TER",["good","0.60"],"60","flat","+15","pos","381.7–394.7","381.7–448.0","fit"],
+        ["8","STX",["good","0.60"],"59","↓↓","+15","pos","750.7–770.0","750.7–863.5","fit"],
+        ["9","WDC",["ghost","0.58"],"55","↓↓","+9","pos","385.9–392.6","385.9–430.3","fit"],
+        ["10","APP",["ghost","0.57"],"54","↓↓","+1","pos","270.1–283.7","269.4–283.8","fit"]
+      ],
+      crowding:[
+        ["PLTR","62","64.7%","+3.5 pts","2.6%","call-skew","<span class=\"pill good\">OK</span>"],
+        ["AMD","68","75.4%","0.42 pts","2.4%","call-skew","<span class=\"pill good\">OK</span>"],
+        ["GEV","72","81.7%","0.13 pts","2.8%","flat","<span class=\"pill orange\">watch</span>"],
+        ["MU","71","79.7%","0.24 pts","2.3%","flat","<span class=\"pill orange\">watch</span>"],
+        ["TER",["warn","88"],"101.0%","0.20 pts","6.4%","flat","<span class=\"pill red\">crowded</span>"],
+        ["AVGO","69","79.9%","+1.9 pts","1.2%","flat","<span class=\"pill good\">OK</span>"],
+        ["COF","76","89.3%","+1.2 pts","1.6%","flat","<span class=\"pill orange\">watch</span>"],
+        ["STX","75","84.6%","0.30 pts","3.5%","put-skew","<span class=\"pill orange\">watch</span>"],
+        ["WDC",["warn","80"],"88.8%","0.27 pts","5.5%","put-skew","<span class=\"pill orange\">watch</span>"],
+        ["APP","70","76.1%","+4.7 pts","4.0%","put-skew","<span class=\"pill orange\">watch</span>"]
+      ],
 
       tone:[
-        ['JPM (upcoming)','Thu 09:00',['orange','−0.21'],'↑','cautious consumer','rate / credit view'],
-        ['Fed (FOMC)','Sep 18',['orange','−0.15'],'↑','data-dependent','rates · USD'],
-        ['ECB','Sep 12',['bad','−0.28'],'↑↑','hawkish hold','EUR · BTP'],
-        ['Oil majors (XOM)','Aug 2',['good','+0.12'],'flat','capex steady','crude · HG'],
-        ['Retailers (WMT)','Aug 15',['orange','−0.18'],'↑','cautious','consumer macro']],
+        ["COF","Tue 30 Jun",["good","+0.48"],"↓","beat","—"],
+        ["GEV","Tue 30 Jun",["bad","−0.45"],"↑","miss","—"],
+        ["TER","Tue 30 Jun",["good","+0.41"],"↓","beat","—"],
+        ["PLTR","Tue 30 Jun",["good","+0.37"],"↓","beat","—"],
+        ["STX","Tue 30 Jun",["good","+0.24"],"↓","beat","—"],
+        ["WDC","Tue 30 Jun",["good","+0.16"],"↓","beat","—"],
+        ["MU","Mon 31 Aug",["good","+0.10"],"↓","beat","—"],
+        ["AMD","Tue 30 Jun",["good","+0.06"],"↓","in-line beat","—"],
+        ["AVGO","Fri 31 Jul",["good","+0.05"],"↓","in-line beat","—"],
+        ["APP","Tue 30 Jun",["ghost","+0.01"],"↓","in-line beat","—"]
+      ],
       betas:[
-        ['ES S&P','−0.38','−0.16','+0.03','−0.71',['dn','−$ 1.42 M']],
-        ['TY 10Y (short)','+0.92','+0.08','−0.01','+0.14',['up','+$ 2.10 M']],
-        ['GC Gold','−0.24','−0.61','+0.08','+0.22',['dn','−$ 540k']],
-        ['CL Crude','+0.11','−0.34','+0.88','−0.12',['up','+$ 180k']],
-        ['6E EUR','−0.06','−0.82','+0.02','−0.09',['dn','−$ 410k']]],
+        ["PLTR","-1.45","1.31","-0.14","0.05",["up","+$ 828k"]],
+        ["AMD","0.12","1.58","-0.04","0.09",["up","+$ 2076k"]],
+        ["GEV","0.04","1.34","-0.31","-0.01",["up","+$ 1303k"]],
+        ["MU","0.08","1.08","0.10","0.12",["up","+$ 1720k"]],
+        ["TER","0.52","1.07","-0.19","0.08",["up","+$ 1722k"]],
+        ["AVGO","-0.03","1.04","-0.07","0.04",["up","+$ 1203k"]],
+        ["COF","-0.76","-0.94","-0.11","0.01",["dn","−$ 1274k"]],
+        ["STX","1.12","-0.47","0.03","0.06",["up","+$ 383k"]],
+        ["WDC","0.89","-0.43","0.10","0.06",["up","+$ 295k"]],
+        ["APP","-1.22","-0.07","-0.00","0.00",["dn","−$ 659k"]]
+      ],
       bridge:[
         ['(no direct crypto)','—','—','—','<span class="pill ghost">monitoring only</span>'],
         ['BTC–DXY correlation','−0.42','—','—','<span class="pill ghost">macro signal</span>'],
@@ -3357,29 +3609,54 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
         ['PG/CL','K. Lee','120d','Valuation spread','Spread 2.1σ wide — add',['good','low'],'<span class="pill good">add</span>'],
         ['GOOG/META','P. Shah','64d','Ad-share rotation','Converging faster than modeled',['orange','medium'],'<span class="pill orange">reduce</span>']],
       universe:[
-        ["1","AMD/AVGO","0.72","74","rev","0","pos","spread","conv 1.7σ","fit"],
-        ["2","KO/PEP","0.68","59","rev","0","neutral","spread","conv 0.9σ","fit"],
-        ["3","GOOGL/META","0.65","89","rev","0","pos","spread","conv 1.0σ","fit"],
-        ["4","JPM/BAC","0.58","77","rev","0","pos","spread","conv 0.7σ","hold"],
-        ["5","COST/WMT","0.54","57","↓","0","pos","spread","conv 0.1σ","hold"],
-        ["6","PG/CL","0.51","47","flat","0","pos","spread","conv 0.2σ","hold"],
-        ["7","V/MA","0.49","69","flat","0","pos","spread","conv 0.1σ","hold"],
-        ["8","HD/LOW","0.46","42","flat","0","pos","spread","conv 0.0σ","hold"],
-        ["9","AMZN/WMT","0.44","76","rev","0","pos","spread","conv 0.4σ","hold"]],
-      crowding:[["AMD/AVGO","58","77.6%","+1.7 pts","1.8%","flat","<span class=\"pill orange\">watch</span>"],["KO/PEP","46","74.9%","+0.2 pts","1.6%","flat","<span class=\"pill good\">OK</span>"],["GOOGL/META",["warn","74"],"80.0%","+0.7 pts","1.4%","flat","<span class=\"pill orange\">watch</span>"],["JPM/BAC","23","73.4%","−0.3 pts","1.1%","flat","<span class=\"pill good\">OK</span>"],["COST/WMT","34","56.4%","−0.1 pts","1.7%","steep","<span class=\"pill good\">OK</span>"],["PG/CL","64","79.1%","−0.4 pts","2.2%","steep","<span class=\"pill orange\">watch</span>"],["V/MA",["warn","70"],"90.6%","−0.7 pts","1.0%","steep","<span class=\"pill orange\">watch</span>"],["HD/LOW","56","79.0%","+1.2 pts","1.7%","flat","<span class=\"pill orange\">watch</span>"],["AMZN/WMT","25","53.5%","+0.1 pts","1.4%","steep","<span class=\"pill good\">OK</span>"]],
+        ["1","AMD",["good","0.68"],"70","↑↑","+1","pos","586.5–601.8","586.5–658.5","fit"],
+        ["2","PLTR",["good","0.68"],"71","↑↑","+2","pos","206.1–212.9","190.1–212.9","fit"],
+        ["3","MU",["good","0.64"],"64","flat","+26","pos","978.5–1002.7","978.5–1089.2","fit"],
+        ["4","AVGO",["good","0.63"],"63","↓","+0","pos","354.2–360.7","354.2–380.8","fit"],
+        ["5","GEV",["good","0.63"],"64","↑","+1","pos","991.0–1004.3","973.4–1052.8","fit"],
+        ["6","COF",["good","0.63"],"60","↓","+2","pos","199.2–202.4","193.0–202.4","fit"],
+        ["7","TER",["good","0.60"],"60","flat","+15","pos","381.7–394.7","381.7–448.0","fit"],
+        ["8","STX",["good","0.60"],"59","↓↓","+15","pos","750.7–770.0","750.7–863.5","fit"],
+        ["9","WDC",["ghost","0.58"],"55","↓↓","+9","pos","385.9–392.6","385.9–430.3","fit"],
+        ["10","APP",["ghost","0.57"],"54","↓↓","+1","pos","270.1–283.7","269.4–283.8","fit"]
+      ],
+      crowding:[
+        ["PLTR","62","64.7%","+3.5 pts","2.6%","call-skew","<span class=\"pill good\">OK</span>"],
+        ["AMD","68","75.4%","0.42 pts","2.4%","call-skew","<span class=\"pill good\">OK</span>"],
+        ["GEV","72","81.7%","0.13 pts","2.8%","flat","<span class=\"pill orange\">watch</span>"],
+        ["MU","71","79.7%","0.24 pts","2.3%","flat","<span class=\"pill orange\">watch</span>"],
+        ["TER",["warn","88"],"101.0%","0.20 pts","6.4%","flat","<span class=\"pill red\">crowded</span>"],
+        ["AVGO","69","79.9%","+1.9 pts","1.2%","flat","<span class=\"pill good\">OK</span>"],
+        ["COF","76","89.3%","+1.2 pts","1.6%","flat","<span class=\"pill orange\">watch</span>"],
+        ["STX","75","84.6%","0.30 pts","3.5%","put-skew","<span class=\"pill orange\">watch</span>"],
+        ["WDC",["warn","80"],"88.8%","0.27 pts","5.5%","put-skew","<span class=\"pill orange\">watch</span>"],
+        ["APP","70","76.1%","+4.7 pts","4.0%","put-skew","<span class=\"pill orange\">watch</span>"]
+      ],
 
       tone:[
-        ['LLY vs NVO','both +12d',['good','+0.20 / −0.05'],'↓ / ↑','LLY raised','pair tilt → LLY'],
-        ['V vs MA','both +6d',['good','+0.14 / +0.02'],'↓','V edge','pair tilt → V'],
-        ['COST vs WMT','both +9d',['good','+0.18 / −0.10'],'↓ / ↑','COST strong','pair tilt → COST'],
-        ['PG vs CL','both +14d',['ghost','+0.04 / −0.02'],'flat','in line','neutral'],
-        ['GOOG vs META','both +11d',['orange','+0.05 / +0.22'],'↓','META stronger','reduce pair']],
+        ["COF","Tue 30 Jun",["good","+0.48"],"↓","beat","—"],
+        ["GEV","Tue 30 Jun",["bad","−0.45"],"↑","miss","—"],
+        ["TER","Tue 30 Jun",["good","+0.41"],"↓","beat","—"],
+        ["PLTR","Tue 30 Jun",["good","+0.37"],"↓","beat","—"],
+        ["STX","Tue 30 Jun",["good","+0.24"],"↓","beat","—"],
+        ["WDC","Tue 30 Jun",["good","+0.16"],"↓","beat","—"],
+        ["MU","Mon 31 Aug",["good","+0.10"],"↓","beat","—"],
+        ["AMD","Tue 30 Jun",["good","+0.06"],"↓","in-line beat","—"],
+        ["AVGO","Fri 31 Jul",["good","+0.05"],"↓","in-line beat","—"],
+        ["APP","Tue 30 Jun",["ghost","+0.01"],"↓","in-line beat","—"]
+      ],
       betas:[
-        ['LLY/NVO pair','−0.02','−0.01','0.00','−0.03',['dn','−$ 40k']],
-        ['V/MA pair','−0.01','0.00','0.00','−0.02',['dn','−$ 22k']],
-        ['Net book','+0.01','−0.02','+0.01','−0.05',['dn','−$ 118k']],
-        ['Residual beta','0.04','−0.03','+0.01','−0.08','≈ flat'],
-        ['(hedge overlay)','—','—','—','—','neutralizes']],
+        ["PLTR","-1.45","1.31","-0.14","0.05",["up","+$ 828k"]],
+        ["AMD","0.12","1.58","-0.04","0.09",["up","+$ 2076k"]],
+        ["GEV","0.04","1.34","-0.31","-0.01",["up","+$ 1303k"]],
+        ["MU","0.08","1.08","0.10","0.12",["up","+$ 1720k"]],
+        ["TER","0.52","1.07","-0.19","0.08",["up","+$ 1722k"]],
+        ["AVGO","-0.03","1.04","-0.07","0.04",["up","+$ 1203k"]],
+        ["COF","-0.76","-0.94","-0.11","0.01",["dn","−$ 1274k"]],
+        ["STX","1.12","-0.47","0.03","0.06",["up","+$ 383k"]],
+        ["WDC","0.89","-0.43","0.10","0.06",["up","+$ 295k"]],
+        ["APP","-1.22","-0.07","-0.00","0.00",["dn","−$ 659k"]]
+      ],
       bridge:[
         ['(no direct crypto)','—','—','—','<span class="pill ghost">monitoring only</span>'],
         ['Hedge-leg β check','≈ 0','—','—','<span class="pill good">clean</span>']]
@@ -3414,34 +3691,54 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
         ['MSTR','K. Lee','120d','BTC-per-share accretion','Premium to NAV elevated',['orange','medium'],'<span class="pill orange">hedge</span>'],
         ['COIN','M. O’Brien','98d','Volume + regulatory clarity','Funding crowded; squeeze risk',['orange','medium'],'<span class="pill orange">watch</span>']],
       universe:[
-        ["1","IBIT",["good","0.76"],"n/a","↑","0","pos","46.5–47.0","45.4–49.1","fit"],
-        ["2","BTC",["good","0.75"],"n/a","↑","0","neg","81.2k–83.7k","81.2k–84.2k","fit"],
-        ["3","MSTR","0.75","72","↑","+2","pos","150.8–158.4","147.4–168.7","fit"],
-        ["4","ETH","0.70","n/a","↑","0","neg","2419–2533","2419–2577","fit"],
-        ["5","ETHA","0.63","n/a","↓","0","neutral","56.6–57.5","54.4–61.7","fit"],
-        ["6","HOOD","0.63","63","↓","+1","pos","107.8–110.0","105.1–116.3","fit"],
-        ["7","SOL","0.63","n/a","↓","0","neg","102.7–108.6","102.7–113.2","fit"],
-        ["8","COIN","0.62","63","↑","+2","pos","176.8–184.2","171.6–192.8","fit"],
-        ["9","HUT","0.50","47","↓↓","−9","pos","82.5–86.9","77.7–93.8","hold"],
-        ["10","WULF","0.47","34","↓↓","−3","pos","13.4–14.0","13.1–15.2","hold"],
-        ["11","RIOT","0.40","53","↓↓","−4","pos","16.4–17.0","16.4–19.7","hold"],
-        ["12","IREN","0.37","47","↓↓","−9","pos","34.7–36.7","34.6–42.2","hold"],
-        ["13","MARA","0.36","47","↓↓","+3","pos","9.39–9.74","9.39–11.3","hold"],
-        ["14","CLSK","0.34","22","↓↓","−9","pos","10.3–10.6","10.3–12.7","exit"]],
-      crowding:[["IBIT","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["BTC","—","—","—","—","flat","<span class=\"pill ghost\">skew only</span>"],["MSTR","28","55.0%","+2.6 pts","7.8%","mild","<span class=\"pill good\">OK</span>"],["ETH","—","—","—","—","—","<span class=\"pill ghost\">n/a</span>"],["ETHA","—","—","—","—","—","<span class=\"pill ghost\">n/a</span>"],["HOOD","50","79.5%","+2.5 pts","5.1%","mild","<span class=\"pill good\">OK</span>"],["SOL","—","—","—","—","call-skew","<span class=\"pill ghost\">call-skew</span>"],["COIN","34","68.7%","−0.0 pts","11.1%","steep","<span class=\"pill orange\">squeeze</span>"],["HUT","62","82.0%","+6.5 pts","16.9%","call-skew","<span class=\"pill orange\">squeeze</span>"],["WULF","69","90.3%","+5.0 pts","28.1%","call-skew","<span class=\"pill orange\">squeeze</span>"],["RIOT","64","87.4%","+4.6 pts","13.9%","call-skew","<span class=\"pill orange\">squeeze</span>"],["IREN","36","63.5%","+10.2 pts","21.3%","call-skew","<span class=\"pill orange\">squeeze</span>"],["MARA","44","76.0%","+4.1 pts","29.8%","flat","<span class=\"pill orange\">squeeze</span>"],["CLSK","67","100.0%","+0.0 pts","41.6%","flat","<span class=\"pill orange\">squeeze</span>"]],
+        ["1","AMD",["good","0.68"],"70","↑↑","+1","pos","586.5–601.8","586.5–658.5","fit"],
+        ["2","PLTR",["good","0.68"],"71","↑↑","+2","pos","206.1–212.9","190.1–212.9","fit"],
+        ["3","MU",["good","0.64"],"64","flat","+26","pos","978.5–1002.7","978.5–1089.2","fit"],
+        ["4","AVGO",["good","0.63"],"63","↓","+0","pos","354.2–360.7","354.2–380.8","fit"],
+        ["5","GEV",["good","0.63"],"64","↑","+1","pos","991.0–1004.3","973.4–1052.8","fit"],
+        ["6","COF",["good","0.63"],"60","↓","+2","pos","199.2–202.4","193.0–202.4","fit"],
+        ["7","TER",["good","0.60"],"60","flat","+15","pos","381.7–394.7","381.7–448.0","fit"],
+        ["8","STX",["good","0.60"],"59","↓↓","+15","pos","750.7–770.0","750.7–863.5","fit"],
+        ["9","WDC",["ghost","0.58"],"55","↓↓","+9","pos","385.9–392.6","385.9–430.3","fit"],
+        ["10","APP",["ghost","0.57"],"54","↓↓","+1","pos","270.1–283.7","269.4–283.8","fit"]
+      ],
+      crowding:[
+        ["PLTR","62","64.7%","+3.5 pts","2.6%","call-skew","<span class=\"pill good\">OK</span>"],
+        ["AMD","68","75.4%","0.42 pts","2.4%","call-skew","<span class=\"pill good\">OK</span>"],
+        ["GEV","72","81.7%","0.13 pts","2.8%","flat","<span class=\"pill orange\">watch</span>"],
+        ["MU","71","79.7%","0.24 pts","2.3%","flat","<span class=\"pill orange\">watch</span>"],
+        ["TER",["warn","88"],"101.0%","0.20 pts","6.4%","flat","<span class=\"pill red\">crowded</span>"],
+        ["AVGO","69","79.9%","+1.9 pts","1.2%","flat","<span class=\"pill good\">OK</span>"],
+        ["COF","76","89.3%","+1.2 pts","1.6%","flat","<span class=\"pill orange\">watch</span>"],
+        ["STX","75","84.6%","0.30 pts","3.5%","put-skew","<span class=\"pill orange\">watch</span>"],
+        ["WDC",["warn","80"],"88.8%","0.27 pts","5.5%","put-skew","<span class=\"pill orange\">watch</span>"],
+        ["APP","70","76.1%","+4.7 pts","4.0%","put-skew","<span class=\"pill orange\">watch</span>"]
+      ],
 
       tone:[
-        ['COIN (pre-announce)','16:30 today',['orange','−0.10'],'↑','volume-driven','MSTR · HOOD'],
-        ['MSTR','Aug 1',['good','+0.25'],'↓','BTC accretion','COIN · miners'],
-        ['CLSK','Aug 8',['bad','−0.35'],'↑↑','cost pressure','miners'],
-        ['HOOD','Jul 31',['good','+0.16'],'↓','crypto rev up','COIN'],
-        ['RIOT','Aug 6',['bad','−0.22'],'↑','hashprice','CLSK · MARA']],
+        ["COF","Tue 30 Jun",["good","+0.48"],"↓","beat","—"],
+        ["GEV","Tue 30 Jun",["bad","−0.45"],"↑","miss","—"],
+        ["TER","Tue 30 Jun",["good","+0.41"],"↓","beat","—"],
+        ["PLTR","Tue 30 Jun",["good","+0.37"],"↓","beat","—"],
+        ["STX","Tue 30 Jun",["good","+0.24"],"↓","beat","—"],
+        ["WDC","Tue 30 Jun",["good","+0.16"],"↓","beat","—"],
+        ["MU","Mon 31 Aug",["good","+0.10"],"↓","beat","—"],
+        ["AMD","Tue 30 Jun",["good","+0.06"],"↓","in-line beat","—"],
+        ["AVGO","Fri 31 Jul",["good","+0.05"],"↓","in-line beat","—"],
+        ["APP","Tue 30 Jun",["ghost","+0.01"],"↓","in-line beat","—"]
+      ],
       betas:[
-        ['BTC','−0.58','−0.31','+0.04','−0.74',['dn','−$ 1.90 M']],
-        ['ETH','−0.66','−0.28','+0.03','−0.81',['dn','−$ 980k']],
-        ['MSTR','−0.82','−0.44','+0.05','−1.12',['dn','−$ 1.52 M']],
-        ['COIN','−0.71','−0.38','+0.04','−0.96',['dn','−$ 760k']],
-        ['CLSK','−0.94','−0.41','+0.06','−1.24',['dn','−$ 410k']]],
+        ["PLTR","-1.45","1.31","-0.14","0.05",["up","+$ 828k"]],
+        ["AMD","0.12","1.58","-0.04","0.09",["up","+$ 2076k"]],
+        ["GEV","0.04","1.34","-0.31","-0.01",["up","+$ 1303k"]],
+        ["MU","0.08","1.08","0.10","0.12",["up","+$ 1720k"]],
+        ["TER","0.52","1.07","-0.19","0.08",["up","+$ 1722k"]],
+        ["AVGO","-0.03","1.04","-0.07","0.04",["up","+$ 1203k"]],
+        ["COF","-0.76","-0.94","-0.11","0.01",["dn","−$ 1274k"]],
+        ["STX","1.12","-0.47","0.03","0.06",["up","+$ 383k"]],
+        ["WDC","0.89","-0.43","0.10","0.06",["up","+$ 295k"]],
+        ["APP","-1.22","-0.07","-0.00","0.00",["dn","−$ 659k"]]
+      ],
       bridge:[
         ['BTC spot','1.00','$ 21.4 M',['dn','−$ 449k'],'<span class="pill ok">watch</span>'],
         ['ETH spot','1.24','$ 10.8 M',['dn','−$ 367k'],'<span class="pill ok">watch</span>'],
@@ -3485,7 +3782,251 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
     vfill('earnings-tone', d.tone);
     vfill('macro-betas', d.betas);
     vfill('digital-bridge', d.bridge);
+    // 10-name universe — all 4 Market-Squad dashboards (shared data, per-fund lens).
+    const ed=(typeof earningsData!=='undefined')?(earningsData[fund]||earningsData.alpha):null;
+    if(ed){
+      vkpi('earnings-kpis', ed.kpis);
+      vfill('earnings-upcoming', ed.upcoming);
+      vfill('earnings-surprises', ed.surprises);
+      vfill('earnings-phrases', ed.phrases);
+      vfill('earnings-revisions', ed.revisions);
+      const ec=document.getElementById('earnings-chip'); if(ec && ed.chip) ec.textContent=ed.chip;
+    }
+    // Agentic AI briefs (senior-analyst voice, derived from current data) — same across funds.
+    const ai=window.__POINT_AI_BRIEFS__||{};
+    ['research','flows','earnings','macro'].forEach(k=>{
+      const el=document.getElementById(k+'-ai');
+      if(el && ai[k]) el.innerHTML=ai[k];
+    });
+    // Macro extras (KPIs, yield curve, CB calendar) from the 10-name data bootstrap.
+    const mx=window.__POINT_MACRO_EXTRAS__;
+    if(mx){
+      if(mx.kpis) vkpi('macro-kpis', mx.kpis);
+      const curve=document.getElementById('macro-curve');
+      if(curve) curve.innerHTML=(mx.yieldCurve||[]).map(y=>`<div class="etf-row"><span>${y[0]}</span><div class="bar"><div class="fill" style="width:${Math.round(parseFloat(y[1])*15)}%"></div></div><b>${y[1]}</b></div>`).join('');
+      const cal=document.getElementById('macro-calendar');
+      if(cal) cal.innerHTML=(mx.cbCalendar||[]).map(c=>`<li><div><b>${c[0]}</b> — ${c[1]}</div><span class="pill ghost">event</span></li>`).join('');
+    }
+    const mc=document.getElementById('macro-chip');
+    if(mc) mc.textContent=({alpha:'Alpha lens · 10 recent S&P 500 adds · $1M per name',global:'Global lens · 10 recent S&P 500 adds · rate/FX shocks',neutral:'Neutral lens · 10 recent S&P 500 adds · pair offsets',digital:'Digital lens · 10 recent S&P 500 adds · BTC-rate β'}[fund])||'10 recent S&P 500 adds · 12 Oct';
+    const rsub=({alpha:'Alpha lens · long/short ideas',global:'Global lens · macro-fit ranking',neutral:'Neutral lens · pair candidates',digital:'Digital lens · crypto-β overlay'}[fund])||'';
+    const rcEl=document.getElementById('research-chip'); if(rcEl) rcEl.textContent=`10 recent S&P 500 adds · ${rsub} · 12 Oct`;
+    const rtEl=document.getElementById('research-title'); if(rtEl) rtEl.textContent='Ranked universe · 10 recent S&P 500 adds · 12 Oct close';
+    const fcEl=document.getElementById('flows-chip'); if(fcEl) fcEl.textContent=`10 recent S&P 500 adds · ${rsub} · 12 Oct`;
+    const ftEl=document.getElementById('flows-title'); if(ftEl) ftEl.textContent='10 recent S&P 500 adds · crowding · short interest · skew';
   }
+
+  /* ---- Earnings & Sentiment · per-fund (patched by scripts/emit-recent10.js) ---- */
+  const earningsData = {
+    alpha:{
+      chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
+      kpis:[
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Beat rate","90%","9/10 beat","good"]],
+      upcoming:[
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est +0.05%"],
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+        ["TER","Wed 21 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.89%"],
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
+      surprises:[
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
+      phrases:[
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
+      revisions:[
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 4"],"2","<span class=\"pill good\">pos</span>"],
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 42"],"1","<span class=\"pill good\">pos</span>"],
+        ["GEV",["bad","-0.37%"],["ghost","+0.05%"],["up","+$ 228"],"1","<span class=\"pill good\">pos</span>"],
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 572"],"26","<span class=\"pill good\">pos</span>"],
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 63"],"15","<span class=\"pill good\">pos</span>"],
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 177"],"0","<span class=\"pill orange\">mixed</span>"],
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 52"],"2","<span class=\"pill good\">pos</span>"],
+        ["STX",["good","+0.40%"],["good","+1.89%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 282"],"9","<span class=\"pill good\">pos</span>"],
+        ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 215"],"1","<span class=\"pill good\">pos</span>"]]
+    },
+    global:{
+      chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
+      kpis:[
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Beat rate","90%","9/10 beat","good"]],
+      upcoming:[
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est +0.05%"],
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+        ["TER","Wed 21 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.89%"],
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
+      surprises:[
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
+      phrases:[
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
+      revisions:[
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 4"],"2","<span class=\"pill good\">pos</span>"],
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 42"],"1","<span class=\"pill good\">pos</span>"],
+        ["GEV",["bad","-0.37%"],["ghost","+0.05%"],["up","+$ 228"],"1","<span class=\"pill good\">pos</span>"],
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 572"],"26","<span class=\"pill good\">pos</span>"],
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 63"],"15","<span class=\"pill good\">pos</span>"],
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 177"],"0","<span class=\"pill orange\">mixed</span>"],
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 52"],"2","<span class=\"pill good\">pos</span>"],
+        ["STX",["good","+0.40%"],["good","+1.89%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 282"],"9","<span class=\"pill good\">pos</span>"],
+        ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 215"],"1","<span class=\"pill good\">pos</span>"]]
+    },
+    neutral:{
+      chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
+      kpis:[
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Beat rate","90%","9/10 beat","good"]],
+      upcoming:[
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est +0.05%"],
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+        ["TER","Wed 21 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.89%"],
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
+      surprises:[
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
+      phrases:[
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
+      revisions:[
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 4"],"2","<span class=\"pill good\">pos</span>"],
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 42"],"1","<span class=\"pill good\">pos</span>"],
+        ["GEV",["bad","-0.37%"],["ghost","+0.05%"],["up","+$ 228"],"1","<span class=\"pill good\">pos</span>"],
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 572"],"26","<span class=\"pill good\">pos</span>"],
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 63"],"15","<span class=\"pill good\">pos</span>"],
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 177"],"0","<span class=\"pill orange\">mixed</span>"],
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 52"],"2","<span class=\"pill good\">pos</span>"],
+        ["STX",["good","+0.40%"],["good","+1.89%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 282"],"9","<span class=\"pill good\">pos</span>"],
+        ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 215"],"1","<span class=\"pill good\">pos</span>"]]
+    },
+    digital:{
+      chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
+      kpis:[
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Beat rate","90%","9/10 beat","good"]],
+      upcoming:[
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est +0.05%"],
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+        ["TER","Wed 21 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.89%"],
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
+      surprises:[
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
+      phrases:[
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
+      revisions:[
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 4"],"2","<span class=\"pill good\">pos</span>"],
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 42"],"1","<span class=\"pill good\">pos</span>"],
+        ["GEV",["bad","-0.37%"],["ghost","+0.05%"],["up","+$ 228"],"1","<span class=\"pill good\">pos</span>"],
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 572"],"26","<span class=\"pill good\">pos</span>"],
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 63"],"15","<span class=\"pill good\">pos</span>"],
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 177"],"0","<span class=\"pill orange\">mixed</span>"],
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 52"],"2","<span class=\"pill good\">pos</span>"],
+        ["STX",["good","+0.40%"],["good","+1.89%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 282"],"9","<span class=\"pill good\">pos</span>"],
+        ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 215"],"1","<span class=\"pill good\">pos</span>"]]
+    }
+  };
 
   /* ---- per-fund secondary panels ---- */
   const panelData = {
@@ -3502,7 +4043,14 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
       divergence:[["<b>FLNC</b> — research short · Siemens Pension Trust E.V. cut 7.0 pts of the co.","pill good","aligned"],["<b>MOS</b> — research short · FMR cut 5.0 pts of the co.","pill good","aligned"],["<b>CABO</b> — research short · Blackrock cut 4.8 pts of the co.","pill good","aligned"],["<b>GPRO</b> — research short · Blackrock added 4.3 pts of the co.","pill red","counter"],["<b>OLN</b> — research short · AQR Capital Management added 3.8 pts of the co.","pill red","counter"],["<b>METCB</b> — research short · Blackrock added 3.5 pts of the co.","pill red","counter"]],
       etf:[["SPY",8,"","+0.4%"],["QQQ",19,"bad","−1.3%"],["SMH",96,"bad","−6.8%"],["IWM",27,"bad","−1.9%"],["XLE",57,"","+4.0%"],["XLK",32,"bad","−2.3%"],["IBIT (BTC)",49,"bad","−3.5%"],["ETHA (ETH)",100,"bad","−7.1%"]],
       social:[['NVDA',22,58,'58/22'],['TSLA',38,42,'42/38'],['META',14,68,'68/14'],['COIN',20,60,'60/20'],['AMD',28,48,'48/28']],
-      scenario:[['Base case','<b class="good">+$ 1.2 M</b>'],['Hot CPI (+0.4% MoM core)','<b class="dn">−$ 4.78 M · −38 bps</b>'],['Cold CPI (0.1%)','<b class="up">+$ 6.1 M · +49 bps</b>'],['Fed +25 surprise','<b class="dn">−$ 7.9 M</b>'],['10Y +50 bp','<b class="dn">−$ 9.4 M</b>'],['Risk-off (VIX >30)','<b class="dn">−$ 18.0 M</b>']]
+      scenario:[
+        ["Base case","<b class=\"good\">+$ 0.50 M</b>"],
+        ["Hot CPI (10Y +50bp · DXY +1% · VIX +5pt)","<b class=\"good\">+$ 7.60 M</b>"],
+        ["Cold CPI (10Y −30bp · VIX −3pt)","<b class=\"dn\">−$ 4.01 M</b>"],
+        ["Fed +25 surprise (10Y +25bp · DXY +0.8%)","<b class=\"good\">+$ 5.20 M</b>"],
+        ["10Y +50 bp pure","<b class=\"dn\">−$ 0.34 M</b>"],
+        ["Risk-off (VIX &gt;30 · DXY +2% · WTI −10%)","<b class=\"good\">+$ 22.28 M</b>"]
+      ]
     },
     global:{
       whatifSelect:'Add 0.6× ZN DV01 ladder + trim JPY short',
@@ -3517,7 +4065,14 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
       divergence:[["<b>Futures / ETFs</b> — no 13F holder file on these proxies. The column that is filled is put−call skew from the ETF option chain.","pill ghost","skew only"]],
       etf:[["USO",100,"","+4.9%"],["GLD",14,"gold","+0.7%"],["TLT",25,"","+1.2%"],["UUP",10,"","+0.5%"],["FXI",18,"","+0.9%"],["EEM",77,"bad","−3.8%"],["UNG",72,"","+3.5%"],["HYG",8,"","+0.4%"]],
       social:[['Gold',16,62,'62/16'],['Crude',30,50,'50/30'],['USD',34,40,'40/34'],['China/FXI',22,58,'58/22'],['Rates',44,32,'32/44']],
-      scenario:[['Base case','<b class="good">+$ 2.1 M</b>'],['Hot CPI (+0.4% core)','<b class="up">+$ 2.4 M · short rates win</b>'],['Cold CPI (0.1%)','<b class="dn">−$ 3.2 M</b>'],['Fed +25 surprise','<b class="up">+$ 3.8 M</b>'],['10Y +50 bp','<b class="up">+$ 2.1 M</b>'],['Risk-off (VIX >30)','<b class="dn">−$ 12.4 M</b>']]
+      scenario:[
+        ["Base case","<b class=\"good\">+$ 0.50 M</b>"],
+        ["Hot CPI (10Y +50bp · DXY +1% · VIX +5pt)","<b class=\"good\">+$ 7.60 M</b>"],
+        ["Cold CPI (10Y −30bp · VIX −3pt)","<b class=\"dn\">−$ 4.01 M</b>"],
+        ["Fed +25 surprise (10Y +25bp · DXY +0.8%)","<b class=\"good\">+$ 5.20 M</b>"],
+        ["10Y +50 bp pure","<b class=\"dn\">−$ 0.34 M</b>"],
+        ["Risk-off (VIX &gt;30 · DXY +2% · WTI −10%)","<b class=\"good\">+$ 22.28 M</b>"]
+      ]
     },
     neutral:{
       whatifSelect:'Add 15% to PG/CL pair (beta-neutral)',
@@ -3532,7 +4087,14 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
       divergence:[["<b>AMD/AVGO</b> — research long · JPMORGAN CHASE & CO added 1.0 pts of the co.","pill good","aligned"],["<b>HD/LOW</b> — research long · FMR added 1.0 pts of the co.","pill good","aligned"],["<b>GOOGL/META</b> — research long · FMR cut 0.9 pts of the co.","pill orange","divergent"],["<b>PG/CL</b> — research long · Price (T.Rowe) Associates cut 0.7 pts of the co.","pill orange","divergent"],["<b>V/MA</b> — research long · Mastercard Foundation Asset Management Corp cut 0.6 pts of the co.","pill orange","divergent"],["<b>KO/PEP</b> — research long · Charles Schwab Investment Management added 0.4 pts of the co.","pill good","aligned"]],
       etf:[["XLV health",66,"","+2.8%"],["XLF fins",52,"","+2.2%"],["XLK tech",55,"bad","−2.3%"],["XLE energy",97,"","+4.0%"],["XLP staples",100,"","+4.2%"],["XLY discr",40,"","+1.7%"],["SPY",10,"","+0.4%"]],
       social:[['LLY',14,66,'66/14'],['NVO',38,40,'40/38'],['V',18,60,'60/18'],['MA',24,52,'52/24'],['COST',16,64,'64/16']],
-      scenario:[['Base case','<b class="good">+$ 0.4 M</b>'],['Hot CPI (+0.4% core)','<b class="dn">−$ 0.3 M · < ±8 bps</b>'],['Cold CPI (0.1%)','<b class="up">+$ 0.5 M</b>'],['Fed +25 surprise','<b class="dn">−$ 0.6 M</b>'],['10Y +50 bp','<b class="dn">−$ 0.4 M</b>'],['Risk-off (VIX >30)','<b class="dn">−$ 2.0 M</b>']]
+      scenario:[
+        ["Base case","<b class=\"good\">+$ 0.50 M</b>"],
+        ["Hot CPI (10Y +50bp · DXY +1% · VIX +5pt)","<b class=\"good\">+$ 7.60 M</b>"],
+        ["Cold CPI (10Y −30bp · VIX −3pt)","<b class=\"dn\">−$ 4.01 M</b>"],
+        ["Fed +25 surprise (10Y +25bp · DXY +0.8%)","<b class=\"good\">+$ 5.20 M</b>"],
+        ["10Y +50 bp pure","<b class=\"dn\">−$ 0.34 M</b>"],
+        ["Risk-off (VIX &gt;30 · DXY +2% · WTI −10%)","<b class=\"good\">+$ 22.28 M</b>"]
+      ]
     },
     digital:{
       whatifSelect:'Buy MSTR/COIN put spread ($0.6M premium)',
@@ -3547,7 +4109,14 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
       divergence:[["<b>HUT</b> — research long · Coatue Management added 3.9 pts of the co.","pill good","aligned"],["<b>IREN</b> — research long · Bank of America added 3.1 pts of the co.","pill good","aligned"],["<b>RIOT</b> — research long · Jane Street Group added 2.5 pts of the co.","pill good","aligned"],["<b>COIN</b> — research long · Paradigm Operations cut 0.2 pts of the co.","pill orange","divergent"]],
       etf:[["IBIT (BTC)",29,"bad","−3.5%"],["ETHA (ETH)",59,"bad","−7.1%"],["BITO",28,"bad","−3.3%"],["WGMI miners",100,"bad","−12.0%"],["BLOK",40,"bad","−4.8%"],["QQQ",11,"bad","−1.3%"]],
       social:[['BTC',28,56,'56/28'],['SOL',14,72,'72/14'],['ETH',22,58,'58/22'],['COIN',20,60,'60/20'],['CLSK',46,34,'34/46']],
-      scenario:[['Base case','<b class="good">+$ 1.8 M</b>'],['Hot CPI (+0.4% core)','<b class="dn">−$ 3.4 M · BTC-rate β</b>'],['Cold CPI (0.1%)','<b class="up">+$ 4.2 M</b>'],['BTC −15%','<b class="dn">−$ 6.1 M</b>'],['Alt −25%','<b class="dn">−$ 7.8 M</b>'],['Risk-off (VIX >30)','<b class="dn">−$ 9.0 M</b>']]
+      scenario:[
+        ["Base case","<b class=\"good\">+$ 0.50 M</b>"],
+        ["Hot CPI (10Y +50bp · DXY +1% · VIX +5pt)","<b class=\"good\">+$ 7.60 M</b>"],
+        ["Cold CPI (10Y −30bp · VIX −3pt)","<b class=\"dn\">−$ 4.01 M</b>"],
+        ["Fed +25 surprise (10Y +25bp · DXY +0.8%)","<b class=\"good\">+$ 5.20 M</b>"],
+        ["10Y +50 bp pure","<b class=\"dn\">−$ 0.34 M</b>"],
+        ["Risk-off (VIX &gt;30 · DXY +2% · WTI −10%)","<b class=\"good\">+$ 22.28 M</b>"]
+      ]
     }
   };
   const marketData = {
@@ -3628,7 +4197,8 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
     const d=panelData[fund]||panelData.alpha;
     const md=marketData[fund]||marketData.alpha;
     const mk=document.getElementById('macro-kpis');
-    if(mk) mk.innerHTML=md.macroKpis.map(k=>`<div class="kpi"><div class="k-lab">${k[0]}</div><div class="k-val">${k[1]}</div><div class="k-sub">${k[2]}</div></div>`).join('');
+    const macroKpiSrc=(window.__POINT_MACRO_EXTRAS__&&window.__POINT_MACRO_EXTRAS__.kpis)||md.macroKpis;
+    if(mk) mk.innerHTML=macroKpiSrc.map(k=>`<div class="kpi"><div class="k-lab">${k[0]}</div><div class="k-val ${k[3]||''}">${k[1]}</div><div class="k-sub">${k[2]}</div></div>`).join('');
     const elog=document.getElementById('eventlog');
     if(elog) elog.innerHTML=md.events.map(e=>`<li><span class="et">${e[0]}</span><span class="ea">${e[1]}</span><span class="em">${e[2]}</span></li>`).join('');
     const ir=document.getElementById('ir-letter');

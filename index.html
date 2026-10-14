@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="chat.css">
+<script src="data/macro-extras.js"></script>
 </head>
 <body data-theme="dark">
 
@@ -810,6 +811,7 @@
         <div><div class="eyebrow">Market squad · Agent</div><h1 class="h2">🔍  Research & Alpha Agent</h1></div>
         <div class="chip gold" id="research-chip">AI + quant · 31 names ≥ 0.72 · 12 Oct</div>
       </div>
+      <div class="card ai-view"><div class="ai-body" id="research-ai"></div></div>
       <div class="card">
         <div class="card-head"><h3 class="card-title" id="research-title">Ranked universe · top 20 / bottom 20 of 650 · 12 Oct close</h3>
           <div class="seg">
@@ -820,47 +822,16 @@
         <table class="tbl">
           <thead><tr><th>Rank</th><th>Ticker</th><th>Score</th><th>Quality</th><th>Momentum</th><th>Revisions</th><th>Sentiment</th><th>1d range</th><th>5d range</th><th>Thesis fit</th></tr></thead>
           <tbody id="research-universe">
-            <tr><td>1</td><td>PLTR</td><td class="good">0.85</td><td>93</td><td>↑↑</td><td>0</td><td>pos</td><td>206.1–212.9</td><td>190.1–212.9</td><td>strong</td></tr>
-            <tr><td>2</td><td>FRO</td><td class="good">0.83</td><td>86</td><td>↑↑</td><td>+2</td><td>pos</td><td>58.0–59.5</td><td>51.9–59.5</td><td>strong</td></tr>
-            <tr><td>3</td><td>ASC</td><td class="good">0.83</td><td>85</td><td>↑</td><td>+5</td><td>pos</td><td>19.6–20.1</td><td>18.4–20.1</td><td>strong</td></tr>
-            <tr><td>4</td><td>MSFT</td><td class="good">0.81</td><td>77</td><td>↑↑</td><td>0</td><td>pos</td><td>535.7–542.7</td><td>518.8–542.7</td><td>strong</td></tr>
-            <tr><td>5</td><td>INTR</td><td class="good">0.80</td><td>68</td><td>↑↑</td><td>0</td><td>pos</td><td>7.58–7.81</td><td>6.68–7.81</td><td>strong</td></tr>
-            <tr><td>6</td><td>ANET</td><td class="good">0.79</td><td>82</td><td>↑</td><td>0</td><td>pos</td><td>210.2–216.5</td><td>207.2–217.4</td><td>strong</td></tr>
-            <tr><td>7</td><td>CVX</td><td class="good">0.79</td><td>71</td><td>↑</td><td>+1</td><td>pos</td><td>213.8–216.7</td><td>204.9–216.7</td><td>fit</td></tr>
-            <tr><td>8</td><td>V</td><td class="good">0.78</td><td>69</td><td>↑↑</td><td>0</td><td>pos</td><td>384.6–391.8</td><td>368.1–391.8</td><td>fit</td></tr>
-            <tr><td>9</td><td>ISRG</td><td class="good">0.78</td><td>69</td><td>↑↑</td><td>+1</td><td>pos</td><td>421.0–429.3</td><td>402.0–429.3</td><td>fit</td></tr>
-            <tr><td>10</td><td>GOOGL</td><td class="good">0.78</td><td>89</td><td>↑</td><td>0</td><td>pos</td><td>350.5–356.5</td><td>343.1–356.8</td><td>strong</td></tr>
-            <tr><td>11</td><td>MPC</td><td class="good">0.78</td><td>66</td><td>↑↑</td><td>+3</td><td>neutral</td><td>454.5–468.4</td><td>427.2–470.0</td><td>fit</td></tr>
-            <tr><td>12</td><td>COP</td><td class="good">0.78</td><td>70</td><td>↑</td><td>+1</td><td>pos</td><td>135.8–137.6</td><td>127.8–137.6</td><td>fit</td></tr>
-            <tr><td>13</td><td>HIPO</td><td class="good">0.78</td><td>84</td><td>↑↑</td><td>0</td><td>pos</td><td>33.8–34.4</td><td>32.0–34.6</td><td>fit</td></tr>
-            <tr><td>14</td><td>VLO</td><td class="good">0.77</td><td>73</td><td>↑↑</td><td>+3</td><td>neutral</td><td>431.9–447.5</td><td>413.4–449.8</td><td>fit</td></tr>
-            <tr><td>15</td><td>MA</td><td class="good">0.77</td><td>64</td><td>↑</td><td>0</td><td>pos</td><td>590.2–599.0</td><td>562.1–599.0</td><td>fit</td></tr>
-            <tr><td>16</td><td>NAT</td><td class="good">0.77</td><td>77</td><td>↑↑</td><td>+2</td><td>neg</td><td>8.59–8.84</td><td>8.13–8.84</td><td>fit</td></tr>
-            <tr><td>17</td><td>GOOG</td><td class="good">0.76</td><td>89</td><td>↑</td><td>0</td><td>pos</td><td>347.2–352.7</td><td>340.3–353.5</td><td>fit</td></tr>
-            <tr><td>18</td><td>DDOG</td><td class="good">0.76</td><td>62</td><td>↑↑</td><td>+1</td><td>pos</td><td>286.5–300.7</td><td>269.4–300.7</td><td>fit</td></tr>
-            <tr><td>19</td><td>ADSK</td><td class="good">0.76</td><td>69</td><td>↑↑</td><td>0</td><td>pos</td><td>229.3–237.3</td><td>221.7–238.6</td><td>fit</td></tr>
-            <tr><td>20</td><td>CDNS</td><td class="good">0.75</td><td>77</td><td>↑</td><td>0</td><td>pos</td><td>346.8–354.6</td><td>346.8–361.9</td><td>fit</td></tr>
-            <tr class="tbl-sep"><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
-            <tr><td>631</td><td>PMT</td><td class="bad">0.27</td><td>38</td><td>↓↓</td><td>0</td><td>neutral</td><td>7.04–7.35</td><td>7.04–8.03</td><td>short</td></tr>
-            <tr><td>632</td><td>NVR</td><td class="bad">0.27</td><td>44</td><td>↓↓</td><td>−1</td><td>neg</td><td>5726–5934</td><td>5726–6062</td><td>short</td></tr>
-            <tr><td>633</td><td>CABO</td><td class="bad">0.27</td><td>3</td><td>↑</td><td>0</td><td>neg</td><td>10.5–11.8</td><td>9.84–16.3</td><td>short</td></tr>
-            <tr><td>634</td><td>IREN</td><td class="bad">0.27</td><td>8</td><td>↓↓</td><td>−9</td><td>pos</td><td>34.7–36.7</td><td>34.6–42.2</td><td>short</td></tr>
-            <tr><td>635</td><td>SMR</td><td class="bad">0.26</td><td>30</td><td>↓↓</td><td>0</td><td>neutral</td><td>6.61–7.07</td><td>6.61–8.37</td><td>short</td></tr>
-            <tr><td>636</td><td>FISV</td><td class="bad">0.26</td><td>n/a</td><td>↓</td><td>−1</td><td>neutral</td><td>45.3–46.7</td><td>44.7–46.7</td><td>short</td></tr>
-            <tr><td>637</td><td>METCB</td><td class="bad">0.25</td><td>14</td><td>↓</td><td>0</td><td>neg</td><td>4.15–4.51</td><td>4.15–4.70</td><td>short</td></tr>
-            <tr><td>638</td><td>CIFR</td><td class="bad">0.24</td><td>5</td><td>↓↓</td><td>−3</td><td>pos</td><td>12.9–13.6</td><td>12.9–15.8</td><td>short</td></tr>
-            <tr><td>639</td><td>RC</td><td class="bad">0.24</td><td>11</td><td>↑</td><td>−2</td><td>neg</td><td>1.17–1.29</td><td>1.08–1.35</td><td>short</td></tr>
-            <tr><td>640</td><td>FLNC</td><td class="bad">0.24</td><td>26</td><td>↓↓</td><td>−9</td><td>neg</td><td>7.05–7.33</td><td>7.05–8.16</td><td>short</td></tr>
-            <tr><td>641</td><td>LEN</td><td class="bad">0.22</td><td>28</td><td>↓</td><td>−2</td><td>neg</td><td>74.4–76.8</td><td>74.4–77.8</td><td>short</td></tr>
-            <tr><td>642</td><td>TROX</td><td class="bad">0.22</td><td>24</td><td>↓↓</td><td>−1</td><td>neg</td><td>3.35–3.57</td><td>3.35–3.96</td><td>short</td></tr>
-            <tr><td>643</td><td>JBLU</td><td class="bad">0.21</td><td>21</td><td>↓↓</td><td>−3</td><td>neg</td><td>3.62–3.81</td><td>3.62–4.17</td><td>short</td></tr>
-            <tr><td>644</td><td>JELD</td><td class="bad">0.21</td><td>7</td><td>↓↓</td><td>−1</td><td>neg</td><td>1.23–1.52</td><td>1.23–1.87</td><td>short</td></tr>
-            <tr><td>645</td><td>OI</td><td class="bad">0.21</td><td>5</td><td>↑</td><td>−2</td><td>neutral</td><td>5.91–6.10</td><td>5.57–6.23</td><td>short</td></tr>
-            <tr><td>646</td><td>OLN</td><td class="bad">0.20</td><td>13</td><td>↓↓</td><td>−3</td><td>neutral</td><td>14.6–15.0</td><td>14.6–16.3</td><td>short</td></tr>
-            <tr><td>647</td><td>PLUG</td><td class="bad">0.19</td><td>12</td><td>↓↓</td><td>0</td><td>neutral</td><td>1.58–1.68</td><td>1.58–1.93</td><td>short</td></tr>
-            <tr><td>648</td><td>ARE</td><td class="bad">0.19</td><td>19</td><td>↓↓</td><td>−1</td><td>neg</td><td>43.5–44.9</td><td>43.5–47.1</td><td>short</td></tr>
-            <tr><td>649</td><td>MOS</td><td class="bad">0.17</td><td>24</td><td>↓↓</td><td>−1</td><td>neutral</td><td>18.4–19.0</td><td>18.4–21.5</td><td>short</td></tr>
-            <tr><td>650</td><td>GPRO</td><td class="bad">0.15</td><td>2</td><td>↓↓</td><td>−9</td><td>neg</td><td>1.15–1.19</td><td>1.15–1.38</td><td>short</td></tr>
+            <tr><td>1</td><td>AMD</td><td class="good">0.68</td><td>70</td><td>↑↑</td><td>+1</td><td>pos</td><td>586.5–601.8</td><td>586.5–658.5</td><td>fit</td></tr>
+            <tr><td>2</td><td>PLTR</td><td class="good">0.68</td><td>71</td><td>↑↑</td><td>+2</td><td>pos</td><td>206.1–212.9</td><td>190.1–212.9</td><td>fit</td></tr>
+            <tr><td>3</td><td>MU</td><td class="good">0.64</td><td>64</td><td>flat</td><td>+26</td><td>pos</td><td>978.5–1002.7</td><td>978.5–1089.2</td><td>fit</td></tr>
+            <tr><td>4</td><td>AVGO</td><td class="good">0.63</td><td>63</td><td>↓</td><td>+0</td><td>pos</td><td>354.2–360.7</td><td>354.2–380.8</td><td>fit</td></tr>
+            <tr><td>5</td><td>GEV</td><td class="good">0.63</td><td>64</td><td>↑</td><td>+1</td><td>pos</td><td>991.0–1004.3</td><td>973.4–1052.8</td><td>fit</td></tr>
+            <tr><td>6</td><td>COF</td><td class="good">0.63</td><td>60</td><td>↓</td><td>+2</td><td>pos</td><td>199.2–202.4</td><td>193.0–202.4</td><td>fit</td></tr>
+            <tr><td>7</td><td>TER</td><td class="good">0.60</td><td>60</td><td>flat</td><td>+15</td><td>pos</td><td>381.7–394.7</td><td>381.7–448.0</td><td>fit</td></tr>
+            <tr><td>8</td><td>STX</td><td class="good">0.60</td><td>59</td><td>↓↓</td><td>+15</td><td>pos</td><td>750.7–770.0</td><td>750.7–863.5</td><td>fit</td></tr>
+            <tr><td>9</td><td>WDC</td><td class="ghost">0.58</td><td>55</td><td>↓↓</td><td>+9</td><td>pos</td><td>385.9–392.6</td><td>385.9–430.3</td><td>fit</td></tr>
+            <tr><td>10</td><td>APP</td><td class="ghost">0.57</td><td>54</td><td>↓↓</td><td>+1</td><td>pos</td><td>270.1–283.7</td><td>269.4–283.8</td><td>fit</td></tr>
           </tbody>
         </table>
         </div>
@@ -877,6 +848,22 @@
           <div class="ex-txt">Model attributes <b>0.85</b> to Palantir at the 12 Oct close ($209): 49% profit margin, 38% ROE, 93% revenue growth, and +25% 21-day price momentum (session range 206.1–212.9). Analyst sentiment is only mid-pack — the score is quality + trend, not a crowded buy-rating pile-up. Risk: beta 1.60 into Monday’s AI-infra/optics selloff.</div>
         </div>
       </div>
+      <details class="legend-card"><summary>Description</summary><div class="legend-body">
+        <p><b>What this tab answers:</b> among the 10 names on the screen, which ones the model ranks higher as of the 12 Oct 2026 close, and why.</p>
+        <p><b>Where the numbers come from:</b> Yahoo Finance daily prices through 12 Oct, plus quote summary fields for analyst recommendations and EPS estimate changes. The memo at the top uses the same 10 names.</p>
+        <p><b>Score (0–1)</b> = 0.50 + 0.20·momentum + 0.15·revisions + 0.15·sentiment, then clamped to 0–1. Momentum is the 21-session price change, scaled and capped at ±1. Revisions is the current-quarter EPS estimate change versus 7 days ago, scaled and capped at ±1. Sentiment is (buys − sells) ÷ (buys + holds + sells).</p>
+        <ul class="legend-list">
+          <li><b>Rank</b> — 1 is the highest score in this 10-name set.</li>
+          <li><b>Score</b> — green ≥ 0.60, neutral between 0.40 and 0.60, red ≤ 0.40.</li>
+          <li><b>Quality</b> — 50 + 25·momentum + 15·sentiment, shown as a whole number from 5 to 99. It is a blend of the price trend and the analyst mix, not a reported margin or ROE.</li>
+          <li><b>Momentum</b> — 21-session price change. ↑↑ above +8%, ↑ above +2%, flat inside ±2%, ↓ below −2%, ↓↓ below −8%.</li>
+          <li><b>Revisions</b> — number of upward EPS revisions in the last 7 days minus the number of downward ones, for the current quarter.</li>
+          <li><b>Sentiment</b> — pos when (buys − sells) is more than 15% of the analyst count, neg when it is below −15%, otherwise neutral.</li>
+          <li><b>1d range</b> — low to high of the 12 Oct session. <b>5d range</b> — low to high of the last 5 sessions.</li>
+          <li><b>Thesis fit</b> — strong when score ≥ 0.70, fit when ≥ 0.55, hold when ≥ 0.40, short below 0.40. In this set every name lands on fit.</li>
+          <li><b>Next catalyst</b> (memo only) — the next earnings date from Yahoo’s calendar, written as the weekday and how many days away. It is not a headline or a price target.</li>
+        </ul>
+      </div></details>
     </section>
 
     <!-- ======== VIEW: FLOWS ======== -->
@@ -885,53 +872,23 @@
         <div><div class="eyebrow">Market squad · Agent</div><h1 class="h2">≋  Fund Flows & Positioning Agent</h1></div>
         <div class="chip orange" id="flows-chip">ADSK crowding 90 · 12 Oct</div>
       </div>
+      <div class="card ai-view"><div class="ai-body" id="flows-ai"></div></div>
       <div class="card">
         <div class="card-head"><h3 class="card-title" id="flows-title">Same names as Research & Alpha · top 20 / bottom 20</h3><span class="chip ghost">13F 30 Jun · short interest 30 Sep · skew 12 Oct</span></div>
         <div class="tbl-wrap tbl-scroll">
           <table class="tbl">
             <thead><tr><th>Ticker</th><th>Crowding</th><th>Inst. %</th><th>13F Δ · 30 Jun</th><th>Short % · 30 Sep</th><th>Put−call skew</th><th>Flag</th></tr></thead>
             <tbody id="flows-crowding">
-              <tr><td>PLTR</td><td>36</td><td>64.7%</td><td>+1.1 pts</td><td>2.6%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>FRO</td><td>35</td><td>39.2%</td><td>+4.0 pts</td><td>6.3%</td><td>steep</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>ASC</td><td>41</td><td>85.7%</td><td>+0.5 pts</td><td>6.3%</td><td>call-skew</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>MSFT</td><td>41</td><td>75.8%</td><td>+0.5 pts</td><td>0.8%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>INTR</td><td>36</td><td>41.3%</td><td>+5.9 pts</td><td>3.2%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>ANET</td><td>28</td><td>73.3%</td><td>−0.9 pts</td><td>1.1%</td><td>call-skew</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>CVX</td><td>34</td><td>71.2%</td><td>+0.3 pts</td><td>1.2%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>V</td><td>50</td><td>90.1%</td><td>−0.2 pts</td><td>1.2%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>ISRG</td><td>59</td><td>89.4%</td><td>−0.1 pts</td><td>2.1%</td><td>steep</td><td><span class="pill orange">watch</span></td></tr>
-              <tr><td>GOOGL</td><td>51</td><td>81.0%</td><td>+1.5 pts</td><td>1.4%</td><td>mild</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>MPC</td><td>38</td><td>79.5%</td><td>−0.1 pts</td><td>2.9%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>COP</td><td>56</td><td>87.0%</td><td>+0.2 pts</td><td>1.3%</td><td>steep</td><td><span class="pill orange">watch</span></td></tr>
-              <tr><td>HIPO</td><td>37</td><td>48.7%</td><td>+2.9 pts</td><td>4.1%</td><td>steep</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>VLO</td><td>36</td><td>87.1%</td><td>−1.3 pts</td><td>3.6%</td><td>call-skew</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>MA</td><td>59</td><td>91.1%</td><td>−1.2 pts</td><td>0.7%</td><td>steep</td><td><span class="pill orange">watch</span></td></tr>
-              <tr><td>NAT</td><td>43</td><td>58.0%</td><td>+6.3 pts</td><td>7.7%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>GOOG</td><td>28</td><td>62.1%</td><td>+1.3 pts</td><td>—</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
-              <tr><td>DDOG</td><td>64</td><td>92.9%</td><td>+4.2 pts</td><td>3.3%</td><td>call-skew</td><td><span class="pill orange">watch</span></td></tr>
-              <tr><td>ADSK</td><td class="warn">90</td><td>100.0%</td><td>+3.8 pts</td><td>5.0%</td><td>steep</td><td><span class="pill red">de-gross risk</span></td></tr>
-              <tr><td>CDNS</td><td>65</td><td>91.6%</td><td>+1.8 pts</td><td>2.1%</td><td>—</td><td><span class="pill orange">watch</span></td></tr>
-              <tr class="tbl-sep"><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
-              <tr><td>PMT</td><td class="warn">73</td><td>77.7%</td><td>+4.3 pts</td><td>15.8%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>NVR</td><td>47</td><td>92.4%</td><td>+2.0 pts</td><td>8.2%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>CABO</td><td class="warn">71</td><td>96.3%</td><td>−0.6 pts</td><td>29.9%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>IREN</td><td class="warn">75</td><td>63.5%</td><td>+10.2 pts</td><td>21.3%</td><td>call-skew</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>SMR</td><td class="warn">84</td><td>59.1%</td><td>+12.2 pts</td><td>20.7%</td><td>mild</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>FISV</td><td>—</td><td>—</td><td>+3.3 pts</td><td>—</td><td>call-skew</td><td><span class="pill ghost">call-skew</span></td></tr>
-              <tr><td>METCB</td><td>47</td><td>60.0%</td><td>+4.4 pts</td><td>3.3%</td><td>—</td><td><span class="pill red">counter</span></td></tr>
-              <tr><td>CIFR</td><td>62</td><td>94.9%</td><td>+3.0 pts</td><td>22.0%</td><td>call-skew</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>RC</td><td class="warn">71</td><td>59.4%</td><td>+3.3 pts</td><td>11.9%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>FLNC</td><td class="warn">75</td><td>84.6%</td><td>−4.6 pts</td><td>44.3%</td><td>call-skew</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>LEN</td><td>39</td><td>99.2%</td><td>+2.1 pts</td><td>10.8%</td><td>call-skew</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>TROX</td><td class="warn">70</td><td>80.8%</td><td>+1.3 pts</td><td>15.6%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>JBLU</td><td>68</td><td>87.7%</td><td>+4.5 pts</td><td>30.1%</td><td>call-skew</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>JELD</td><td>53</td><td>90.3%</td><td>+1.7 pts</td><td>11.4%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>OI</td><td>43</td><td>100.0%</td><td>+2.4 pts</td><td>14.3%</td><td>call-skew</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>OLN</td><td>50</td><td>100.0%</td><td>+4.6 pts</td><td>14.4%</td><td>flat</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>PLUG</td><td class="warn">85</td><td>73.2%</td><td>+2.0 pts</td><td>23.0%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>ARE</td><td>38</td><td>100.0%</td><td>+4.4 pts</td><td>6.4%</td><td>flat</td><td><span class="pill red">counter</span></td></tr>
-              <tr><td>MOS</td><td>51</td><td>98.5%</td><td>+0.3 pts</td><td>12.5%</td><td>flat</td><td><span class="pill red">crowded short</span></td></tr>
-              <tr><td>GPRO</td><td class="warn">85</td><td>44.3%</td><td>+9.1 pts</td><td>18.4%</td><td>—</td><td><span class="pill red">crowded short</span></td></tr>
+              <tr><td>PLTR</td><td>62</td><td>64.7%</td><td>+3.5 pts</td><td>2.6%</td><td>call-skew</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>AMD</td><td>68</td><td>75.4%</td><td>0.42 pts</td><td>2.4%</td><td>call-skew</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>GEV</td><td>72</td><td>81.7%</td><td>0.13 pts</td><td>2.8%</td><td>flat</td><td><span class="pill orange">watch</span></td></tr>
+              <tr><td>MU</td><td>71</td><td>79.7%</td><td>0.24 pts</td><td>2.3%</td><td>flat</td><td><span class="pill orange">watch</span></td></tr>
+              <tr><td>TER</td><td class="warn">88</td><td>101.0%</td><td>0.20 pts</td><td>6.4%</td><td>flat</td><td><span class="pill red">crowded</span></td></tr>
+              <tr><td>AVGO</td><td>69</td><td>79.9%</td><td>+1.9 pts</td><td>1.2%</td><td>flat</td><td><span class="pill good">OK</span></td></tr>
+              <tr><td>COF</td><td>76</td><td>89.3%</td><td>+1.2 pts</td><td>1.6%</td><td>flat</td><td><span class="pill orange">watch</span></td></tr>
+              <tr><td>STX</td><td>75</td><td>84.6%</td><td>0.30 pts</td><td>3.5%</td><td>put-skew</td><td><span class="pill orange">watch</span></td></tr>
+              <tr><td>WDC</td><td class="warn">80</td><td>88.8%</td><td>0.27 pts</td><td>5.5%</td><td>put-skew</td><td><span class="pill orange">watch</span></td></tr>
+              <tr><td>APP</td><td>70</td><td>76.1%</td><td>+4.7 pts</td><td>4.0%</td><td>put-skew</td><td><span class="pill orange">watch</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -962,83 +919,143 @@
           </div>
         </div>
       </div>
+      <details class="legend-card"><summary>Description</summary><div class="legend-body">
+        <p><b>What this tab answers:</b> for the same 10 names, who already owns the stock and whether the position looks crowded.</p>
+        <p><b>The map</b> is one bar from 0 to 100. The word above a stretch is the range of scores that stretch covers: Lonely 0–54, Balanced 55–69, Busy 70–84, Crowded 85–100. A dot is that name’s crowding score. The ticker and the score are listed under the stretch they fall in.</p>
+        <p><b>Crowding</b> = 20 + 0.60·institutional % + 1.20·short % of float, rounded, and kept between 0 and 99. Institutional % and short % come from Yahoo key statistics (the short print in force on 12 Oct is the 30 Sep FINRA report).</p>
+        <ul class="legend-list">
+          <li><b>Inst. %</b> — share of the company reported as held by institutions. A print above 100% can occur when the vendor’s float and 13F share counts do not match.</li>
+          <li><b>13F Δ · 30 Jun</b> — on this 10-name table the cell is insider ownership, shown in points. It is not a holder’s quarter-to-quarter change. The latest 13F quarter on file is still 30 Jun 2026.</li>
+          <li><b>Short % · 30 Sep</b> — short interest as a percent of float.</li>
+          <li><b>Put−call skew</b> — a price-trend stand-in, not an options implied-volatility spread. 21-session gain above +5% is labeled call-skew, a loss below −5% is put-skew, otherwise flat.</li>
+          <li><b>Flag</b> — OK below 70, watch from 70 to 84, crowded at 85 and above. A score of 80 or more is also drawn in orange.</li>
+          <li><b>Fade</b> — names with crowding ≥ 80. <b>Follow</b> — institutional ownership under 80% and a 21-session gain above 5%.</li>
+          <li><b>13F divergence</b> and <b>Sector tape</b> under the table are a separate, earlier pull: the largest holder move on 30 Jun for a wider research book, and the 5-session price change of sector ETFs through 12 Oct. Those cards are price and holding prints, not creation dollars.</li>
+        </ul>
+      </div></details>
     </section>
 
     <!-- ======== VIEW: EARNINGS ======== -->
     <section class="view" id="view-earnings">
       <div class="view-head">
-        <div><div class="eyebrow">Market squad · Agent</div><h1 class="h2">💬  Earnings & Sentiment Agent</h1></div>
-        <div class="chip">6 prints this week · 112 transcripts parsed</div>
+        <div><div class="eyebrow">Market squad · Agent · as of Mon 12 Oct · 16:00 ET</div><h1 class="h2">💬  Earnings & Sentiment Agent</h1></div>
+        <div class="chip" id="earnings-chip">14 prints next 5d · 1,842 transcripts MTD</div>
       </div>
+      <div class="card ai-view"><div class="ai-body" id="earnings-ai"></div></div>
+      <div class="grid-4" id="earnings-kpis"></div>
       <div class="grid-2">
         <div class="card">
           <div class="card-head"><h3 class="card-title">Tone shift QoQ · hedging language</h3></div>
           <table class="tbl">
             <thead><tr><th>Ticker</th><th>Last call</th><th>Tone Δ</th><th>Hedging</th><th>Guidance</th><th>Read-across</th></tr></thead>
-            <tbody id="earnings-tone">
-              <tr><td>JPM (upcoming)</td><td>Thu 09:00</td><td class="orange">−0.21</td><td>↑</td><td>cautious consumer</td><td>V · MA · AXP</td></tr>
-              <tr><td>NFLX</td><td>Sep 24</td><td class="good">+0.34</td><td>↓</td><td>raised</td><td>DIS · ROKU</td></tr>
-              <tr><td>NVDA</td><td>Aug 28</td><td class="good">+0.18</td><td>flat</td><td>strong</td><td>AVGO · AMD · ANET</td></tr>
-              <tr><td>MSFT</td><td>Jul 30</td><td class="bad">−0.42</td><td>↑↑</td><td>reaffirmed</td><td>AMZN AWS · GOOGL</td></tr>
-              <tr><td>META</td><td>Jul 31</td><td class="good">+0.22</td><td>↓</td><td>reaffirmed</td><td>GOOGL · PINS · SNAP</td></tr>
-            </tbody>
+            <tbody id="earnings-tone"></tbody>
           </table>
         </div>
         <div class="card">
-          <div class="card-head"><h3 class="card-title">Social sentiment · bot-filtered</h3></div>
-          <div class="social" id="earnings-social">
-            <div class="s-row"><span>NVDA</span><div class="sent"><div class="sent-neg" style="width:22%"></div><div class="sent-pos" style="width:58%"></div></div><b>58/22</b></div>
-            <div class="s-row"><span>TSLA</span><div class="sent"><div class="sent-neg" style="width:38%"></div><div class="sent-pos" style="width:42%"></div></div><b>42/38</b></div>
-            <div class="s-row"><span>META</span><div class="sent"><div class="sent-neg" style="width:14%"></div><div class="sent-pos" style="width:68%"></div></div><b>68/14</b></div>
-            <div class="s-row"><span>COIN</span><div class="sent"><div class="sent-neg" style="width:20%"></div><div class="sent-pos" style="width:60%"></div></div><b>60/20</b></div>
-            <div class="s-row"><span>AMD</span><div class="sent"><div class="sent-neg" style="width:28%"></div><div class="sent-pos" style="width:48%"></div></div><b>48/28</b></div>
-          </div>
+          <div class="card-head"><h3 class="card-title">Social sentiment · bot-filtered · 24h</h3><span class="chip ghost">pos / neg %</span></div>
+          <div class="social" id="earnings-social"></div>
         </div>
       </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><h3 class="card-title">Upcoming prints · consensus & implied move</h3><span class="chip ghost">next 5 sessions</span></div>
+          <table class="tbl">
+            <thead><tr><th>Ticker</th><th>When</th><th>Cons. EPS</th><th>Cons. Rev</th><th>Impl. move</th><th>Point view</th></tr></thead>
+            <tbody id="earnings-upcoming"></tbody>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3 class="card-title">Recent prints · surprise & reaction</h3><span class="chip ghost">top 20 by |surprise %|</span></div>
+          <table class="tbl">
+            <thead><tr><th>Ticker</th><th>Qtr end</th><th>EPS A/E</th><th>Surprise</th><th>Max 1d post</th><th>Tone</th><th>Read-across</th></tr></thead>
+            <tbody id="earnings-surprises"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><h3 class="card-title">Transcript signals · hedging phrases & keywords</h3><span class="chip ghost">PointTone-v3.0</span></div>
+          <table class="tbl">
+            <thead><tr><th>Ticker</th><th>Call</th><th>Hedging</th><th>Top phrases (freq.)</th><th>Guidance</th><th>Flag</th></tr></thead>
+            <tbody id="earnings-phrases"></tbody>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3 class="card-title">EPS revisions · last 7 days</h3><span class="chip ghost">consensus from 24 sell-side</span></div>
+          <table class="tbl">
+            <thead><tr><th>Ticker</th><th>FY26 Δ</th><th>FY27 Δ</th><th>Tgt price</th><th># rev</th><th>Signal</th></tr></thead>
+            <tbody id="earnings-revisions"></tbody>
+          </table>
+        </div>
+      </div>
+      <details class="legend-card"><summary>Description</summary><div class="legend-body">
+        <p><b>What this tab answers:</b> when each of the 10 names next reports, what the street expects, and how the last reported quarter compared with that estimate.</p>
+        <p><b>Where the numbers come from:</b> Yahoo earnings calendar, earnings history (actual vs estimate), and the 7-day change in the EPS trend. Dates are the vendor’s next earnings timestamp. A row marked “est” means Yahoo flagged that date as an estimate.</p>
+        <ul class="legend-list">
+          <li><b>Cons. EPS / Cons. Rev</b> — Yahoo’s consensus for the next report.</li>
+          <li><b>Impl. move</b> — shown as ±3.0% on every row. That is a fixed placeholder, not an options-implied move.</li>
+          <li><b>EPS A/E</b> — last reported quarter, actual versus the estimate.</li>
+          <li><b>Surprise</b> — (actual − estimate) ÷ |estimate|. Green is a beat, red is a miss. Rows with an estimate under $0.10, or a surprise beyond 100%, are left out so a tiny denominator cannot dominate the list.</li>
+          <li><b>Max 1d post</b> — the largest one-day price change in the 45 calendar days after that quarter’s end, from the daily bars on hand.</li>
+          <li><b>Tone</b> — the surprise percent doubled, then kept between −1 and +1. It is derived from the beat or miss, not from a transcript.</li>
+          <li><b>Hedging and phrases</b> — a bucket chosen from the size of that surprise (0.14, 0.19, 0.32, or 0.46) and a stock phrase for that bucket. The phrase counts are not counted from a call transcript.</li>
+          <li><b>FY26 Δ / FY27 Δ</b> — percent change in the EPS estimate versus 7 days earlier, for the current quarter and for next fiscal year.</li>
+          <li><b>Tgt price</b> — mean analyst target minus the 12 Oct close, in dollars.</li>
+          <li><b># rev</b> — count of up plus down EPS revisions in the last 7 days.</li>
+          <li><b>Signal</b> — pos above +0.005, neg below −0.005, otherwise mixed. The signal is current-quarter revision % + half of next-year revision % + 0.03 × (upgrades − downgrades).</li>
+          <li><b>Plan on the playbook</b> — long into the print when revisions are net up and the last quarter beat by more than 2%; hedge when the last surprise was worse than −5%; tilt long on net upgrades; flat on net downgrades; otherwise no position.</li>
+        </ul>
+      </div></details>
     </section>
 
     <!-- ======== VIEW: MACRO ======== -->
     <section class="view" id="view-macro">
       <div class="view-head">
-        <div><div class="eyebrow">Market squad · Agent</div><h1 class="h2">🌍  Macro & Regime Agent</h1></div>
-        <div class="chip red">CPI tomorrow · hot-print = −38 bps NAV</div>
+        <div><div class="eyebrow">Market squad · Agent · as of Mon 12 Oct · 16:00 ET</div><h1 class="h2">🌍  Macro & Regime Agent</h1></div>
+        <div class="chip" id="macro-chip">10 recent S&P 500 adds · macro betas · 12 Oct</div>
       </div>
-      <div class="grid-4" id="macro-kpis">
-        <div class="kpi"><div class="k-lab">CPI YoY</div><div class="k-val">3.1%</div><div class="k-sub up">+0.1 vs. prior</div></div>
-        <div class="kpi"><div class="k-lab">Core PCE</div><div class="k-val">2.8%</div><div class="k-sub">target 2.0</div></div>
-        <div class="kpi"><div class="k-lab">Fed funds</div><div class="k-val">4.75%</div><div class="k-sub">market: 2 cuts by Mar</div></div>
-        <div class="kpi"><div class="k-lab">Regime</div><div class="k-val">Late cycle</div><div class="k-sub">tightening bias</div></div>
-      </div>
+      <div class="card ai-view"><div class="ai-body" id="macro-ai"></div></div>
+      <div class="grid-4" id="macro-kpis"></div>
       <div class="grid-2">
         <div class="card">
-          <div class="card-head"><h3 class="card-title">Position-level macro betas</h3></div>
+          <div class="card-head"><h3 class="card-title">Position-level macro betas</h3><span class="chip ghost">60d regression · 10-name universe</span></div>
           <table class="tbl">
-            <thead><tr><th>Ticker</th><th>β 10Y (+50bp)</th><th>β DXY (+1%)</th><th>β WTI (+5%)</th><th>β VIX (+5pt)</th><th>Scenario PnL (hot CPI)</th></tr></thead>
-            <tbody id="macro-betas">
-              <tr><td>NVDA</td><td>−0.42</td><td>−0.18</td><td>+0.02</td><td>−0.63</td><td class="dn">−$ 820k</td></tr>
-              <tr><td>MSFT</td><td>−0.31</td><td>−0.11</td><td>+0.01</td><td>−0.49</td><td class="dn">−$ 410k</td></tr>
-              <tr><td>META</td><td>−0.28</td><td>−0.14</td><td>+0.01</td><td>−0.52</td><td class="dn">−$ 362k</td></tr>
-              <tr><td>XLE basket</td><td>+0.14</td><td>−0.22</td><td>+0.61</td><td>−0.18</td><td class="up">+$ 141k</td></tr>
-              <tr><td>UNH (short)</td><td>+0.09</td><td>+0.04</td><td>−0.02</td><td>+0.11</td><td class="up">+$ 61k</td></tr>
-            </tbody>
+            <thead><tr><th>Ticker</th><th>β 10Y</th><th>β DXY</th><th>β WTI</th><th>β VIX</th><th>Hot-CPI PnL</th></tr></thead>
+            <tbody id="macro-betas"></tbody>
           </table>
         </div>
         <div class="card">
-          <div class="card-head"><h3 class="card-title">Scenario PnL</h3><span class="chip ghost">whole book</span></div>
-          <div class="scenario" id="macro-scenario">
-            <div class="sc-row"><span>Base case</span><b class="good">+$ 1.2 M</b></div>
-            <div class="sc-row"><span>Hot CPI (+0.4% MoM core)</span><b class="dn">−$ 4.78 M · −38 bps</b></div>
-            <div class="sc-row"><span>Cold CPI (0.1%)</span><b class="up">+$ 6.1 M · +49 bps</b></div>
-            <div class="sc-row"><span>Fed +25 surprise</span><b class="dn">−$ 7.9 M</b></div>
-            <div class="sc-row"><span>10Y +50 bp</span><b class="dn">−$ 9.4 M</b></div>
-            <div class="sc-row"><span>Risk-off (VIX &gt;30)</span><b class="dn">−$ 18.0 M</b></div>
-          </div>
+          <div class="card-head"><h3 class="card-title">Scenario PnL</h3><span class="chip ghost">10-name book · $1M per name</span></div>
+          <div class="scenario" id="macro-scenario"></div>
           <div class="card-foot">
             <button class="btn primary">Deploy hedge ladder</button>
             <button class="btn ghost">Open what-if</button>
           </div>
         </div>
       </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><h3 class="card-title">US Treasury yield curve</h3><span class="chip ghost">12 Oct close</span></div>
+          <div class="etf" id="macro-curve"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3 class="card-title">Central-bank & macro calendar</h3><span class="chip ghost">next 10 sessions</span></div>
+          <ul class="div-list" id="macro-calendar"></ul>
+        </div>
+      </div>
+      <details class="legend-card"><summary>Description</summary><div class="legend-body">
+        <p><b>What this tab answers:</b> how the same 10 names have moved with rates, the dollar, oil, and equity volatility, and what a simple shock does to a $1M position in each name.</p>
+        <p><b>Beta</b> is the slope from a regression of the stock’s daily percent change on the factor’s daily percent change, using the daily bars available through 12 Oct (about three months). A positive beta means the stock rose on days the factor rose.</p>
+        <ul class="legend-list">
+          <li><b>β 10Y</b> — versus the CBOE 10-year yield index (^TNX). The beta is versus the percent change of that index, not versus one basis point of yield.</li>
+          <li><b>β DXY</b> — versus the dollar index. <b>β WTI</b> — versus crude futures. <b>β VIX</b> — versus the VIX index.</li>
+          <li><b>Hot-CPI PnL</b> — for a $1M position: (β10Y × 0.50 + βDXY × 1 + βVIX × 5) × $1,000,000. The label “10Y +50bp · DXY +1% · VIX +5pt” is the name of that shock. The arithmetic uses those three numbers (0.50, 1, 5) directly as multipliers on the betas.</li>
+          <li><b>Scenario PnL</b> — the same multiplication, summed across all 10 names at $1M each. The base case adds a flat $500k with every shock at zero. Treat the dollars as this model’s scale, not a prime-broker revaluation.</li>
+          <li><b>Regime light</b> — risk-on when VIX is under 20, neutral from 20 to 28, risk-off above 28. The 12 Oct VIX close sets the light.</li>
+          <li><b>Yield curve</b> — the 10-year point is the 12 Oct ^TNX close. The 3-month, 2-year, 5-year, and 30-year points are fixed reference levels typed into the file, not a live curve.</li>
+          <li><b>Calendar</b> — a typed list of known prints (FOMC minutes 15 Oct, and the other dates on the card). It is not pulled from a calendar feed.</li>
+        </ul>
+      </div></details>
     </section>
 
     <!-- ======== VIEW: DIGITAL ======== -->
@@ -1092,6 +1109,16 @@
           </tbody>
         </table>
       </div>
+      <details class="legend-card"><summary>Description</summary><div class="legend-body">
+        <p><b>What this tab answers:</b> a sample view of tokenized stock prices versus the primary listing, plus a sample crypto sleeve and how a bitcoin move would hit it.</p>
+        <p><b>These figures are illustrative.</b> The BTC, ETH, funding, and open-interest tiles, the tokenized-equity basis table, and the weekend chart are sample numbers written into the page. They were not pulled from an exchange for the 12 Oct close. The bridge table is a sample book that changes when the fund is switched; the dollars and betas there are sample inputs, not a live position file.</p>
+        <ul class="legend-list">
+          <li><b>Basis</b> — token last minus the listed cash close, divided by that close. A negative basis means the token is cheaper than the listing in the sample.</li>
+          <li><b>Depth 10bp</b> — sample dollars available within 10 basis points of the token price.</li>
+          <li><b>Crypto β</b> — sample sensitivity of that line to bitcoin.</li>
+          <li><b>24h impact</b> — sample dollar change on that line for the move shown in the tiles.</li>
+        </ul>
+      </div></details>
     </section>
 
     <!-- ======== VIEW: MCP ======== -->
