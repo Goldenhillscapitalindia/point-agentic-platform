@@ -779,39 +779,6 @@
           <div class="tear-block"><h3>Risk &amp; return profile</h3><div class="tear-kpis four risk-kpis"><div><span>ANNUALIZED RETURN &middot; ITD</span><b>14.2%</b></div><div><span>ANNUALIZED VOLATILITY</span><b>11.6%</b></div><div><span>SHARPE RATIO</span><b>1.18</b></div><div><span>MAX DRAWDOWN</span><b>-8.2%</b></div></div></div>
         </article>
       </section>
-      <section id="alpha-perpetual-contract-rankings" class="perp-markets perp-contract-rankings" aria-labelledby="alpha-perp-markets-title" hidden>
-        <div class="perp-intro">
-          <div class="eyebrow">Alpha Fund · Market research · Perpetual futures</div>
-          <h2 id="alpha-perp-markets-title" class="h2">Perpetual Futures — Latest Market Tables</h2>
-          <p>Exchange-level contracts ranked by reported 24-hour trading volume. These static research tables are included for context only and are not Alpha Fund holdings or trading recommendations.</p>
-          <div class="perp-meta"><span class="chip ghost">Static verified snapshot · Not live</span><time id="alpha-perp-snapshot-date" datetime="2026-10-15"></time></div>
-        </div>
-        <article class="card">
-          <div class="card-head perp-card-head"><h3 class="card-title" id="alpha-perp-cex-title">Top 10 CEX Perpetual Futures</h3><span class="chip ghost">Centralized exchanges</span></div>
-          <p class="perp-description">Contracts are ranked by their reported 24-hour volume. Eight-hour and 12-hour volume were not available in the supplied snapshot.</p>
-          <div class="tbl-wrap" role="region" aria-labelledby="alpha-perp-cex-title" tabindex="0">
-            <table class="tbl perp-table perp-contract-table" aria-labelledby="alpha-perp-cex-title">
-              <thead><tr><th scope="col">Rank</th><th scope="col">Exchange</th><th scope="col">Contract</th><th scope="col">Price · USD</th><th scope="col">8h volume</th><th scope="col">12h volume</th><th scope="col">24h volume</th><th scope="col">Open interest</th></tr></thead>
-              <tbody id="alpha-perp-cex-rows"></tbody>
-            </table>
-          </div>
-        </article>
-        <article class="card">
-          <div class="card-head perp-card-head"><h3 class="card-title" id="alpha-perp-dex-title">Top 10 DEX Perpetual Futures</h3><span class="chip ghost">Decentralized exchanges</span></div>
-          <p class="perp-description">Contracts are ranked by their reported 24-hour volume. Open interest is the outstanding perpetual position value, not order-book liquidity.</p>
-          <div class="tbl-wrap" role="region" aria-labelledby="alpha-perp-dex-title" tabindex="0">
-            <table class="tbl perp-table perp-contract-table" aria-labelledby="alpha-perp-dex-title">
-              <thead><tr><th scope="col">Rank</th><th scope="col">Exchange</th><th scope="col">Contract</th><th scope="col">Price · USD</th><th scope="col">8h volume</th><th scope="col">12h volume</th><th scope="col">24h volume</th><th scope="col">Open interest</th></tr></thead>
-              <tbody id="alpha-perp-dex-rows"></tbody>
-            </table>
-          </div>
-        </article>
-        <details class="card perp-methodology">
-          <summary>Snapshot details</summary>
-          <p>Snapshot: October 15, 2026, approximately 9:29 a.m.–12:05 p.m. IST. The supplied exchange snapshots cover selected high-volume CEX and DEX contracts; they are not an exhaustive worldwide census.</p>
-          <p>8-hour and 12-hour volume appear as em dashes because verified rolling-interval data was not included in the source snapshot. Values are static demo research data and should not be treated as a live market feed.</p>
-        </details>
-      </section>
     </section>
 
     <!-- ======== VIEW: POSITION INTEL ======== -->
@@ -1209,6 +1176,39 @@
           <p>Source: <a href="https://loris.tools/markets/perps" target="_blank" rel="noopener noreferrer">Loris Tools exchange-level market data ↗</a>. Each asset links to its market breakdown. B = billion; M = million. Leading venues are the three largest contributors in the snapshot, not the complete listing.</p>
           <p>The source's 50 largest asset markets were screened, with volume summed separately across 13 CEX and 29 decentralized or hybrid venue feeds. Rankings describe the covered markets, not every exchange worldwide. Volumes are reported, not independently audited; source symbol groupings are retained.</p>
           <p>Coinbase US perpetual-style contracts with expiry and QFEX, whose classification was not independently confirmed, were excluded. Options and ordinary expiring futures are outside this comparison. Trade[XYZ] and EntropyIO are separate Hyperliquid market deployments; their volume is counted separately from its core markets.</p>
+        </details>
+      </section>
+      <section id="alpha-perpetual-contract-rankings" class="perp-markets perp-contract-rankings" aria-labelledby="alpha-perp-markets-title" hidden>
+        <div class="perp-intro">
+          <div class="eyebrow">Alpha Fund · Market research · Perpetual futures</div>
+          <h2 id="alpha-perp-markets-title" class="h2">Perpetual Futures — Latest Market Tables</h2>
+          <p>Exchange-level contracts ranked by reported 24-hour trading volume. These static research tables are included for context only and are not Alpha Fund holdings or trading recommendations.</p>
+          <div class="perp-meta"><span class="chip ghost">Static verified snapshot · Not live</span><time id="alpha-perp-snapshot-date" datetime="2026-10-15"></time></div>
+        </div>
+        <article class="card">
+          <div class="card-head perp-card-head"><h3 class="card-title" id="alpha-perp-cex-title">Top 10 CEX Perpetual Futures</h3><span class="chip ghost">Centralized exchanges</span></div>
+          <p class="perp-description">Contracts are ranked by their reported 24-hour volume. Eight-hour and 12-hour volume were not available in the supplied snapshot.</p>
+          <div class="tbl-wrap" role="region" aria-labelledby="alpha-perp-cex-title" tabindex="0">
+            <table class="tbl perp-table perp-contract-table" aria-labelledby="alpha-perp-cex-title">
+              <thead><tr><th scope="col">Rank</th><th scope="col">Exchange</th><th scope="col">Contract</th><th scope="col">Price · USD</th><th scope="col">8h volume</th><th scope="col">12h volume</th><th scope="col">24h volume</th><th scope="col">Open interest</th></tr></thead>
+              <tbody id="alpha-perp-cex-rows"></tbody>
+            </table>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-head perp-card-head"><h3 class="card-title" id="alpha-perp-dex-title">Top 10 DEX Perpetual Futures</h3><span class="chip ghost">Decentralized exchanges</span></div>
+          <p class="perp-description">Contracts are ranked by their reported 24-hour volume. Open interest is the outstanding perpetual position value, not order-book liquidity.</p>
+          <div class="tbl-wrap" role="region" aria-labelledby="alpha-perp-dex-title" tabindex="0">
+            <table class="tbl perp-table perp-contract-table" aria-labelledby="alpha-perp-dex-title">
+              <thead><tr><th scope="col">Rank</th><th scope="col">Exchange</th><th scope="col">Contract</th><th scope="col">Price · USD</th><th scope="col">8h volume</th><th scope="col">12h volume</th><th scope="col">24h volume</th><th scope="col">Open interest</th></tr></thead>
+              <tbody id="alpha-perp-dex-rows"></tbody>
+            </table>
+          </div>
+        </article>
+        <details class="card perp-methodology">
+          <summary>Snapshot details</summary>
+          <p>Snapshot: October 15, 2026, approximately 9:29 a.m.–12:05 p.m. IST. The supplied exchange snapshots cover selected high-volume CEX and DEX contracts; they are not an exhaustive worldwide census.</p>
+          <p>8-hour and 12-hour volume appear as em dashes because verified rolling-interval data was not included in the source snapshot. Values are static demo research data and should not be treated as a live market feed.</p>
         </details>
       </section>
     </section>
