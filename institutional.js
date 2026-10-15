@@ -738,11 +738,13 @@ let VIEW='command';
 const VIEW_LABELS={command:'Command center',portfolio:'Portfolio',risk:'Risk monitor',guidelines:'Guidelines',
   opportunities:'Opportunities',scenarios:'Scenario studio',pnl:'P&L attribution',decisions:'Decisions',
   alerts:'Alert center',ask:'Ask Point',reports:'Reports',audit:'Audit trail'};
+const TONE={command:'ws',decisions:'ws',alerts:'ws',portfolio:'pf',risk:'pf',guidelines:'pf',opportunities:'pf',scenarios:'mk',pnl:'mk',ask:'dp',reports:'dp',audit:'dp'};
 function go(v){
   if(!RENDER[v])return;
   VIEW=v;
   QA('.view').forEach(s=>s.classList.toggle('on',s.id==='view-'+v));
   QA('#nav a').forEach(a=>a.classList.toggle('on',a.dataset.v===v));
+  document.body.dataset.tone=TONE[v]||'ws';
   const crumb=Q('#crumb-view'); if(crumb)crumb.textContent=VIEW_LABELS[v]||'Workspace';
   const mobile=Q('#mobile-nav'); if(mobile){mobile.classList.remove('open');mobile.setAttribute('aria-hidden','true');}
   const mobileBtn=Q('#mobile-nav-btn'); if(mobileBtn)mobileBtn.setAttribute('aria-expanded','false');

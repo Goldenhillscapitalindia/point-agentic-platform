@@ -7,6 +7,7 @@
   const items = document.querySelectorAll('[data-view]');
   const views = document.querySelectorAll('.view');
   const crumb = document.getElementById('crumb-view');
+  const crumbSquad = document.getElementById('crumb-squad');
   const titles = {
     dashboard:'Dashboard', brief:'Morning Brief', cards:'Action Cards', conductor:'Point Conductor',
     risk:'Risk & Guideline', tech:'Technical Signals', pnl:'P&L Attribution', ir:'IR & Reporting',
@@ -15,6 +16,14 @@
     mcp:'Point MCP', execute:'Point Execute', governance:'Governance',
     profile:'My profile', settings:'Account settings', funds:'Manage funds', signout:'Sign out'
   };
+  const squadName = {
+    dashboard:'Workspace', brief:'Workspace', cards:'Workspace', conductor:'Workspace',
+    profile:'Workspace', settings:'Workspace', funds:'Workspace', signout:'Workspace',
+    risk:'Portfolio Squad', tech:'Portfolio Squad', pnl:'Portfolio Squad', ir:'Portfolio Squad', pos:'Portfolio Squad',
+    research:'Market Squad', flows:'Market Squad', earnings:'Market Squad', macro:'Market Squad', digital:'Market Squad',
+    mcp:'Deploy', execute:'Deploy', governance:'Deploy'
+  };
+  const squadTone = {'Workspace':'ws','Portfolio Squad':'pf','Market Squad':'mk','Deploy':'dp'};
   // Each view change is a browser history entry (#view or #ir/template1), so the
   // Back button returns to the previous page instead of leaving the app.
   let currentView='dashboard';
@@ -25,6 +34,9 @@
     views.forEach(v=>v.classList.toggle('active', v.id==='view-'+view));
     document.querySelectorAll('.side-item').forEach(a=>a.classList.toggle('active', a.dataset.view===view));
     if(crumb) crumb.textContent = titles[view]||'Dashboard';
+    const squad = squadName[view]||'Workspace';
+    if(crumbSquad) crumbSquad.textContent = squad;
+    document.body.dataset.tone = squadTone[squad]||'ws';
     if(opts.history!==false) setRoute(view);
     if(changed) window.scrollTo({top:0,behavior:opts.history===false?'auto':'smooth'});
   }
@@ -466,16 +478,16 @@
 
   /* ---- Analyst recommendations: suggested action, supporting evidence, and next step ---- */
   const agentMeta = {
-    risk:{n:'Risk & Guideline Agent',i:'🛡',sq:'red'},
-    tech:{n:'Technical Signals Agent',i:'📈',sq:'red'},
-    pnl:{n:'P&L Attribution Agent',i:'⚖︎',sq:'red'},
-    ir:{n:'IR & Reporting Agent',i:'📝',sq:'red'},
-    pos:{n:'Position Intelligence Agent',i:'📰',sq:'red'},
-    research:{n:'Research & Alpha Agent',i:'🔍',sq:'gold'},
-    flows:{n:'Fund Flows & Positioning Agent',i:'≋',sq:'gold'},
-    earnings:{n:'Earnings & Sentiment Agent',i:'💬',sq:'gold'},
-    macro:{n:'Macro & Regime Agent',i:'🌍',sq:'gold'},
-    digital:{n:'Digital Assets & Tokenization Agent',i:'◉',sq:'gold'}
+    risk:{n:'Risk & Guideline Agent',i:'🛡',sq:'pf'},
+    tech:{n:'Technical Signals Agent',i:'📈',sq:'pf'},
+    pnl:{n:'P&L Attribution Agent',i:'⚖︎',sq:'pf'},
+    ir:{n:'IR & Reporting Agent',i:'📝',sq:'pf'},
+    pos:{n:'Position Intelligence Agent',i:'📰',sq:'pf'},
+    research:{n:'Research & Alpha Agent',i:'🔍',sq:'mk'},
+    flows:{n:'Fund Flows & Positioning Agent',i:'≋',sq:'mk'},
+    earnings:{n:'Earnings & Sentiment Agent',i:'💬',sq:'mk'},
+    macro:{n:'Macro & Regime Agent',i:'🌍',sq:'mk'},
+    digital:{n:'Digital Assets & Tokenization Agent',i:'◉',sq:'mk'}
   };
   // Each entry is [recommendation, supporting evidence, suggested next step].
   // Copy describes the illustrative fund snapshot, not live analysis or human approval.
@@ -694,7 +706,7 @@
     const head=view.querySelector('.view-head'); if(!head) return;
     const m=agentMeta[k];
     const el=document.createElement('section');
-    el.className='decision-brief'+(m.sq==='gold'?' gold':'');
+    el.className='decision-brief';
     el.setAttribute('aria-labelledby', 'decision-title-'+k);
     el.innerHTML=`
       <div class="db-head">
@@ -2591,19 +2603,19 @@
 
   /* ---- fund switcher ---- */
   const funds = [
-    {id:'alpha', name:'Alpha Fund', sub:'Equity L/S · flagship', color:'#e8603b', init:'AL',
+    {id:'alpha', name:'Alpha Fund', sub:'Equity L/S · flagship', color:'#B93815', init:'AL',
      aum:'$1.248 B', aumD:'+$6.1M · 24h', pnl:'+34 bps', pnlUp:true, pnlD:'$ 4.24 M · vs. $2.1M bench',
      exp:'184% / 62%', expD:'Net ↑ 3.1pts since Fri close', var:'$ 14.3 M', varD:'1.15% of NAV',
      cards:'7 action cards', crit:'2 critical'},
-    {id:'global', name:'Global Macro Fund', sub:'Macro · multi-asset', color:'#d4a42b', init:'GM',
+    {id:'global', name:'Global Macro Fund', sub:'Macro · multi-asset', color:'#8A5A07', init:'GM',
      aum:'$842.0 M', aumD:'−$2.3M · 24h', pnl:'−12 bps', pnlUp:false, pnlD:'−$ 1.01 M · vs. +$0.4M bench',
      exp:'142% / 38%', expD:'Net flat since Fri close', var:'$ 9.8 M', varD:'1.16% of NAV',
      cards:'4 action cards', crit:'1 critical'},
-    {id:'neutral', name:'Market Neutral Fund', sub:'Equity MN · low beta', color:'#58b06a', init:'MN',
+    {id:'neutral', name:'Market Neutral Fund', sub:'Equity MN · low beta', color:'#157347', init:'MN',
      aum:'$1.560 B', aumD:'+$1.2M · 24h', pnl:'+9 bps', pnlUp:true, pnlD:'$ 1.40 M · vs. $0.2M bench',
      exp:'210% / 4%', expD:'Net 4% · within band', var:'$ 6.1 M', varD:'0.39% of NAV',
      cards:'3 action cards', crit:'0 critical'},
-    {id:'digital', name:'Digital Assets Fund', sub:'Crypto + tokenized', color:'#6c7bf0', init:'DA',
+    {id:'digital', name:'Digital Assets Fund', sub:'Crypto + tokenized', color:'#4338CA', init:'DA',
      aum:'$318.4 M', aumD:'−$8.9M · 24h', pnl:'−2.1%', pnlUp:false, pnlD:'−$ 6.80 M · 24/7 book',
      exp:'96% / 71%', expD:'Net ↑ 6pts on BTC drift', var:'$ 11.2 M', varD:'3.52% of NAV',
      cards:'5 action cards', crit:'2 critical'}
@@ -3036,7 +3048,7 @@
           </div>
           <div class="card-foot">
             <button class="btn ghost" type="button" id="stay-in">Stay signed in</button>
-            <button class="btn primary" type="button" id="do-signout" style="background:var(--bad)">Sign out</button>
+            <button class="btn primary" type="button" id="do-signout" style="background:#B91C1C">Sign out</button>
           </div>
         </div>
         <div class="card">
