@@ -220,31 +220,30 @@ a.brand:hover{background:var(--panel)}
 .brand-name{font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:.2px}
 .brand-sub{font-size:11px;color:var(--txt-3);letter-spacing:.3px;margin-top:-2px}
 
-/* Each menu is one solid box. The same hue is the only accent inside its tabs. */
-.side-section{display:flex;flex-direction:column;gap:2px;border-radius:12px;padding:6px;background:var(--squad);color:#fff}
-.side-section.squad-ws{--squad:var(--ws);color:var(--ws-on);box-shadow:inset 0 0 0 1px rgba(58,52,44,.14)}
-.side-section.squad-pf{--squad:var(--pf)}
-.side-section.squad-mk{--squad:var(--mk)}
-.side-section.squad-dp{--squad:var(--dp)}
-.side-section.squad-ws .side-label{color:rgba(58,52,44,.86)}
-.side-section.squad-ws .side-item{color:var(--ws-on)}
-.side-section.squad-ws .side-item:hover{background:rgba(58,52,44,.08);color:#2A261F}
-.side-section.squad-ws .side-item.active{background:rgba(58,52,44,.14);color:#2A261F;box-shadow:inset 3px 0 0 var(--ws-on)}
-.side-section.squad-ws .dot,
-.side-section.squad-ws .side-item.active .dot{background:var(--ws-on);box-shadow:none}
-.side-section.squad-ws .badge{background:var(--ws-on);color:#F4F0EA}
-.side-label{font-size:10.5px;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,.78);
+/* Soft sidebar surfaces with matching dark ink in both page themes. */
+.side-section{display:flex;flex-direction:column;gap:2px;border-radius:12px;padding:6px;
+  background:var(--squad);color:var(--squad-ink);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--squad-ink) 16%,transparent)}
+.side-section.squad-ws{--squad:#E9DFCE;--squad-ink:#51473B}
+.side-section.squad-pf{--squad:#D1E8E4;--squad-ink:#215D57}
+.side-section.squad-mk{--squad:#F0E4C1;--squad-ink:#715820}
+.side-section.squad-dp{--squad:#E6DCF4;--squad-ink:#59417D}
+.side-label{font-size:10.5px;text-transform:uppercase;letter-spacing:1.2px;color:var(--squad-ink);
   padding:5px 8px 4px;font-weight:700}
 .side-nav{display:flex;flex-direction:column;gap:1px}
 .side-item{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:8px;
-  color:rgba(255,255,255,.92);font-weight:500;font-size:13px;transition:.12s;cursor:pointer}
-.side-item:hover{background:rgba(255,255,255,.12);color:#fff}
-.side-item.active{background:rgba(255,255,255,.2);color:#fff;box-shadow:inset 3px 0 0 #fff}
-.side-item.active .dot{background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.22)}
+  color:var(--squad-ink);font-weight:500;font-size:13px;transition:.12s;cursor:pointer}
+.side-item:hover{background:color-mix(in srgb,var(--squad-ink) 8%,transparent)}
+.side-item.active{background:color-mix(in srgb,var(--squad-ink) 14%,transparent);
+  box-shadow:inset 3px 0 0 var(--squad-ink)}
+.side-item:focus-visible{outline:2px solid var(--squad-ink);outline-offset:-2px}
+.side-section .side-item.active .dot{box-shadow:0 0 0 3px color-mix(in srgb,var(--squad-ink) 16%,transparent)}
 .dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.85);flex:none}
 .dot.red,.dot.gold{background:#fff}
+.side-section .dot{background:var(--squad-ink)}
 .badge{margin-left:auto;background:#fff;color:var(--squad);font-size:10px;font-weight:700;
   padding:1px 7px;border-radius:20px}
+.side-section .badge{background:var(--squad-ink);color:var(--squad)}
 .side-foot{margin-top:auto;padding-top:12px;border-top:1px solid var(--line)}
 .user-chip{display:flex;gap:10px;align-items:center;padding:6px}
 .avatar{width:36px;height:36px;border-radius:10px;background:var(--ws);
