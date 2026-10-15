@@ -657,7 +657,7 @@
             "Ticker",
             "Thesis age",
             "Alpha half-life",
-            "MTD PnL",
+            "MTD P&L",
             "Risk budget used",
             "Catalyst",
             "Suggestion"
@@ -1359,7 +1359,7 @@
             "β DXY",
             "β WTI",
             "β VIX",
-            "Hot-CPI PnL"
+            "Hot-CPI P&L"
           ],
           "rows": [
             [
@@ -1866,7 +1866,7 @@
                 },
                 {
                   "ag": "Risk & Guideline",
-                  "tx": "Scenario PnL −$4.78M at hot print; within loss cap but dents MTD."
+                  "tx": "Scenario P&L −$4.78M at hot print; within loss cap but dents MTD."
                 },
                 {
                   "ag": "Digital Assets",
@@ -1880,7 +1880,7 @@
                   "st": "done"
                 },
                 {
-                  "t": "Scenario PnL computed",
+                  "t": "Scenario P&L computed",
                   "s": "06:09 · hot/base/cold grid",
                   "st": "done"
                 },
@@ -2127,7 +2127,7 @@
           },
           {
             "lvl": "WARN",
-            "agent": "PnL Attribution",
+            "agent": "P&L Attribution",
             "id": "AC-20261007-011",
             "ts": "1h ago",
             "title": "MSFT alpha half-life expired — trim candidate",
@@ -3099,7 +3099,7 @@
               "1.8 bps/mo"
             ],
             [
-              "Hot-CPI PnL",
+              "Hot-CPI P&L",
               "−$4.78M → −$1.4M"
             ],
             [
@@ -3249,7 +3249,7 @@
             "Ticker",
             "Thesis age",
             "Alpha half-life",
-            "MTD PnL",
+            "MTD P&L",
             "Risk budget used",
             "Catalyst",
             "Suggestion"
@@ -3927,7 +3927,7 @@
             "β DXY",
             "β WTI",
             "β VIX",
-            "Hot-CPI PnL"
+            "Hot-CPI P&L"
           ],
           "rows": [
             [
@@ -4078,7 +4078,7 @@
           "Dear Partner,",
           "The Global Macro fund returned −0.12% on the day but remains +11.2% YTD. Gains were led by a long-gold position and a short-duration expression in the rate complex; FX detracted modestly as the yen stayed resilient on intervention risk.",
           "Into tomorrow’s CPI we run a 0.6× DV01 hedge ladder that caps a hot-print drawdown for under two basis points of monthly carry, while retaining most of the cold-print upside. We added to EM on the China-stimulus headline and trimmed the yen short ahead of potential BOJ action.",
-          "[auto-generated · derivatives-use disclosure updated · scenario-PnL exhibit attached]"
+          "[auto-generated · derivatives-use disclosure updated · scenario-P&L exhibit attached]"
         ]
       },
       "Briefs": {
@@ -4258,7 +4258,7 @@
                   "0.4×"
                 ],
                 [
-                  "Hot-CPI PnL",
+                  "Hot-CPI P&L",
                   "−$4.1M",
                   "−$1.4M"
                 ],
@@ -5276,7 +5276,7 @@
             "Ticker",
             "Thesis age",
             "Alpha half-life",
-            "MTD PnL",
+            "MTD P&L",
             "Risk budget used",
             "Catalyst",
             "Suggestion"
@@ -5942,7 +5942,7 @@
             "β DXY",
             "β WTI",
             "β VIX",
-            "Hot-CPI PnL"
+            "Hot-CPI P&L"
           ],
           "rows": [
             [
@@ -6199,7 +6199,7 @@
         "actionCards": [
           {
             "lvl": "WARN",
-            "agent": "PnL Attribution",
+            "agent": "P&L Attribution",
             "id": "AC-N-001",
             "ts": "9 min ago",
             "title": "Staples pair PG/CL at 60-day spread wide — add to pair",
@@ -6381,7 +6381,7 @@
               ],
               "evidence": [
                 {
-                  "ag": "PnL Attribution",
+                  "ag": "P&L Attribution",
                   "tx": "Pair is still a winner; the fee is the new drag, not the spread."
                 },
                 {
@@ -6523,7 +6523,7 @@
           [
             "orange",
             "Staples pair PG/CL at 60-day spread wide",
-            "PnL Attribution · mean-reversion setup · add 15%",
+            "P&L Attribution · mean-reversion setup · add 15%",
             "9m",
             "AC-N-001"
           ],
@@ -7157,7 +7157,7 @@
             "Ticker",
             "Thesis age",
             "Alpha half-life",
-            "MTD PnL",
+            "MTD P&L",
             "Risk budget used",
             "Catalyst",
             "Suggestion"
@@ -7835,7 +7835,7 @@
             "β DXY",
             "β WTI",
             "β VIX",
-            "Hot-CPI PnL"
+            "Hot-CPI P&L"
           ],
           "rows": [
             [
@@ -9962,7 +9962,7 @@
             "evidence": [
               [
                 "Quant Engine",
-                "Scenario PnL grid vs position-level rate betas"
+                "Scenario P&L grid vs position-level rate betas"
               ],
               [
                 "Catalyst Calendar",
@@ -10051,7 +10051,7 @@
                 "8-K + transcript delta vs recorded thesis"
               ],
               [
-                "PnL Agent",
+                "P&L Agent",
                 "YTD −$2.4M · efficiency POOR"
               ]
             ]

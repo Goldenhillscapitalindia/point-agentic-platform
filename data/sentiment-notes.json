@@ -1,0 +1,47 @@
+{
+  "_about": "Narrative summaries for the Position Intel sentiment table, written from web coverage on 15 Oct 2026. scripts/fetch-sentiment.cjs merges these with the fetched numbers; update them when you re-run after new events.",
+  "NVDA": {
+    "summary": "Nvidia hit record highs in early October and neared a $6 trillion market value after a $150 billion buyback, with management guiding Q3 revenue to about $108 billion on the Blackwell Ultra and Vera Rubin ramp. The past week turned risk-off: a hotter CPI print hit chip stocks and NVDA fell 3.2% on 14 Oct to $221.30, about 9% below its 52-week high. The one-month tone stays constructive (33 Buy ratings, no Sell); the one-week read is pulled down by price momentum, not by company news.",
+    "themes": ["$150B buyback", "Q3 guide ~$108B", "Hot CPI hit chip stocks", "Near $6T market cap"],
+    "catalyst": "Q3 FY27 earnings (late Nov)",
+    "sources": [
+      {"title": "Nvidia heads for $6 trillion value with chipmaker back at record", "source": "Bloomberg", "url": "https://www.bloomberg.com/news/articles/2026-10-06/nvidia-heads-for-6-trillion-value-with-chipmaker-back-at-record"},
+      {"title": "Nvidia stock sinks as chip sell-off deepens on hot inflation data", "source": "Yahoo Finance", "url": "https://finance.yahoo.com/markets/stocks/article/nvidia-stock-sinks-as-chip-sell-off-deepens-on-hot-inflation-data-203235137.html"},
+      {"title": "Nvidia Stock News (Oct 15, 2026): NVDA Falls 3.2% to $221.30", "source": "Gotrade", "url": "https://www.heygotrade.com/en/news/nvidia-nvda-stock-news-october-15-2026/"},
+      {"title": "Nvidia Stock Forecast: Rubin Ramp and $108 Billion Q3 Outlook", "source": "TradingKey", "url": "https://www.tradingkey.com/analysis/stocks/us-stocks/262201321-nvidia-nvda-stock-forecast-october-6-2026"}
+    ]
+  },
+  "MSFT": {
+    "summary": "Microsoft closed at its first record high in about a year on 13 Oct, up more than 50% from its June low, as Azure passed $100 billion in annual revenue and grew 43% last quarter with an $678 billion commercial backlog. Jefferies lifted its target to $650. The debate is now whether Azure can hold above 40% growth (guide 44-45% cc) when Microsoft reports on 28 Oct; routine CFO plan sales drew little reaction. Note this is more upbeat than the thesis-drift row's 'Azure decel' read.",
+    "themes": ["Record high 13 Oct", "Azure >$100B, +43%", "Jefferies PT $650", "Earnings 28 Oct"],
+    "catalyst": "FQ1 earnings · 28 Oct",
+    "sources": [
+      {"title": "Microsoft hits first record in a year after $1.4 trillion rally", "source": "Bloomberg", "url": "https://www.bloomberg.com/news/articles/2026-10-13/microsoft-eyes-first-record-in-nearly-a-year-as-ai-rally-builds"},
+      {"title": "Microsoft needs Azure to keep growing faster than 40% when it reports on Oct. 28", "source": "The Motley Fool", "url": "https://www.fool.com/investing/2026/10/11/microsoft-needs-azure-to-keep-growing-faster-than-40-when-it-reports-on-oct-28/"},
+      {"title": "Microsoft (MSFT) posted 43% Azure growth, yet trades below its own five-year P/E", "source": "Yahoo Finance", "url": "https://finance.yahoo.com/markets/stocks/articles/microsoft-msft-posted-43-azure-132642768.html"},
+      {"title": "Jefferies raises Microsoft target to USD 650", "source": "AD HOC NEWS", "url": "https://www.ad-hoc-news.de/boerse/news/corporate-news/jefferies-raises-microsoft-target-to-usd-650-microsoft-stock-falls-2-16-percent/70327431"}
+    ]
+  },
+  "CRM": {
+    "summary": "Salesforce rallied in the past week after BofA double-upgraded the stock to Buy (target $285 from $160), arguing agentic AI deepens lock-in rather than eroding seats; Agentforce ARR is now above $1.5 billion. Dreamforce brought AIforce and the Koa reasoning model built with Nvidia, but no new Agentforce pricing. The one-month picture is mixed: shares are still down about 8% on the month and trail the market in 2026, and Oppenheimer's survey points to healthy spending rather than accelerating demand.",
+    "themes": ["BofA double upgrade", "Agentforce ARR >$1.5B", "Dreamforce: AIforce, Koa", "Lags market YTD"],
+    "catalyst": "Q3 FY27 earnings (early Dec)",
+    "sources": [
+      {"title": "Salesforce (CRM) stock is up, what you need to know", "source": "Yahoo Finance", "url": "https://finance.yahoo.com/markets/stocks/articles/salesforce-crm-stock-know-225503593.html"},
+      {"title": "85% of Salesforce customers have tried Agentforce. Oppenheimer says one thing is missing", "source": "Yahoo Finance", "url": "https://finance.yahoo.com/markets/stocks/articles/85-salesforce-customers-tried-agentforce-033950671.html"},
+      {"title": "Salesforce (CRM) trails the market in 2026: what could fuel a re-rating?", "source": "Yahoo Finance", "url": "https://finance.yahoo.com/markets/stocks/articles/salesforce-crm-trails-market-2026-210621882.html"},
+      {"title": "21 things we announced at Dreamforce 2026", "source": "Salesforce", "url": "https://www.salesforce.com/blog/dreamforce-2026-announcements/"}
+    ]
+  },
+  "UNH": {
+    "summary": "UnitedHealth beat Q3 on 13 Oct with adjusted EPS of $4.69 against about $4.12 expected, and raised 2026 guidance to at least $20.50, its third increase this year. The medical care ratio improved to 88.4% from 89.9%, helped partly by $610 million of favourable reserve development. Shares rose 4.8% on 14 Oct while the market sold off, and coverage frames it as the margin-repair story gaining credibility. Watch how much of the MCR gain is one-off reserve releases.",
+    "themes": ["Q3 beat $4.69 vs $4.12", "2026 EPS ≥ $20.50", "MCR 88.4%", "Up 4.8% in a selloff"],
+    "catalyst": "Investor day · Q4 MCR trend",
+    "sources": [
+      {"title": "UnitedHealth gains on Q3 earnings beat, raised 2026 profit guidance", "source": "Investing.com", "url": "https://www.investing.com/news/earnings/unitedhealth-gains-on-q3-earnings-beat-raised-2026-profit-guidance-4946030"},
+      {"title": "UnitedHealth Q3 2026 earnings release (Form 8-K)", "source": "SEC", "url": "https://www.sec.gov/Archives/edgar/data/0000731766/000073176626000255/earningsrelease3q26unh.htm"},
+      {"title": "UnitedHealth Group (UNH) shares rally after Q3 earnings beat and raised 2026 guidance", "source": "GuruFocus", "url": "https://www.gurufocus.com/news/9121045/unitedhealth-group-unh-shares-rally-after-q3-earnings-beat-and-raised-2026-guidance"},
+      {"title": "UnitedHealth (UNH) Q3 2026 earnings call transcript", "source": "The Motley Fool", "url": "https://www.fool.com/earnings/call-transcripts/2026/10/13/unitedhealth-unh-q3-2026-earnings-call-transcript/"}
+    ]
+  }
+}

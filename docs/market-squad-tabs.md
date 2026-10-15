@@ -143,13 +143,13 @@ Rows are dropped when the estimate is under $0.10 or the surprise is beyond 100%
 
 The 10-year beta is versus the percent change of the yield index. It is not “basis points of stock per basis point of yield.”
 
-**Hot-CPI PnL**, for a $1M position:
+**Hot-CPI P&L**, for a $1M position:
 
 `(β10Y × 0.50 + βDXY × 1 + βVIX × 5) × $1,000,000`
 
 The card names that shock “10Y +50bp · DXY +1% · VIX +5pt”. The arithmetic uses 0.50, 1, and 5 directly as multipliers on the betas.
 
-**Scenario PnL.** The same multiplication, summed across all ten names at $1M each.
+**Scenario P&L.** The same multiplication, summed across all ten names at $1M each.
 
 | Scenario | Multipliers used |
 |---|---|

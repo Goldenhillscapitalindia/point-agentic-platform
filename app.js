@@ -9,18 +9,43 @@
   const crumb = document.getElementById('crumb-view');
   const titles = {
     dashboard:'Dashboard', brief:'Morning Brief', cards:'Action Cards', conductor:'Point Conductor',
-    risk:'Risk & Guideline', tech:'Technical Signals', pnl:'PnL Attribution', ir:'IR & Reporting',
+    risk:'Risk & Guideline', tech:'Technical Signals', pnl:'P&L Attribution', ir:'IR & Reporting',
     pos:'Position Intelligence', research:'Research & Alpha', flows:'Fund Flows',
     earnings:'Earnings & Sentiment', macro:'Macro & Regime', digital:'Digital Assets',
     mcp:'Point MCP', execute:'Point Execute', governance:'Governance',
     profile:'My profile', settings:'Account settings', funds:'Manage funds', signout:'Sign out'
   };
-  function go(view){
+  // Each view change is a browser history entry (#view or #ir/template1), so the
+  // Back button returns to the previous page instead of leaving the app.
+  let currentView='dashboard';
+  function go(view,opts={}){
+    if(!document.getElementById('view-'+view)) view='dashboard';
+    const changed=view!==currentView;
+    currentView=view;
     views.forEach(v=>v.classList.toggle('active', v.id==='view-'+view));
     document.querySelectorAll('.side-item').forEach(a=>a.classList.toggle('active', a.dataset.view===view));
     if(crumb) crumb.textContent = titles[view]||'Dashboard';
-    window.scrollTo({top:0,behavior:'smooth'});
+    if(opts.history!==false) setRoute(view);
+    if(changed) window.scrollTo({top:0,behavior:opts.history===false?'auto':'smooth'});
   }
+  function setRoute(route,replace){
+    if(location.hash.slice(1)===route) return;
+    const depth=(history.state&&history.state.depth)||0;
+    try{ history[replace?'replaceState':'pushState']({route,depth:replace?depth:depth+1},'','#'+route); }catch(e){ location.hash=route; }
+    syncBackLink();
+  }
+  // The top-bar back button steps back through in-app pages; from the first page it returns to the site.
+  const backLink=document.getElementById('crumb-back');
+  function syncBackLink(){
+    if(!backLink) return;
+    const inApp=((history.state&&history.state.depth)||0)>0;
+    const label=document.getElementById('crumb-back-label');
+    if(label) label.textContent=inApp?'Back':'Site';
+    backLink.title=inApp?'Back to the previous page':'Back to site';
+  }
+  backLink?.addEventListener('click',e=>{
+    if(((history.state&&history.state.depth)||0)>0){ e.preventDefault(); history.back(); }
+  });
   items.forEach(el=>el.addEventListener('click', e=>{
     e.preventDefault();
     go(el.dataset.view);
@@ -28,8 +53,9 @@
 
   /* ---- IR dashboard / tear sheet template tabs ---- */
   const irTabs = [...document.querySelectorAll('[data-ir-tab]')];
-  function selectIrTab(tab){
+  function selectIrTab(tab,opts={}){
     const selected = tab.dataset.irTab;
+    if(opts.history!==false && currentView==='ir') setRoute(selected==='dashboard'?'ir':'ir/'+selected);
     irTabs.forEach(item=>{
       const active = item === tab;
       item.classList.toggle('active', active);
@@ -52,7 +78,7 @@
     });
   });
 
-  /* ---- per-fund detail datasets (positions + PnL) ---- */
+  /* ---- per-fund detail datasets (positions + P&L) ---- */
   const flagMap = {
     trim:'pill orange', ok:'pill good', high:'pill red', crowded:'pill orange',
     add:'pill good', stop:'pill red', watch:'pill ok', hedge:'pill red', cover:'pill orange'
@@ -207,7 +233,7 @@
       expChip:'Net 4% · lim ±10', pnlYtd:'YTD +7.8%', hit:'Hit rate 64% · W/L 1.22', topCardId:'AC-N-001',
       exposure:[['Gross',100,'210%',''],['Net β',4,'4%','good'],['Staples',18,'18%',''],['Payments',15,'15%',''],['Retail',14,'14%',''],['Pharma',12,'12%',''],['Tech',9,'9%','']],
       feed:[
-        ['orange','Staples pair PG/CL at 60-day spread wide','PnL Attribution · mean-reversion setup · add 15%','9m','AC-N-001'],
+        ['orange','Staples pair PG/CL at 60-day spread wide','P&L Attribution · mean-reversion setup · add 15%','9m','AC-N-001'],
         ['orange','NVO borrow fee spiked to 180bp','Fund Flows · short-leg cost rising · review LLY/NVO pair','25m',''],
         ['gold','Payments pair V/MA · V revisions turning +','Research & Alpha · tilt pair toward V','44m',''],
         ['ghost','Net exposure 4% · within ±10% band','Risk & Guideline · beta-neutral maintained','1h',''],
@@ -236,7 +262,7 @@
        summary:'Rates are breaking out with CPI tomorrow. The book carries <b>long duration</b> via EM and equity-index exposure; the agent proposes a cheap DV01 ladder to neutralize most of the rate risk into the print.',
        drivers:[{t:'10Y breaks 4.40%',s:'Services PPI hot; term premium rising',w:'main'},{t:'Book DV01 long',s:'EM + index futures carry duration',w:'−$9.4M/50bp'},{t:'CPI tomorrow 08:30',s:'Hot-print scenario compounds',w:'event'}],
        trades:[{act:'buy',tk:'ZN 10Y future ladder',sz:'0.6× book DV01',det:'Short rates via futures; neutralizes ~60% of duration into CPI.'},{act:'sell',tk:'JPY short trim',sz:'−25%',det:'Reduce intervention risk above 158.'}],
-       whatif:[['Book DV01','1.0×','0.4×'],['Hot-CPI PnL','−$4.1M','−$1.4M'],['Carry','—','1.8 bps/mo']],
+       whatif:[['Book DV01','1.0×','0.4×'],['Hot-CPI P&L','−$4.1M','−$1.4M'],['Carry','—','1.8 bps/mo']],
        evidence:[{ag:'Fund Flows',tx:'Rate-vol sellers crowded; a hot print forces fast unwind.'},{ag:'Risk & Guideline',tx:'Within loss cap but dents MTD; hedge keeps headroom.'}],
        timeline:[{t:'Rates breakout flagged',s:'06:02 · 10Y > 4.40%',st:'done'},{t:'DV01 ladder sized',s:'06:09 · 0.6×',st:'done'},{t:'Awaiting your approval',s:'now',st:'active'}],
        reasoning:'A probability-weighted CPI grid shows asymmetric downside; the ladder cuts hot-print loss by two-thirds for under 2 bps/month carry.'
@@ -281,7 +307,7 @@
        reasoning:'The add is conditional on a dip so the book does not chase the gap. Net stays well inside the cap.'
      }}
   ], neutral: [
-    {lvl:'WARN', agent:'PnL Attribution', id:'AC-N-001', ts:'9 min ago',
+    {lvl:'WARN', agent:'P&L Attribution', id:'AC-N-001', ts:'9 min ago',
      title:'Staples pair PG/CL at 60-day spread wide — add to pair',
      metrics:[['+2.1σ','Spread z','warn'],['$1.1M','Pair notional',''],['0.02','Net beta',''],['64%','Pair hit rate','good']],
      body:'Mean-reversion setup: the PG/CL spread is 2.1σ wide with no fundamental catalyst. Agent suggests adding 15% to the pair, beta-neutral.',
@@ -303,7 +329,7 @@
        drivers:[{t:'Fee 180bp',s:'Up sharply versus the rest of the short book',w:'cost'},{t:'Pair still the #1 spread',s:'Score gap vs NVO remains the reason to be short',w:'thesis'},{t:'No earnings for 12d',s:'Time to reassess size before the print',w:'window'}],
        trades:[{act:'buy',tk:'NVO cover 20%',sz:'−20% of the short leg',det:'Shrink the expensive leg and keep LLY unless the spread collapses.'}],
        whatif:[['Borrow drag','180bp','144bp blended'],['Pair notional','$7.9M','$6.3M'],['Net beta','0.04','0.05']],
-       evidence:[{ag:'PnL Attribution',tx:'Pair is still a winner; the fee is the new drag, not the spread.'},{ag:'Risk & Guideline',tx:'A smaller short stays inside the single-pair cap.'}],
+       evidence:[{ag:'P&L Attribution',tx:'Pair is still a winner; the fee is the new drag, not the spread.'},{ag:'Risk & Guideline',tx:'A smaller short stays inside the single-pair cap.'}],
        timeline:[{t:'Fee spike flagged',s:'05:20',st:'done'},{t:'Cover sized',s:'05:22 · 20%',st:'done'},{t:'Awaiting your decision',s:'now',st:'active'}],
        reasoning:'Keep the pair, pay less for it. Covering a fifth of NVO protects the hit rate without flipping the book to a naked long.'
      }},
@@ -442,7 +468,7 @@
   const agentMeta = {
     risk:{n:'Risk & Guideline Agent',i:'🛡',sq:'red'},
     tech:{n:'Technical Signals Agent',i:'📈',sq:'red'},
-    pnl:{n:'PnL Attribution Agent',i:'⚖︎',sq:'red'},
+    pnl:{n:'P&L Attribution Agent',i:'⚖︎',sq:'red'},
     ir:{n:'IR & Reporting Agent',i:'📝',sq:'red'},
     pos:{n:'Position Intelligence Agent',i:'📰',sq:'red'},
     research:{n:'Research & Alpha Agent',i:'🔍',sq:'gold'},
@@ -1109,209 +1135,209 @@
     alpha:{
       chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
       kpis:[
-        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
-        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
-        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
         ["Beat rate","90%","9/10 beat","good"]],
       upcoming:[
-        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
-        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
-        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
-        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
-        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
-        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
-        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
-        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
-        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
         ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
       surprises:[
-        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
-        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
-        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
-        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
-        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
-        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
-        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
-        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
-        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
         ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
       phrases:[
-        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
-        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
-        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
         ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
       revisions:[
-        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
-        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
-        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
-        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
-        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
-        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
-        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
-        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
-        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
+        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
+        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
         ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 212"],"1","<span class=\"pill good\">pos</span>"]]
     },
     global:{
       chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
       kpis:[
-        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
-        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
-        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
         ["Beat rate","90%","9/10 beat","good"]],
       upcoming:[
-        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
-        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
-        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
-        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
-        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
-        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
-        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
-        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
-        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
         ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
       surprises:[
-        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
-        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
-        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
-        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
-        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
-        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
-        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
-        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
-        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
         ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
       phrases:[
-        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
-        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
-        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
         ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
       revisions:[
-        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
-        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
-        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
-        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
-        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
-        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
-        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
-        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
-        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
+        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
+        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
         ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 212"],"1","<span class=\"pill good\">pos</span>"]]
     },
     neutral:{
       chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
       kpis:[
-        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
-        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
-        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
         ["Beat rate","90%","9/10 beat","good"]],
       upcoming:[
-        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
-        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
-        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
-        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
-        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
-        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
-        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
-        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
-        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
         ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
       surprises:[
-        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
-        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
-        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
-        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
-        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
-        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
-        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
-        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
-        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
         ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
       phrases:[
-        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
-        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
-        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
         ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
       revisions:[
-        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
-        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
-        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
-        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
-        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
-        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
-        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
-        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
-        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
+        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
+        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
         ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 212"],"1","<span class=\"pill good\">pos</span>"]]
     },
     digital:{
       chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
       kpis:[
-        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
-        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
-        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
         ["Beat rate","90%","9/10 beat","good"]],
       upcoming:[
-        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
-        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
-        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
-        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
-        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
-        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
-        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
-        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
-        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
         ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
       surprises:[
-        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
-        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
-        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
-        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
-        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
-        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
-        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
-        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
-        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
         ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
       phrases:[
-        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
-        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
-        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
         ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
       revisions:[
-        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
-        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
-        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
-        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
-        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
-        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
-        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
-        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
-        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
+        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
+        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
         ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 212"],"1","<span class=\"pill good\">pos</span>"]]
     }
   };
@@ -1390,7 +1416,7 @@
     },
     global:{
       whatifSelect:'Add 0.6× ZN DV01 ladder + trim JPY short',
-      whatif:[['DV01','0.9× → <b class="good">0.4×</b>'],['Net','38% → 34%'],['VaR 99%','$9.8M → $7.1M'],['Carry','1.8 bps/mo'],['Hot-CPI PnL','−$4.78M → −$1.4M'],['Breach prob 1d','<b class="good">11%</b>']],
+      whatif:[['DV01','0.9× → <b class="good">0.4×</b>'],['Net','38% → 34%'],['VaR 99%','$9.8M → $7.1M'],['Carry','1.8 bps/mo'],['Hot-CPI P&L','−$4.78M → −$1.4M'],['Breach prob 1d','<b class="good">11%</b>']],
       stress:[['10Y +50bp','−$ 9.4 M'],['Hot CPI (+0.4% core)','−$ 4.78 M'],['USD +3% DXY','−$ 6.2 M'],['Oil −10%','−$ 3.1 M'],['Risk-off (VIX >30)','−$ 12.4 M']],
       pnlStats:[['Hit rate','57%'],['W/L ratio','1.41'],['Avg hold','9d']],
       cal:[['Tue Oct 8','CPI 08:30 · <span class="red">key print</span>'],['Thu Oct 10','Fed minutes 14:00'],['Thu Oct 10','3Y / 10Y auctions'],['Fri Oct 11','PPI 08:30'],['Wed Oct 16','ECB minutes'],['Thu Oct 17','China GDP'],['Fri Oct 18','OPEC+ monthly report']],
@@ -1561,7 +1587,7 @@
     alpha:{
       macroKpis:[['CPI YoY','3.1%','+0.1 vs. prior'],['Core PCE','2.8%','target 2.0'],['Fed funds','4.75%','market: 2 cuts by Mar'],['Book stance','Risk-on tilt','net 62% · semis-led']],
       events:[
-        ['06:11:42','Macro','CPI nowcast → 3.12% YoY · re-ran Risk, PnL, Flows'],
+        ['06:11:42','Macro','CPI nowcast → 3.12% YoY · re-ran Risk, P&L, Flows'],
         ['06:11:08','Digital','tNVDA basis −2.81% · triggered Risk gap-check'],
         ['06:10:51','Risk','Beta-net 63.1% · breach prob 71% · Action Card composed'],
         ['06:10:40','Flows','ADSK crowding 90 · 17 research shorts already ≥ 8% SI'],
@@ -1592,12 +1618,12 @@
         '<b>Dear Partner,</b>',
         'The Global Macro fund returned <b>−0.12% on the day</b> but remains <b>+11.2% YTD</b>. Gains were led by a long-gold position and a short-duration expression in the rate complex; FX detracted modestly as the yen stayed resilient on intervention risk.',
         'Into tomorrow’s CPI we run a <b>0.6× DV01 hedge ladder</b> that caps a hot-print drawdown for under two basis points of monthly carry, while retaining most of the cold-print upside. We added to EM on the China-stimulus headline and trimmed the yen short ahead of potential BOJ action.',
-        '<span class="muted">[auto-generated · derivatives-use disclosure updated · scenario-PnL exhibit attached]</span>']
+        '<span class="muted">[auto-generated · derivatives-use disclosure updated · scenario-P&L exhibit attached]</span>']
     },
     neutral:{
       macroKpis:[['CPI YoY','3.1%','+0.1 vs. prior'],['Core PCE','2.8%','target 2.0'],['Fed funds','4.75%','market: 2 cuts by Mar'],['Book stance','Beta-neutral','net 4% · pairs']],
       events:[
-        ['06:11:42','PnL','PG/CL spread +2.1σ · mean-rev add flagged'],
+        ['06:11:42','P&L','PG/CL spread +2.1σ · mean-rev add flagged'],
         ['06:11:08','Flows','NVO borrow fee 180bp · short-leg watch'],
         ['06:10:51','Research','Pair re-rank · AMD/AVGO #1 by score spread'],
         ['06:10:22','Risk','Net beta 0.04 · beta-neutral confirmed'],
@@ -1791,12 +1817,12 @@
        ],
        evidence:[
          {ag:'Fund Flows',tx:'Rate-vol sellers crowded; a hot print forces fast unwind.'},
-         {ag:'Risk & Guideline',tx:'Scenario PnL −$4.78M at hot print; within loss cap but dents MTD.'},
+         {ag:'Risk & Guideline',tx:'Scenario P&L −$4.78M at hot print; within loss cap but dents MTD.'},
          {ag:'Digital Assets',tx:'BTC−Nasdaq correlation elevated; crypto adds to risk-off beta.'}
        ],
        timeline:[
          {t:'Economic calendar flagged',s:'06:02 · CPI 08:30 ET tomorrow',st:'done'},
-         {t:'Scenario PnL computed',s:'06:09 · hot/base/cold grid',st:'done'},
+         {t:'Scenario P&L computed',s:'06:09 · hot/base/cold grid',st:'done'},
          {t:'Hedge ladder sized',s:'06:09 · 0.6× DV01, 1.8 bps carry',st:'done'},
          {t:'Awaiting your approval',s:'now',st:'active'}
        ],
@@ -1862,7 +1888,7 @@
        ],
        reasoning:'With the thesis unchanged but momentum weakening, the agent prefers a <b>tightened stop</b> over an outright exit — it protects the embedded gain while leaving upside open if the breakout resumes. The optional 30% trim is offered for lower risk tolerance.'
      }},
-    {lvl:'WARN', agent:'PnL Attribution', id:'AC-20261007-011', ts:'1h ago',
+    {lvl:'WARN', agent:'P&L Attribution', id:'AC-20261007-011', ts:'1h ago',
      title:'MSFT alpha half-life expired — trim candidate',
      metrics:[['−24 bps','MTD','bad'],['14d','Half-life','red'],['18%','Risk budget',''],['284d','Thesis age','']],
      body:'Alpha half-life expired, no catalyst in 20 days, Azure deceleration. Agent suggests trimming 25% of the position.',
@@ -2342,7 +2368,7 @@
     html('conductor-focus-body', c.focus);
     const mx=document.getElementById('handoff-matrix');
     if(!mx) return;
-    const head='<div class="mx-head"><span></span><span>Risk</span><span>Tech</span><span>PnL</span><span>Pos</span><span>Macro</span><span>Flows</span></div>';
+    const head='<div class="mx-head"><span></span><span>Risk</span><span>Tech</span><span>P&L</span><span>Pos</span><span>Macro</span><span>Flows</span></div>';
     const rows=c.matrix.map(r=>'<div class="mx-row"><span class="mx-lab">'+r[0]+'</span>'+r.slice(1).map(cell=>{
       if(cell==='—') return '<span class="c self">—</span>';
       const hot=parseInt(cell,10)>=3;
@@ -2583,7 +2609,7 @@
   // Clear the old persistent demo queue state so the report returns to its original controls.
   try{for(let i=localStorage.length-1;i>=0;i--){const key=localStorage.key(i);if(key&&key.startsWith('ir-compliance:'))localStorage.removeItem(key);}}catch(e){}
   const irActions=(report,fund)=>{
-    return `<div class="ir-actions" data-ir-report="${report}"><button class="btn primary" data-ir-action="submit">Send to compliance</button><button class="btn ghost" data-ir-action="edit">Edit</button><button class="btn ghost" data-ir-action="save" hidden>Save</button><button class="btn ghost" data-ir-action="cancel" hidden>Cancel</button><button class="btn dark" data-ir-action="export">Export .docx</button><span class="ir-action-message" data-ir-message role="status" aria-live="polite"></span></div>`;
+    return `<div class="ir-actions" data-ir-report="${report}"><button class="btn primary" data-ir-action="submit">Send to compliance</button><button class="btn ghost" data-ir-action="edit">Edit</button><button class="btn ghost" data-ir-action="save" hidden>Save</button><button class="btn ghost" data-ir-action="cancel" hidden>Cancel</button><button class="btn dark" data-ir-action="export">Download PDF</button><span class="ir-action-message" data-ir-message role="status" aria-live="polite"></span></div>`;
   };
   function renderIRTearSheets(id){
     const d=irTearData[id]||irTearData.alpha;
@@ -2609,6 +2635,105 @@
       try{const saved=localStorage.getItem(`ir-draft:${id}:${report}`);const doc=panel.querySelector('[data-ir-doc]');if(saved&&doc)doc.innerHTML=saved;}catch(e){}
     });
   }
+  function irDownload(blob,name){
+    const url=URL.createObjectURL(blob),link=document.createElement('a');
+    link.href=url;link.download=name;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }
+  /* ---- monthly tear sheet: fund returns + public benchmarks from data/tearsheet-data.json ---- */
+  let irTearsheet=null;
+  function renderIRTearsheet(id,month){
+    const panel=document.getElementById('ir-tearsheet');
+    if(!panel||!window.PointIRReports) return;
+    if(!window.PointTearsheetData){panel.innerHTML='<p class="tear-footnote">Tear sheet data is missing. Run <code>node scripts/fetch-tearsheet-data.cjs</code> and rebuild.</p>';return;}
+    irTearsheet=window.PointIRReports.tearsheet(window.PointTearsheetData,id,month,irTearData[id]||irTearData.alpha);
+    panel.innerHTML=window.PointIRReports.tearsheetHtml(irTearsheet);
+  }
+  document.addEventListener('change',event=>{
+    if(event.target.matches('[data-ts-period]')) renderIRTearsheet(activeFund,event.target.value);
+  });
+  document.addEventListener('click',event=>{
+    const button=event.target.closest('[data-ts-download]');if(!button||!irTearsheet)return;
+    const message=document.querySelector('[data-ts-message]');
+    try{
+      irDownload(window.PointIRReports.tearsheetPdf(irTearsheet),`${irTearsheet.name.replace(/[^a-z0-9]+/gi,'-')}-Tear-Sheet-${irTearsheet.month}.pdf`);
+      if(message) message.textContent='Tear sheet PDF downloaded.';
+    }catch(e){console.error(e);if(message) message.textContent='Could not build the PDF.';}
+  });
+
+  /* ---- Position Intel · sentiment summary (data/sentiment-data.json via scripts/fetch-sentiment.cjs) ---- */
+  const sentiState={fund:'alpha',horizon:'week',query:'',filter:'all',open:new Set(),expanded:new Set()};
+  const sEsc=v=>String(v==null?'':v).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const SENTI={Bullish:['good strong','↑'],Positive:['good','↗'],Neutral:['gold','→'],Negative:['red','↘'],Bearish:['red strong','↓']};
+  const sPill=s=>{const [cls,arrow]=SENTI[s.label]||SENTI.Neutral;return `<span class="senti-pill ${cls}" title="Score ${s.score>0?'+':''}${s.score.toFixed(2)} · news ${s.parts.news.toFixed(2)} · price ${s.parts.price.toFixed(2)} · analysts ${s.parts.analysts.toFixed(2)}">${arrow} ${s.label}</span>`;};
+  const sPct=v=>(v>0?'+':'')+(v*100).toFixed(1)+'%';
+  const sDate=iso=>new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  function sentiRows(rows){
+    return rows.map(r=>{
+      const open=sentiState.open.has(r.ticker),more=sentiState.expanded.has(r.ticker),a=r.analysts;
+      const toneBar=n=>{const t=Math.max(1,n.count);return `<div class="senti-tone" aria-label="${n.pos} positive, ${n.neutral} neutral, ${n.neg} negative headlines"><i class="p" style="width:${n.pos/t*100}%"></i><i class="z" style="width:${n.neutral/t*100}%"></i><i class="n" style="width:${n.neg/t*100}%"></i></div><small>${n.pos} pos · ${n.neutral} neutral · ${n.neg} neg · ${n.count} headlines</small>`;};
+      const detail=open?`<tr class="senti-detail"><td colspan="8"><div class="senti-detail-grid">
+        <section><h4>News tone</h4>
+          <div class="senti-mix"><span>1-Week</span>${toneBar(r.week.news)}</div>
+          <div class="senti-mix"><span>1-Month</span>${toneBar(r.month.news)}</div>
+        </section>
+        <section><h4>Market &amp; Street</h4>
+          <dl><div><dt>Price · 1W / 1M</dt><dd><b class="${r.change1w>=0?'up':'dn'}">${sPct(r.change1w)}</b> / <b class="${r.change1m>=0?'up':'dn'}">${sPct(r.change1m)}</b></dd></div>
+          ${a?`<div><dt>Street consensus</dt><dd>${sEsc(a.consensus||'—')} · ${a.buy??0} buy / ${a.hold??0} hold / ${a.sell??0} sell</dd></div><div><dt>Price target</dt><dd>$${a.target?.toFixed(2)} <small>($${a.low} – $${a.high})</small></dd></div>`:''}
+          <div><dt>Coverage</dt><dd>${r.publishers} publishers</dd></div></dl>
+        </section>
+        <section><h4>Key themes</h4>
+          ${r.themes.length?`<div class="senti-themes">${r.themes.map(t=>`<span>${sEsc(t)}</span>`).join('')}</div>`:''}
+          ${r.catalyst?`<dl class="senti-catalyst"><div><dt>Next catalyst</dt><dd>${sEsc(r.catalyst)}</dd></div></dl>`:''}
+        </section>
+      </div></td></tr>`:'';
+      return `<tr class="${open?'is-open':''}">
+        <td><div class="senti-tk">${sEsc(r.ticker)} <span>US</span></div><small class="senti-ex">${sEsc(r.exchange||'')}</small></td>
+        <td class="senti-name">${sEsc(r.name.toUpperCase())}</td>
+        <td class="senti-num">$${r.last.toFixed(2)}<small>${sDate(r.lastDate+'T12:00:00Z')} · <b class="${r.change1w>=0?'up':'dn'}">${sPct(r.change1w)}</b> 1W</small></td>
+        <td>${sDate(window.PointSentimentData.runAt)}</td>
+        <td>${sPill(r.week)}</td><td>${sPill(r.month)}</td>
+        <td class="senti-sum"><p class="${more?'':'clamp'}">${sEsc(r.summary)}</p><button type="button" class="senti-more" data-senti-more="${sEsc(r.ticker)}" aria-expanded="${more}">${more?'Show less':'Read more'}</button></td>
+        <td><button type="button" class="senti-eye" data-senti-open="${sEsc(r.ticker)}" aria-expanded="${open}" aria-label="${open?'Hide':'Show'} sentiment detail for ${sEsc(r.ticker)}"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 5C6.5 5 2.7 9.3 1.5 12c1.2 2.7 5 7 10.5 7s9.3-4.3 10.5-7C21.3 9.3 17.5 5 12 5zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" fill="currentColor"/></svg></button></td>
+      </tr>${detail}`;
+    }).join('');
+  }
+  function renderSentiment(fund){
+    const host=document.getElementById('pos-sentiment');if(!host)return;
+    if(fund) sentiState.fund=fund;
+    const data=window.PointSentimentData,all=data?.books?.[sentiState.fund];
+    const head=`<div class="senti-head"><div><h3 class="card-title" id="senti-title">Sentiment Summary</h3><p>AI-driven news &amp; market sentiment · thesis names</p></div>
+      <div class="senti-seg" role="group" aria-label="Filter horizon"><button type="button" data-senti-horizon="week" aria-pressed="${sentiState.horizon==='week'}">1-Week</button><button type="button" data-senti-horizon="month" aria-pressed="${sentiState.horizon==='month'}">1-Month</button></div>
+      <span class="chip ghost">${data?`Run ${sDate(data.runAt)}`:'No run yet'}</span></div>`;
+    if(!all){
+      host.innerHTML=head+`<p class="senti-empty">No sentiment run covers this book yet. Runs currently cover the Alpha Fund thesis names (NVDA, MSFT, CRM, UNH).</p>`;
+      return;
+    }
+    const q=sentiState.query.trim().toLowerCase();
+    const rows=all.filter(r=>(!q||r.ticker.toLowerCase().includes(q)||r.name.toLowerCase().includes(q))&&(sentiState.filter==='all'||r[sentiState.horizon].label===sentiState.filter));
+    const opts=['all','Bullish','Positive','Neutral','Negative','Bearish'].map(v=>`<option value="${v}"${v===sentiState.filter?' selected':''}>${v==='all'?'All Sentiments':v}</option>`).join('');
+    host.innerHTML=head+`<div class="senti-tools"><label class="senti-search"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 4a6 6 0 1 0 3.7 10.7l4.8 4.8 1.4-1.4-4.8-4.8A6 6 0 0 0 10 4zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8z" fill="currentColor"/></svg><input type="search" data-senti-search placeholder="Search ticker, issuer…" value="${sEsc(sentiState.query)}" aria-label="Search ticker or issuer"></label>
+      <select data-senti-filter aria-label="Filter by ${sentiState.horizon==='week'?'1-week':'1-month'} sentiment">${opts}</select><span class="senti-count">${rows.length} result${rows.length===1?'':'s'}</span></div>
+      <div class="senti-wrap"><table class="senti-table"><thead><tr><th>Ticker</th><th>Issuer Name</th><th>Last Close</th><th>Sentiment Run Date</th><th>1-Week</th><th>1-Month</th><th>Summary</th><th><span class="sr-only">Detail</span></th></tr></thead>
+      <tbody>${rows.length?sentiRows(rows):'<tr><td colspan="8" class="senti-empty">No names match these filters.</td></tr>'}</tbody></table></div>
+      <p class="senti-foot">${sEsc(data.method)} Sources: ${data.sources.map(sEsc).join(', ')}. StockTwits and Reddit block automated access and are not included. Not investment advice.</p>`;
+  }
+  const sentiHost=document.getElementById('pos-sentiment');
+  sentiHost?.addEventListener('click',event=>{
+    const eye=event.target.closest('[data-senti-open]'),more=event.target.closest('[data-senti-more]'),hz=event.target.closest('[data-senti-horizon]');
+    const toggle=(set,key)=>set.has(key)?set.delete(key):set.add(key);
+    if(eye){toggle(sentiState.open,eye.dataset.sentiOpen);renderSentiment();sentiHost.querySelector(`[data-senti-open="${eye.dataset.sentiOpen}"]`)?.focus();}
+    else if(more){toggle(sentiState.expanded,more.dataset.sentiMore);renderSentiment();sentiHost.querySelector(`[data-senti-more="${more.dataset.sentiMore}"]`)?.focus();}
+    else if(hz){sentiState.horizon=hz.dataset.sentiHorizon;renderSentiment();sentiHost.querySelector(`[data-senti-horizon="${sentiState.horizon}"]`)?.focus();}
+  });
+  sentiHost?.addEventListener('input',event=>{
+    if(!event.target.matches('[data-senti-search]'))return;
+    sentiState.query=event.target.value;const pos=event.target.selectionStart;renderSentiment();
+    const input=sentiHost.querySelector('[data-senti-search]');input.focus();input.setSelectionRange(pos,pos);
+  });
+  sentiHost?.addEventListener('change',event=>{
+    if(!event.target.matches('[data-senti-filter]'))return;
+    sentiState.filter=event.target.value;renderSentiment();sentiHost.querySelector('[data-senti-filter]')?.focus();
+  });
   const fundSwitch=document.getElementById('fund-switch');
   const fundMenu=document.getElementById('fund-menu');
   const fundBtnName=document.getElementById('fund-btn-name');
@@ -2677,6 +2802,7 @@
     const f=funds.find(x=>x.id===id); if(!f) return;
     activeFund=id;
     renderIRTearSheets(id);
+    renderIRTearsheet(id,irTearsheet?.month);
     if(fundBtnName) fundBtnName.textContent=f.name;
     setText('hero-fund', f.name.replace(/ Fund$/,''));
     const cardList=cardsByFund[id]||cardsByFund.alpha;
@@ -2695,6 +2821,7 @@
     if(critEl) critEl.style.color = critN===0 ? 'var(--good)' : '';
     const dot=document.querySelector('.fund-dot'); if(dot) dot.style.background=f.color;
     renderDetail(id);
+    renderSentiment(id);
     syncIRDashboardStatus(id);
     try{ localStorage.setItem('point-fund', id); }catch(e){}
     renderFundMenu();
@@ -2709,27 +2836,6 @@
     if(submit){submit.textContent='Send to compliance';submit.disabled=false;}
   }
 
-  function irXmlEscape(value){return String(value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');}
-  function irCrc32(bytes){let crc=-1;for(let i=0;i<bytes.length;i++){crc^=bytes[i];for(let j=0;j<8;j++)crc=(crc>>>1)^((crc&1)?0xEDB88320:0);}return (crc^-1)>>>0;}
-  function irMakeDocx(text){
-    const enc=new TextEncoder();
-    const files=[
-      ['[Content_Types].xml','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>'],
-      ['_rels/.rels','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>'],
-      ['word/document.xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>${text.split(/\r?\n/).map(line=>`<w:p><w:r><w:t xml:space="preserve">${irXmlEscape(line)}</w:t></w:r></w:p>`).join('')}<w:sectPr><w:pgSz w:w="12240" w:h="15840"/><w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440"/></w:sectPr></w:body></w:document>`]
-    ].map(([name,content])=>({name:enc.encode(name),data:enc.encode(content)}));
-    const chunks=[],central=[];let offset=0;
-    const u16=n=>[n&255,(n>>>8)&255],u32=n=>[n&255,(n>>>8)&255,(n>>>16)&255,(n>>>24)&255];
-    const append=(target,arr)=>target.push(new Uint8Array(arr));
-    files.forEach(file=>{
-      const crc=irCrc32(file.data),local=[...u32(0x04034b50),...u16(20),...u16(0),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(file.data.length),...u32(file.data.length),...u16(file.name.length),...u16(0)];
-      chunks.push(new Uint8Array(local),file.name,file.data);
-      const c=[...u32(0x02014b50),...u16(20),...u16(20),...u16(0),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(file.data.length),...u32(file.data.length),...u16(file.name.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(offset)];
-      central.push(new Uint8Array(c),file.name);offset+=local.length+file.name.length+file.data.length;
-    });
-    const centralSize=central.reduce((n,b)=>n+b.length,0),end=new Uint8Array([...u32(0x06054b50),...u16(0),...u16(0),...u16(files.length),...u16(files.length),...u32(centralSize),...u32(offset),...u16(0)]);
-    return new Blob([...chunks,...central,end],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
-  }
   const irConfirmOverlay=document.getElementById('ir-confirm-overlay');
   const irConfirmCard=document.getElementById('ir-confirm-card');
   let irConfirmReturnFocus=null;
@@ -2778,10 +2884,14 @@
       if(target.isContentEditable){say('Save or cancel your edits before submitting.');return;}
       say('');openIRConfirmation(button,report);
     }else if(action==='export'){
+      if(target.isContentEditable){say('Save or cancel your edits before downloading.');return;}
       const fundName=(funds.find(f=>f.id===activeFund)||funds[0]).name;
-      const reportName=report==='dashboard'?'Investor Letter':report==='template1'?'Monthly Factsheet':report==='template2'?'Portfolio Exposure':'Performance Attribution';
-      const blob=irMakeDocx(`${fundName} - ${reportName}\n\n${target.innerText.trim()}`),url=URL.createObjectURL(blob),link=document.createElement('a');
-      link.href=url;link.download=`${fundName.replace(/[^a-z0-9]+/gi,'-')}-${reportName.replace(/[^a-z0-9]+/gi,'-')}.docx`;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);say('DOCX downloaded.');
+      const articles=['template1','template2','template3'].map(r=>document.querySelector(`#ir-${r} [data-ir-doc]`)).filter(Boolean);
+      try{
+        const blob=window.PointIRReports.templatesPdf({fundName,asOf:'30 Sep 2026',articles,letter:report==='dashboard'?target:null});
+        irDownload(blob,`${fundName.replace(/[^a-z0-9]+/gi,'-')}-IR-Reporting-Pack.pdf`);
+        say(`PDF downloaded · ${articles.length} templates${report==='dashboard'?' + investor letter':''}.`);
+      }catch(e){console.error(e);say('Could not build the PDF.');}
     }
   });
   try{
@@ -3070,7 +3180,20 @@
     if(event.key==='Enter'){event.preventDefault();const question=chatSearch.value.trim();chatSearch.value='';pointChat.open(question||undefined);}
   });
 
-  /* open from hash */
-  const h = (location.hash||'').replace('#','');
-  if(h && titles[h]) go(h);
+  /* open from hash, and follow Back / Forward between views */
+  function routeFromHash(initial){
+    const [view,sub]=(location.hash||'').replace('#','').split('/');
+    if(!(view && titles[view] && document.getElementById('view-'+view))){
+      if(initial) setRoute(currentView,true); else go('dashboard',{history:false});
+      return;
+    }
+    go(view,{history:false});
+    if(view==='ir'){
+      const tab=irTabs.find(t=>t.dataset.irTab===(sub||'dashboard'))||irTabs[0];
+      if(tab) selectIrTab(tab,{history:false});
+    }
+  }
+  window.addEventListener('popstate',()=>{ routeFromHash(false); syncBackLink(); });
+  routeFromHash(true);
+  syncBackLink();
 })();
