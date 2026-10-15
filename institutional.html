@@ -44,7 +44,7 @@ body[data-theme="light"][data-tone="pf"]{--accent-ink:#115E59;--accent-weak:rgba
 body[data-theme="light"][data-tone="mk"]{--accent-ink:#7A4E09;--accent-weak:rgba(140,98,8,.12)}
 body[data-theme="light"][data-tone="dp"]{--accent-ink:#5B21B6;--accent-weak:rgba(91,33,182,.1)}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(circle at top right,rgba(205,223,245,.22),transparent 34%),var(--bg);color:var(--ink);font-family:var(--sans);font-size:13px;-webkit-font-smoothing:antialiased;transition:background-color .18s ease,color .18s ease}
+body{margin:0;background:radial-gradient(circle at top right,color-mix(in srgb,var(--ws) 22%,transparent),transparent 34%),var(--bg);color:var(--ink);font-family:var(--sans);font-size:13px;-webkit-font-smoothing:antialiased;transition:background-color .18s ease,color .18s ease}
 a{color:inherit;text-decoration:none}
 button,input,select,textarea{font-family:inherit}
 .num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
@@ -421,6 +421,7 @@ table.t.lite th.c,table.t.lite td.c{text-align:center}
 @media(max-width:620px){.crumbs{display:none}.top{padding:12px;min-height:62px}.ask-mini{width:min(42vw,230px)}.kbd{display:none}.top-tools{gap:7px}.icon-btn,.profile-btn{height:36px;width:36px}.profile-btn{justify-content:center}.fundsel-btn{max-width:160px}.fundsel-btn .fs-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:106px}}
 </style>
 <link rel="stylesheet" href="chat.css">
+<link rel="stylesheet" href="theme-picker.css">
 </head>
 <body data-theme="light" data-tone="ws">
 <div class="app">
@@ -499,7 +500,7 @@ table.t.lite th.c,table.t.lite td.c{text-align:center}
       <div class="top-tools">
         <div class="ask-mini" id="ask-mini"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input placeholder="Ask Point: ‘what moved NVDA?’" id="ask-mini-in"/><span class="kbd">⌘K</span></div>
         <button class="icon-btn" data-goto="alerts" title="Alerts" aria-label="Open alerts"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg><span class="dot"></span></button>
-        <button class="icon-btn" id="theme-btn" type="button" title="Switch to dark theme" aria-label="Switch to dark theme"><svg class="theme-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="theme-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg></button>
+        <button class="icon-btn" id="theme-btn" type="button" title="Appearance settings" aria-label="Appearance settings"><svg class="theme-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="theme-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg></button>
         <div class="profile" id="profile" aria-label="Signed in user">
           <button class="profile-btn" id="profile-btn" type="button" aria-haspopup="menu" aria-expanded="false"><span class="profile-avatar">US</span><span>User</span><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="m7 10 5 5 5-5z"/></svg></button>
           <div class="profile-menu" id="profile-menu" role="menu">
@@ -536,6 +537,7 @@ table.t.lite th.c,table.t.lite td.c{text-align:center}
 
 <script src="chat-core.js"></script>
 <script src="chat-ui.js"></script>
+<script src="theme-picker.js"></script>
 <script src="institutional.js"></script>
 </body>
 </html>

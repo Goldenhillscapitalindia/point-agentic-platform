@@ -3147,9 +3147,10 @@
   document.addEventListener('click',()=>{ fundSwitch?.classList.remove('open'); profile?.classList.remove('open'); });
   document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ fundSwitch?.classList.remove('open'); profile?.classList.remove('open'); } });
 
-  /* ---- theme toggle ---- */
+  /* ---- appearance: display mode and shared color palettes ---- */
   const themeBtn = document.getElementById('theme-btn');
   function applyTheme(t){
+    t = t === 'light' ? 'light' : 'dark';
     document.body.setAttribute('data-theme', t);
     const moon = document.querySelector('.ic-moon'), sun = document.querySelector('.ic-sun');
     if(moon) moon.style.display = t==='light' ? 'none' : '';
@@ -3158,11 +3159,10 @@
   let saved='dark';
   try{ saved = localStorage.getItem('point-theme') || 'dark'; }catch(e){}
   applyTheme(saved);
-  if(themeBtn) themeBtn.addEventListener('click', ()=>{
-    const next = document.body.getAttribute('data-theme')==='light' ? 'dark' : 'light';
-    applyTheme(next);
-    try{ localStorage.setItem('point-theme', next); }catch(e){}
-  });
+  window.PointThemePicker?.init({trigger:themeBtn, setTheme:theme=>{
+    applyTheme(theme);
+    try{ localStorage.setItem('point-theme', theme); }catch(e){}
+  }});
 
 
   if(window.__tagRows) window.__tagRows();

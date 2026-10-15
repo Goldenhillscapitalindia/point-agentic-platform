@@ -12,7 +12,7 @@ function setTheme(theme){
   try{localStorage.setItem('point-inst-theme',next);}catch(e){}
   const control=Q('#theme-btn');
   if(control){
-    const label=next==='light'?'Switch to dark theme':'Switch to light theme';
+    const label='Appearance settings';
     control.title=label; control.setAttribute('aria-label',label);
   }
 }
@@ -794,7 +794,7 @@ try{const sf=localStorage.getItem('point-inst-fund'); if(sf&&FUNDS[sf])FUND=sf; 
 renderAll(); syncAlertBadges();
 renderMobileNav();
 try{setTheme(localStorage.getItem('point-inst-theme')||'light');}catch(e){setTheme('light');}
-Q('#theme-btn')?.addEventListener('click',()=>setTheme(document.body.dataset.theme==='light'?'dark':'light'));
+window.PointThemePicker?.init({trigger:Q('#theme-btn'),setTheme});
 
 Q('#fundsel-btn').onclick=e=>{e.stopPropagation();Q('#fundsel').classList.toggle('open');};
 document.addEventListener('click',()=>{Q('#fundsel').classList.remove('open');Q('#profile')?.classList.remove('open');Q('#profile-btn')?.setAttribute('aria-expanded','false');});

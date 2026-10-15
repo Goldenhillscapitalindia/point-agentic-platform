@@ -72,7 +72,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.3px;margin:0}
 .constellation{position:relative;aspect-ratio:1;max-width:440px;margin:0 auto;width:100%}
 .c-center{position:absolute;left:50%;top:50%;width:92px;height:92px;transform:translate(-50%,-50%);
   background:#fff;border-radius:50%;display:grid;place-items:center;z-index:3;
-  box-shadow:0 0 0 10px rgba(255,255,255,.05),0 20px 50px -14px rgba(205,223,245,.45)}
+  box-shadow:0 0 0 10px rgba(255,255,255,.05),0 20px 50px -14px color-mix(in srgb,var(--ws) 45%,transparent)}
 .c-center svg{width:48px;height:48px}
 .node{position:absolute;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;
   font-size:20px;z-index:2;transform:translate(-50%,-50%);transition:.3s;cursor:default}
@@ -82,7 +82,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.3px;margin:0}
 .spoke{position:absolute;left:50%;top:50%;height:1px;background:linear-gradient(90deg,rgba(148,163,184,.55),transparent);
   transform-origin:left center;z-index:1}
 .glow{position:absolute;width:560px;height:560px;left:50%;top:50%;transform:translate(-50%,-50%);
-  background:radial-gradient(circle,rgba(205,223,245,.2),transparent 62%);z-index:0;pointer-events:none}
+  background:radial-gradient(circle,color-mix(in srgb,var(--ws) 20%,transparent),transparent 62%);z-index:0;pointer-events:none}
 
 /* stat band */
 .band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-2)}
@@ -156,7 +156,7 @@ section.blk{padding:90px 0}
 .legend-inline{display:flex;gap:18px;font-size:12px;color:var(--txt-2);margin-top:14px;flex-wrap:wrap}
 .legend-inline i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
 .feat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
-.feat{background:rgba(205,223,245,.10);border:1px solid rgba(205,223,245,.22);border-radius:12px;padding:16px}
+.feat{background:color-mix(in srgb,var(--ws) 10%,transparent);border:1px solid color-mix(in srgb,var(--ws) 22%,transparent);border-radius:12px;padding:16px}
 .feat h4{font-family:var(--serif);font-size:15px;margin:0 0 6px}
 .feat p{font-size:12.5px;color:var(--txt-2);margin:0;line-height:1.5}
 
@@ -189,7 +189,7 @@ section.blk{padding:90px 0}
 .cta{text-align:center;padding:100px 0;position:relative}
 .cta h2{font-size:46px;line-height:1.1}
 .cta p{font-size:18px;color:var(--txt-2);margin:18px auto 34px;max-width:560px;line-height:1.6}
-.cta .glow{width:720px;height:420px;background:radial-gradient(ellipse,rgba(205,223,245,.16),transparent 65%)}
+.cta .glow{width:720px;height:420px;background:radial-gradient(ellipse,color-mix(in srgb,var(--ws) 16%,transparent),transparent 65%)}
 
 /* footer */
 footer{border-top:1px solid var(--line);padding:46px 0;background:var(--bg-2)}
@@ -215,13 +215,13 @@ footer{border-top:1px solid var(--line);padding:46px 0;background:var(--bg-2)}
 .demo-card textarea{resize:vertical}
 .demo-card input::placeholder,.demo-card textarea::placeholder{color:var(--txt-3)}
 .demo-card input:focus,.demo-card select:focus,.demo-card textarea:focus{border-color:var(--ws);
-  box-shadow:0 0 0 3px rgba(205,223,245,.16)}
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--ws) 16%,transparent)}
 .demo-card input:invalid:not(:placeholder-shown){border-color:#cc4a46}
 .df-chips{display:flex;gap:8px;flex-wrap:wrap}
 .df-chip{font-size:13px;font-weight:600;padding:8px 14px;border-radius:9px;border:1px solid var(--line-2);
   background:var(--bg-2);color:var(--txt-2);cursor:pointer;transition:.15s;user-select:none}
 .df-chip:hover{border-color:var(--txt-3)}
-.df-chip.on{background:rgba(47,82,124,.10);border-color:var(--ws-on);color:var(--txt)}
+.df-chip.on{background:color-mix(in srgb,var(--ws) 16%,transparent);border-color:var(--ws-on);color:var(--txt)}
 .df-note{font-size:11.5px;color:var(--txt-3);text-align:center}
 .df-success{display:none;align-items:center;gap:14px;background:rgba(88,176,106,.1);
   border:1px solid rgba(88,176,106,.3);border-radius:12px;padding:16px;margin-top:4px}
@@ -248,6 +248,7 @@ footer{border-top:1px solid var(--line);padding:46px 0;background:var(--bg-2)}
 }
 @media(max-width:560px){.vision,.band-in,.feat-row{grid-template-columns:1fr}}
 </style>
+<link rel="stylesheet" href="theme-picker.css">
 </head>
 <body>
 
@@ -267,7 +268,7 @@ footer{border-top:1px solid var(--line);padding:46px 0;background:var(--bg-2)}
       <a href="#demo">Request a demo</a>
     </div>
     <div class="nav-cta">
-      <button class="btn ghost" id="theme-btn" title="Toggle theme" style="padding:9px 12px">
+      <button class="btn ghost" id="theme-btn" type="button" title="Appearance" aria-label="Appearance" style="padding:9px 12px">
         <svg class="ic-moon" viewBox="0 0 24 24" width="17" height="17"><path fill="currentColor" d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
         <svg class="ic-sun" viewBox="0 0 24 24" width="17" height="17" style="display:none"><path fill="currentColor" d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0-5v3m0 14v3M4.2 4.2l2.1 2.1m11.4 11.4 2.1 2.1M2 12h3m14 0h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       </button>
@@ -629,6 +630,7 @@ footer{border-top:1px solid var(--line);padding:46px 0;background:var(--bg-2)}
   </div>
 </footer>
 
+<script src="theme-picker.js"></script>
 <script>
 (function(){
   'use strict';
@@ -743,13 +745,14 @@ footer{border-top:1px solid var(--line);padding:46px 0;background:var(--bg-2)}
   /* theme toggle */
   const tb=document.getElementById('theme-btn');
   function apply(t){
+    t=t==='light'?'light':'dark';
     document.body.setAttribute('data-theme',t);
     const m=document.querySelector('.ic-moon'),s=document.querySelector('.ic-sun');
     if(m)m.style.display=t==='light'?'none':''; if(s)s.style.display=t==='light'?'':'none';
   }
   let saved='dark'; try{saved=localStorage.getItem('point-theme')||'dark';}catch(e){}
   apply(saved);
-  if(tb)tb.addEventListener('click',()=>{const nx=document.body.getAttribute('data-theme')==='light'?'dark':'light';apply(nx);try{localStorage.setItem('point-theme',nx);}catch(e){}});
+  window.PointThemePicker?.init({trigger:tb,setTheme:theme=>{apply(theme);try{localStorage.setItem('point-theme',theme);}catch(e){}}});
 })();
 </script>
 

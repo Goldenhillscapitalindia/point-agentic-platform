@@ -10,7 +10,8 @@
  *   styles.css   · app styles
  *   app.js       · app logic
  *   ir-reports.js · IR PDF downloads + monthly tear sheet
- *   landing.html · marketing page (self-contained)
+ *   theme-picker.js + theme-picker.css · shared appearance controls
+ *   landing.html · marketing page
  *
  * Output  (generated — do not hand-edit):
  *   dist/index.html · landing page, the deploy entry point
@@ -57,8 +58,14 @@ function inlineChat(html) {
 app = inlineChat(app);
 inst = inlineChat(inst);
 
-// 3. Load the self-contained landing page
-const landing = fs.readFileSync(r('landing.html'), 'utf8');
+// 3. Bundle the shared appearance picker on every entry point.
+function inlineAppearance(html) {
+  html = html.replace('<link rel="stylesheet" href="theme-picker.css">', () => '<style>\n' + fs.readFileSync(r('theme-picker.css'), 'utf8') + '\n</style>');
+  return html.replace('<script src="theme-picker.js"></script>', () => '<script>\n' + fs.readFileSync(r('theme-picker.js'), 'utf8') + '\n</script>');
+}
+app = inlineAppearance(app);
+inst = inlineAppearance(inst);
+const landing = inlineAppearance(fs.readFileSync(r('landing.html'), 'utf8'));
 
 // 4. Assemble dist/ with the landing page as index.html (default served file)
 const dist = r('dist');
