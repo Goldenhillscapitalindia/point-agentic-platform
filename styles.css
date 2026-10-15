@@ -501,6 +501,9 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .perp-table .perp-volume{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
 .perp-table .perp-rank{color:var(--txt-3);width:48px}
 .perp-table .perp-venues{white-space:normal;min-width:190px;line-height:1.6}
+.perp-contract-rankings{margin-top:32px}
+.perp-contract-table{min-width:900px}
+.perp-contract-table td:nth-child(n+4),.perp-contract-table th:nth-child(n+4){text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
 .perp-methodology summary{cursor:pointer;font-size:13px;font-weight:600}
 .perp-markets a:focus-visible,.perp-markets summary:focus-visible,.perp-markets .tbl-wrap:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 
@@ -1375,3 +1378,83 @@ body[data-theme="light"] .spec-name.z-crowded{border-color:rgba(177,58,34,.45)}
 body[data-theme="light"] .spec-name.z-balanced{border-color:#d3c6b0;color:#2a211a}
 body[data-theme="light"] details.legend-card{background:#f7f1e6;border-color:#e4dac8}
 body[data-theme="light"] .legend-body code{background:#efe6d6;color:#2a211a}
+
+/* ---- IR monthly tear sheet ---- */
+.ts-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:0 0 14px}
+.ts-toolbar h3{margin:0 auto 0 0;font-family:var(--serif);font-size:20px;font-weight:650;color:var(--txt)}
+.ts-toolbar h3 span{color:var(--orange-2)}
+.ts-toolbar label{display:flex;align-items:center;gap:8px;font-size:10px;font-weight:750;letter-spacing:.8px;color:var(--txt-3)}
+.ts-toolbar select{padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--txt);font:600 12px var(--sans);cursor:pointer}
+.ts-toolbar select:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.ts-sheet .tear-period .ts-conf{display:inline-block;margin-top:6px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;background:var(--panel-2);color:var(--txt-2);font-size:8.5px;letter-spacing:.3px}
+.ts-sheet .tear-side dd.up{color:var(--good)}.ts-sheet .tear-side dd.dn{color:var(--bad)}
+.ts-sheet>.tear-block{margin:0 0 12px}
+.ts-drivers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.ts-driver{padding:2px 0 2px 12px;border-left:3px solid var(--orange)}
+.ts-driver.d1{border-color:var(--gold)}.ts-driver.d2{border-color:#687f75}
+.ts-driver b{display:block;margin-bottom:5px;font-size:11px;color:var(--txt)}
+.ts-driver em{font-style:normal;margin-left:4px}.ts-driver em.up{color:var(--good)}.ts-driver em.dn{color:var(--bad)}
+.ts-driver p{margin:0;font-size:11px;line-height:1.5;color:var(--txt-2)}
+.ts-grid-table .ts-bench-row th,.ts-grid-table .ts-bench-row td{padding-top:4px;color:var(--txt-3);font-style:italic;font-weight:500;font-size:9px}
+.ts-grid-table tr:not(.ts-bench-row) th,.ts-grid-table tr:not(.ts-bench-row) td{border-bottom:0;padding-bottom:3px}
+.ts-grid-table .ts-ytd{font-weight:700}
+.ts-sheet .tear-footnote a{color:var(--orange-2)}
+@media(max-width:900px){.ts-drivers{grid-template-columns:1fr}}
+@media(max-width:600px){.ts-toolbar h3{width:100%}}
+
+/* ---- Position Intel · sentiment summary ---- */
+.senti{padding-bottom:16px}
+.senti-head{display:flex;align-items:center;flex-wrap:wrap;gap:12px 18px;margin-bottom:14px}
+.senti-head>div:first-child{margin-right:auto}
+.senti-head .card-title{margin:0}
+.senti-head p{margin:3px 0 0;font-size:12px;color:var(--txt-3)}
+.senti-seg{display:flex;gap:6px}
+.senti-seg button{min-width:76px;padding:8px 14px;border:1px solid var(--line);border-radius:9px;background:var(--panel);color:var(--txt-2);font:650 12px var(--sans);cursor:pointer}
+.senti-seg button[aria-pressed="true"]{border-color:var(--orange);background:rgba(232,96,59,.1);color:var(--orange-2);box-shadow:0 0 0 1px var(--orange) inset}
+.senti-seg button:focus-visible,.senti-eye:focus-visible,.senti-more:focus-visible,.senti-tools select:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.senti-tools{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.senti-search{flex:1;display:flex;align-items:center;gap:8px;padding:0 12px;border:1px solid var(--line);border-radius:9px;background:var(--panel);color:var(--txt-3)}
+.senti-search:focus-within{border-color:var(--orange)}
+.senti-search input{flex:1;min-width:0;padding:10px 0;border:0;outline:0;background:transparent;color:var(--txt);font:13px var(--sans)}
+.senti-tools select{padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:var(--panel);color:var(--txt);font:600 12.5px var(--sans);cursor:pointer}
+.senti-count{font-size:11.5px;color:var(--txt-3);white-space:nowrap}
+.senti-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+.senti-table{width:100%;min-width:980px;border-collapse:collapse;font-size:12.5px}
+.senti-table th{padding:14px 14px;text-align:left;font-size:12px;font-weight:700;color:var(--txt);border-bottom:1px solid var(--line);background:var(--panel)}
+.senti-table td{padding:16px 14px;vertical-align:middle;border-bottom:1px solid var(--line);color:var(--txt-2)}
+.senti-table tbody>tr:not(.senti-detail):nth-of-type(even){background:var(--panel-2)}
+.senti-table tr.is-open>td{border-bottom-color:transparent}
+.senti-tk{white-space:nowrap;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--orange-2);letter-spacing:.5px}
+.senti-tk span{color:var(--txt-3);font-weight:600}
+.senti-ex{display:block;margin-top:3px;font-size:10px;color:var(--txt-3)}
+.senti-name{color:var(--txt)!important;font-size:12px;letter-spacing:.2px}
+.senti-num{color:var(--txt)!important;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}
+.senti-num small{display:block;margin-top:3px;font-weight:500;font-size:10.5px;color:var(--txt-3)}
+.senti-table .up{color:var(--good)}.senti-table .dn{color:var(--bad)}
+.senti-pill{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid;border-radius:7px;font-size:11.5px;font-weight:700;white-space:nowrap}
+.senti-pill.gold{color:var(--gold-2);background:rgba(212,164,43,.1);border-color:rgba(212,164,43,.45)}
+.senti-pill.good{color:var(--good);background:rgba(88,176,106,.1);border-color:rgba(88,176,106,.45)}
+.senti-pill.red{color:var(--bad);background:rgba(217,83,79,.08);border-color:rgba(217,83,79,.45)}
+.senti-pill.strong{border-width:2px}
+.senti-sum{min-width:300px;max-width:420px}
+.senti-sum p{margin:0;font-size:12px;line-height:1.55;color:var(--txt)}
+.senti-sum p.clamp{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.senti-more{padding:2px 0;border:0;background:none;color:var(--orange-2);font:650 11.5px var(--sans);cursor:pointer}
+.senti-eye{display:grid;place-items:center;width:32px;height:32px;border:0;border-radius:8px;background:rgba(232,96,59,.1);color:var(--orange-2);cursor:pointer}
+.senti-eye[aria-expanded="true"]{background:var(--orange);color:#fff}
+.senti-detail td{padding:0 14px 18px;background:var(--panel-2)}
+.senti-detail-grid{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:18px;padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.senti-detail h4{margin:0 0 10px;font-size:10px;font-weight:750;letter-spacing:.8px;text-transform:uppercase;color:var(--txt-3)}
+.senti-mix{margin-bottom:10px}.senti-mix>span{display:block;font-size:11px;color:var(--txt-2);margin-bottom:4px}
+.senti-mix small{font-size:10px;color:var(--txt-3)}
+.senti-tone{display:flex;height:7px;border-radius:4px;overflow:hidden;background:var(--line);margin-bottom:3px}
+.senti-tone .p{background:var(--good)}.senti-tone .z{background:#b9ad9a}.senti-tone .n{background:var(--bad)}
+.senti-detail dl{margin:0}.senti-detail dl div{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:11px}
+.senti-detail dt{color:var(--txt-3)}.senti-detail dd{margin:0;text-align:right;color:var(--txt)}
+.senti-themes{display:flex;flex-wrap:wrap;gap:6px}
+.senti-catalyst{margin-top:12px!important}
+.senti-themes span{padding:3px 8px;border-radius:20px;background:var(--panel-2);border:1px solid var(--line);font-size:10.5px;color:var(--txt-2)}
+.senti-foot{margin:12px 2px 0;font-size:10.5px;line-height:1.5;color:var(--txt-3)}
+.senti-empty{padding:18px 4px;color:var(--txt-3);font-size:12px}
+@media(max-width:900px){.senti-detail-grid{grid-template-columns:1fr}.senti-tools{flex-wrap:wrap}.senti-search{flex-basis:100%}}
+.senti .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}

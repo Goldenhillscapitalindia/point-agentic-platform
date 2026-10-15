@@ -9,6 +9,7 @@
  *   index.html   · app markup (references styles.css + app.js)
  *   styles.css   · app styles
  *   app.js       · app logic
+ *   ir-reports.js · IR PDF downloads + monthly tear sheet
  *   landing.html · marketing page (self-contained)
  *
  * Output  (generated — do not hand-edit):
@@ -29,6 +30,10 @@ const js  = fs.readFileSync(r('app.js'), 'utf8');
 app = app.replace('<link rel="stylesheet" href="styles.css">', () => '<style>\n' + css + '\n</style>');
 app = app.replace('<script src="app.js"></script>', () => '<script>\n' + js + '\n</script>');
 app = app.replace('<script src="data/perpetual-markets.js"></script>', () => '<script>\n' + fs.readFileSync(r('data/perpetual-markets.js'), 'utf8') + '\n</script>');
+// IR reporting PDF builder, tear sheet data and Position Intel sentiment (scripts/fetch-*.cjs)
+for (const file of ['data/tearsheet-data.js', 'data/sentiment-data.js', 'ir-reports.js']) {
+  app = app.replace('<script src="' + file + '"></script>', () => '<script>\n' + fs.readFileSync(r(file), 'utf8') + '\n</script>');
+}
 // Inline the macro-extras bootstrap (yield curve + CB calendar for the 10-name universe)
 const macroExtrasPath = r('data/macro-extras.js');
 if (fs.existsSync(macroExtrasPath)) {
