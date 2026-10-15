@@ -5,12 +5,23 @@ const path = require('node:path');
 
 test('institutional terminal uses the platform dark surface system', () => {
   const terminal = fs.readFileSync(path.join(__dirname, '..', 'institutional.html'), 'utf8');
+  const appStyles = fs.readFileSync(path.join(__dirname, '..', 'styles.css'), 'utf8');
+  const rootTokens = source => Object.fromEntries(
+    [...source.match(/:root\s*\{([^}]+)\}/)[1].matchAll(/--([\w-]+):\s*([^;]+);/g)]
+      .map(([, name, value]) => [name, value.trim()])
+  );
+  const terminalTokens = rootTokens(terminal);
+  const appTokens = rootTokens(appStyles);
 
   assert.match(terminal, /Fraunces/);
   assert.match(terminal, /JetBrains\+Mono/);
-  assert.match(terminal, /--bg:#141210/);
-  assert.match(terminal, /--panel:#201c18/);
-  assert.match(terminal, /--accent:#e8603b/);
+  for (const [terminalToken, appToken] of [
+    ['bg', 'bg'], ['panel', 'panel'], ['accent', 'ws'],
+    ['accent-2', 'ws-2'], ['accent-ink', 'ws-ink']
+  ]) {
+    assert.ok(appTokens[appToken], `Platform token ${appToken} must exist`);
+    assert.equal(terminalTokens[terminalToken], appTokens[appToken], `${terminalToken} must match the platform`);
+  }
   assert.doesNotMatch(terminal, /--bg:#f6f7f9/);
 });
 

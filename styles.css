@@ -1,7 +1,7 @@
 /* ============ Point — design tokens ============
    Neutrals are a cool institutional slate (readable in dark and light).
    Four light squad colors stay the same hue in both themes:
-   Workspace blush · Portfolio mint · Market honey · Deploy lilac.
+   Workspace blue · Portfolio mint · Market honey · Deploy lilac.
    Green / red / amber stay reserved for gain, loss, and warning. */
 :root{
   --bg:#0B1220;
@@ -21,12 +21,12 @@
   --red:#F07178;
   --orange:#E08A3C;
   --orange-2:#F0A05A;
-  --ws:#F4D2CC;
-  --ws-2:#E8C0B8;
+  --ws:#CDDFF5;
+  --ws-2:#B8CFEA;
   --ws-on:#3A342C;
-  --ws-ink:#FBE6E2;
-  --ws-soft:rgba(244,210,204,.36);
-  --ws-line:rgba(244,210,204,.55);
+  --ws-ink:#E3EEFC;
+  --ws-soft:rgba(205,223,245,.36);
+  --ws-line:rgba(205,223,245,.55);
   --pf:#C9E8E0;
   --pf-2:#B3DDD2;
   --pf-ink:#D7F3EC;
@@ -82,9 +82,9 @@ body[data-theme="light"]{
   --red:#DC2626;
   --orange:#C2410C;
   --orange-2:#9A3412;
-  --ws-ink:#4A453E;
-  --ws-soft:rgba(74,69,62,.10);
-  --ws-line:rgba(74,69,62,.22);
+  --ws-ink:#2F527C;
+  --ws-soft:rgba(47,82,124,.10);
+  --ws-line:rgba(47,82,124,.22);
   --pf-ink:#115E59;
   --pf-soft:rgba(15,118,110,.10);
   --pf-line:rgba(15,118,110,.28);
