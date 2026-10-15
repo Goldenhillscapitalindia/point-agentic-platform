@@ -60,7 +60,7 @@ const dist = r('dist');
 fs.mkdirSync(dist, { recursive: true });
 
 // landing -> dist/index.html; its app links (point.html) become app.html
-fs.writeFileSync(path.join(dist, 'index.html'), landing.replace(/point\.html/g, 'app.html'));
+fs.writeFileSync(path.join(dist, 'index.html'), landing.replace(/(?:point|index)\.html/g, 'app.html'));
 
 // agentic app -> dist/app.html; its back-links (landing.html) become index.html
 fs.writeFileSync(path.join(dist, 'app.html'), app.replace(/landing\.html/g, 'index.html'));

@@ -7,6 +7,7 @@
   const items = document.querySelectorAll('[data-view]');
   const views = document.querySelectorAll('.view');
   const crumb = document.getElementById('crumb-view');
+  const crumbSquad = document.getElementById('crumb-squad');
   const titles = {
     dashboard:'Dashboard', brief:'Morning Brief', cards:'Action Cards', conductor:'Point Conductor',
     risk:'Risk & Guideline', tech:'Technical Signals', pnl:'PnL Attribution', ir:'IR & Reporting',
@@ -15,10 +16,21 @@
     mcp:'Point MCP', execute:'Point Execute', governance:'Governance',
     profile:'My profile', settings:'Account settings', funds:'Manage funds', signout:'Sign out'
   };
+  const squadName = {
+    dashboard:'Workspace', brief:'Workspace', cards:'Workspace', conductor:'Workspace',
+    profile:'Workspace', settings:'Workspace', funds:'Workspace', signout:'Workspace',
+    risk:'Portfolio Squad', tech:'Portfolio Squad', pnl:'Portfolio Squad', ir:'Portfolio Squad', pos:'Portfolio Squad',
+    research:'Market Squad', flows:'Market Squad', earnings:'Market Squad', macro:'Market Squad', digital:'Market Squad',
+    mcp:'Deploy', execute:'Deploy', governance:'Deploy'
+  };
+  const squadTone = {'Workspace':'ws','Portfolio Squad':'pf','Market Squad':'mk','Deploy':'dp'};
   function go(view){
     views.forEach(v=>v.classList.toggle('active', v.id==='view-'+view));
     document.querySelectorAll('.side-item').forEach(a=>a.classList.toggle('active', a.dataset.view===view));
     if(crumb) crumb.textContent = titles[view]||'Dashboard';
+    const squad = squadName[view]||'Workspace';
+    if(crumbSquad) crumbSquad.textContent = squad;
+    document.body.dataset.tone = squadTone[squad]||'ws';
     window.scrollTo({top:0,behavior:'smooth'});
   }
   items.forEach(el=>el.addEventListener('click', e=>{
@@ -440,16 +452,16 @@
 
   /* ---- Analyst recommendations: suggested action, supporting evidence, and next step ---- */
   const agentMeta = {
-    risk:{n:'Risk & Guideline Agent',i:'🛡',sq:'red'},
-    tech:{n:'Technical Signals Agent',i:'📈',sq:'red'},
-    pnl:{n:'PnL Attribution Agent',i:'⚖︎',sq:'red'},
-    ir:{n:'IR & Reporting Agent',i:'📝',sq:'red'},
-    pos:{n:'Position Intelligence Agent',i:'📰',sq:'red'},
-    research:{n:'Research & Alpha Agent',i:'🔍',sq:'gold'},
-    flows:{n:'Fund Flows & Positioning Agent',i:'≋',sq:'gold'},
-    earnings:{n:'Earnings & Sentiment Agent',i:'💬',sq:'gold'},
-    macro:{n:'Macro & Regime Agent',i:'🌍',sq:'gold'},
-    digital:{n:'Digital Assets & Tokenization Agent',i:'◉',sq:'gold'}
+    risk:{n:'Risk & Guideline Agent',i:'🛡',sq:'pf'},
+    tech:{n:'Technical Signals Agent',i:'📈',sq:'pf'},
+    pnl:{n:'PnL Attribution Agent',i:'⚖︎',sq:'pf'},
+    ir:{n:'IR & Reporting Agent',i:'📝',sq:'pf'},
+    pos:{n:'Position Intelligence Agent',i:'📰',sq:'pf'},
+    research:{n:'Research & Alpha Agent',i:'🔍',sq:'mk'},
+    flows:{n:'Fund Flows & Positioning Agent',i:'≋',sq:'mk'},
+    earnings:{n:'Earnings & Sentiment Agent',i:'💬',sq:'mk'},
+    macro:{n:'Macro & Regime Agent',i:'🌍',sq:'mk'},
+    digital:{n:'Digital Assets & Tokenization Agent',i:'◉',sq:'mk'}
   };
   // Each entry is [recommendation, supporting evidence, suggested next step].
   // Copy describes the illustrative fund snapshot, not live analysis or human approval.
@@ -668,7 +680,7 @@
     const head=view.querySelector('.view-head'); if(!head) return;
     const m=agentMeta[k];
     const el=document.createElement('section');
-    el.className='decision-brief'+(m.sq==='gold'?' gold':'');
+    el.className='decision-brief';
     el.setAttribute('aria-labelledby', 'decision-title-'+k);
     el.innerHTML=`
       <div class="db-head">
@@ -1109,209 +1121,365 @@
     alpha:{
       chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
       kpis:[
-        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
-        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
-        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+
         ["Beat rate","90%","9/10 beat","good"]],
       upcoming:[
-        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
-        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
-        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
-        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
-        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
-        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
-        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
-        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
-        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+
+        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
+
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
+
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+
         ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
       surprises:[
-        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
-        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
-        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
-        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
-        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
-        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
-        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
-        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
-        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+
         ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
       phrases:[
-        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
-        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
-        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+
         ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
       revisions:[
-        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
-        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
-        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
-        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
-        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
-        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
-        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
-        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
-        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
+
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
+
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
+
+        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
+
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
+
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
+
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
+
+        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+
         ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 212"],"1","<span class=\"pill good\">pos</span>"]]
     },
     global:{
       chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
       kpis:[
-        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
-        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
-        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+
         ["Beat rate","90%","9/10 beat","good"]],
       upcoming:[
-        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
-        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
-        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
-        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
-        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
-        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
-        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
-        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
-        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+
+        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
+
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
+
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+
         ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
       surprises:[
-        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
-        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
-        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
-        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
-        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
-        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
-        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
-        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
-        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+
         ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
       phrases:[
-        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
-        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
-        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+
         ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
       revisions:[
-        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
-        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
-        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
-        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
-        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
-        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
-        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
-        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
-        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
+
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
+
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
+
+        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
+
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
+
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
+
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
+
+        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+
         ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 212"],"1","<span class=\"pill good\">pos</span>"]]
     },
     neutral:{
       chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
       kpis:[
-        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
-        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
-        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+
         ["Beat rate","90%","9/10 beat","good"]],
       upcoming:[
-        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
-        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
-        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
-        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
-        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
-        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
-        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
-        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
-        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+
+        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
+
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
+
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+
         ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
       surprises:[
-        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
-        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
-        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
-        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
-        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
-        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
-        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
-        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
-        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+
         ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
       phrases:[
-        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
-        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
-        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+
         ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
       revisions:[
-        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
-        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
-        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
-        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
-        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
-        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
-        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
-        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
-        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
+
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
+
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
+
+        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
+
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
+
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
+
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
+
+        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+
         ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 212"],"1","<span class=\"pill good\">pos</span>"]]
     },
     digital:{
       chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
       kpis:[
-        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
-        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
-        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+
         ["Beat rate","90%","9/10 beat","good"]],
       upcoming:[
-        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
-        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
-        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
-        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
-        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
-        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
-        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
-        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
-        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+
+        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
+
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
+
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+
         ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
       surprises:[
-        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
-        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
-        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
-        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
-        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
-        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
-        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
-        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
-        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+
         ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
       phrases:[
-        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
-        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
-        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+
         ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
       revisions:[
-        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
-        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
-        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
-        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
-        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
-        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
-        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
-        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
-        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
+
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
+
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
+
+        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
+
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
+
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
+
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
+
+        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+
         ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 212"],"1","<span class=\"pill good\">pos</span>"]]
     }
   };

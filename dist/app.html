@@ -8,68 +8,158 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ============ Point — design tokens ============ */
+/* ============ Point — design tokens ============
+   Neutrals are a cool institutional slate (readable in dark and light).
+   Four solid squad colors stay the same hue in both themes:
+   Workspace cobalt · Portfolio teal · Market gold · Deploy violet.
+   Green / red / amber stay reserved for gain, loss, and warning. */
 :root{
-  --bg:#141210;
-  --bg-2:#1b1815;
-  --panel:#201c18;
-  --panel-2:#262019;
-  --line:#322b23;
-  --line-2:#3d342a;
-  --txt:#f3ece1;
-  --txt-2:#b9ad9c;
-  --txt-3:#8a7e6e;
-  --orange:#e8603b;
-  --orange-2:#f2744f;
-  --gold:#d4a42b;
-  --gold-2:#e3b949;
-  --cream:#f0e8da;
-  --muted:#cbbfab;
-  --good:#58b06a;
-  --bad:#d9534f;
-  --warn:#e2a13a;
-  --red:#d9534f;
-  --sb:#17140f;
+  --bg:#0B1220;
+  --bg-2:#10192B;
+  --panel:#131C2E;
+  --panel-2:#1A2540;
+  --line:#243044;
+  --line-2:#31415C;
+  --txt:#E8EEF7;
+  --txt-2:#A8B6CC;
+  --txt-3:#7E8DA6;
+  --cream:#E8EEF7;
+  --muted:#9AABC2;
+  --good:#3DDC84;
+  --bad:#F07178;
+  --warn:#F5A524;
+  --red:#F07178;
+  --orange:#E08A3C;
+  --orange-2:#F0A05A;
+  --ws:#334789;
+  --ws-2:#3E549C;
+  --ws-ink:#D5DDF0;
+  --ws-soft:rgba(51,71,137,.20);
+  --ws-line:rgba(191,219,254,.38);
+  --pf:#0F766E;
+  --pf-2:#0D9488;
+  --pf-ink:#99F6E4;
+  --pf-soft:rgba(15,118,110,.20);
+  --pf-line:rgba(153,246,228,.36);
+  --mk:#8C6208;
+  --mk-2:#A16207;
+  --mk-ink:#FDE68A;
+  --mk-soft:rgba(161,98,7,.22);
+  --mk-line:rgba(253,230,138,.36);
+  --dp:#5B21B6;
+  --dp-2:#6D28D9;
+  --dp-ink:#DDD6FE;
+  --dp-soft:rgba(91,33,182,.20);
+  --dp-line:rgba(221,214,254,.36);
+  --gold:#C4A35A;
+  --gold-2:#F0D78C;
+  --accent:var(--ws);
+  --accent-2:var(--ws-2);
+  --accent-ink:var(--ws-ink);
+  --accent-soft:var(--ws-soft);
+  --accent-line:var(--ws-line);
+  --sb:#070D18;
   --radius:14px;
   --radius-sm:9px;
   --sans:'Inter',system-ui,sans-serif;
   --serif:'Fraunces',Georgia,serif;
   --mono:'JetBrains Mono',ui-monospace,monospace;
   --shadow:0 10px 40px -18px rgba(0,0,0,.7);
-  --topbar-bg:rgba(20,18,16,.82);
+  --topbar-bg:rgba(11,18,32,.88);
 }
+body[data-tone="ws"]{--accent:var(--ws);--accent-2:var(--ws-2);--accent-ink:var(--ws-ink);--accent-soft:var(--ws-soft);--accent-line:var(--ws-line)}
+body[data-tone="pf"]{--accent:var(--pf);--accent-2:var(--pf-2);--accent-ink:var(--pf-ink);--accent-soft:var(--pf-soft);--accent-line:var(--pf-line)}
+body[data-tone="mk"]{--accent:var(--mk);--accent-2:var(--mk-2);--accent-ink:var(--mk-ink);--accent-soft:var(--mk-soft);--accent-line:var(--mk-line)}
+body[data-tone="dp"]{--accent:var(--dp);--accent-2:var(--dp-2);--accent-ink:var(--dp-ink);--accent-soft:var(--dp-soft);--accent-line:var(--dp-line)}
 
 /* ============ light theme ============ */
 body[data-theme="light"]{
-  --bg:#f5f0e6;
-  --bg-2:#efe8da;
-  --panel:#fffdf8;
-  --panel-2:#f2ebdc;
-  --line:#e4dac8;
-  --line-2:#d3c6b0;
-  --txt:#2a211a;
-  --txt-2:#6a5e4e;
-  --txt-3:#978a78;
-  --orange:#d9532f;
-  --orange-2:#c7421f;
-  --gold:#b88a17;
-  --gold-2:#a67c10;
-  --good:#3f9a53;
-  --bad:#cc4a46;
-  --warn:#c58a22;
-  --red:#cc4a46;
-  --sb:#efe7d7;
-  --muted:#5c5144;
-  --shadow:0 10px 34px -20px rgba(80,60,30,.35);
-  --topbar-bg:rgba(245,240,230,.85);
+  --bg:#F4F7FB;
+  --bg-2:#E7EEF6;
+  --panel:#FFFFFF;
+  --panel-2:#F1F5FB;
+  --line:#D5DFEC;
+  --line-2:#C3D0E2;
+  --txt:#0F172A;
+  --txt-2:#3E4C63;
+  --txt-3:#64748B;
+  --cream:#0F172A;
+  --muted:#52627A;
+  --good:#15803D;
+  --bad:#DC2626;
+  --warn:#C2410C;
+  --red:#DC2626;
+  --orange:#C2410C;
+  --orange-2:#9A3412;
+  --ws-ink:#334789;
+  --ws-soft:rgba(51,71,137,.12);
+  --ws-line:rgba(51,71,137,.28);
+  --pf-ink:#115E59;
+  --pf-soft:rgba(15,118,110,.10);
+  --pf-line:rgba(15,118,110,.28);
+  --mk-ink:#7A4E09;
+  --mk-soft:rgba(140,98,8,.12);
+  --mk-line:rgba(122,78,9,.30);
+  --dp-ink:#5B21B6;
+  --dp-soft:rgba(91,33,182,.10);
+  --dp-line:rgba(91,33,182,.28);
+  --gold:#8C6208;
+  --gold-2:#7A4E09;
+  --sb:#F8FAFC;
+  --shadow:0 10px 34px -20px rgba(15,23,42,.18);
+  --topbar-bg:rgba(244,247,251,.92);
 }
-body[data-theme="light"] .brand-name{color:#2a211a}
+body[data-theme="light"] .brand-name{color:var(--txt)}
 body[data-theme="light"] .search input{color:var(--txt)}
 body[data-theme="light"] .k-val,
 body[data-theme="light"] .stat-val,
 body[data-theme="light"] .m-val,
 body[data-theme="light"] .sc-val,
-body[data-theme="light"] .kv-v{color:#241c15}
+body[data-theme="light"] .kv-v{color:var(--txt)}
+body[data-theme="light"] .pill.red,
+body[data-theme="light"] .dw-trade .act.sell,
+body[data-theme="light"] .pm-item.danger,
+body[data-theme="light"] .pt-rate.r-red,
+body[data-theme="light"] .spec-name.z-crowded,
+body[data-theme="light"] .spec-zone.z-crowded,
+body[data-theme="light"] .pm-pill.red,
+body[data-theme="light"] .ern-plan.ern-hedge,
+body[data-theme="light"] .c-tier.t-red{color:#B91C1C}
+body[data-theme="light"] .pill.good,
+body[data-theme="light"] .pt-up,
+body[data-theme="light"] .pt-rate.r-buy,
+body[data-theme="light"] .spec-zone.z-lonely,
+body[data-theme="light"] .spec-name.z-lonely,
+body[data-theme="light"] .pm-pill.green,
+body[data-theme="light"] .dw-trade .act.buy{color:#166534}
+body[data-theme="light"] .pill.orange,
+body[data-theme="light"] .tag.red{color:#9A3412}
+body[data-theme="light"] .pt-rate.r-accum,
+body[data-theme="light"] .spec-zone.z-busy,
+body[data-theme="light"] .spec-name.z-busy,
+body[data-theme="light"] .c-tier.t-med{color:#7A4E09}
+body[data-theme="light"] .pill.red,
+body[data-theme="light"] .dw-trade .act.sell,
+body[data-theme="light"] .pm-item.danger,
+body[data-theme="light"] .pt-rate.r-red,
+body[data-theme="light"] .spec-name.z-crowded,
+body[data-theme="light"] .spec-zone.z-crowded,
+body[data-theme="light"] .pm-pill.red,
+body[data-theme="light"] .ern-plan.ern-hedge,
+body[data-theme="light"] .c-tier.t-red{color:#B91C1C}
+body[data-theme="light"] .pill.good,
+body[data-theme="light"] .pt-up,
+body[data-theme="light"] .pt-rate.r-buy,
+body[data-theme="light"] .spec-zone.z-lonely,
+body[data-theme="light"] .spec-name.z-lonely,
+body[data-theme="light"] .pm-pill.green,
+body[data-theme="light"] .dw-trade .act.buy{color:#166534}
+body[data-theme="light"] .pill.orange,
+body[data-theme="light"] .tag.red{color:#9A3412}
+body[data-theme="light"] .pt-rate.r-accum,
+body[data-theme="light"] .spec-zone.z-busy,
+body[data-theme="light"] .spec-name.z-busy,
+body[data-theme="light"] .c-tier.t-med{color:#7A4E09}
 /* keep intentionally-dark panels readable in light mode */
 body[data-theme="light"] .dark-card,
 body[data-theme="light"] .side-card.dark,
@@ -96,8 +186,8 @@ body{
 a{color:inherit;text-decoration:none}
 /* form controls don't inherit the page font by default — force it so no button falls back to Arial */
 button,input,select,textarea{font-family:inherit}
-::selection{background:var(--orange);color:#fff}
-.orange{color:var(--orange)}
+::selection{background:var(--accent);color:#fff}
+.orange{color:var(--accent-ink)}
 .muted{color:var(--txt-2)}
 .up,.good{color:var(--good)}
 .dn,.bad{color:var(--bad)}
@@ -110,41 +200,47 @@ b{font-weight:600}
 /* ============ layout ============ */
 .app{display:flex;min-height:100vh}
 .sidebar{
-  width:248px;flex:none;background:var(--sb);
+  width:256px;flex:none;background:var(--sb);
   border-right:1px solid var(--line);
-  padding:18px 14px;position:sticky;top:0;height:100vh;
-  overflow-y:auto;display:flex;flex-direction:column;gap:18px;
+  padding:16px 12px;position:sticky;top:0;height:100vh;
+  overflow-y:auto;display:flex;flex-direction:column;gap:10px;
 }
 .sidebar::-webkit-scrollbar{width:7px}
 .sidebar::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:4px}
-.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.main{flex:1;min-width:0;display:flex;flex-direction:column;
+  background:color-mix(in srgb,var(--accent) 16%,var(--bg));
+  transition:background .2s ease}
 
 /* brand */
 .brand{display:flex;align-items:center;gap:11px;padding:4px 6px 2px;border-radius:10px;transition:.12s}
 a.brand:hover{background:var(--panel)}
-.brand-mark{width:38px;height:38px;border-radius:11px;background:linear-gradient(140deg,var(--orange),#c7421f);
-  display:grid;place-items:center;box-shadow:0 6px 18px -8px var(--orange)}
+.brand-mark{width:38px;height:38px;border-radius:11px;background:var(--ws);
+  display:grid;place-items:center;box-shadow:0 6px 18px -8px var(--ws)}
 .brand-name{font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:.2px}
 .brand-sub{font-size:11px;color:var(--txt-3);letter-spacing:.3px;margin-top:-2px}
 
-.side-section{display:flex;flex-direction:column;gap:3px}
-.side-label{font-size:10.5px;text-transform:uppercase;letter-spacing:1.3px;color:var(--txt-3);
-  padding:2px 8px 6px;font-weight:600}
+/* Each menu is one solid box. The same hue is the only accent inside its tabs. */
+.side-section{display:flex;flex-direction:column;gap:2px;border-radius:12px;padding:6px;background:var(--squad);color:#fff}
+.side-section.squad-ws{--squad:var(--ws)}
+.side-section.squad-pf{--squad:var(--pf)}
+.side-section.squad-mk{--squad:var(--mk)}
+.side-section.squad-dp{--squad:var(--dp)}
+.side-label{font-size:10.5px;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,.78);
+  padding:5px 8px 4px;font-weight:700}
 .side-nav{display:flex;flex-direction:column;gap:1px}
-.side-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;
-  color:var(--txt-2);font-weight:500;font-size:13px;transition:.12s;cursor:pointer}
-.side-item:hover{background:var(--panel);color:var(--txt)}
-.side-item.active{background:linear-gradient(90deg,rgba(232,96,59,.16),transparent);color:var(--txt)}
-.side-item.active .dot{background:var(--orange);box-shadow:0 0 0 3px rgba(232,96,59,.2)}
-.dot{width:6px;height:6px;border-radius:50%;background:var(--txt-3);flex:none}
-.dot.red{background:var(--orange)}
-.dot.gold{background:var(--gold)}
-.badge{margin-left:auto;background:var(--orange);color:#fff;font-size:10px;font-weight:700;
+.side-item{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:8px;
+  color:rgba(255,255,255,.92);font-weight:500;font-size:13px;transition:.12s;cursor:pointer}
+.side-item:hover{background:rgba(255,255,255,.12);color:#fff}
+.side-item.active{background:rgba(255,255,255,.2);color:#fff;box-shadow:inset 3px 0 0 #fff}
+.side-item.active .dot{background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.22)}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.85);flex:none}
+.dot.red,.dot.gold{background:#fff}
+.badge{margin-left:auto;background:#fff;color:var(--squad);font-size:10px;font-weight:700;
   padding:1px 7px;border-radius:20px}
 .side-foot{margin-top:auto;padding-top:12px;border-top:1px solid var(--line)}
 .user-chip{display:flex;gap:10px;align-items:center;padding:6px}
-.avatar{width:36px;height:36px;border-radius:10px;background:linear-gradient(140deg,var(--gold),#a9811c);
-  display:grid;place-items:center;font-weight:700;color:#1a1308;font-size:13px}
+.avatar{width:36px;height:36px;border-radius:10px;background:var(--ws);
+  display:grid;place-items:center;font-weight:700;color:#fff;font-size:13px}
 .user-name{font-weight:600;font-size:13px}
 .user-role{font-size:11px;color:var(--txt-3)}
 
@@ -153,7 +249,8 @@ a.brand:hover{background:var(--panel)}
   border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;
   background:var(--topbar-bg);backdrop-filter:blur(14px)}
 .crumbs{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--txt-3)}
-.crumb.current{color:var(--txt);font-weight:600}
+.crumb.current{color:var(--accent-ink);font-weight:600}
+#crumb-squad{color:var(--accent-ink);font-weight:650}
 .back-link{display:inline-flex;align-items:center;gap:3px;color:var(--txt-2);font-weight:500;
   padding:4px 9px 4px 6px;border:1px solid var(--line);border-radius:8px;transition:.12s;margin-right:2px}
 .back-link:hover{color:var(--txt);border-color:var(--line-2);background:var(--panel)}
@@ -169,7 +266,7 @@ a.brand:hover{background:var(--panel)}
 .icon-btn{position:relative;width:38px;height:38px;border-radius:10px;border:1px solid var(--line);
   background:var(--panel);color:var(--txt-2);display:grid;place-items:center;cursor:pointer;transition:.12s}
 .icon-btn:hover{color:var(--txt);border-color:var(--line-2)}
-.pulse{position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:var(--orange)}
+.pulse{position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:var(--warn)}
 .status-pill{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--txt-2);
   background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
 .live{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 3px rgba(88,176,106,.2);
@@ -183,37 +280,35 @@ a.brand:hover{background:var(--panel)}
 #view-dashboard.view{max-width:none;margin:0;padding:0;width:100%}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:1.6px;color:var(--orange);font-weight:600;margin-bottom:8px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:1.6px;color:var(--accent-ink);font-weight:600;margin-bottom:8px}
+/* Page title sits in a solid block of the menu color. No edge stripe. */
+.view-head{background:var(--accent);color:#fff;border-radius:16px;padding:20px 22px;margin-bottom:18px}
+.view-head .eyebrow{color:rgba(255,255,255,.78)}
+.view-head .h2,.view-head .h1{color:#fff}
+.view-head .status-pill,.view-head .chip{background:rgba(255,255,255,.16);border-color:transparent;color:#fff}
+.view-head .chip.orange,.view-head .chip.gold,.view-head .chip.crit{background:rgba(255,255,255,.2);color:#fff}
 .h-eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:1.6px;color:var(--txt-3);font-weight:600;margin-bottom:6px}
 .h1{font-family:var(--serif);font-weight:600;font-size:30px;line-height:1.25;margin:0;letter-spacing:-.3px}
 .h2{font-family:var(--serif);font-weight:600;font-size:24px;margin:0;letter-spacing:-.2px}
 .h3{font-family:var(--serif);font-weight:600;font-size:17px;margin:18px 0 8px}
 
 /* hero */
-/* ============ Dashboard section bands (alternating gold / slate · dark + light safe) ============ */
-/* Dashboard bands fill the main pane, from the sidebar edge to the right edge. */
+/* ============ Dashboard section bands ============ */
 .section-band{position:relative;padding:28px 0;margin:0;width:100%}
 .section-band + .section-band{margin-top:0}
-.section-band.gold{background:#291e19}
-.section-band.slate{background:#120e0c}
-body[data-theme="light"] .section-band.gold{background:#f4ecdf}
-body[data-theme="light"] .section-band.slate{background:#c1ac8a}
-body:not([data-theme="light"]) #view-dashboard .section-band .card,
-body:not([data-theme="light"]) #view-dashboard .section-band .stat,
-body:not([data-theme="light"]) #view-dashboard .section-band .agent-tile,
-body:not([data-theme="light"]) #view-dashboard .section-band .card.critical{background:#6b4d2d}
+.section-band.gold,.section-band.slate{background:transparent}
+body[data-theme="light"] .section-band.gold,
+body[data-theme="light"] .section-band.slate{background:transparent}
 .section-band > .section-inner{max-width:1500px;margin:0 auto;padding:0 28px;width:100%}
 .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap}
 .section-inner .hero + .section-head,.section-inner .grid-3 + .section-head{margin-top:28px}
-.section-head .section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-2);margin-bottom:4px}
+.section-head .section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
 .section-head .section-title{font-family:var(--serif);font-size:20px;font-weight:600;color:var(--txt);margin:0;line-height:1.25}
 .section-head .section-note{font-size:12px;color:var(--txt-3);font-weight:500;letter-spacing:.02em}
-/* Keep cards inside bands clean — no outer stroke, lift via subtle elevation */
 .section-band .card{box-shadow:0 1px 2px rgba(0,0,0,.08),0 8px 24px -14px rgba(0,0,0,.4)}
 body:not([data-theme="light"]) .section-band .card,
-body:not([data-theme="light"]) .section-band .stat,
-body:not([data-theme="light"]) .section-band .agent-tile{box-shadow:0 1px 0 rgba(243,236,225,.08),0 16px 34px -22px rgba(0,0,0,.75)}
-body[data-theme="light"] .section-band .card{box-shadow:0 1px 2px rgba(80,60,30,.06),0 10px 28px -18px rgba(80,60,30,.2)}
+body:not([data-theme="light"]) .section-band .stat{box-shadow:0 1px 0 rgba(232,238,247,.06),0 16px 34px -22px rgba(0,0,0,.75)}
+body[data-theme="light"] .section-band .card{box-shadow:0 1px 2px rgba(15,23,42,.05),0 10px 28px -18px rgba(15,23,42,.16)}
 
 .hero{display:flex;gap:28px;justify-content:space-between;align-items:flex-start;margin-bottom:22px}
 .hero-actions{display:flex;gap:10px;margin-top:16px}
@@ -227,8 +322,8 @@ body[data-theme="light"] .section-band .card{box-shadow:0 1px 2px rgba(80,60,30,
 #view-dashboard .dash-open .hero-actions{margin-top:22px}
 #view-dashboard .dash-open .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;min-width:0;width:100%;margin-top:36px;padding:0;background:transparent;box-shadow:none;border-radius:0}
 #view-dashboard .dash-open .hero-stats .stat{padding:18px 18px 16px}
-body:not([data-theme="light"]) #view-dashboard .dash-open .hero-actions .btn.ghost{color:#f3ece1;border-color:rgba(243,236,225,.32);background:transparent}
-body:not([data-theme="light"]) #view-dashboard .dash-open .hero-actions .btn.ghost:hover{background:rgba(0,0,0,.16);border-color:rgba(243,236,225,.5)}
+body:not([data-theme="light"]) #view-dashboard .dash-open .hero-actions .btn.ghost{color:var(--txt);border-color:var(--line-2);background:transparent}
+body:not([data-theme="light"]) #view-dashboard .dash-open .hero-actions .btn.ghost:hover{background:rgba(255,255,255,.06);border-color:var(--txt-3)}
 #view-dashboard .dash-open .section-head{margin-top:44px;margin-bottom:18px}
 #view-dashboard .dash-open .section-row{margin-bottom:0}
 #view-dashboard .dash-open .card.critical{margin-bottom:0;padding:22px 24px 20px}
@@ -238,32 +333,8 @@ body:not([data-theme="light"]) #view-dashboard .dash-open .hero-actions .btn.gho
 #view-dashboard .dash-open .metric{padding:16px 18px}
 #view-dashboard .dash-open .card-body{font-size:14px;line-height:1.6;max-width:880px}
 #view-dashboard .dash-open .card-foot{margin-top:20px}
-body:not([data-theme="light"]) #view-dashboard .dash-open .metric{background:#291e19;border:none}
-body[data-theme="light"] #view-dashboard .dash-open .metric{background:#f4ecdf;border:none}
-body:not([data-theme="light"]) #view-dashboard .section-note,
-body:not([data-theme="light"]) #view-dashboard .legend,
-body:not([data-theme="light"]) #view-dashboard .section-band .stat-label,
-body:not([data-theme="light"]) #view-dashboard .section-band .m-lab,
-body:not([data-theme="light"]) #view-dashboard .section-band .a-sub,
-body:not([data-theme="light"]) #view-dashboard .section-band .f-sub,
-body:not([data-theme="light"]) #view-dashboard .section-band .f-time,
-body:not([data-theme="light"]) #view-dashboard .section-band .mg-lab,
-body:not([data-theme="light"]) #view-dashboard .section-band .tbl th,
-body:not([data-theme="light"]) #view-dashboard .section-band .chip-meta,
-body:not([data-theme="light"]) #view-dashboard .section-band .card-foot .meta{color:#f0e2d0}
-body:not([data-theme="light"]) #view-dashboard .section-band .card-body,
-body:not([data-theme="light"]) #view-dashboard .section-band .kv span{color:#f6ebdf}
-body:not([data-theme="light"]) #view-dashboard .section-band .f-row,
-body:not([data-theme="light"]) #view-dashboard .section-band .kv,
-body:not([data-theme="light"]) #view-dashboard .section-band .tbl td,
-body:not([data-theme="light"]) #view-dashboard .section-band .tbl th{border-color:rgba(243,236,225,.16)}
-body:not([data-theme="light"]) #view-dashboard .section-band .tbl tbody tr:hover{background:rgba(0,0,0,.16)}
-body:not([data-theme="light"]) #view-dashboard .section-band .tbl-scroll thead th{background:#6b4d2d}
-body:not([data-theme="light"]) #view-dashboard .section-band .rg-cell{background:#291e19;border-color:transparent;color:#f0e2d0}
-body:not([data-theme="light"]) #view-dashboard .section-band .rg-cell.on{background:rgba(212,164,43,.22);border-color:rgba(212,164,43,.45);color:#f0d48a}
-body:not([data-theme="light"]) #view-dashboard .section-band .bar,
-body:not([data-theme="light"]) #view-dashboard .section-band .seg{background:#291e19}
-body:not([data-theme="light"]) #view-dashboard .section-band .seg-btn{color:#f0e2d0}
+body:not([data-theme="light"]) #view-dashboard .dash-open .metric{background:var(--panel-2);border:none}
+body[data-theme="light"] #view-dashboard .dash-open .metric{background:var(--panel-2);border:none}
 .stat{background:var(--panel);border:none;border-radius:var(--radius);padding:14px 16px}
 .stat-label{font-size:11px;color:var(--txt-3);text-transform:uppercase;letter-spacing:.8px}
 .stat-val{font-size:22px;font-weight:700;margin:4px 0;font-family:var(--serif)}
@@ -272,37 +343,37 @@ body:not([data-theme="light"]) #view-dashboard .section-band .seg-btn{color:#f0e
 /* buttons */
 .btn{font-family:var(--sans);font-weight:600;font-size:13px;border-radius:9px;padding:9px 16px;
   border:1px solid transparent;cursor:pointer;transition:.12s}
-.btn.primary{background:var(--orange);color:#fff}
-.btn.primary:hover{background:var(--orange-2)}
+.btn.primary{background:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--accent-2)}
 .btn.ghost{background:transparent;border-color:var(--line-2);color:var(--txt)}
 .btn.ghost:hover{border-color:var(--txt-3);background:var(--panel)}
-.btn.dark{background:#17130f;color:#f3ece1;border-color:var(--line-2)}
-.btn.dark:hover{background:#0f0c09;color:#fff}
+.btn.dark{background:#0B1220;color:#E8EEF7;border-color:var(--line-2)}
+.btn.dark:hover{background:#070D18;color:#fff}
 
 /* chips/pills */
 .chip{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:7px;background:var(--panel-2);
   color:var(--txt-2);border:1px solid var(--line)}
 .chip.crit{background:var(--red);color:#fff;border-color:transparent}
 .chip.warn{background:rgba(226,161,58,.16);color:var(--warn);border-color:rgba(226,161,58,.3)}
-.chip.gold{background:rgba(212,164,43,.14);color:var(--gold-2);border-color:rgba(212,164,43,.3)}
+.chip.gold{background:var(--mk-soft);color:var(--mk-ink);border-color:var(--mk-line)}
 .chip.ghost{background:transparent}
 .chip-meta{font-size:11.5px;color:var(--txt-3)}
 .pill{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap;
   background:var(--panel-2);color:var(--txt-2);border:1px solid var(--line)}
 .pill.red{background:rgba(217,83,79,.16);color:#f0847f;border-color:rgba(217,83,79,.3)}
 .pill.orange{background:rgba(232,96,59,.15);color:var(--orange-2);border-color:rgba(232,96,59,.3)}
-.pill.gold{background:rgba(212,164,43,.14);color:var(--gold-2);border-color:rgba(212,164,43,.3)}
+.pill.gold{background:var(--mk-soft);color:var(--mk-ink);border-color:var(--mk-line)}
 .pill.good{background:rgba(88,176,106,.15);color:#7ac78b;border-color:rgba(88,176,106,.3)}
 .pill.ok{background:rgba(226,161,58,.13);color:var(--warn);border-color:rgba(226,161,58,.25)}
 .pill.ghost{background:transparent}
 .tag{font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:5px;background:var(--panel-2);
   color:var(--txt-2);border:1px solid var(--line);margin:0 2px}
 .tag.red{background:rgba(232,96,59,.14);color:var(--orange-2);border-color:rgba(232,96,59,.3)}
-.tag.gold{background:rgba(212,164,43,.14);color:var(--gold-2);border-color:rgba(212,164,43,.3)}
+.tag.gold{background:var(--mk-soft);color:var(--mk-ink);border-color:var(--mk-line)}
 
 /* ============ cards ============ */
 .card{background:var(--panel);border:none;border-radius:var(--radius);
-  padding:18px;box-shadow:var(--shadow);margin-bottom:18px}
+  padding:18px;box-shadow:0 1px 2px rgba(15,23,42,.04);margin-bottom:18px}
 .card-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .card-title{font-family:var(--serif);font-weight:600;font-size:16px;margin:0}
 .card-title.white{color:#fff}
@@ -310,7 +381,7 @@ body:not([data-theme="light"]) #view-dashboard .section-band .seg-btn{color:#f0e
 .card-foot{display:flex;align-items:center;gap:10px;margin-top:16px}
 .card-foot .meta{font-size:11px;color:var(--txt-3)}
 .card.critical{border:none;background:var(--panel)}
-.dark-card{background:#15110d;border-color:var(--line-2)}
+.dark-card{background:#0B1220;border-color:var(--line-2)}
 
 .section-row{margin-bottom:22px}
 .card-title b{color:var(--txt);font-weight:700}
@@ -330,16 +401,23 @@ body:not([data-theme="light"]) #view-dashboard .section-band .seg-btn{color:#f0e
 .grid-head{display:flex;justify-content:space-between;align-items:flex-end;margin:4px 0 16px}
 .legend{display:flex;gap:16px;font-size:12px;color:var(--txt-2)}
 .legend i,.legend-inline i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
-.sq.red{background:var(--orange)}.sq.gold{background:var(--gold)}.sq.grey{background:var(--txt-3)}
-.sq.good{background:var(--good)}.sq.bad{background:var(--bad)}.sq.orange{background:var(--orange)}
+.sq.red,.sq.pf{background:var(--pf)}.sq.gold,.sq.mk{background:var(--mk)}.sq.ws{background:var(--ws)}.sq.dp{background:var(--dp)}.sq.grey{background:var(--txt-3)}
+.sq.good{background:var(--good)}.sq.bad{background:var(--bad)}.sq.orange{background:var(--warn)}
 .sq.ltline{background:#e8e0d2}
 
 /* agent grid */
 .agent-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px}
 @media(max-width:1200px){.agent-grid{grid-template-columns:repeat(2,1fr)}}
-.agent-tile{background:var(--panel);border:none;border-radius:var(--radius);
-  padding:16px;cursor:pointer;transition:.15s;position:relative;overflow:hidden}
-.agent-tile:hover{transform:translateY(-2px);box-shadow:0 10px 24px -16px rgba(0,0,0,.7)}
+.agent-tile{background:var(--panel);border:none;border-radius:16px;
+  padding:16px;cursor:pointer;transition:.15s;position:relative;overflow:hidden;box-shadow:none}
+.agent-tile:hover{transform:translateY(-2px)}
+.agent-tile.pf{background:var(--pf);color:#fff}
+.agent-tile.mk{background:var(--mk);color:#fff}
+.agent-tile.pf:hover,.agent-tile.mk:hover{transform:translateY(-2px)}
+.agent-tile .a-icon{width:auto;height:auto;border-radius:0;display:block;font-size:22px;margin-bottom:10px;background:transparent;color:inherit}
+.agent-tile.pf .a-name,.agent-tile.mk .a-name{color:#fff}
+.agent-tile.pf .a-sub,.agent-tile.mk .a-sub{color:rgba(255,255,255,.82)}
+.agent-tile.pf .pill.ghost,.agent-tile.mk .pill.ghost{background:rgba(255,255,255,.16);border-color:transparent;color:#fff}
 .a-icon{font-size:22px;margin-bottom:10px}
 .a-name{font-weight:600;font-size:14px}
 .a-sub{font-size:11.5px;color:var(--txt-3);margin:3px 0 11px;min-height:28px}
@@ -368,7 +446,7 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .bar-row{display:flex;align-items:center;gap:12px;font-size:12.5px}
 .bar-lab{width:66px;color:var(--txt-2)}
 .bar{flex:1;height:8px;background:var(--panel-2);border-radius:6px;overflow:hidden}
-.fill{height:100%;background:linear-gradient(90deg,var(--orange),var(--orange-2));border-radius:6px}
+.fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:6px}
 .fill.warn{background:linear-gradient(90deg,var(--warn),var(--gold-2))}
 .fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold-2))}
 .fill.bad{background:linear-gradient(90deg,var(--bad),#e0716d)}
@@ -378,7 +456,7 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .regime-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}
 .rg-cell{font-size:11px;text-align:center;padding:8px 4px;border-radius:7px;background:var(--panel-2);
   border:1px solid var(--line);color:var(--txt-3)}
-.rg-cell.on{background:rgba(212,164,43,.16);border-color:rgba(212,164,43,.4);color:var(--gold-2);font-weight:600}
+.rg-cell.on{background:var(--mk-soft);border-color:var(--mk-line);color:var(--mk-ink);font-weight:600}
 .kv{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line);font-size:13px}
 .kv:last-child{border:none}
 .kv span{color:var(--txt-2)}
@@ -401,7 +479,7 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .seg{display:flex;gap:4px;background:var(--panel-2);border-radius:9px;padding:3px}
 .seg-btn{font-size:12px;font-weight:500;padding:5px 12px;border-radius:6px;border:none;
   background:transparent;color:var(--txt-2);cursor:pointer}
-.seg-btn.active{background:var(--orange);color:#fff}
+.seg-btn.active{background:var(--accent);color:#fff}
 
 /* tables */
 .tbl-wrap{overflow-x:auto}
@@ -429,15 +507,15 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .perp-description{margin:0 0 14px}
 .perp-asset{display:flex;flex-direction:column;gap:4px;color:var(--txt);text-decoration:none;font-weight:600}
 .perp-asset span{color:var(--txt-3);font-family:var(--mono);font-size:11px;font-weight:400}
-.perp-asset:hover,.perp-methodology a{color:var(--orange);text-decoration:underline}
+.perp-asset:hover,.perp-methodology a{color:var(--accent-ink);text-decoration:underline}
 .perp-table .perp-volume{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
 .perp-table .perp-rank{color:var(--txt-3);width:48px}
 .perp-table .perp-venues{white-space:normal;min-width:190px;line-height:1.6}
 .perp-methodology summary{cursor:pointer;font-size:13px;font-weight:600}
-.perp-markets a:focus-visible,.perp-markets summary:focus-visible,.perp-markets .tbl-wrap:focus-visible{outline:2px solid var(--orange);outline-offset:4px}
+.perp-markets a:focus-visible,.perp-markets summary:focus-visible,.perp-markets .tbl-wrap:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 
 /* kpi */
-.kpi{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.kpi{background:var(--panel);border:none;border-radius:var(--radius);padding:16px;box-shadow:0 1px 2px rgba(15,23,42,.04)}
 .k-lab{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--txt-3)}
 .k-val{font-size:26px;font-weight:700;font-family:var(--serif);margin:5px 0}
 .k-sub{font-size:11.5px;color:var(--txt-2)}
@@ -480,7 +558,7 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .brief-ol li{margin-bottom:6px}
 .brief-side{display:flex;flex-direction:column;gap:14px}
 .side-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
-.side-card.dark{background:#15110d}
+.side-card.dark{background:#0B1220}
 .sc-lab{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--txt-3)}
 .sc-lab.white{color:var(--txt-2)}
 .sc-val{font-size:24px;font-weight:700;font-family:var(--serif);margin:5px 0 2px}
@@ -493,8 +571,8 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .chat{margin-top:10px;display:flex;flex-direction:column;gap:8px}
 .cb{font-size:12.5px;line-height:1.5;padding:10px 12px;border-radius:10px}
 .cb.user{background:var(--panel-2);color:var(--txt);align-self:flex-end;border:1px solid var(--line)}
-.cb.bot{background:rgba(232,96,59,.1);border:1px solid rgba(232,96,59,.25);color:var(--txt-2)}
-.cb.bot a{color:var(--orange-2);font-weight:600}
+.cb.bot{background:var(--accent-soft);border:1px solid var(--accent-line);color:var(--txt-2)}
+.cb.bot a{color:var(--accent-ink);font-weight:600}
 
 /* action cards grid */
 .view-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:18px;gap:20px}
@@ -502,7 +580,7 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .chip-btn{font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:9px;border:1px solid var(--line);
   background:var(--panel);color:var(--txt-2);cursor:pointer}
 .chip-btn span{margin-left:5px;color:var(--txt-3)}
-.chip-btn.active{border-color:var(--orange);background:rgba(232,96,59,.1);color:var(--txt)}
+.chip-btn.active{border-color:var(--accent);background:var(--accent-soft);color:var(--txt)}
 .cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 @media(max-width:1100px){.cards-grid{grid-template-columns:1fr}}
 
@@ -512,24 +590,25 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .flow-col{flex:1;min-width:170px;display:flex;flex-direction:column;gap:8px}
 .flow-head{font-size:11px;text-transform:uppercase;letter-spacing:.9px;color:var(--txt-3);font-weight:600;margin-bottom:4px}
 .flow-pill{background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--txt-2)}
-.flow-arrow{display:grid;place-items:center;font-size:22px;color:var(--orange);flex:none}
+.flow-arrow{display:grid;place-items:center;font-size:22px;color:var(--accent-ink);flex:none}
 .agents-col{min-width:300px}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.ag{display:flex;align-items:center;gap:8px;background:var(--panel-2);border:1px solid var(--line);
+.ag{display:flex;align-items:center;gap:8px;background:var(--panel-2);border:none;
   border-radius:8px;padding:9px 10px;font-size:12px;font-weight:500}
 .ag i{font-style:normal}
-.ag.red,.ag.gold{border-left:none}
-.conductor-box{background:#14100c;border:1px solid var(--line-2);border-radius:12px;padding:16px}
-.cb-brain{font-size:28px;color:var(--orange);text-align:center;margin-bottom:8px}
+.ag.red{background:var(--pf);color:#fff;box-shadow:none}
+.ag.gold{background:var(--mk);color:#fff;box-shadow:none}
+.conductor-box{background:#0B1220;border:1px solid var(--line-2);border-radius:12px;padding:16px}
+.cb-brain{font-size:28px;color:var(--accent-ink);text-align:center;margin-bottom:8px}
 .conductor-box ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:7px}
 .conductor-box li{font-size:12px;color:var(--txt-2);padding-left:14px;position:relative}
-.conductor-box li:before{content:"›";position:absolute;left:0;color:var(--orange)}
+.conductor-box li:before{content:"›";position:absolute;left:0;color:var(--accent-ink)}
 
 .eventlog{list-style:none;margin:0;padding:0;font-family:var(--mono);font-size:11.5px;
   display:flex;flex-direction:column;gap:7px;max-height:300px;overflow-y:auto}
-.eventlog li{display:flex;gap:10px;padding:6px 8px;background:var(--panel-2);border-radius:7px;border-left:2px solid var(--line-2)}
+.eventlog li{display:flex;gap:10px;padding:6px 8px;background:var(--panel-2);border-radius:7px}
 .eventlog .et{color:var(--txt-3);flex:none}
-.eventlog .ea{color:var(--orange-2);font-weight:600;flex:none;width:92px}
+.eventlog .ea{color:var(--accent-ink);font-weight:600;flex:none;width:92px}
 .eventlog .em{color:var(--txt-2)}
 
 .matrix{font-size:12px}
@@ -539,7 +618,7 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .mx-row{margin-bottom:5px}
 .mx-lab{color:var(--txt-2);font-weight:600}
 .c{text-align:center;padding:7px 0;border-radius:6px;background:var(--panel-2);color:var(--txt-3)}
-.c.on{background:rgba(232,96,59,.18);color:var(--orange-2);font-weight:700}
+.c.on{background:var(--accent-soft);color:var(--accent-ink);font-weight:700}
 .c.self{background:transparent;color:var(--line-2)}
 
 /* doc */
@@ -561,15 +640,15 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .ir-tab{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;min-width:112px;padding:9px 14px;border:1px solid transparent;border-radius:8px;background:transparent;color:var(--txt-2);font-size:12.5px;font-weight:650;white-space:nowrap;cursor:pointer;transition:.15s}
 .ir-tab span{font-size:10px;font-weight:500;color:var(--txt-3)}
 .ir-tab:hover{background:var(--panel-2);color:var(--txt)}
-.ir-tab.active{background:rgba(232,96,59,.12);border-color:rgba(232,96,59,.32);color:var(--txt)}
-.ir-tab.active span{color:var(--orange-2)}
-.ir-tab:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.ir-tab.active{background:var(--accent-soft);border-color:var(--accent-line);color:var(--txt)}
+.ir-tab.active span{color:var(--accent-ink)}
+.ir-tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .ir-tab-panel{display:none}.ir-tab-panel.active{display:block;animation:fade .2s ease}
 .ir-actions{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin-top:14px}
 .ir-actions .chip{margin-right:2px}
 .ir-action-message{flex:1 1 220px;color:var(--txt-3);font-size:11px;line-height:1.4}
 .ir-actions [disabled]{opacity:.6;cursor:not-allowed}
-.ir-editing{outline:2px solid var(--orange);outline-offset:3px}
+.ir-editing{outline:2px solid var(--accent);outline-offset:3px}
 .tear+[data-ir-report]{padding-top:2px}
 .ir-confirm-overlay{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:22px;background:rgba(22,18,14,.42);backdrop-filter:blur(3px)}
 .ir-confirm-overlay[hidden]{display:none}
@@ -584,11 +663,11 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .ir-confirm-return{margin-top:18px}
 .tear{width:100%;max-width:none;margin:0;padding:clamp(18px,2vw,26px);background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);font-family:var(--sans)}
 .tear-topline{display:flex;justify-content:space-between;gap:12px;padding-bottom:5px;color:var(--txt-3);font-size:9px;font-weight:750;letter-spacing:1.1px}
-.tear-topline span:last-child{color:var(--gold-2);text-align:right}
+.tear-topline span:last-child{color:var(--accent-ink);text-align:right}
 .tear-title-row{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:14px 0 18px}
 .tear-title-row h2{font-family:var(--serif);font-size:28px;line-height:1.1;margin:4px 0 5px;color:var(--txt)}
 .tear-title-row p{margin:0;color:var(--txt-2);font-size:12px}
-.tear-kicker{font-size:9px;letter-spacing:1.2px;font-weight:750;color:var(--orange-2)}
+.tear-kicker{font-size:9px;letter-spacing:1.2px;font-weight:750;color:var(--accent-ink)}
 .tear-period{text-align:right;font-size:9px;line-height:1.8;letter-spacing:.8px;color:var(--txt-3)}
 .tear-period b{font-size:11px;color:var(--txt);letter-spacing:.2px}
 .tear-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 14px}
@@ -614,13 +693,13 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .exposure-row{display:grid;grid-template-columns:minmax(130px,1.15fr) minmax(80px,1fr) 42px;gap:12px;align-items:center;color:var(--txt-2);font-size:10px}
 .exposure-row>b{text-align:right;color:var(--txt);font-size:11px;font-variant-numeric:tabular-nums}
 .exposure-track,.return-bars>div>div{height:8px;border-radius:10px;background:var(--line);overflow:hidden}
-.exposure-track i,.return-bars i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,var(--gold),var(--gold-2))}
+.exposure-track i,.return-bars i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
 .cap-stack{display:flex;overflow:hidden;height:18px;margin:17px 0 12px;border-radius:5px;background:var(--line)}
-.cap-stack i:nth-child(1){background:var(--gold)}.cap-stack i:nth-child(2){background:#687f75}.cap-stack i:nth-child(3){background:#aeb8a5}
+.cap-stack i:nth-child(1){background:var(--accent)}.cap-stack i:nth-child(2){background:#687f75}.cap-stack i:nth-child(3){background:#aeb8a5}
 .cap-legend{display:grid;gap:9px}.cap-legend>div{display:grid;grid-template-columns:10px 1fr auto;gap:8px;align-items:center;color:var(--txt-2);font-size:10px}
-.cap-legend i{width:8px;height:8px;border-radius:2px;background:var(--gold)}.cap-legend>div:nth-child(2) i{background:#687f75}.cap-legend>div:nth-child(3) i{background:#aeb8a5}
+.cap-legend i{width:8px;height:8px;border-radius:2px;background:var(--accent)}.cap-legend>div:nth-child(2) i{background:#687f75}.cap-legend>div:nth-child(3) i{background:#aeb8a5}
 .cap-legend b{color:var(--txt);font-variant-numeric:tabular-nums}
-.tear-callout{display:flex;flex-direction:column;gap:5px;margin-top:16px;padding:12px;border-left:3px solid var(--orange);background:var(--panel)}
+.tear-callout{display:flex;flex-direction:column;gap:5px;margin-top:16px;padding:12px;border-radius:10px;background:var(--accent-soft)}
 .tear-callout>span{font-size:8px;letter-spacing:.8px;color:var(--txt-3);font-weight:750}.tear-callout>b{font-family:var(--serif);font-size:19px;color:var(--txt)}
 .tear-callout small{font-size:9px;color:var(--txt-2)}
 .return-bars{display:grid;gap:14px}.return-bars>div{display:grid;grid-template-columns:100px 1fr 52px;gap:10px;align-items:center;color:var(--txt-2);font-size:10px}
@@ -645,7 +724,7 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .ex-row{display:flex;align-items:center;gap:12px}
 .ex-k{width:84px;font-size:12px;color:var(--txt-2)}
 .ex-bar{flex:1;height:7px;background:var(--panel-2);border-radius:5px;overflow:hidden}
-.ex-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-2))}
+.ex-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
 .ex-v{width:40px;text-align:right;font-weight:600;font-size:12px}
 .ex-txt{margin-top:10px;font-size:12.5px;line-height:1.6;color:var(--txt-2);
   background:var(--panel-2);border-radius:9px;padding:13px;border:1px solid var(--line)}
@@ -683,13 +762,13 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .llm-grid{display:flex;flex-direction:column;gap:9px}
 .llm{display:flex;gap:12px;align-items:center;background:var(--panel-2);border:1px solid var(--line);
   border-radius:9px;padding:11px 13px}
-.llm-i{width:32px;height:32px;border-radius:8px;background:#14100c;display:grid;place-items:center;font-size:15px}
+.llm-i{width:32px;height:32px;border-radius:8px;background:#0B1220;display:grid;place-items:center;font-size:15px}
 .llm b{font-size:13px}
 .llm .muted{font-size:11px}
 .mcp-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
 .mcp-list li{display:flex;align-items:center;gap:14px;padding:9px 2px;border-bottom:1px solid var(--line)}
 .mcp-list li:last-child{border:none}
-.mcp-list code{font-family:var(--mono);font-size:12px;color:var(--orange-2);background:rgba(232,96,59,.1);
+.mcp-list code{font-family:var(--mono);font-size:12px;color:var(--accent-ink);background:var(--accent-soft);
   padding:4px 9px;border-radius:6px;min-width:168px}
 .mcp-list span{font-size:12px;color:var(--txt-2)}
 
@@ -701,14 +780,14 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .xf-i{font-size:22px;margin-bottom:8px}
 .xf-k{font-weight:600;font-size:13px}
 .xf-s{font-size:11px;color:var(--txt-3);margin-top:3px}
-.xf-arrow{color:var(--orange);font-size:18px;flex:none}
+.xf-arrow{color:var(--accent-ink);font-size:18px;flex:none}
 .autonomy{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
 .auto-opt{display:flex;gap:12px;align-items:center;background:var(--panel-2);border:1px solid var(--line);
   border-radius:10px;padding:12px 14px;cursor:pointer}
-.auto-opt.active{border-color:var(--orange);background:rgba(232,96,59,.08)}
+.auto-opt.active{border-color:var(--accent);background:var(--accent-soft)}
 .auto-opt b{font-size:13px}
 .auto-opt span{font-size:11.5px;color:var(--txt-3);display:block}
-.killbar{display:flex;align-items:center;justify-content:space-between;background:#15110d;
+.killbar{display:flex;align-items:center;justify-content:space-between;background:#0B1220;
   border:1px solid var(--line-2);border-radius:10px;padding:14px}
 .toggle{position:relative;width:44px;height:24px;flex:none}
 .toggle input{display:none}
@@ -758,7 +837,7 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .dw-sub{font-size:12.5px;color:var(--txt-3);margin-top:6px}
 .dw-body{padding:22px 26px 32px}
 .dw-sec{margin-bottom:26px}
-.dw-sec-h{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--orange);
+.dw-sec-h{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--accent-ink);
   font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .dw-sec-h .count{color:var(--txt-3);font-weight:500}
 
@@ -769,7 +848,7 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 
 .dw-driver{display:flex;gap:11px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line)}
 .dw-driver:last-child{border:none}
-.dw-driver .dot{width:7px;height:7px;border-radius:50%;background:var(--orange);margin-top:5px;flex:none}
+.dw-driver .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);margin-top:5px;flex:none}
 .dw-driver .dd-t{font-size:13.5px;font-weight:500}
 .dw-driver .dd-s{font-size:12px;color:var(--txt-3);margin-top:2px}
 .dw-driver .dd-w{margin-left:auto;font-size:11px;color:var(--txt-2);white-space:nowrap}
@@ -792,7 +871,7 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 
 .dw-evi{display:flex;gap:11px;padding:11px;background:var(--panel);border:1px solid var(--line);
   border-radius:10px;margin-bottom:9px;font-size:12.5px;line-height:1.5}
-.dw-evi .ag{font-weight:600;color:var(--orange-2);flex:none;width:118px}
+.dw-evi .ag{font-weight:600;color:var(--accent-ink);flex:none;width:118px}
 .dw-evi .tx{color:var(--txt-2)}
 
 .dw-timeline{position:relative;padding-left:22px}
@@ -802,7 +881,7 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .dw-tl:before{content:"";position:absolute;left:-19px;top:3px;width:11px;height:11px;border-radius:50%;
   background:var(--panel);border:2px solid var(--line-2)}
 .dw-tl.done:before{background:var(--good);border-color:var(--good)}
-.dw-tl.active:before{background:var(--orange);border-color:var(--orange);box-shadow:0 0 0 4px rgba(232,96,59,.2)}
+.dw-tl.active:before{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
 .dw-tl .tl-t{font-size:13px;font-weight:600}
 .dw-tl .tl-s{font-size:11.5px;color:var(--txt-3);margin-top:2px}
 
@@ -824,8 +903,8 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
   border-radius:10px;padding:7px 11px;cursor:pointer;color:var(--txt);font-family:var(--sans);
   font-weight:600;font-size:13px;transition:.12s}
 .fund-btn:hover{border-color:var(--txt-3)}
-.fund-dot{width:8px;height:8px;border-radius:50%;background:var(--orange);
-  box-shadow:0 0 0 3px rgba(232,96,59,.2);flex:none}
+.fund-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 3px var(--accent-soft);flex:none}
 .fund-caret{color:var(--txt-3);transition:.15s}
 .fund-switch.open .fund-caret{transform:rotate(180deg)}
 .fund-menu{position:absolute;top:calc(100% + 8px);left:0;width:300px;background:var(--panel);
@@ -836,16 +915,16 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
   font-weight:600;padding:8px 10px 6px}
 .fund-opt{display:flex;align-items:center;gap:11px;padding:10px;border-radius:9px;cursor:pointer;transition:.1s}
 .fund-opt:hover{background:var(--panel-2)}
-.fund-opt.active{background:rgba(232,96,59,.1)}
+.fund-opt.active{background:var(--accent-soft)}
 .fund-ic{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-weight:700;
   font-size:13px;color:#fff;flex:none}
 .fund-opt .fo-name{font-weight:600;font-size:13px}
 .fund-opt .fo-sub{font-size:11px;color:var(--txt-3);margin-top:1px}
 .fund-opt .fo-aum{margin-left:auto;text-align:right;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}
-.fund-opt .fo-check{margin-left:auto;color:var(--orange);font-weight:700}
+.fund-opt .fo-check{margin-left:auto;color:var(--accent-ink);font-weight:700}
 .fund-opt.active .fo-aum{display:none}
 .fund-menu-foot{border-top:1px solid var(--line);margin-top:4px;padding:9px 10px 5px}
-.fund-menu-foot a{font-size:12px;color:var(--orange-2);font-weight:600;cursor:pointer}
+.fund-menu-foot a{font-size:12px;color:var(--accent-ink);font-weight:600;cursor:pointer}
 
 /* ============ profile menu ============ */
 .avatar.sm{width:28px;height:28px;border-radius:8px;font-size:11px}
@@ -876,10 +955,10 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .pm-acct{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:transparent;border:0;
   border-radius:9px;padding:8px 10px;cursor:pointer;color:var(--txt);font-family:var(--sans)}
 .pm-acct:hover{background:var(--panel-2)}
-.pm-acct.on{background:rgba(232,96,59,.1)}
+.pm-acct.on{background:var(--accent-soft)}
 .pm-acct b{display:block;font-size:13px;font-weight:600}
 .pm-acct small{display:block;font-size:11px;color:var(--txt-3);font-weight:500;margin-top:1px}
-.pm-check{margin-left:auto;color:var(--orange);font-weight:700}
+.pm-check{margin-left:auto;color:var(--accent-ink);font-weight:700}
 .avatar.user{background:linear-gradient(140deg,#6d7a86,#3e4850);color:#fff}
 .profile-menu{width:300px}
 
@@ -892,7 +971,7 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 @media(max-width:700px){.acct-pick{grid-template-columns:1fr}}
 .acct-card{display:flex;flex-direction:column;gap:8px;text-align:left;background:var(--panel);border:1px solid var(--line-2);
   border-radius:14px;padding:18px;cursor:pointer;color:var(--txt);font-family:var(--sans);box-shadow:var(--shadow)}
-.acct-card:hover{border-color:var(--orange)}
+.acct-card:hover{border-color:var(--accent)}
 .acct-card .avatar{width:44px;height:44px;border-radius:12px;font-size:14px}
 .acct-card b{font-family:var(--serif);font-size:22px;font-weight:600}
 .acct-card .role{font-size:12px;color:var(--txt-3)}
@@ -914,7 +993,7 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .set-row small{display:block;color:var(--txt-3);font-size:12px;margin-top:2px;line-height:1.4}
 .toggle{width:38px;height:22px;border-radius:20px;border:1px solid var(--line-2);background:var(--panel-2);position:relative;cursor:pointer;flex:none}
 .toggle i{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--txt-3);transition:.15s}
-.toggle.on{background:var(--orange);border-color:transparent}
+.toggle.on{background:var(--accent);border-color:transparent}
 .toggle.on i{left:18px;background:#fff}
 .toggle:disabled{opacity:.45;cursor:not-allowed}
 .set-select{background:var(--panel-2);color:var(--txt);border:1px solid var(--line-2);border-radius:8px;padding:7px 10px;font-family:var(--sans);font-size:13px}
@@ -927,12 +1006,11 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 }
 
 /* ============ Decision briefs (top of each agent view) ============ */
-.decision-brief{background:linear-gradient(135deg,rgba(232,96,59,.07),var(--panel) 60%);
-  border:1px solid var(--line-2);border-radius:14px;padding:22px 24px;margin-bottom:20px;box-shadow:var(--shadow)}
-.decision-brief.gold{background:linear-gradient(135deg,rgba(212,164,43,.08),var(--panel) 60%)}
+.decision-brief{background:var(--panel);
+  border:none;border-radius:16px;padding:22px 24px;margin-bottom:20px;box-shadow:0 1px 2px rgba(15,23,42,.04)}
 .db-head{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--line)}
 .db-icon{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:18px;
-  background:var(--panel-2);flex:none}
+  background:var(--accent);color:#fff;flex:none}
 .db-title{font-family:var(--serif);font-weight:600;font-size:17px;margin:0}
 .db-sub{font-size:12px;color:var(--txt-2);margin-top:3px;line-height:1.5}
 .db-badge{margin-left:auto;flex:none;font-size:11px;color:var(--txt-2);background:var(--panel);
@@ -941,10 +1019,8 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .db-recommendation{font-family:var(--serif);font-weight:600;font-size:21px;line-height:1.4;color:var(--txt);margin:0 0 10px}
 .db-rationale,.db-discussion p{font-size:14px;line-height:1.75;color:var(--txt-2);margin:0}
 .db-rationale b{color:var(--txt);font-weight:600}
-.db-discussion{margin-top:17px;padding:12px 14px;border:none;border-radius:10px;background:rgba(232,96,59,.1)}
-.decision-brief.gold .db-discussion{background:rgba(212,164,43,.12)}
-.db-discussion h4{display:inline-block;font-size:11px;line-height:1.4;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--orange-2);margin:0 0 6px}
-.decision-brief.gold .db-discussion h4{color:var(--gold-2)}
+.db-discussion{margin-top:17px;padding:12px 14px;border:none;border-radius:10px;background:var(--accent-soft)}
+.db-discussion h4{display:inline-block;font-size:11px;line-height:1.4;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-ink);margin:0 0 6px}
 @media(max-width:600px){
   .decision-brief{padding:17px 16px}
   .db-head{flex-wrap:wrap;gap:10px}
@@ -957,15 +1033,15 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .tbl th.th-sort{cursor:pointer;user-select:none;position:relative;padding-right:18px;transition:color .12s}
 .tbl th.th-sort:hover{color:var(--txt)}
 .tbl th.th-sort:after{content:"⇅";position:absolute;right:5px;opacity:.32;font-size:10px}
-.tbl th.sorted-asc:after{content:"↑";opacity:1;color:var(--orange)}
-.tbl th.sorted-desc:after{content:"↓";opacity:1;color:var(--orange)}
+.tbl th.sorted-asc:after{content:"↑";opacity:1;color:var(--accent-ink)}
+.tbl th.sorted-desc:after{content:"↓";opacity:1;color:var(--accent-ink)}
 
 /* ============ Ask Point chatbot ============ */
 .askp-fab{position:fixed;right:22px;bottom:22px;z-index:95;display:flex;align-items:center;gap:9px;
-  background:linear-gradient(140deg,var(--orange),#c7421f);color:#fff;border:none;border-radius:30px;
+  background:var(--ws);color:#fff;border:none;border-radius:30px;
   padding:13px 20px;font-family:var(--sans);font-weight:600;font-size:14px;cursor:pointer;
-  box-shadow:0 14px 34px -12px rgba(232,96,59,.6);transition:.18s}
-.askp-fab:hover{transform:translateY(-2px);box-shadow:0 18px 40px -12px rgba(232,96,59,.7)}
+  box-shadow:0 14px 34px -12px rgba(51,71,137,.55);transition:.18s}
+.askp-fab:hover{transform:translateY(-2px);box-shadow:0 18px 40px -12px rgba(51,71,137,.65)}
 .askp-fab .fab-i{font-size:17px}
 .askp-fab.hide{display:none}
 .askp{position:fixed;right:22px;bottom:22px;z-index:100;width:min(400px,94vw);height:min(600px,82vh);
@@ -975,24 +1051,24 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .askp.open{transform:none;opacity:1;pointer-events:auto}
 .askp-head{display:flex;align-items:center;gap:11px;padding:15px 16px;border-bottom:1px solid var(--line);
   background:linear-gradient(140deg,rgba(232,96,59,.12),transparent)}
-.askp-logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(140deg,var(--orange),#c7421f);
+.askp-logo{width:34px;height:34px;border-radius:10px;background:var(--ws);
   display:grid;place-items:center;flex:none}
 .askp-logo svg{width:20px;height:20px}
 .askp-ht{font-family:var(--serif);font-weight:600;font-size:15px}
 .askp-hs{font-size:11px;color:var(--txt-3);margin-top:1px}
-.askp-fundtag{margin-left:auto;font-size:10.5px;font-weight:600;color:var(--orange-2);
-  background:rgba(232,96,59,.12);border:1px solid rgba(232,96,59,.3);border-radius:20px;padding:3px 9px}
+.askp-fundtag{margin-left:auto;font-size:10.5px;font-weight:600;color:var(--ws-ink);
+  background:var(--ws-soft);border:1px solid var(--ws-line);border-radius:20px;padding:3px 9px}
 .askp-x{width:30px;height:30px;border-radius:8px;border:1px solid var(--line-2);background:var(--panel-2);
   color:var(--txt-2);cursor:pointer;display:grid;place-items:center;font-size:15px;flex:none}
 .askp-x:hover{color:var(--txt)}
 .askp-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
 .askp-body::-webkit-scrollbar{width:7px}.askp-body::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:4px}
 .am{max-width:84%;font-size:13px;line-height:1.55;padding:10px 13px;border-radius:13px}
-.am.user{align-self:flex-end;background:var(--orange);color:#fff;border-bottom-right-radius:4px}
+.am.user{align-self:flex-end;background:var(--ws);color:#fff;border-bottom-right-radius:4px}
 .am.bot{align-self:flex-start;background:var(--panel-2);border:1px solid var(--line);color:var(--txt);border-bottom-left-radius:4px}
 .am.bot b{color:var(--txt)}
 .am.bot ul{margin:7px 0 0;padding-left:16px}.am.bot li{margin-bottom:3px}
-.am.bot .amv{color:var(--orange-2);font-weight:600}
+.am.bot .amv{color:var(--ws-ink);font-weight:600}
 .am-typing{align-self:flex-start;display:flex;gap:4px;padding:12px 14px;background:var(--panel-2);border:1px solid var(--line);border-radius:13px}
 .am-typing span{width:6px;height:6px;border-radius:50%;background:var(--txt-3);animation:amb 1.2s infinite}
 .am-typing span:nth-child(2){animation-delay:.2s}.am-typing span:nth-child(3){animation-delay:.4s}
@@ -1000,13 +1076,13 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .askp-sugg{display:flex;flex-wrap:wrap;gap:7px;padding:0 16px 10px}
 .askp-chip{font-size:11.5px;font-weight:500;padding:6px 11px;border-radius:16px;border:1px solid var(--line-2);
   background:var(--panel-2);color:var(--txt-2);cursor:pointer;transition:.12s}
-.askp-chip:hover{border-color:var(--orange);color:var(--txt)}
+.askp-chip:hover{border-color:var(--ws);color:var(--txt)}
 .askp-input{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--line);background:var(--panel)}
 .askp-input input{flex:1;background:var(--bg-2);border:1px solid var(--line-2);border-radius:10px;
   padding:10px 13px;color:var(--txt);font-family:var(--sans);font-size:13px;outline:none}
-.askp-input input:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(232,96,59,.14)}
-.askp-input button{width:40px;border-radius:10px;border:none;background:var(--orange);color:#fff;cursor:pointer;font-size:16px}
-.askp-input button:hover{background:var(--orange-2)}
+.askp-input input:focus{border-color:var(--ws);box-shadow:0 0 0 3px var(--ws-soft)}
+.askp-input button{width:40px;border-radius:10px;border:none;background:var(--ws);color:#fff;cursor:pointer;font-size:16px}
+.askp-input button:hover{background:var(--ws-2)}
 @media(max-width:560px){.askp{right:3vw;bottom:12px;height:84vh}}
 
 /* ---- Agentic AI view · shared shell ---- */
@@ -1046,7 +1122,7 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .fbar{display:grid;grid-template-columns:110px 1fr auto;gap:12px;align-items:center;font-size:12.5px}
 .fbar-k{color:var(--muted);font-size:11.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase}
 .fbar-track{height:6px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden}
-.fbar-fill{height:100%;background:linear-gradient(90deg,rgba(212,164,43,.4),var(--gold-2));border-radius:3px}
+.fbar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:3px}
 .fbar-v{color:var(--txt);font-size:11.5px}
 .memo-cat{font-size:13px;line-height:1.6;color:var(--muted)}
 .memo-cat b{color:var(--gold-2);font-weight:600}
@@ -1202,7 +1278,7 @@ ul.ai-obs .o-label{display:inline-block;font-size:10.5px;font-weight:700;letter-
 .ai-action b,.ai-risks b{color:var(--gold-2);font-weight:600}
 .ai-risks ul{list-style:none;padding-left:0}
 .ai-risks ul li{padding-left:16px;position:relative}
-.ai-risks ul li:before{content:'⚠';position:absolute;left:0;color:var(--orange)}
+.ai-risks ul li:before{content:'⚠';position:absolute;left:0;color:var(--warn)}
 @media(min-width:900px){
   .ai-grid{grid-template-columns:1fr 1fr;gap:28px}
   .ai-action-grid{grid-template-columns:1fr 1fr;gap:28px}
@@ -1312,7 +1388,7 @@ body[data-theme="light"] .legend-body code{background:#efe6d6;color:#2a211a}
 
 </style>
 <style>
-.pc-launch,.pc-panel{--pc-bg:var(--panel,#fff);--pc-text:var(--txt,#202631);--pc-muted:var(--txt-2,#5c6675);--pc-line:var(--line,#dce1e8);--pc-accent:var(--orange,#3157d5);font-family:Inter,system-ui,sans-serif;box-sizing:border-box}
+.pc-launch,.pc-panel{--pc-bg:var(--panel,#fff);--pc-text:var(--txt,#202631);--pc-muted:var(--txt-2,#5c6675);--pc-line:var(--line,#dce1e8);--pc-accent:var(--ws,#334789);font-family:Inter,system-ui,sans-serif;box-sizing:border-box}
 .pc-launch{position:fixed;right:24px;bottom:22px;z-index:150;padding:13px 20px;border:0;border-radius:28px;background:var(--pc-accent);color:#fff;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 10px 28px #0003}
 .pc-panel{position:fixed;right:20px;bottom:20px;z-index:160;width:min(490px,calc(100vw - 24px));height:min(790px,calc(100dvh - 32px));display:flex;flex-direction:column;background:var(--pc-bg);color:var(--pc-text);border:1px solid var(--pc-line);border-radius:18px;box-shadow:0 20px 80px #0005;overflow:hidden}
 .pc-panel [hidden],.pc-panel[hidden],.pc-launch[hidden]{display:none!important}
@@ -1339,7 +1415,7 @@ window.__POINT_MACRO_EXTRAS__ = {"yieldCurve":[["3M","4.68%","bar"],["2Y","4.42%
 window.__POINT_AI_BRIEFS__ = {"research":"\n    <div class=\"memo\">\n      <div class=\"memo-head\">\n        <div class=\"memo-stamp\">RESEARCH MEMO · 2026-10-12</div>\n        <div class=\"memo-ref\">Universe: 10 names · ranked from 512 S&P 500 constituents</div>\n      </div>\n      <div class=\"memo-verdict\">\n        <span class=\"verd-tag\">VERDICT</span>\n        <span class=\"verd-txt\">Buy the semi + AI-compute cluster. Lead with <b>AMD, TER, PLTR</b>; sizing is a trade (top is a tight 0.11-point band near 0.68 — no high-conviction standout).</span>\n      </div>\n      <div class=\"memo-section\">\n        <div class=\"memo-s-head\">① &nbsp; TOP PICKS</div>\n        <table class=\"pick-tbl\">\n          <thead><tr><th>Ticker</th><th>Call</th><th>Score</th><th>Last</th><th>Target (upside)</th><th>Thesis</th><th>Next catalyst</th></tr></thead>\n          <tbody><tr>\n      <td class=\"pt-tick\">AMD</td>\n      <td><span class=\"pt-rate r-buy\">BUY</span></td>\n      <td class=\"pt-score\">0.71</td>\n      <td class=\"pt-px\">$605.53</td>\n      <td class=\"pt-tgt\">$636.21 <span class=\"pt-up\">(+5%)</span></td>\n      <td class=\"pt-thesis\">momentum + consensus up</td>\n      <td class=\"pt-cat\"><span class=\"pt-cat-kind\">Earnings</span><br/><span class=\"pt-cat-when\">Tue 03 Nov · T−21d</span></td>\n    </tr><tr>\n      <td class=\"pt-tick\">TER</td>\n      <td><span class=\"pt-rate r-buy\">BUY</span></td>\n      <td class=\"pt-score\">0.67</td>\n      <td class=\"pt-px\">$380.29</td>\n      <td class=\"pt-tgt\">$446.47 <span class=\"pt-up\">(+17%)</span></td>\n      <td class=\"pt-thesis\">momentum + consensus up</td>\n      <td class=\"pt-cat\"><span class=\"pt-cat-kind\">Earnings</span><br/><span class=\"pt-cat-when\">Tue 27 Oct · T−14d</span></td>\n    </tr><tr>\n      <td class=\"pt-tick\">PLTR</td>\n      <td><span class=\"pt-rate r-buy\">BUY</span></td>\n      <td class=\"pt-score\">0.66</td>\n      <td class=\"pt-px\">$208.67</td>\n      <td class=\"pt-tgt\">$205.27 <span class=\"pt-up\">(-2%)</span></td>\n      <td class=\"pt-thesis\">momentum + consensus up</td>\n      <td class=\"pt-cat\"><span class=\"pt-cat-kind\">Earnings</span><br/><span class=\"pt-cat-when\">Mon 02 Nov · T−20d</span></td>\n    </tr><tr>\n      <td class=\"pt-tick\">GEV</td>\n      <td><span class=\"pt-rate r-buy\">BUY</span></td>\n      <td class=\"pt-score\">0.66</td>\n      <td class=\"pt-px\">$1004.04</td>\n      <td class=\"pt-tgt\">$1224.89 <span class=\"pt-up\">(+22%)</span></td>\n      <td class=\"pt-thesis\">momentum + consensus up</td>\n      <td class=\"pt-cat\"><span class=\"pt-cat-kind\">Earnings</span><br/><span class=\"pt-cat-when\">Wed 28 Oct · T−14d</span></td>\n    </tr><tr>\n      <td class=\"pt-tick\">AVGO</td>\n      <td><span class=\"pt-rate r-buy\">BUY</span></td>\n      <td class=\"pt-score\">0.66</td>\n      <td class=\"pt-px\">$357.31</td>\n      <td class=\"pt-tgt\">$531.31 <span class=\"pt-up\">(+49%)</span></td>\n      <td class=\"pt-thesis\">revisions turning up</td>\n      <td class=\"pt-cat\"><span class=\"pt-cat-kind\">Earnings</span><br/><span class=\"pt-cat-when\">Wed 09 Dec · T−57d</span></td>\n    </tr></tbody>\n        </table>\n      </div>\n      <div class=\"memo-section\">\n        <div class=\"memo-s-head\">② &nbsp; FACTOR BREAKDOWN — what's driving the ranking</div>\n        <div class=\"factor-bars\">\n          <div class=\"fbar\"><span class=\"fbar-k\">Momentum</span><div class=\"fbar-track\"><div class=\"fbar-fill\" style=\"width:60%\"></div></div><span class=\"fbar-v\">6/10 positive · 4/10 negative</span></div>\n          <div class=\"fbar\"><span class=\"fbar-k\">Revisions</span><div class=\"fbar-track\"><div class=\"fbar-fill\" style=\"width:90%\"></div></div><span class=\"fbar-v\">9/10 upward · 0 total upgrades in 7d</span></div>\n          <div class=\"fbar\"><span class=\"fbar-k\">Sentiment</span><div class=\"fbar-track\"><div class=\"fbar-fill\" style=\"width:100%\"></div></div><span class=\"fbar-v\">10/10 buy-heavy · analyst mix skewed long</span></div>\n          <div class=\"fbar\"><span class=\"fbar-k\">Quality</span><div class=\"fbar-track\"><div class=\"fbar-fill\" style=\"width:60%\"></div></div><span class=\"fbar-v\">Mixed — ROE strong, FY-growth softer</span></div>\n        </div>\n      </div>\n      <div class=\"memo-section\">\n        <div class=\"memo-s-head\">③ &nbsp; 5-DAY TAPE — how the ranked names actually traded</div>\n        <div class=\"memo-cat\">\n          <b>PLTR +8.6%</b> leads the tape; <b>TER -11.6%</b> is the worst. <b>2 of 10</b> finished positive over the last 5 sessions — read as light risk-off beneath the surface. Confirm each pick against the 1-day / 5-day range in the table before adding.\n        </div>\n      </div>\n      <div class=\"memo-section memo-footer\">\n        <div class=\"memo-s-head\">④ &nbsp; CATALYST WATCH</div>\n        <div class=\"memo-cat\">\n          <b>Near-term:</b> COF Tue 20 Oct · WDC Thu 22 Oct · TER Tue 27 Oct · FOMC minutes <b>15 Oct</b>.\n          <br/>\n          <b>Caveat:</b> Model is quant-first; it will miss narrative risks (regulatory, management change, macro inflection) until they show up in price or revisions. Bottom-3 (<b>STX, WDC, APP</b>) are not shorts — just lower-conviction longs.\n        </div>\n      </div>\n    </div>\n  ","flows":"\n    <div class=\"posmap\">\n      <div class=\"posmap-head\">\n        <div class=\"pm-stamp\">POSITIONING MAP · 2026-10-12</div>\n        <div class=\"pm-sub\">Avg inst. ownership <b>82%</b> · avg short interest <b>3.2%</b> · 2 names flagged crowded</div>\n      </div>\n      <div class=\"posmap-spectrum\">\n        <div class=\"spec-zones\"><div class=\"spec-zone z-lonely\"><b>Lonely</b><span>0–54</span></div><div class=\"spec-zone z-balanced\"><b>Balanced</b><span>55–69</span></div><div class=\"spec-zone z-busy\"><b>Busy</b><span>70–84</span></div><div class=\"spec-zone z-crowded\"><b>Crowded</b><span>85–100</span></div></div><div class=\"spec-barwrap\"><div class=\"spec-grad\"></div><div class=\"spec-dot z-balanced\" style=\"left:62%\" title=\"PLTR 62\"></div><div class=\"spec-dot z-balanced\" style=\"left:68%\" title=\"AMD 68\"></div><div class=\"spec-dot z-balanced\" style=\"left:69%\" title=\"AVGO 69\"></div><div class=\"spec-dot z-busy\" style=\"left:70%\" title=\"APP 70\"></div><div class=\"spec-dot z-busy\" style=\"left:71%\" title=\"MU 71\"></div><div class=\"spec-dot z-busy\" style=\"left:72%\" title=\"GEV 72\"></div><div class=\"spec-dot z-busy\" style=\"left:75%\" title=\"STX 75\"></div><div class=\"spec-dot z-busy\" style=\"left:76%\" title=\"COF 76\"></div><div class=\"spec-dot z-busy\" style=\"left:80%\" title=\"WDC 80\"></div><div class=\"spec-dot z-crowded\" style=\"left:88%\" title=\"TER 88\"></div></div><div class=\"spec-axis\"><span style=\"left:0\">0</span><span style=\"left:25%\">25</span><span style=\"left:50%\">50</span><span style=\"left:75%\">75</span><span style=\"left:100%\">100</span></div><div class=\"spec-groups\"><div class=\"spec-group z-lonely\"><div class=\"spec-empty\">none</div></div><div class=\"spec-group z-balanced\"><div class=\"spec-name z-balanced\">PLTR 62</div><div class=\"spec-name z-balanced\">AMD 68</div><div class=\"spec-name z-balanced\">AVGO 69</div></div><div class=\"spec-group z-busy\"><div class=\"spec-name z-busy\">APP 70</div><div class=\"spec-name z-busy\">MU 71</div><div class=\"spec-name z-busy\">GEV 72</div><div class=\"spec-name z-busy\">STX 75</div><div class=\"spec-name z-busy\">COF 76</div><div class=\"spec-name z-busy\">WDC 80</div></div><div class=\"spec-group z-crowded\"><div class=\"spec-name z-crowded\">TER 88</div></div></div>\n      </div>\n      <div class=\"posmap-grid\">\n        <div class=\"posmap-col posmap-fade\">\n          <div class=\"pm-col-head\">FADE  <span class=\"pm-pill red\">de-gross risk</span></div>\n          <ul><li><b>TER</b> — crowding ≥ 80. Do not add; trim on strength.</li><li><b>WDC</b> — crowding ≥ 80. Do not add; trim on strength.</li></ul>\n        </div>\n        <div class=\"posmap-col posmap-follow\">\n          <div class=\"pm-col-head\">FOLLOW  <span class=\"pm-pill green\">under-owned + momentum</span></div>\n          <ul><li><b>AMD</b> — inst &lt;80% with 21d price up.</li><li><b>PLTR</b> — inst &lt;80% with 21d price up.</li></ul>\n        </div>\n      </div>\n      <div class=\"posmap-alerts\">\n        <div class=\"pm-alert\"><span class=\"pm-alt-tag\">RESEARCH ∩ FLOW</span><b>9 aligned</b> / 1 mixed / 0 divergent. Where research says long and revisions are rising, the flow signal is confirming the model — safer side of the trade. Divergent names are the ones to pressure-test.</div>\n        <div class=\"pm-alert\"><span class=\"pm-alt-tag\">5-DAY TAPE</span>Only <b>2 of 10</b> finished positive over the last week. <b>TER</b> at -11.6% is leading the pullback — crowding + weak tape is a de-grossing combination; size accordingly.</div>\n        <div class=\"pm-alert\"><span class=\"pm-alt-tag\">OPTIONS</span>3 put-skew (STX, WDC, APP) · 4 call-skew (AMD, PLTR, TER, GEV). Put-skew ≠ short — it's a hedging bid.</div>\n        <div class=\"pm-alert\"><span class=\"pm-alt-tag\">13F</span>Reporting cutoff <b>30 Jun 2026</b>. Any flow conclusion after that is price-action inference, not an actual holder report.</div>\n        <div class=\"pm-alert\"><span class=\"pm-alt-tag\">INSIDER</span>4 names with material insider ownership ≥1% — constructive but non-urgent signal.</div>\n      </div>\n    </div>\n  ","earnings":"\n    <div class=\"ernplay\">\n      <div class=\"ernplay-head\">\n        <div class=\"ep-stamp\">EARNINGS PLAYBOOK · 2026-10-12</div>\n        <div class=\"ep-sub\">10 prints over the next 30 days · 90% beat rate last cycle · avg surprise +7.1%</div>\n      </div>\n      <div class=\"ernplay-score\">\n        <div class=\"ep-stat\"><div class=\"ep-stat-v\">9/10</div><div class=\"ep-stat-k\">BEATS LAST Q</div></div>\n        <div class=\"ep-stat\"><div class=\"ep-stat-v\">+7.1%</div><div class=\"ep-stat-k\">AVG SURPRISE</div></div>\n        <div class=\"ep-stat\"><div class=\"ep-stat-v\">+13.7%</div><div class=\"ep-stat-k\">AVG MAX 1D POST</div></div>\n        <div class=\"ep-stat\"><div class=\"ep-stat-v\">10</div><div class=\"ep-stat-k\">PRINTS NEXT 30D</div></div>\n      </div>\n      <div class=\"ernplay-section\">\n        <div class=\"ep-s-head\">COUNTDOWN · next 7 prints  <span class=\"ep-s-note\">plan locks in T−3 sessions</span></div>\n        <div class=\"ern-list\"><div class=\"ern-row\">\n      <div class=\"ern-tick\">COF</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Tue 20 Oct</div><div class=\"ern-tminus\">T−7d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$5.50</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$16.2B</div></div>\n      <div class=\"ern-whisp\">+23.8% last Q · +2/−0 rev</div>\n      <div class=\"ern-plan ern-long\">LONG INTO PRINT</div>\n    </div><div class=\"ern-row\">\n      <div class=\"ern-tick\">WDC</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Thu 22 Oct</div><div class=\"ern-tminus\">T−9d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$4.08</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$4.1B</div></div>\n      <div class=\"ern-whisp\">+7.9% last Q · +9/−0 rev</div>\n      <div class=\"ern-plan ern-long\">LONG INTO PRINT</div>\n    </div><div class=\"ern-row\">\n      <div class=\"ern-tick\">TER</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Tue 27 Oct</div><div class=\"ern-tminus\">T−14d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$2.05</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$1.3B</div></div>\n      <div class=\"ern-whisp\">+20.3% last Q · +15/−0 rev</div>\n      <div class=\"ern-plan ern-long\">LONG INTO PRINT</div>\n    </div><div class=\"ern-row\">\n      <div class=\"ern-tick\">STX</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Tue 27 Oct</div><div class=\"ern-tminus\">T−14d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$7.38</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$4.1B</div></div>\n      <div class=\"ern-whisp\">+12.1% last Q · +15/−0 rev</div>\n      <div class=\"ern-plan ern-long\">LONG INTO PRINT</div>\n    </div><div class=\"ern-row\">\n      <div class=\"ern-tick\">GEV</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Wed 28 Oct</div><div class=\"ern-tminus\">T−14d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$4.00</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$12.0B</div></div>\n      <div class=\"ern-whisp\">-22.4% last Q · +1/−0 rev</div>\n      <div class=\"ern-plan ern-hedge\">HEDGE BEFORE PRINT</div>\n    </div><div class=\"ern-row\">\n      <div class=\"ern-tick\">PLTR</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Mon 02 Nov</div><div class=\"ern-tminus\">T−20d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$0.41</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$2.2B</div></div>\n      <div class=\"ern-whisp\">+18.5% last Q · +2/−0 rev</div>\n      <div class=\"ern-plan ern-long\">LONG INTO PRINT</div>\n    </div><div class=\"ern-row\">\n      <div class=\"ern-tick\">AMD</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Tue 03 Nov</div><div class=\"ern-tminus\">T−21d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$1.93</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$13.1B</div></div>\n      <div class=\"ern-whisp\">+3.2% last Q · +1/−0 rev</div>\n      <div class=\"ern-plan ern-long\">LONG INTO PRINT</div>\n    </div></div>\n      </div>\n      <div class=\"ernplay-section ernplay-pattern\">\n        <div class=\"ep-s-head\">PATTERN READ</div>\n        <p>Last cycle the tape paid for beats — 90% hit rate with average +13.7% max 1-day post-earnings move. Standout was <b>COF +23.8%</b>. Standout miss was <b>GEV -22.4%</b> — guide-cut language usually rhymes next quarter, so plan to hedge.</p>\n        <p><b>Street sentiment:</b> <b>AVGO</b> 94% buy · <b>MU</b> 92% buy · <b>STX</b> 88% buy lead the universe on analyst buy-mix. <b>PLTR</b> is the laggard at 66% — pre-print setups work best where sentiment and revisions are both pointing up.</p>\n        <p><b>Watch:</b> Hedging-score (transcript language) &gt; 0.35 is cut-risk until proven otherwise. 4 names cluster in one week — size positions accordingly.</p>\n      </div>\n    </div>\n  ","macro":"\n    <div class=\"macronote\">\n      <div class=\"macronote-head\">\n        <div class=\"mn-stamp\">MACRO NOTE · 2026-10-12</div>\n        <div class=\"mn-regime\">\n          <span class=\"mn-light mn-green\"></span>\n          <span class=\"mn-regime-label\">RISK-ON</span>\n          <span class=\"mn-regime-desc\">rates-up · dollar-up · low-vol</span>\n        </div>\n      </div>\n      <div class=\"macronote-dash\">\n        <div class=\"mn-panel\">\n          <div class=\"mn-p-head\">RATES</div>\n          <div class=\"mn-p-val\">5.22%</div>\n          <div class=\"mn-p-sub\">21d move: +26% bp</div>\n          <div class=\"mn-p-txt\">Yields drifted higher — directional, not noise. 6 of 10 names in book benefit from rising rates.</div>\n        </div>\n        <div class=\"mn-panel\">\n          <div class=\"mn-p-head\">DOLLAR</div>\n          <div class=\"mn-p-val\">102.12</div>\n          <div class=\"mn-p-sub\">21d move: +2.5%</div>\n          <div class=\"mn-p-txt\">Book runs long dollar (avg β-DXY 0.79). Semi longs trade with the dollar on AI-capex $-flows — not the usual sign.</div>\n        </div>\n        <div class=\"mn-panel\">\n          <div class=\"mn-p-head\">VOLATILITY</div>\n          <div class=\"mn-p-val\">15.3</div>\n          <div class=\"mn-p-sub\">21d move: -10.7%</div>\n          <div class=\"mn-p-txt\">VIX well below panic line. Risk-off scenarios likely overstate PnL — betas are regime-dependent and would reset in a real sell-off.</div>\n        </div>\n      </div>\n      <div class=\"macronote-sens\">\n        <div class=\"mn-s-head\">BOOK SENSITIVITY · who wins / loses by factor</div>\n        <table class=\"sens-tbl\">\n          <tr><td class=\"sens-k\">Rates ↑</td><td class=\"sens-win\">WIN · AMD, TER, GEV, MU</td><td class=\"sens-lose\">LOSE · PLTR, COF, APP</td></tr>\n          <tr><td class=\"sens-k\">Dollar ↑</td><td class=\"sens-win\">WIN · AMD, PLTR, TER, GEV</td><td class=\"sens-lose\">LOSE · COF</td></tr>\n          <tr><td class=\"sens-k\">Hot CPI</td><td class=\"sens-win\">Book PnL <b>+$ 1.55 M</b></td><td class=\"sens-lose\">Comfortable with surprise</td></tr>\n          <tr><td class=\"sens-k\">Risk-off</td><td class=\"sens-win\">Scenario <b>+$ 10.42 M</b></td><td class=\"sens-lose\">Treat as upper-bound only</td></tr>\n        </table>\n      </div>\n      <div class=\"macronote-hedge\">\n        <div class=\"mn-h-head\">HEDGE RECOMMENDATION</div>\n        <div class=\"mn-h-body\">\n          <div class=\"mn-h-primary\"><span class=\"mn-h-tag\">PRIMARY</span>If 10Y breaks <b>5.32%</b> around FOMC minutes (Oct 15), trim DXY-long exposure by 25% and buy a 1-month put spread on <b>COF</b>.</div>\n          <div class=\"mn-h-secondary\"><span class=\"mn-h-tag\">SECONDARY</span>Hold a 5–8% cash buffer through the FOMC window. No additions to high-β-VIX positions before Oct 15.</div>\n          <div class=\"mn-h-watch\"><span class=\"mn-h-tag\">TAPE</span>Last 5 sessions: <b>TER -11.6%</b> worst, <b>PLTR +8.6%</b> best. Semis leading the pullback = macro turning; watch the DXY response at the Oct 15 print.</div>\n          <div class=\"mn-h-watch\"><span class=\"mn-h-tag\">WATCH</span>FOMC minutes <b>15 Oct 14:00</b> · China GDP <b>16 Oct 22:00</b>. Either print has the potential to invert the regime.</div>\n        </div>\n      </div>\n    </div>\n  "};
 </script>
 </head>
-<body data-theme="dark">
+<body data-theme="dark" data-tone="ws">
 
 <!-- =============== APP SHELL =============== -->
 <div class="app">
@@ -1356,7 +1432,7 @@ window.__POINT_AI_BRIEFS__ = {"research":"\n    <div class=\"memo\">\n      <div
       </div>
     </a>
 
-    <div class="side-section">
+    <div class="side-section squad-ws">
       <div class="side-label">Workspace</div>
       <nav class="side-nav">
         <a href="#dashboard" class="side-item active" data-view="dashboard"><span class="dot"></span>Dashboard</a>
@@ -1366,7 +1442,7 @@ window.__POINT_AI_BRIEFS__ = {"research":"\n    <div class=\"memo\">\n      <div
       </nav>
     </div>
 
-    <div class="side-section">
+    <div class="side-section squad-pf">
       <div class="side-label">Portfolio Squad</div>
       <nav class="side-nav">
         <a href="#risk" class="side-item" data-view="risk"><span class="dot red"></span>Risk & Guideline</a>
@@ -1377,7 +1453,7 @@ window.__POINT_AI_BRIEFS__ = {"research":"\n    <div class=\"memo\">\n      <div
       </nav>
     </div>
 
-    <div class="side-section">
+    <div class="side-section squad-mk">
       <div class="side-label">Market Squad</div>
       <nav class="side-nav">
         <a href="#research" class="side-item" data-view="research"><span class="dot gold"></span>Research & Alpha</a>
@@ -1388,7 +1464,7 @@ window.__POINT_AI_BRIEFS__ = {"research":"\n    <div class=\"memo\">\n      <div
       </nav>
     </div>
 
-    <div class="side-section">
+    <div class="side-section squad-dp">
       <div class="side-label">Deploy</div>
       <nav class="side-nav">
         <a href="#mcp" class="side-item" data-view="mcp"><span class="dot"></span>Point MCP</a>
@@ -1419,7 +1495,7 @@ window.__POINT_AI_BRIEFS__ = {"research":"\n    <div class=\"memo\">\n      <div
           Site
         </a>
         <span class="sep">/</span>
-        <span class="crumb">Workspace</span>
+        <span class="crumb" id="crumb-squad">Workspace</span>
         <span class="sep">/</span>
         <span class="crumb current" id="crumb-view">Dashboard</span>
       </div>
@@ -1532,39 +1608,39 @@ window.__POINT_AI_BRIEFS__ = {"research":"\n    <div class=\"memo\">\n      <div
           <div class="section-title">Ten specialist agents · one coordinated book</div>
         </div>
         <div class="legend">
-          <span><i class="sq red"></i>Portfolio Squad</span>
-          <span><i class="sq gold"></i>Market Squad</span>
+          <span><i class="sq pf"></i>Portfolio Squad</span>
+          <span><i class="sq mk"></i>Market Squad</span>
           <span><i class="sq grey"></i>Idle</span>
         </div>
       </div>
 
       <div class="agent-grid">
         <!-- Portfolio -->
-        <a href="#risk" class="agent-tile red" data-view="risk">
+        <a href="#risk" class="agent-tile pf" data-view="risk">
           <div class="a-icon">🛡</div>
           <div class="a-name">Risk & Guideline</div>
           <div class="a-sub">VaR, limits, stress, drawdown</div>
           <div class="a-meta"><span class="pill red">2 critical</span><span class="pill ghost">running</span></div>
         </a>
-        <a href="#tech" class="agent-tile red" data-view="tech">
+        <a href="#tech" class="agent-tile pf" data-view="tech">
           <div class="a-icon">📈</div>
           <div class="a-name">Technical Signals</div>
           <div class="a-sub">Stops, RSI, MACD, volume z</div>
           <div class="a-meta"><span class="pill orange">4 warnings</span><span class="pill ghost">running</span></div>
         </a>
-        <a href="#pnl" class="agent-tile red" data-view="pnl">
+        <a href="#pnl" class="agent-tile pf" data-view="pnl">
           <div class="a-icon">⚖︎</div>
           <div class="a-name">PnL Attribution</div>
           <div class="a-sub">By name · sector · factor</div>
           <div class="a-meta"><span class="pill ghost">updated 6m ago</span></div>
         </a>
-        <a href="#ir" class="agent-tile red" data-view="ir">
+        <a href="#ir" class="agent-tile pf" data-view="ir">
           <div class="a-icon">📝</div>
           <div class="a-name">IR & Reporting</div>
           <div class="a-sub">Tear sheets, LP letters, DDQ</div>
           <div class="a-meta"><span class="pill gold">2 drafts</span></div>
         </a>
-        <a href="#pos" class="agent-tile red" data-view="pos">
+        <a href="#pos" class="agent-tile pf" data-view="pos">
           <div class="a-icon">📰</div>
           <div class="a-name">Position Intelligence</div>
           <div class="a-sub">News, catalysts, thesis drift</div>
@@ -1572,31 +1648,31 @@ window.__POINT_AI_BRIEFS__ = {"research":"\n    <div class=\"memo\">\n      <div
         </a>
 
         <!-- Market -->
-        <a href="#research" class="agent-tile gold" data-view="research">
+        <a href="#research" class="agent-tile mk" data-view="research">
           <div class="a-icon">🔍</div>
           <div class="a-name">Research & Alpha</div>
           <div class="a-sub">AI + quant ranking, ranges</div>
           <div class="a-meta"><span class="pill ghost">31 new ideas</span></div>
         </a>
-        <a href="#flows" class="agent-tile gold" data-view="flows">
+        <a href="#flows" class="agent-tile mk" data-view="flows">
           <div class="a-icon">≋</div>
           <div class="a-name">Fund Flows</div>
           <div class="a-sub">13F, short interest, options skew</div>
           <div class="a-meta"><span class="pill orange">ADSK crowding 90</span></div>
         </a>
-        <a href="#earnings" class="agent-tile gold" data-view="earnings">
+        <a href="#earnings" class="agent-tile mk" data-view="earnings">
           <div class="a-icon">💬</div>
           <div class="a-name">Earnings & Sentiment</div>
           <div class="a-sub">Call tone, guidance, read-across</div>
           <div class="a-meta"><span class="pill ghost">6 prints today</span></div>
         </a>
-        <a href="#macro" class="agent-tile gold" data-view="macro">
+        <a href="#macro" class="agent-tile mk" data-view="macro">
           <div class="a-icon">🌍</div>
           <div class="a-name">Macro & Regime</div>
           <div class="a-sub">Rates, CPI, FX, regime</div>
           <div class="a-meta"><span class="pill red">CPI tomorrow</span></div>
         </a>
-        <a href="#digital" class="agent-tile gold" data-view="digital">
+        <a href="#digital" class="agent-tile mk" data-view="digital">
           <div class="a-icon">◉</div>
           <div class="a-name">Digital Assets</div>
           <div class="a-sub">Crypto · tokenized equities</div>
@@ -3304,6 +3380,7 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
   const items = document.querySelectorAll('[data-view]');
   const views = document.querySelectorAll('.view');
   const crumb = document.getElementById('crumb-view');
+  const crumbSquad = document.getElementById('crumb-squad');
   const titles = {
     dashboard:'Dashboard', brief:'Morning Brief', cards:'Action Cards', conductor:'Point Conductor',
     risk:'Risk & Guideline', tech:'Technical Signals', pnl:'PnL Attribution', ir:'IR & Reporting',
@@ -3312,10 +3389,21 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
     mcp:'Point MCP', execute:'Point Execute', governance:'Governance',
     profile:'My profile', settings:'Account settings', funds:'Manage funds', signout:'Sign out'
   };
+  const squadName = {
+    dashboard:'Workspace', brief:'Workspace', cards:'Workspace', conductor:'Workspace',
+    profile:'Workspace', settings:'Workspace', funds:'Workspace', signout:'Workspace',
+    risk:'Portfolio Squad', tech:'Portfolio Squad', pnl:'Portfolio Squad', ir:'Portfolio Squad', pos:'Portfolio Squad',
+    research:'Market Squad', flows:'Market Squad', earnings:'Market Squad', macro:'Market Squad', digital:'Market Squad',
+    mcp:'Deploy', execute:'Deploy', governance:'Deploy'
+  };
+  const squadTone = {'Workspace':'ws','Portfolio Squad':'pf','Market Squad':'mk','Deploy':'dp'};
   function go(view){
     views.forEach(v=>v.classList.toggle('active', v.id==='view-'+view));
     document.querySelectorAll('.side-item').forEach(a=>a.classList.toggle('active', a.dataset.view===view));
     if(crumb) crumb.textContent = titles[view]||'Dashboard';
+    const squad = squadName[view]||'Workspace';
+    if(crumbSquad) crumbSquad.textContent = squad;
+    document.body.dataset.tone = squadTone[squad]||'ws';
     window.scrollTo({top:0,behavior:'smooth'});
   }
   items.forEach(el=>el.addEventListener('click', e=>{
@@ -3737,16 +3825,16 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
 
   /* ---- Analyst recommendations: suggested action, supporting evidence, and next step ---- */
   const agentMeta = {
-    risk:{n:'Risk & Guideline Agent',i:'🛡',sq:'red'},
-    tech:{n:'Technical Signals Agent',i:'📈',sq:'red'},
-    pnl:{n:'PnL Attribution Agent',i:'⚖︎',sq:'red'},
-    ir:{n:'IR & Reporting Agent',i:'📝',sq:'red'},
-    pos:{n:'Position Intelligence Agent',i:'📰',sq:'red'},
-    research:{n:'Research & Alpha Agent',i:'🔍',sq:'gold'},
-    flows:{n:'Fund Flows & Positioning Agent',i:'≋',sq:'gold'},
-    earnings:{n:'Earnings & Sentiment Agent',i:'💬',sq:'gold'},
-    macro:{n:'Macro & Regime Agent',i:'🌍',sq:'gold'},
-    digital:{n:'Digital Assets & Tokenization Agent',i:'◉',sq:'gold'}
+    risk:{n:'Risk & Guideline Agent',i:'🛡',sq:'pf'},
+    tech:{n:'Technical Signals Agent',i:'📈',sq:'pf'},
+    pnl:{n:'PnL Attribution Agent',i:'⚖︎',sq:'pf'},
+    ir:{n:'IR & Reporting Agent',i:'📝',sq:'pf'},
+    pos:{n:'Position Intelligence Agent',i:'📰',sq:'pf'},
+    research:{n:'Research & Alpha Agent',i:'🔍',sq:'mk'},
+    flows:{n:'Fund Flows & Positioning Agent',i:'≋',sq:'mk'},
+    earnings:{n:'Earnings & Sentiment Agent',i:'💬',sq:'mk'},
+    macro:{n:'Macro & Regime Agent',i:'🌍',sq:'mk'},
+    digital:{n:'Digital Assets & Tokenization Agent',i:'◉',sq:'mk'}
   };
   // Each entry is [recommendation, supporting evidence, suggested next step].
   // Copy describes the illustrative fund snapshot, not live analysis or human approval.
@@ -3965,7 +4053,7 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
     const head=view.querySelector('.view-head'); if(!head) return;
     const m=agentMeta[k];
     const el=document.createElement('section');
-    el.className='decision-brief'+(m.sq==='gold'?' gold':'');
+    el.className='decision-brief';
     el.setAttribute('aria-labelledby', 'decision-title-'+k);
     el.innerHTML=`
       <div class="db-head">
@@ -4406,209 +4494,365 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
     alpha:{
       chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
       kpis:[
-        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
-        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
-        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+
         ["Beat rate","90%","9/10 beat","good"]],
       upcoming:[
-        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
-        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
-        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
-        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
-        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
-        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
-        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
-        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
-        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+
+        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
+
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
+
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+
         ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
       surprises:[
-        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
-        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
-        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
-        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
-        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
-        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
-        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
-        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
-        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+
         ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
       phrases:[
-        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
-        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
-        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+
         ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
       revisions:[
-        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
-        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
-        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
-        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
-        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
-        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
-        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
-        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
-        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
+
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
+
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
+
+        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
+
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
+
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
+
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
+
+        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+
         ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 212"],"1","<span class=\"pill good\">pos</span>"]]
     },
     global:{
       chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
       kpis:[
-        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
-        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
-        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+
         ["Beat rate","90%","9/10 beat","good"]],
       upcoming:[
-        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
-        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
-        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
-        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
-        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
-        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
-        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
-        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
-        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+
+        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
+
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
+
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+
         ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
       surprises:[
-        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
-        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
-        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
-        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
-        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
-        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
-        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
-        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
-        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+
         ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
       phrases:[
-        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
-        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
-        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+
         ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
       revisions:[
-        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
-        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
-        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
-        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
-        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
-        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
-        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
-        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
-        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
+
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
+
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
+
+        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
+
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
+
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
+
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
+
+        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+
         ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 212"],"1","<span class=\"pill good\">pos</span>"]]
     },
     neutral:{
       chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
       kpis:[
-        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
-        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
-        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+
         ["Beat rate","90%","9/10 beat","good"]],
       upcoming:[
-        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
-        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
-        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
-        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
-        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
-        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
-        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
-        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
-        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+
+        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
+
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
+
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+
         ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
       surprises:[
-        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
-        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
-        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
-        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
-        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
-        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
-        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
-        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
-        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+
         ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
       phrases:[
-        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
-        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
-        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+
         ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
       revisions:[
-        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
-        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
-        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
-        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
-        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
-        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
-        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
-        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
-        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
+
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
+
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
+
+        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
+
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
+
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
+
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
+
+        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+
         ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 212"],"1","<span class=\"pill good\">pos</span>"]]
     },
     digital:{
       chip:"10 prints in next 30d · 10 recent S&P 500 adds · 12 Oct",
       kpis:[
-        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
-        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
-        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+        ["Prints next 5d","0","10 in next 30d · 10-name universe"],
+
+        ["Universe","10 recent SPX adds","Palantir · Dell · Apollo · Workday · DoorDash · WSM · TKO · EXE · EQT · TPL"],
+
+        ["Avg EPS Δ · last cycle","+7.1%","from 10 reports","good"],
+
         ["Beat rate","90%","9/10 beat","good"]],
       upcoming:[
-        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
-        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
-        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
-        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
-        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
-        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
-        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
-        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
-        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+        ["AMD","Tue 03 Nov","$1.93","$13.1B","±3.0%","FY+1 est +0.89%"],
+
+        ["PLTR","Mon 02 Nov","$0.41","$2.2B","±3.0%","FY+1 est +0.31%"],
+
+        ["TER","Tue 27 Oct","$2.05","$1.3B","±3.0%","FY+1 est +0.00%"],
+
+        ["GEV","Wed 28 Oct","$4.00","$12.0B","±3.0%","FY+1 est -0.44%"],
+
+        ["AVGO","Wed 09 Dec","$3.83","$34.9B","±3.0%","FY+1 est +0.07%"],
+
+        ["MU","Wed 23 Dec · est","$38.21","$61.7B","±3.0%","FY+1 est +0.22%"],
+
+        ["COF","Tue 20 Oct","$5.50","$16.2B","±3.0%","FY+1 est -0.01%"],
+
+        ["STX","Tue 27 Oct","$7.38","$4.1B","±3.0%","FY+1 est +1.80%"],
+
+        ["WDC","Thu 22 Oct","$4.08","$4.1B","±3.0%","FY+1 est +3.64%"],
+
         ["APP","Wed 04 Nov","$4.34","$2.1B","±3.0%","FY+1 est -0.21%"]],
       surprises:[
-        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
-        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
-        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
-        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
-        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
-        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
-        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
-        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
-        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+        ["COF","Tue 30 Jun · q-end",["good","5.81 vs 4.69"],["good","+23.8%"],["up","+4.1%"],["good","+0.48"],"beat · guide raised"],
+
+        ["GEV","Tue 30 Jun · q-end",["bad","2.47 vs 3.18"],["bad","-22.4%"],["up","+9.1%"],["bad","−0.45"],"miss · guide cut risk"],
+
+        ["TER","Tue 30 Jun · q-end",["good","2.47 vs 2.05"],["good","+20.3%"],["up","+14.4%"],["good","+0.41"],"beat · guide raised"],
+
+        ["PLTR","Tue 30 Jun · q-end",["good","0.41 vs 0.35"],["good","+18.5%"],["up","+29.5%"],["good","+0.37"],"beat · guide raised"],
+
+        ["STX","Tue 30 Jun · q-end",["good","5.71 vs 5.09"],["good","+12.1%"],["up","+11.4%"],["good","+0.24"],"beat · guide raised"],
+
+        ["WDC","Tue 30 Jun · q-end",["good","3.56 vs 3.30"],["good","+7.9%"],["up","+15.4%"],["good","+0.16"],"beat · guide raised"],
+
+        ["MU","Mon 31 Aug · q-end",["good","33.42 vs 31.82"],["good","+5.0%"],["up","+6.1%"],["good","+0.10"],"beat · guide raised"],
+
+        ["AMD","Tue 30 Jun · q-end",["good","1.66 vs 1.61"],["good","+3.2%"],["up","+13.0%"],["good","+0.06"],"in-line beat"],
+
+        ["AVGO","Fri 31 Jul · q-end",["good","3.32 vs 3.24"],["good","+2.5%"],["up","+6.6%"],["good","+0.05"],"in-line beat"],
+
         ["APP","Tue 30 Jun · q-end",["good","3.76 vs 3.74"],["good","+0.4%"],["dn","-19.7%"],["ghost","+0.01"],"in-line beat"]],
       phrases:[
-        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
-        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
-        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
-        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+        ["COF","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["GEV","Tue 30 Jun",["bad","0.46 ↑↑"],"\"headwinds\" ×7 · \"guidance cut\" ×5","cut","<span class=\"pill orange\">watch</span>"],
+
+        ["TER","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["PLTR","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["STX","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["WDC","Tue 30 Jun",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["MU","Mon 31 Aug",["good","0.14 ↓"],"\"strong demand\" ×8 · \"raised guide\" ×5","raised","<span class=\"pill good\">OK</span>"],
+
+        ["AMD","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+
+        ["AVGO","Fri 31 Jul",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"],
+
         ["APP","Tue 30 Jun",["good","0.19 flat"],"\"in line\" ×5 · \"unchanged\" ×4","reaffirmed","<span class=\"pill ghost\">neutral</span>"]],
       revisions:[
-        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
-        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
-        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
-        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
-        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
-        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
-        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
-        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
-        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+        ["AMD",["good","+0.19%"],["good","+0.89%"],["up","+$ 31"],"1","<span class=\"pill good\">pos</span>"],
+
+        ["PLTR",["bad","-0.15%"],["good","+0.31%"],["dn","−$ 3"],"2","<span class=\"pill good\">pos</span>"],
+
+        ["TER",["ghost","+0.00%"],["ghost","+0.00%"],["up","+$ 66"],"15","<span class=\"pill good\">pos</span>"],
+
+        ["GEV",["bad","-1.56%"],["bad","-0.44%"],["up","+$ 221"],"1","<span class=\"pill good\">pos</span>"],
+
+        ["AVGO",["ghost","+0.00%"],["good","+0.07%"],["up","+$ 174"],"0","<span class=\"pill orange\">mixed</span>"],
+
+        ["MU",["ghost","+0.00%"],["good","+0.22%"],["up","+$ 607"],"26","<span class=\"pill good\">pos</span>"],
+
+        ["COF",["good","+1.43%"],["ghost","-0.01%"],["up","+$ 56"],"2","<span class=\"pill good\">pos</span>"],
+
+        ["STX",["good","+0.40%"],["good","+1.80%"],["up","+$ 391"],"15","<span class=\"pill good\">pos</span>"],
+
+        ["WDC",["good","+0.86%"],["good","+3.64%"],["up","+$ 288"],"9","<span class=\"pill good\">pos</span>"],
+
         ["APP",["good","+0.55%"],["bad","-0.21%"],["up","+$ 212"],"1","<span class=\"pill good\">pos</span>"]]
     }
   };
