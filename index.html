@@ -43,7 +43,7 @@
       <nav class="side-nav">
         <a href="#risk" class="side-item" data-view="risk"><span class="dot red"></span>Risk & Guideline</a>
         <a href="#tech" class="side-item" data-view="tech"><span class="dot red"></span>Technical Signals</a>
-        <a href="#pnl" class="side-item" data-view="pnl"><span class="dot red"></span>PnL Attribution</a>
+        <a href="#pnl" class="side-item" data-view="pnl"><span class="dot red"></span>P&amp;L Attribution</a>
         <a href="#ir" class="side-item" data-view="ir"><span class="dot red"></span>IR & Reporting</a>
         <a href="#pos" class="side-item" data-view="pos"><span class="dot red"></span>Position Intel</a>
       </nav>
@@ -86,9 +86,9 @@
     <!-- Top bar -->
     <header class="topbar">
       <div class="crumbs">
-        <a class="crumb back-link" href="landing.html" title="Back to site">
-          <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M15.4 7.4 14 6l-6 6 6 6 1.4-1.4-4.6-4.6z"/></svg>
-          Site
+        <a class="crumb back-link" id="crumb-back" href="landing.html" title="Back to site">
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M15.4 7.4 14 6l-6 6 6 6 1.4-1.4-4.6-4.6z"/></svg>
+          <span id="crumb-back-label">Site</span>
         </a>
         <span class="sep">/</span>
         <span class="crumb">Workspace</span>
@@ -157,10 +157,10 @@
       <div class="section-band gold dash-open"><div class="section-inner">
       <div class="hero">
         <div>
-          <div class="eyebrow">Monday · October 7, 2026 · 06:12 ET</div>
+          <div class="eyebrow">Monday · October 15, 2026 · 06:12 ET</div>
           <h1 class="h1">Good morning, <span id="hero-name">Admin</span>.<br/><span class="muted">You have <b class="orange" id="hero-cards">7 action cards</b>, <b class="orange" id="hero-crit">2 critical</b>, overnight on the <b id="hero-fund">Alpha</b> fund.</span></h1>
           <div class="hero-actions">
-            <button class="btn primary">Open Morning Brief</button>
+            <button class="btn primary" type="button" data-view="brief">Open Morning Brief</button>
             <button class="btn ghost">Ask Portfolio Intelligence ↗</button>
           </div>
         </div>
@@ -171,7 +171,7 @@
             <div class="stat-delta up" id="kpi-aum-d">+$6.1M · 24h</div>
           </div>
           <div class="stat">
-            <div class="stat-label">Day PnL</div>
+            <div class="stat-label">Day P&amp;L</div>
             <div class="stat-val up" id="kpi-pnl">+34 bps</div>
             <div class="stat-delta" id="kpi-pnl-d">$ 4.24 M · vs. $2.1M bench</div>
           </div>
@@ -226,7 +226,7 @@
         </a>
         <a href="#pnl" class="agent-tile red" data-view="pnl">
           <div class="a-icon">⚖︎</div>
-          <div class="a-name">PnL Attribution</div>
+          <div class="a-name">P&amp;L Attribution</div>
           <div class="a-sub">By name · sector · factor</div>
           <div class="a-meta"><span class="pill ghost">updated 6m ago</span></div>
         </a>
@@ -281,12 +281,12 @@
       <!-- Market pulse + live tape -->
       <div class="section-band gold"><div class="section-inner">
       <div class="section-head">
-        <div><div class="section-eyebrow">Market pulse</div><div class="section-title">PnL · Exposure · Regime</div></div>
+        <div><div class="section-eyebrow">Market pulse</div><div class="section-title">P&amp;L · Exposure · Regime</div></div>
         <div class="section-note">Live snapshot · 06:12 ET</div>
       </div>
       <div class="grid-3">
         <div class="card">
-          <div class="card-head"><h3 class="card-title">PnL Attribution · Day</h3><span class="chip ghost" id="pnl-ytd">YTD +18.4%</span></div>
+          <div class="card-head"><h3 class="card-title">P&amp;L Attribution · Day</h3><span class="chip ghost" id="pnl-ytd">YTD +18.4%</span></div>
           <div class="pnl-bars" id="pnl-bars"></div>
           <div class="legend-inline">
             <span><i class="sq good"></i>Winners</span>
@@ -414,7 +414,7 @@
 
         <aside class="brief-side">
           <div class="side-card">
-            <div class="sc-lab">Overnight PnL (est.)</div>
+            <div class="sc-lab">Overnight P&amp;L (est.)</div>
             <div class="sc-val dn" id="brief-pnl">−$ 2.14 M</div>
             <div class="sc-sub" id="brief-pnl-sub">tokenized semis + BTC drag</div>
           </div>
@@ -494,7 +494,7 @@
               <div class="ag gold"><i>≋</i> Fund Flows</div>
             </div>
             <div class="pair">
-              <div class="ag red"><i>⚖︎</i> PnL Attribution</div>
+              <div class="ag red"><i>⚖︎</i> P&amp;L Attribution</div>
               <div class="ag gold"><i>💬</i> Earnings & Sentiment</div>
             </div>
             <div class="pair">
@@ -536,7 +536,7 @@
         <div class="card">
           <div class="card-head"><h3 class="card-title">Agent handoffs today</h3><span class="chip ghost">cross-agent triggers</span></div>
           <div class="matrix" id="handoff-matrix">
-            <div class="mx-head"><span></span><span>Risk</span><span>Tech</span><span>PnL</span><span>Pos</span><span>Macro</span><span>Flows</span></div>
+            <div class="mx-head"><span></span><span>Risk</span><span>Tech</span><span>P&amp;L</span><span>Pos</span><span>Macro</span><span>Flows</span></div>
             <div class="mx-row"><span class="mx-lab">Macro</span><span class="c on">8</span><span class="c">1</span><span class="c on">4</span><span class="c">2</span><span class="c self">—</span><span class="c on">3</span></div>
             <div class="mx-row"><span class="mx-lab">Flows</span><span class="c on">5</span><span class="c">0</span><span class="c">2</span><span class="c on">3</span><span class="c">1</span><span class="c self">—</span></div>
             <div class="mx-row"><span class="mx-lab">Digital</span><span class="c on">6</span><span class="c">0</span><span class="c">1</span><span class="c">0</span><span class="c">1</span><span class="c">0</span></div>
@@ -646,7 +646,7 @@
     <!-- ======== VIEW: PNL ======== -->
     <section class="view" id="view-pnl">
       <div class="view-head">
-        <div><div class="eyebrow">Portfolio squad · Agent</div><h1 class="h2">⚖︎  PnL Attribution Agent</h1></div>
+        <div><div class="eyebrow">Portfolio squad · Agent</div><h1 class="h2">⚖︎  P&amp;L Attribution Agent</h1></div>
         <div class="chip">YTD +18.4% · bench +9.7%</div>
       </div>
       <div class="grid-4" id="pnl-kpis">
@@ -686,7 +686,7 @@
       <div class="card">
         <div class="card-head"><h3 class="card-title">Trim & exit candidates · alpha decayed / risk-budget heavy</h3><span class="chip ghost">suggested by agent</span></div>
         <table class="tbl">
-          <thead><tr><th>Ticker</th><th>Thesis age</th><th>Alpha half-life</th><th>MTD PnL</th><th>Risk budget used</th><th>Catalyst</th><th>Suggestion</th></tr></thead>
+          <thead><tr><th>Ticker</th><th>Thesis age</th><th>Alpha half-life</th><th>MTD P&amp;L</th><th>Risk budget used</th><th>Catalyst</th><th>Suggestion</th></tr></thead>
           <tbody id="pnl-trims">
             <tr><td>MSFT</td><td>284d</td><td>14d · <b class="red">expired</b></td><td class="dn">−24 bp</td><td>18%</td><td>none in 20d</td><td><span class="pill orange">Trim 25%</span></td></tr>
             <tr><td>CRM</td><td>161d</td><td>22d</td><td class="dn">−9 bp</td><td>11%</td><td>Dreamforce +9d</td><td><span class="pill ghost">Hold · catalyst near</span></td></tr>
@@ -706,6 +706,7 @@
       </div>
       <nav class="ir-tabs" aria-label="IR reporting views" role="tablist">
         <button class="ir-tab active" id="ir-tab-dashboard" type="button" role="tab" aria-selected="true" aria-controls="ir-dashboard" data-ir-tab="dashboard">Dashboard</button>
+        <button class="ir-tab" id="ir-tab-tearsheet" type="button" role="tab" aria-selected="false" aria-controls="ir-tearsheet" data-ir-tab="tearsheet">Monthly <span>Tear sheet</span></button>
         <button class="ir-tab" id="ir-tab-template1" type="button" role="tab" aria-selected="false" aria-controls="ir-template1" data-ir-tab="template1">Template 1 <span>Monthly factsheet</span></button>
         <button class="ir-tab" id="ir-tab-template2" type="button" role="tab" aria-selected="false" aria-controls="ir-template2" data-ir-tab="template2">Template 2 <span>Portfolio &amp; exposure</span></button>
         <button class="ir-tab" id="ir-tab-template3" type="button" role="tab" aria-selected="false" aria-controls="ir-template3" data-ir-tab="template3">Template 3 <span>Performance &amp; attribution</span></button>
@@ -720,7 +721,7 @@
             <button class="btn ghost" data-ir-action="edit">Edit</button>
             <button class="btn ghost" data-ir-action="save" hidden>Save</button>
             <button class="btn ghost" data-ir-action="cancel" hidden>Cancel</button>
-            <button class="btn dark" data-ir-action="export">Export .docx</button>
+            <button class="btn dark" data-ir-action="export">Download PDF</button>
             <span class="ir-action-message" data-ir-message role="status" aria-live="polite"></span>
           </div>
         </div>
@@ -779,6 +780,7 @@
           <div class="tear-block"><h3>Risk &amp; return profile</h3><div class="tear-kpis four risk-kpis"><div><span>ANNUALIZED RETURN &middot; ITD</span><b>14.2%</b></div><div><span>ANNUALIZED VOLATILITY</span><b>11.6%</b></div><div><span>SHARPE RATIO</span><b>1.18</b></div><div><span>MAX DRAWDOWN</span><b>-8.2%</b></div></div></div>
         </article>
       </section>
+      <section class="ir-tab-panel" id="ir-tearsheet" role="tabpanel" aria-labelledby="ir-tab-tearsheet" hidden><!-- rendered by JS from data/tearsheet-data.js --></section>
       <section id="alpha-perpetual-contract-rankings" class="perp-markets perp-contract-rankings" aria-labelledby="alpha-perp-markets-title" hidden>
         <div class="perp-intro">
           <div class="eyebrow">Alpha Fund · Market research · Perpetual futures</div>
@@ -836,7 +838,7 @@
           </ul>
         </div>
         <div class="card">
-          <div class="card-head"><h3 class="card-title">News & sentiment · last 24h</h3></div>
+          <div class="card-head"><h3 class="card-title">News </h3></div>
           <ul class="news" id="pos-news">
             <li><span class="t">05:12</span><span class="src">Bloomberg</span><div><b>Nvidia</b> insider sales total $220M over 10 trading days</div><span class="pill red">neg</span></li>
             <li><span class="t">04:48</span><span class="src">Reuters</span><div><b>Meta</b> secures EU AI compliance ruling</div><span class="pill good">pos</span></li>
@@ -847,6 +849,8 @@
           </ul>
         </div>
       </div>
+
+      <div class="card senti" id="pos-sentiment" aria-labelledby="senti-title"><!-- rendered by JS from data/sentiment-data.js --></div>
 
       <div class="card">
         <div class="card-head"><h3 class="card-title">Thesis-drift monitor</h3><span class="chip ghost">vs. analyst original thesis</span></div>
@@ -1077,12 +1081,12 @@
         <div class="card">
           <div class="card-head"><h3 class="card-title">Position-level macro betas</h3><span class="chip ghost">60d regression · 10-name universe</span></div>
           <table class="tbl">
-            <thead><tr><th>Ticker</th><th>β 10Y</th><th>β DXY</th><th>β WTI</th><th>β VIX</th><th>Hot-CPI PnL</th></tr></thead>
+            <thead><tr><th>Ticker</th><th>β 10Y</th><th>β DXY</th><th>β WTI</th><th>β VIX</th><th>Hot-CPI P&amp;L</th></tr></thead>
             <tbody id="macro-betas"></tbody>
           </table>
         </div>
         <div class="card">
-          <div class="card-head"><h3 class="card-title">Scenario PnL</h3><span class="chip ghost">10-name book · $1M per name</span></div>
+          <div class="card-head"><h3 class="card-title">Scenario P&amp;L</h3><span class="chip ghost">10-name book · $1M per name</span></div>
           <div class="scenario" id="macro-scenario"></div>
           <div class="card-foot">
             <button class="btn primary">Deploy hedge ladder</button>
@@ -1106,8 +1110,8 @@
         <ul class="legend-list">
           <li><b>β 10Y</b> — versus the CBOE 10-year yield index (^TNX). The beta is versus the percent change of that index, not versus one basis point of yield.</li>
           <li><b>β DXY</b> — versus the dollar index. <b>β WTI</b> — versus crude futures. <b>β VIX</b> — versus the VIX index.</li>
-          <li><b>Hot-CPI PnL</b> — for a $1M position: (β10Y × 0.50 + βDXY × 1 + βVIX × 5) × $1,000,000. The label “10Y +50bp · DXY +1% · VIX +5pt” is the name of that shock. The arithmetic uses those three numbers (0.50, 1, 5) directly as multipliers on the betas.</li>
-          <li><b>Scenario PnL</b> — the same multiplication, summed across all 10 names at $1M each. The base case adds a flat $500k with every shock at zero. Treat the dollars as this model’s scale, not a prime-broker revaluation.</li>
+          <li><b>Hot-CPI P&amp;L</b> — for a $1M position: (β10Y × 0.50 + βDXY × 1 + βVIX × 5) × $1,000,000. The label “10Y +50bp · DXY +1% · VIX +5pt” is the name of that shock. The arithmetic uses those three numbers (0.50, 1, 5) directly as multipliers on the betas.</li>
+          <li><b>Scenario P&amp;L</b> — the same multiplication, summed across all 10 names at $1M each. The base case adds a flat $500k with every shock at zero. Treat the dollars as this model’s scale, not a prime-broker revaluation.</li>
           <li><b>Regime light</b> — risk-on when VIX is under 20, neutral from 20 to 28, risk-off above 28. The 12 Oct VIX close sets the light.</li>
           <li><b>Yield curve</b> — the 10-year point is the 12 Oct ^TNX close. The 3-month, 2-year, 5-year, and 30-year points are fixed reference levels typed into the file, not a live curve.</li>
           <li><b>Calendar</b> — a typed list of known prints (FOMC minutes 15 Oct, and the other dates on the card). It is not pulled from a calendar feed.</li>
@@ -1340,7 +1344,7 @@
               <tr><td>Suresh Raju</td><td>Founder</td><td>all</td><td>all</td><td>Confirm</td><td>2m</td></tr>
               <tr><td>Priya Shah</td><td>Analyst · tech</td><td>Research · Earnings</td><td>Alpha</td><td>Alert</td><td>19m</td></tr>
               <tr><td>Kiran Lee</td><td>Risk</td><td>Risk · Macro · Flows</td><td>Alpha, Global</td><td>Alert</td><td>31m</td></tr>
-              <tr><td>Mary O'Brien</td><td>IR</td><td>IR · PnL</td><td>Alpha</td><td>Alert</td><td>1h</td></tr>
+              <tr><td>Mary O'Brien</td><td>IR</td><td>IR · P&amp;L</td><td>Alpha</td><td>Alert</td><td>1h</td></tr>
               <tr><td>Quants bot</td><td>Service</td><td>MCP · all read</td><td>all</td><td>—</td><td>now</td></tr>
             </tbody>
           </table>
@@ -1424,6 +1428,9 @@
 <script src="chat-core.js"></script>
 <script src="chat-ui.js"></script>
 <script src="data/perpetual-markets.js"></script>
+<script src="data/tearsheet-data.js"></script>
+<script src="data/sentiment-data.js"></script>
+<script src="ir-reports.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

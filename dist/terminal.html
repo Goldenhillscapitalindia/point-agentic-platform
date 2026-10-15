@@ -494,7 +494,7 @@ table.t.lite th.c,table.t.lite td.c{text-align:center}
         <div class="fundsel-menu" id="fundsel-menu"></div>
       </div>
       <div class="asof" id="asof">
-        <b>Oct 07, 2026 · 09:42 ET</b><br/>
+        <b>Oct 15, 2026 · 09:42 ET</b><br/>
         <span class="freshdot"><span class="fd live"></span>Prices live · Positions 09:35 · Risk 09:41</span>
       </div>
       <div class="top-tools">
@@ -882,7 +882,7 @@ const CARDS=[
    m:[['−$8.2M','Hot scenario'],['−0.65%','% NAV'],['0.6×','DV01 hedge'],['High','Portfolio sens.']],
    drivers:['Core CPI consensus 0.3% MoM','Book long-duration growth','Rate-vol sellers crowded'],
    rec:'Deploy 10Y DV01 hedge ladder at 0.6× book. Carry < 2 bps/mo.',
-   evidence:[['Quant Engine','Scenario PnL grid vs position-level rate betas'],['Catalyst Calendar','CPI Oct 08 08:30 ET · HIGH sensitivity']]},
+   evidence:[['Quant Engine','Scenario P&L grid vs position-level rate betas'],['Catalyst Calendar','CPI Oct 08 08:30 ET · HIGH sensitivity']]},
   {id:'AC-7725',sev:'warn',agent:'Fund Flows',ts:'08:12 ET',conf:'Med',fresh:'13F 54d',
    title:'META crowding score 92 — de-grossing vulnerability',
    m:[['92','Crowding'],['14.1%','HF ownership'],['+7pts','QoQ Δ'],['High','De-gross risk']],
@@ -894,7 +894,7 @@ const CARDS=[
    m:[['61%','Alignment'],['86%','Prior'],['−3.1%','MTD'],['98%','Risk budget used']],
    drivers:['Gross-margin guidance weakened','Capex growth exceeded thesis','Competitor pricing pressure'],
    rec:'Re-underwrite or trim. Position is high-risk / low-return (99% budget, −4% return).',
-   evidence:[['Position Intel','8-K + transcript delta vs recorded thesis'],['PnL Agent','YTD −$2.4M · efficiency POOR']]},
+   evidence:[['Position Intel','8-K + transcript delta vs recorded thesis'],['P&L Agent','YTD −$2.4M · efficiency POOR']]},
   {id:'AC-7704',sev:'opp',agent:'Research & Alpha',ts:'07:05 ET',conf:'High',fresh:'Estimates 3h',
    title:'META — Alpha 84, diversifies semiconductor concentration',
    m:[['84','Alpha score'],['High','Portfolio fit'],['+4.1/−2.3%','5D range'],['18d','Earnings']],
@@ -1290,7 +1290,7 @@ function renderScenarios(){
         <div class="filters"><span class="preset">SMH puts</span><span class="preset">QQQ puts</span><span class="preset">Reduce NVDA</span></div>
       </div></div>
     </div>
-    <div class="prov">Stress results are produced by the deterministic Quant Engine stress API against position-level factor betas. AI proposes hedges and explains drivers; it does not compute the stress PnL.</div>`;
+    <div class="prov">Stress results are produced by the deterministic Quant Engine stress API against position-level factor betas. AI proposes hedges and explains drivers; it does not compute the stress P&L.</div>`;
 }
 
 /* ---- PNL ---- */
@@ -1350,7 +1350,7 @@ function renderAlerts(){
     <div class="pg-head"><div><div class="pg-eyebrow">${ICO.cmd}<span>Unified inbox</span></div><div class="pg-title">Alert center</div><div class="pg-sub">One unified inbox · duplicates grouped by the Conductor</div></div>
       <div class="pg-acts"><button class="btn gh sm" data-goto="ask">${ICO.book}Ask the book</button><button class="btn gh sm" data-goto="scenarios">Scenario studio</button><button class="btn pri sm" data-al-readall ${n.unread?'':'disabled'}>${ICO.check}Mark all read</button></div></div>
     <div class="al-hero">
-      <div class="al-hero-t"><div class="eb">Today · Oct 07, 2026</div><h2>Signal triage</h2><p>${n.crit+n.warn?`${n.crit+n.warn} item${n.crit+n.warn>1?'s':''} need a decision — prioritized by portfolio impact.`:'Nothing needs a decision right now.'}</p></div>
+      <div class="al-hero-t"><div class="eb">Today · Oct 15, 2026</div><h2>Signal triage</h2><p>${n.crit+n.warn?`${n.crit+n.warn} item${n.crit+n.warn>1?'s':''} need a decision — prioritized by portfolio impact.`:'Nothing needs a decision right now.'}</p></div>
       <div class="al-stats">${stat('crit','Critical','#f97066')}${stat('warn','Warnings','#fdb022')}${stat('opp','Opportunities','#84a9ff')}
         <div class="al-stat static"><span class="n num">09:41</span><span class="l"><i style="background:#32d583"></i>Last sync</span></div></div>
     </div>
