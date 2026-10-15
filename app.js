@@ -1343,16 +1343,27 @@
   };
 
   function renderPerpetualMarkets(fund){
-    const section=document.getElementById('digital-perpetual-markets');
-    section.hidden=fund!=='digital';
-    if(section.hidden) return;
-    document.getElementById('perp-snapshot-date').textContent=perpetualMarkets.asOfLabel;
-    ['cex','dex'].forEach(kind=>{
-      const body=document.getElementById('perp-'+kind+'-rows');
-      body.innerHTML=perpetualMarkets[kind].map(row=>{
+    const marketSection=document.getElementById('digital-perpetual-markets');
+    marketSection.hidden=fund!=='digital';
+    if(!marketSection.hidden){
+      document.getElementById('perp-snapshot-date').textContent=perpetualMarkets.asOfLabel;
+      ['cex','dex'].forEach(kind=>{
+        const body=document.getElementById('perp-'+kind+'-rows');
+        body.innerHTML=perpetualMarkets[kind].map(row=>{
         const volume=row.volumeUsd>=1e9 ? '$'+(row.volumeUsd/1e9).toFixed(2)+'B' : '$'+(row.volumeUsd/1e6).toFixed(1)+'M';
         return `<tr><td class="perp-rank">${row.rank}</td><td><a class="perp-asset" href="${row.source}" target="_blank" rel="noopener noreferrer">${row.name}<span>${row.symbol} ↗</span></a></td><td><span class="pill ghost">${row.assetType}</span></td><td class="perp-volume">${volume}</td><td class="perp-venues">${row.venues.join(' · ')}</td></tr>`;
-      }).join('');
+        }).join('');
+      });
+    }
+
+    const section=document.getElementById('alpha-perpetual-contract-rankings');
+    section.hidden=fund!=='alpha';
+    if(section.hidden) return;
+    const rankings=perpetualMarkets.contractRankings;
+    document.getElementById('alpha-perp-snapshot-date').textContent=rankings.asOfLabel;
+    ['cex','dex'].forEach(kind=>{
+      const body=document.getElementById('alpha-perp-'+kind+'-rows');
+      body.innerHTML=rankings[kind].map((row,index)=>`<tr><td class="perp-rank">${index+1}</td>${row.map(cell=>`<td>${cell}</td>`).join('')}</tr>`).join('');
     });
   }
 
