@@ -423,6 +423,9 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .perp-table .perp-volume{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
 .perp-table .perp-rank{color:var(--txt-3);width:48px}
 .perp-table .perp-venues{white-space:normal;min-width:190px;line-height:1.6}
+.perp-contract-rankings{margin-top:32px}
+.perp-contract-table{min-width:900px}
+.perp-contract-table td:nth-child(n+4),.perp-contract-table th:nth-child(n+4){text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
 .perp-methodology summary{cursor:pointer;font-size:13px;font-weight:600}
 .perp-markets a:focus-visible,.perp-markets summary:focus-visible,.perp-markets .tbl-wrap:focus-visible{outline:2px solid var(--orange);outline-offset:4px}
 

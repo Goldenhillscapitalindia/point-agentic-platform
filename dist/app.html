@@ -433,6 +433,9 @@ body[data-theme="light"] .pb-fill.neg{background:linear-gradient(180deg,#e08a86,
 .perp-table .perp-volume{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
 .perp-table .perp-rank{color:var(--txt-3);width:48px}
 .perp-table .perp-venues{white-space:normal;min-width:190px;line-height:1.6}
+.perp-contract-rankings{margin-top:32px}
+.perp-contract-table{min-width:900px}
+.perp-contract-table td:nth-child(n+4),.perp-contract-table th:nth-child(n+4){text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
 .perp-methodology summary{cursor:pointer;font-size:13px;font-weight:600}
 .perp-markets a:focus-visible,.perp-markets summary:focus-visible,.perp-markets .tbl-wrap:focus-visible{outline:2px solid var(--orange);outline-offset:4px}
 
@@ -2107,6 +2110,39 @@ window.__POINT_AI_BRIEFS__ = {"research":"\n    <div class=\"memo\">\n      <div
           <div class="tear-block"><h3>Risk &amp; return profile</h3><div class="tear-kpis four risk-kpis"><div><span>ANNUALIZED RETURN &middot; ITD</span><b>14.2%</b></div><div><span>ANNUALIZED VOLATILITY</span><b>11.6%</b></div><div><span>SHARPE RATIO</span><b>1.18</b></div><div><span>MAX DRAWDOWN</span><b>-8.2%</b></div></div></div>
         </article>
       </section>
+      <section id="alpha-perpetual-contract-rankings" class="perp-markets perp-contract-rankings" aria-labelledby="alpha-perp-markets-title" hidden>
+        <div class="perp-intro">
+          <div class="eyebrow">Alpha Fund · Market research · Perpetual futures</div>
+          <h2 id="alpha-perp-markets-title" class="h2">Perpetual Futures — Latest Market Tables</h2>
+          <p>Exchange-level contracts ranked by reported 24-hour trading volume. These static research tables are included for context only and are not Alpha Fund holdings or trading recommendations.</p>
+          <div class="perp-meta"><span class="chip ghost">Static verified snapshot · Not live</span><time id="alpha-perp-snapshot-date" datetime="2026-10-15"></time></div>
+        </div>
+        <article class="card">
+          <div class="card-head perp-card-head"><h3 class="card-title" id="alpha-perp-cex-title">Top 10 CEX Perpetual Futures</h3><span class="chip ghost">Centralized exchanges</span></div>
+          <p class="perp-description">Contracts are ranked by their reported 24-hour volume. Eight-hour and 12-hour volume were not available in the supplied snapshot.</p>
+          <div class="tbl-wrap" role="region" aria-labelledby="alpha-perp-cex-title" tabindex="0">
+            <table class="tbl perp-table perp-contract-table" aria-labelledby="alpha-perp-cex-title">
+              <thead><tr><th scope="col">Rank</th><th scope="col">Exchange</th><th scope="col">Contract</th><th scope="col">Price · USD</th><th scope="col">8h volume</th><th scope="col">12h volume</th><th scope="col">24h volume</th><th scope="col">Open interest</th></tr></thead>
+              <tbody id="alpha-perp-cex-rows"></tbody>
+            </table>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-head perp-card-head"><h3 class="card-title" id="alpha-perp-dex-title">Top 10 DEX Perpetual Futures</h3><span class="chip ghost">Decentralized exchanges</span></div>
+          <p class="perp-description">Contracts are ranked by their reported 24-hour volume. Open interest is the outstanding perpetual position value, not order-book liquidity.</p>
+          <div class="tbl-wrap" role="region" aria-labelledby="alpha-perp-dex-title" tabindex="0">
+            <table class="tbl perp-table perp-contract-table" aria-labelledby="alpha-perp-dex-title">
+              <thead><tr><th scope="col">Rank</th><th scope="col">Exchange</th><th scope="col">Contract</th><th scope="col">Price · USD</th><th scope="col">8h volume</th><th scope="col">12h volume</th><th scope="col">24h volume</th><th scope="col">Open interest</th></tr></thead>
+              <tbody id="alpha-perp-dex-rows"></tbody>
+            </table>
+          </div>
+        </article>
+        <details class="card perp-methodology">
+          <summary>Snapshot details</summary>
+          <p>Snapshot: October 15, 2026, approximately 9:29 a.m.–12:05 p.m. IST. The supplied exchange snapshots cover selected high-volume CEX and DEX contracts; they are not an exhaustive worldwide census.</p>
+          <p>8-hour and 12-hour volume appear as em dashes because verified rolling-interval data was not included in the source snapshot. Values are static demo research data and should not be treated as a live market feed.</p>
+        </details>
+      </section>
     </section>
 
     <!-- ======== VIEW: POSITION INTEL ======== -->
@@ -3287,7 +3323,35 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
       ],
       "source": "https://loris.tools/markets/perps/skhx"
     }
-  ]
+  ],
+  "contractRankings": {
+    "asOfLabel": "15 Oct 2026 · approximately 9:29 a.m.–12:05 p.m. IST",
+    "sourceLabel": "Verified exchange snapshots supplied for this static demo",
+    "cex": [
+      ["Binance", "BTC", "$80,942.06", "—", "—", "$23.12B", "$7.42B"],
+      ["Binance", "ETH", "$2,363.63", "—", "—", "$18.96B", "$5.48B"],
+      ["OKX", "ETH", "$2,371.20", "—", "—", "$10.44B", "$1.80B"],
+      ["OKX", "BTC", "$81,376.90", "—", "—", "$9.54B", "$3.36B"],
+      ["Gate.io", "ETH", "$2,355.98", "—", "—", "$8.13B", "$1.75B"],
+      ["Gate.io", "BTC", "$80,849.00", "—", "—", "$7.94B", "$4.13B"],
+      ["Deribit", "BTC", "$80,979.50", "—", "—", "$7.61B", "$1.03B"],
+      ["Bybit", "BTC", "$80,772.80", "—", "—", "$6.98B", "$5.63B"],
+      ["Bybit", "ETH", "$2,353.50", "—", "—", "$4.51B", "$2.14B"],
+      ["Bybit", "XAU (Gold)", "$4,143.17", "—", "—", "$4.15B", "$623.93M"]
+    ],
+    "dex": [
+      ["Hyperliquid", "BTC", "$80,755.37", "—", "—", "$4.06B", "$3.19B"],
+      ["Hyperliquid", "ETH", "$2,353.70", "—", "—", "$1.81B", "$2.48B"],
+      ["Variational", "NASDAQ100", "$29,613.30", "—", "—", "$1.77B", "$80.21M"],
+      ["Lighter", "BTC", "$81,106.80", "—", "—", "$1.07B", "$315.51M"],
+      ["Aster", "BTC", "$81,110.50", "—", "—", "$737.00M", "$449.18M"],
+      ["Variational", "BTC", "$80,768.34", "—", "—", "$606.31M", "$194.02M"],
+      ["Pacifica", "BTC", "$81,048.84", "—", "—", "$597.56M", "$43.30M"],
+      ["Aster", "ETH", "$2,363.73", "—", "—", "$521.34M", "$203.70M"],
+      ["edgeX", "ETH", "$2,346.98", "—", "—", "$517.81M", "$85.84M"],
+      ["Lighter", "ETH", "$2,362.32", "—", "—", "$511.78M", "$147.66M"]
+    ]
+  }
 };
   if(typeof module === "object" && module.exports) module.exports=snapshot;
   else root.PointPerpetualMarkets=snapshot;
@@ -4614,16 +4678,27 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
   };
 
   function renderPerpetualMarkets(fund){
-    const section=document.getElementById('digital-perpetual-markets');
-    section.hidden=fund!=='digital';
-    if(section.hidden) return;
-    document.getElementById('perp-snapshot-date').textContent=perpetualMarkets.asOfLabel;
-    ['cex','dex'].forEach(kind=>{
-      const body=document.getElementById('perp-'+kind+'-rows');
-      body.innerHTML=perpetualMarkets[kind].map(row=>{
+    const marketSection=document.getElementById('digital-perpetual-markets');
+    marketSection.hidden=fund!=='digital';
+    if(!marketSection.hidden){
+      document.getElementById('perp-snapshot-date').textContent=perpetualMarkets.asOfLabel;
+      ['cex','dex'].forEach(kind=>{
+        const body=document.getElementById('perp-'+kind+'-rows');
+        body.innerHTML=perpetualMarkets[kind].map(row=>{
         const volume=row.volumeUsd>=1e9 ? '$'+(row.volumeUsd/1e9).toFixed(2)+'B' : '$'+(row.volumeUsd/1e6).toFixed(1)+'M';
         return `<tr><td class="perp-rank">${row.rank}</td><td><a class="perp-asset" href="${row.source}" target="_blank" rel="noopener noreferrer">${row.name}<span>${row.symbol} ↗</span></a></td><td><span class="pill ghost">${row.assetType}</span></td><td class="perp-volume">${volume}</td><td class="perp-venues">${row.venues.join(' · ')}</td></tr>`;
-      }).join('');
+        }).join('');
+      });
+    }
+
+    const section=document.getElementById('alpha-perpetual-contract-rankings');
+    section.hidden=fund!=='alpha';
+    if(section.hidden) return;
+    const rankings=perpetualMarkets.contractRankings;
+    document.getElementById('alpha-perp-snapshot-date').textContent=rankings.asOfLabel;
+    ['cex','dex'].forEach(kind=>{
+      const body=document.getElementById('alpha-perp-'+kind+'-rows');
+      body.innerHTML=rankings[kind].map((row,index)=>`<tr><td class="perp-rank">${index+1}</td>${row.map(cell=>`<td>${cell}</td>`).join('')}</tr>`).join('');
     });
   }
 
