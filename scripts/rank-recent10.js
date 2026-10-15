@@ -793,7 +793,7 @@ async function main() {
           <div class="mn-p-head">VOLATILITY</div>
           <div class="mn-p-val">${macroKpis[3][1]}</div>
           <div class="mn-p-sub">${macroKpis[3][2].replace('21d: ', '21d ')}</div>
-          <div class="mn-p-txt">VIX well below panic line. Risk-off scenarios likely overstate PnL — betas are regime-dependent and would reset in a real sell-off.</div>
+          <div class="mn-p-txt">VIX well below panic line. Risk-off scenarios likely overstate P&L — betas are regime-dependent and would reset in a real sell-off.</div>
         </div>
       </div>
       <div class="macronote-sens">
@@ -801,7 +801,7 @@ async function main() {
         <table class="sens-tbl">
           <tr><td class="sens-k">Rates ↑</td><td class="sens-win">WIN · ${rateWinners.slice(0, 4).join(', ') || '—'}</td><td class="sens-lose">LOSE · ${rateLosers.slice(0, 3).join(', ') || '—'}</td></tr>
           <tr><td class="sens-k">Dollar ↑</td><td class="sens-win">WIN · ${dollarWinners.slice(0, 4).join(', ') || '—'}</td><td class="sens-lose">LOSE · ${dollarLosers.slice(0, 3).join(', ') || '—'}</td></tr>
-          <tr><td class="sens-k">Hot CPI</td><td class="sens-win">Book PnL <b>${macroScenarios[1][1].replace(/<[^>]+>/g, '')}</b></td><td class="sens-lose">${hotCpiPnl >= 0 ? 'Comfortable with surprise' : 'Vulnerable to surprise'}</td></tr>
+          <tr><td class="sens-k">Hot CPI</td><td class="sens-win">Book P&L <b>${macroScenarios[1][1].replace(/<[^>]+>/g, '')}</b></td><td class="sens-lose">${hotCpiPnl >= 0 ? 'Comfortable with surprise' : 'Vulnerable to surprise'}</td></tr>
           <tr><td class="sens-k">Risk-off</td><td class="sens-win">Scenario <b>${macroScenarios[5][1].replace(/<[^>]+>/g, '')}</b></td><td class="sens-lose">Treat as upper-bound only</td></tr>
         </table>
       </div>

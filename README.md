@@ -2,7 +2,7 @@
 
 A static marketing site + demo platform for **Point Agentic Solutions**: a landing
 page and a fully-populated (dummy-data) platform app showcasing the ten specialist
-agents, the Point Conductor, Action Cards, risk/PnL/research views, the 24/7
+agents, the Point Conductor, Action Cards, risk/P&L/research views, the 24/7
 tokenized market, Point MCP and Point Execute.
 
 Pure HTML/CSS/JS — no framework, no backend, no build tooling beyond Node for
@@ -85,6 +85,21 @@ fund's trusted Digital chat context. It retains numeric USD volumes, sources,
 coverage and exclusions. Refresh both rankings and the snapshot timestamp together
 after researching a new window, then run `npm run build`. Other funds do not receive
 these rankings. The page's Sources & methodology disclosure explains the coverage.
+
+IR & Reporting → Monthly renders a tear sheet from `data/tearsheet-data.json`.
+Fund monthly returns come from `irTearData` in `app.js` (Oct–Dec of prior years are
+pro-rated from the reported calendar-year return); benchmark returns (S&P 500 TR,
+MSCI ACWI, US Agg, Bitcoin, 13-week T-bill) are fetched from Yahoo Finance. Refresh
+with `npm run data:tearsheet`. Every "Download PDF" button builds the PDF in the
+browser (`ir-reports.js`, no dependencies): the template buttons export all three
+templates, the Dashboard button adds the investor letter, and the Monthly tab
+exports the tear sheet.
+
+Position Intel → Sentiment Summary scores the Alpha thesis names (NVDA, MSFT, CRM,
+UNH). `npm run data:sentiment` pulls 30 days of headlines (Google News, Yahoo
+Finance), price momentum (Yahoo) and analyst consensus (Nasdaq), scores them, and
+writes `data/sentiment-data.json`. Narrative summaries live in
+`data/sentiment-notes.json`; update them when news changes.
 
 The platform and terminal share a fund roster but have separate datasets. Only Alpha has detailed terminal
 holdings; other terminal funds get their own headline figures. Positions are
@@ -208,7 +223,7 @@ Rebuild after editing: `node build.js`.
 
 - **Theme** — light/dark toggle in the header of both pages; the choice is saved to
   `localStorage` and shared across the landing page and the app.
-- **Data** — everything in the app is illustrative dummy data (positions, PnL,
+- **Data** — everything in the app is illustrative dummy data (positions, P&L,
   Action Cards, prices). No live feeds.
 - **Browser support** — modern evergreen browsers. Uses `fetch`,
   `IntersectionObserver`, and CSS custom properties.

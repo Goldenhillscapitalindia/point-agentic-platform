@@ -9,7 +9,9 @@
     "start": "node build.js && node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/dev.cjs",
     "serve": "npx -y serve dist -l 4178",
     "dev": "node build.js && node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/dev.cjs",
-    "index:knowledge": "node build-data.js && node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/index-knowledge.cjs"
+    "index:knowledge": "node build-data.js && node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/index-knowledge.cjs",
+    "data:tearsheet": "node scripts/fetch-tearsheet-data.cjs && node build.js",
+    "data:sentiment": "node scripts/fetch-sentiment.cjs && node build.js"
   },
   "engines": {
     "node": ">=22.9.0"
