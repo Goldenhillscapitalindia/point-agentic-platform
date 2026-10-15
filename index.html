@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="chat.css">
 <script src="data/macro-extras.js"></script>
 </head>
-<body data-theme="dark">
+<body data-theme="dark" data-tone="ws">
 
 <!-- =============== APP SHELL =============== -->
 <div class="app">
@@ -28,7 +28,7 @@
       </div>
     </a>
 
-    <div class="side-section">
+    <div class="side-section squad-ws">
       <div class="side-label">Workspace</div>
       <nav class="side-nav">
         <a href="#dashboard" class="side-item active" data-view="dashboard"><span class="dot"></span>Dashboard</a>
@@ -38,7 +38,7 @@
       </nav>
     </div>
 
-    <div class="side-section">
+    <div class="side-section squad-pf">
       <div class="side-label">Portfolio Squad</div>
       <nav class="side-nav">
         <a href="#risk" class="side-item" data-view="risk"><span class="dot red"></span>Risk & Guideline</a>
@@ -49,7 +49,7 @@
       </nav>
     </div>
 
-    <div class="side-section">
+    <div class="side-section squad-mk">
       <div class="side-label">Market Squad</div>
       <nav class="side-nav">
         <a href="#research" class="side-item" data-view="research"><span class="dot gold"></span>Research & Alpha</a>
@@ -60,7 +60,7 @@
       </nav>
     </div>
 
-    <div class="side-section">
+    <div class="side-section squad-dp">
       <div class="side-label">Deploy</div>
       <nav class="side-nav">
         <a href="#mcp" class="side-item" data-view="mcp"><span class="dot"></span>Point MCP</a>
@@ -91,7 +91,7 @@
           <span id="crumb-back-label">Site</span>
         </a>
         <span class="sep">/</span>
-        <span class="crumb">Workspace</span>
+        <span class="crumb" id="crumb-squad">Workspace</span>
         <span class="sep">/</span>
         <span class="crumb current" id="crumb-view">Dashboard</span>
       </div>
@@ -204,39 +204,39 @@
           <div class="section-title">Ten specialist agents · one coordinated book</div>
         </div>
         <div class="legend">
-          <span><i class="sq red"></i>Portfolio Squad</span>
-          <span><i class="sq gold"></i>Market Squad</span>
+          <span><i class="sq pf"></i>Portfolio Squad</span>
+          <span><i class="sq mk"></i>Market Squad</span>
           <span><i class="sq grey"></i>Idle</span>
         </div>
       </div>
 
       <div class="agent-grid">
         <!-- Portfolio -->
-        <a href="#risk" class="agent-tile red" data-view="risk">
+        <a href="#risk" class="agent-tile pf" data-view="risk">
           <div class="a-icon">🛡</div>
           <div class="a-name">Risk & Guideline</div>
           <div class="a-sub">VaR, limits, stress, drawdown</div>
           <div class="a-meta"><span class="pill red">2 critical</span><span class="pill ghost">running</span></div>
         </a>
-        <a href="#tech" class="agent-tile red" data-view="tech">
+        <a href="#tech" class="agent-tile pf" data-view="tech">
           <div class="a-icon">📈</div>
           <div class="a-name">Technical Signals</div>
           <div class="a-sub">Stops, RSI, MACD, volume z</div>
           <div class="a-meta"><span class="pill orange">4 warnings</span><span class="pill ghost">running</span></div>
         </a>
-        <a href="#pnl" class="agent-tile red" data-view="pnl">
+        <a href="#pnl" class="agent-tile pf" data-view="pnl">
           <div class="a-icon">⚖︎</div>
           <div class="a-name">P&amp;L Attribution</div>
           <div class="a-sub">By name · sector · factor</div>
           <div class="a-meta"><span class="pill ghost">updated 6m ago</span></div>
         </a>
-        <a href="#ir" class="agent-tile red" data-view="ir">
+        <a href="#ir" class="agent-tile pf" data-view="ir">
           <div class="a-icon">📝</div>
           <div class="a-name">IR & Reporting</div>
           <div class="a-sub">Tear sheets, LP letters, DDQ</div>
           <div class="a-meta"><span class="pill gold">2 drafts</span></div>
         </a>
-        <a href="#pos" class="agent-tile red" data-view="pos">
+        <a href="#pos" class="agent-tile pf" data-view="pos">
           <div class="a-icon">📰</div>
           <div class="a-name">Position Intelligence</div>
           <div class="a-sub">News, catalysts, thesis drift</div>
@@ -244,31 +244,31 @@
         </a>
 
         <!-- Market -->
-        <a href="#research" class="agent-tile gold" data-view="research">
+        <a href="#research" class="agent-tile mk" data-view="research">
           <div class="a-icon">🔍</div>
           <div class="a-name">Research & Alpha</div>
           <div class="a-sub">AI + quant ranking, ranges</div>
           <div class="a-meta"><span class="pill ghost">31 new ideas</span></div>
         </a>
-        <a href="#flows" class="agent-tile gold" data-view="flows">
+        <a href="#flows" class="agent-tile mk" data-view="flows">
           <div class="a-icon">≋</div>
           <div class="a-name">Fund Flows</div>
           <div class="a-sub">13F, short interest, options skew</div>
           <div class="a-meta"><span class="pill orange">ADSK crowding 90</span></div>
         </a>
-        <a href="#earnings" class="agent-tile gold" data-view="earnings">
+        <a href="#earnings" class="agent-tile mk" data-view="earnings">
           <div class="a-icon">💬</div>
           <div class="a-name">Earnings & Sentiment</div>
           <div class="a-sub">Call tone, guidance, read-across</div>
           <div class="a-meta"><span class="pill ghost">6 prints today</span></div>
         </a>
-        <a href="#macro" class="agent-tile gold" data-view="macro">
+        <a href="#macro" class="agent-tile mk" data-view="macro">
           <div class="a-icon">🌍</div>
           <div class="a-name">Macro & Regime</div>
           <div class="a-sub">Rates, CPI, FX, regime</div>
           <div class="a-meta"><span class="pill red">CPI tomorrow</span></div>
         </a>
-        <a href="#digital" class="agent-tile gold" data-view="digital">
+        <a href="#digital" class="agent-tile mk" data-view="digital">
           <div class="a-icon">◉</div>
           <div class="a-name">Digital Assets</div>
           <div class="a-sub">Crypto · tokenized equities</div>
