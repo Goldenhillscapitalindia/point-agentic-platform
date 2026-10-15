@@ -2603,19 +2603,19 @@
 
   /* ---- fund switcher ---- */
   const funds = [
-    {id:'alpha', name:'Alpha Fund', sub:'Equity L/S · flagship', color:'#e8603b', init:'AL',
+    {id:'alpha', name:'Alpha Fund', sub:'Equity L/S · flagship', color:'#B93815', init:'AL',
      aum:'$1.248 B', aumD:'+$6.1M · 24h', pnl:'+34 bps', pnlUp:true, pnlD:'$ 4.24 M · vs. $2.1M bench',
      exp:'184% / 62%', expD:'Net ↑ 3.1pts since Fri close', var:'$ 14.3 M', varD:'1.15% of NAV',
      cards:'7 action cards', crit:'2 critical'},
-    {id:'global', name:'Global Macro Fund', sub:'Macro · multi-asset', color:'#d4a42b', init:'GM',
+    {id:'global', name:'Global Macro Fund', sub:'Macro · multi-asset', color:'#8A5A07', init:'GM',
      aum:'$842.0 M', aumD:'−$2.3M · 24h', pnl:'−12 bps', pnlUp:false, pnlD:'−$ 1.01 M · vs. +$0.4M bench',
      exp:'142% / 38%', expD:'Net flat since Fri close', var:'$ 9.8 M', varD:'1.16% of NAV',
      cards:'4 action cards', crit:'1 critical'},
-    {id:'neutral', name:'Market Neutral Fund', sub:'Equity MN · low beta', color:'#58b06a', init:'MN',
+    {id:'neutral', name:'Market Neutral Fund', sub:'Equity MN · low beta', color:'#157347', init:'MN',
      aum:'$1.560 B', aumD:'+$1.2M · 24h', pnl:'+9 bps', pnlUp:true, pnlD:'$ 1.40 M · vs. $0.2M bench',
      exp:'210% / 4%', expD:'Net 4% · within band', var:'$ 6.1 M', varD:'0.39% of NAV',
      cards:'3 action cards', crit:'0 critical'},
-    {id:'digital', name:'Digital Assets Fund', sub:'Crypto + tokenized', color:'#6c7bf0', init:'DA',
+    {id:'digital', name:'Digital Assets Fund', sub:'Crypto + tokenized', color:'#4338CA', init:'DA',
      aum:'$318.4 M', aumD:'−$8.9M · 24h', pnl:'−2.1%', pnlUp:false, pnlD:'−$ 6.80 M · 24/7 book',
      exp:'96% / 71%', expD:'Net ↑ 6pts on BTC drift', var:'$ 11.2 M', varD:'3.52% of NAV',
      cards:'5 action cards', crit:'2 critical'}
@@ -3048,7 +3048,7 @@
           </div>
           <div class="card-foot">
             <button class="btn ghost" type="button" id="stay-in">Stay signed in</button>
-            <button class="btn primary" type="button" id="do-signout" style="background:var(--bad)">Sign out</button>
+            <button class="btn primary" type="button" id="do-signout" style="background:#B91C1C">Sign out</button>
           </div>
         </div>
         <div class="card">
