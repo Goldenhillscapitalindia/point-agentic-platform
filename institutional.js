@@ -1,6 +1,8 @@
 /* ===================== Point — Fund Intelligence Terminal ===================== */
-(function(){
+(async function(){
 'use strict';
+const signedInUser=await window.PointAuth.ready;
+const userStorageKey='point-user-'+signedInUser.id+'-terminal-fund';
 const Q=s=>document.querySelector(s), QA=s=>[...document.querySelectorAll(s)];
 const fmt=n=>n.toLocaleString('en-US');
 const sgn=(v,suf='')=>(v>=0?'+':'')+v+suf;
@@ -32,7 +34,7 @@ const FUNDS={
     nav:'$318.4M',day:'−$6.80M',dayp:'−2.10%',dayPos:false,gross:'96%',net:'71%',var:'3.52%',cash:'4%',
     health:58,yhealth:67,type:'digital'}
 };
-let FUND='alpha';
+let FUND=signedInUser.funds[0];
 
 /* ---------- POSITIONS (Alpha) ---------- */
 /* tk, company, side, qty, mv($M), nav%, day$M, mtd$M, ytd$M, varc%, rbud%, rused%, sector, factor, crowd, liqDays, catalyst, health, beta, ret% */
@@ -718,14 +720,15 @@ function openPos(tk){
 /* ======================= FUND SWITCHER + ROUTING ======================= */
 function renderFundMenu(){
   const menu=Q('#fundsel-menu');
-  menu.innerHTML=`<div class="nav-lab" style="padding:6px 8px 4px">Switch fund · 4</div>`+Object.entries(FUNDS).map(([id,f])=>`<div class="fund-opt ${id===FUND?'on':''}" data-fund="${id}"><span class="fs-ic" style="background:${f.col}">${f.ic}</span><div><div class="fs-name">${f.name}</div><div class="fs-sub">${f.sub}</div></div><span class="fo-aum num">${f.aum}</span></div>`).join('');
+  menu.innerHTML=`<div class="nav-lab" style="padding:6px 8px 4px">Switch fund · ${signedInUser.funds.length}</div>`+Object.entries(FUNDS).filter(([id])=>signedInUser.funds.includes(id)).map(([id,f])=>`<div class="fund-opt ${id===FUND?'on':''}" data-fund="${id}"><span class="fs-ic" style="background:${f.col}">${f.ic}</span><div><div class="fs-name">${f.name}</div><div class="fs-sub">${f.sub}</div></div><span class="fo-aum num">${f.aum}</span></div>`).join('');
   menu.querySelectorAll('.fund-opt').forEach(o=>o.onclick=()=>{selectFund(o.dataset.fund);Q('#fundsel').classList.remove('open');});
 }
 function selectFund(id){
+  if(!signedInUser.funds.includes(id)||!FUNDS[id])return;
   FUND=id; const f=FUNDS[id];
   Q('#fs-ic').textContent=f.ic; Q('#fs-ic').style.background=f.col;
   Q('#fs-name').textContent=f.name; Q('#fs-sub').textContent=f.sub;
-  try{localStorage.setItem('point-inst-fund',id);}catch(e){}
+  try{localStorage.setItem(userStorageKey,id);}catch(e){}
   renderAll(); renderFundMenu();
   document.dispatchEvent(new Event('point:context'));
 }
@@ -780,7 +783,10 @@ function runAction(action,control){
   if(action==='submit-rule'){const input=Q('#rule-proposal');if(input?.value.trim()){closeDrw();toast('Guideline proposal sent to Compliance for review.');}else toast('Add a guideline before sending it for review.');return;}
   if(action==='open-fund-menu'){Q('#profile')?.classList.remove('open');Q('#fundsel-btn')?.click();return;}
   if(action==='toggle-profile-theme'){setTheme(document.body.dataset.theme==='light'?'dark':'light');return;}
-  if(action==='demo-signout'){toast('Demo mode keeps this workspace signed in.');return;}
+  if(action==='signout'){
+    if(control){control.disabled=true;control.textContent='Signing out…';}
+    window.PointAuth.logout().catch(error=>{toast(error.message);if(control){control.disabled=false;control.textContent='Sign out';}});return;
+  }
   if(action==='new-report'){openDrw('<div class="drw-h"><div class="drw-top"><span class="tag">Reporting center</span><button class="drw-x" id="drw-x">✕</button></div><div class="drw-ttl">New report</div></div><div class="drw-b"><p class="prov" style="color:var(--ink-2)">Choose a report from the approved template library. The new draft will use the selected fund context.</p><button class="btn pri" data-action="create-report">Create investor update</button></div>');return;}
   if(action==='create-report'){closeDrw();toast('Investor update draft created for review.');return;}
   if(action==='report-open'){openDrw(`<div class="drw-h"><div class="drw-top"><span class="tag">Report preview</span><button class="drw-x" id="drw-x">✕</button></div><div class="drw-ttl">${report}</div></div><div class="drw-b"><p class="prov" style="color:var(--ink-2)">Preview is scoped to ${FUNDS[FUND].name}. Values remain illustrative demo data until a reviewer approves the report.</p><button class="btn pri" data-action="report-export" data-report="${report}">Export PDF</button></div>`);return;}
@@ -790,7 +796,7 @@ function runAction(action,control){
 
 /* ======================= WIRE ======================= */
 renderFundMenu();
-try{const sf=localStorage.getItem('point-inst-fund'); if(sf&&FUNDS[sf])FUND=sf; const f=FUNDS[FUND]; Q('#fs-ic').textContent=f.ic;Q('#fs-ic').style.background=f.col;Q('#fs-name').textContent=f.name;Q('#fs-sub').textContent=f.sub;}catch(e){}
+try{const sf=localStorage.getItem(userStorageKey); if(sf&&FUNDS[sf]&&signedInUser.funds.includes(sf))FUND=sf; const f=FUNDS[FUND]; Q('#fs-ic').textContent=f.ic;Q('#fs-ic').style.background=f.col;Q('#fs-name').textContent=f.name;Q('#fs-sub').textContent=f.sub;}catch(e){}
 renderAll(); syncAlertBadges();
 renderMobileNav();
 try{setTheme(localStorage.getItem('point-inst-theme')||'light');}catch(e){setTheme('light');}
@@ -801,7 +807,7 @@ document.addEventListener('click',()=>{Q('#fundsel').classList.remove('open');Q(
 Q('#fundsel-menu').onclick=e=>e.stopPropagation();
 
 Q('#profile-btn')?.addEventListener('click',e=>{e.stopPropagation();Q('#fundsel').classList.remove('open');const profile=Q('#profile');const open=!profile.classList.contains('open');profile.classList.toggle('open',open);e.currentTarget.setAttribute('aria-expanded',String(open));});
-Q('#profile-menu')?.addEventListener('click',e=>e.stopPropagation());
+// Profile actions bubble to the shared action handler below (including sign out).
 Q('#mobile-nav-btn')?.addEventListener('click',()=>setMobileNav(!Q('#mobile-nav').classList.contains('open')));
 Q('#mobile-nav')?.addEventListener('click',e=>{if(e.target.closest('[data-mobile-close]'))setMobileNav(false);});
 
@@ -847,10 +853,12 @@ document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='ask-i
 Q('#ask-mini-in')?.addEventListener('keydown',e=>{if(e.key==='Enter'){const q=e.target.value.trim();e.target.value='';pointChat.open(q||undefined);}});
 Q('#ask-mini')?.addEventListener('click',()=>pointChat.open());
 
-/* role picker */
-const ROLES=[['PM · Alpha Fund','command'],['Head of Risk','risk'],['CIO','portfolio'],['Compliance','guidelines'],['Investor Relations','reports']];
-let roleI=0;
-Q('#role-pick').onclick=()=>{roleI=(roleI+1)%ROLES.length;Q('#rp-role').textContent=ROLES[roleI][0];go(ROLES[roleI][1]);};
+/* The signed-in identity is shared with the platform. */
+const initials=signedInUser.name.trim().split(/\s+/).slice(0,2).map(part=>part[0]).join('').toUpperCase();
+QA('.rp-av,.profile-avatar').forEach(el=>el.textContent=initials);
+QA('.rp-name,#profile-btn > span:nth-child(2),.pm-head b').forEach(el=>el.textContent=signedInUser.name);
+QA('.rp-role,.pm-head > span').forEach(el=>el.textContent=signedInUser.role==='admin'?'CIO · Full access':'Analyst · Limited access');
+Q('#role-pick').style.cursor='default';
 function terminalSnapshot(id){
   const full=id==='alpha';
   return PointChatCore.clean({surface:'terminal',fundId:id,fundName:FUNDS[id].name,
@@ -865,6 +873,6 @@ function terminalSnapshot(id){
       }:{})
     }});
 }
-const pointChat=window.PointChat.mount({surface:'terminal',accountScope:()=> 'demo',
-  getSnapshot:()=>terminalSnapshot(FUND),getAllSnapshots:()=>Object.keys(FUNDS).map(terminalSnapshot)});
+const pointChat=window.PointChat.mount({surface:'terminal',accountScope:()=>signedInUser.id,
+  getSnapshot:()=>terminalSnapshot(FUND),getAllSnapshots:()=>signedInUser.funds.map(terminalSnapshot)});
 })();

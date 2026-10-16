@@ -1,4 +1,6 @@
 // Local integration preview using the real route and mocked OpenAI; never billed.
+// Preview sign-ups stay separate from normal local development accounts.
+process.env.POINT_AUTH_DIR ||= require('node:path').join(__dirname,'../.point-auth/browser-preview');
 const {createServer}=require('../server/local');
 const {createHandler}=require('../api/chat');
 const ok=value=>new Response(JSON.stringify(value),{status:200});

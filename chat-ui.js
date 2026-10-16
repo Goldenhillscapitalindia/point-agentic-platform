@@ -58,6 +58,7 @@
         const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',
           body:JSON.stringify({surface:snapshot.surface,fundId:snapshot.fundId,question,history:previous}),signal:current.signal});
         let reply;try{reply=await response.json();}catch{throw new Error('Portfolio Intelligence is unavailable. Please try again later.');}
+        if(response.status===401){histories.clear();window.PointAuth?.requireLogin();return;}
         if(!response.ok)throw new Error(reply.error||'Unable to complete the answer. Please retry.');
         if(typeof reply.text!=='string'||!reply.text.trim())throw new Error('No answer was returned. Please try again.');
         if(id!==requestId||active!==contextKey())return;

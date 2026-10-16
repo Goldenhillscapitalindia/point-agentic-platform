@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-auth-pending>
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -1592,12 +1592,115 @@ body[data-theme="light"] .ptp-panel{box-shadow:0 18px 54px rgba(35,48,68,.16)}
 @media(prefers-reduced-motion:reduce){.ptp-panel button{transition:none}}
 
 </style>
+<style>
+/* Authentication owns the viewport until the server verifies the session. */
+html[data-auth-pending] body > :not(#point-auth-root):not(noscript) { display: none !important; }
+html[data-auth-pending], html[data-auth-pending] body { min-height: 100%; background: #f8f9f7; }
+html[data-auth-pending] body { margin: 0; overflow: auto; }
+#point-auth-root, #point-auth-root * { box-sizing: border-box; }
+#point-auth-root [hidden] { display: none !important; }
+#point-auth-root {
+    --auth-ink: #172d3b;
+    --auth-muted: #65727b;
+    --auth-accent: #c6e4ee;
+    display: grid;
+    grid-template-columns: minmax(320px, 0.95fr) minmax(440px, 1.05fr);
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    color: var(--auth-ink);
+    background: #f8f9f7;
+    font: 400 15px/1.55 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    text-align: left;
+    letter-spacing: normal;
+}
+#point-auth-root button, #point-auth-root input { font: inherit; }
+#point-auth-root button, #point-auth-root a { -webkit-tap-highlight-color: transparent; }
+#point-auth-root a { color: inherit; text-decoration: none; }
+#point-auth-root button { cursor: pointer; }
+#point-auth-root button:disabled { cursor: wait; opacity: 0.65; }
+#point-auth-root :focus-visible { outline: 3px solid #42839f; outline-offset: 4px; }
+#point-auth-root p, #point-auth-root h1, #point-auth-root h2 { margin: 0; }
+.point-auth-story {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(32px, 5vw, 76px);
+    background: #142b39;
+    color: #f2f7f6;
+    position: relative;
+    overflow: hidden;
+}
+.point-auth-brand { display: inline-flex; width: fit-content; gap: 12px; align-items: center; font-size: 22px; font-weight: 600; letter-spacing: -0.8px; }
+.point-auth-brand-symbol { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid #66808c; border-radius: 50%; font: 28px/1 Georgia, serif; padding-bottom: 4px; }
+.point-auth-story-copy { padding: 90px 0; position: relative; z-index: 1; }
+.point-auth-eyebrow { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
+.point-auth-story .point-auth-eyebrow { color: #b4d5e0; margin-bottom: 26px; }
+#point-auth-root .point-auth-story h1 { font-family: Fraunces, Georgia, serif; font-weight: 400; font-size: clamp(44px, 4.6vw, 72px); line-height: 1.08; letter-spacing: -2px; }
+#point-auth-root .point-auth-story-copy > p { color: #b8c7cf; max-width: 290px; font-size: 15px; line-height: 1.7; margin-top: 28px; }
+.point-auth-story-footer { display: flex; align-items: center; gap: 14px; color: #a5b9c3; font-size: 11px; }
+.point-auth-line { width: 30px; height: 1px; background: #7697a8; flex-shrink: 0; }
+.point-auth-panel { display: flex; flex-direction: column; align-items: center; padding: 38px clamp(28px, 6vw, 90px) 28px; }
+.point-auth-back { align-self: flex-end; font-size: 12px; color: var(--auth-muted) !important; display: inline-flex; gap: 8px; align-items: center; }
+.point-auth-back:hover { color: var(--auth-ink) !important; }
+.point-auth-content { width: 100%; max-width: 400px; margin: auto 0; padding: 52px 0; }
+.point-auth-content > .point-auth-eyebrow { color: var(--auth-muted); margin-bottom: 14px; }
+#point-auth-root .point-auth-content h2 { font: 400 clamp(31px, 3vw, 43px)/1.15 Fraunces, Georgia, serif; letter-spacing: -1.25px; }
+#point-auth-root .point-auth-description { margin: 14px 0 28px; color: var(--auth-muted); font-size: 13px; }
+.point-auth-field { margin-bottom: 18px; }
+.point-auth-field label { display: block; margin-bottom: 7px; font-size: 12px; font-weight: 600; color: var(--auth-ink); }
+#point-auth-root .point-auth-field input { display: block; width: 100%; min-width: 0; height: 48px; padding: 10px 13px; color: var(--auth-ink); background: #fff; border: 1px solid #cbd3d5; border-radius: 5px; box-shadow: none; outline-offset: 2px; transition: border-color 120ms; }
+#point-auth-root .point-auth-field input:hover { border-color: #93a4ad; }
+#point-auth-root .point-auth-field input:focus { border-color: #42839f; }
+#point-auth-root .point-auth-field input[aria-invalid="true"] { border-color: #ae4b3d; }
+.point-auth-password-wrap { position: relative; }
+#point-auth-root .point-auth-password-wrap input { padding-right: 68px; }
+#point-auth-root #point-auth-password-toggle { position: absolute; right: 4px; top: 4px; height: 40px; width: 57px; background: transparent; color: #4c6270; border: 0; border-radius: 3px; font-size: 11px; font-weight: 600; }
+#point-auth-root #point-auth-password-toggle:hover { background: #f1f5f5; }
+#point-auth-root .point-auth-hint { margin-top: 7px; font-size: 11px; line-height: 1.5; color: var(--auth-muted); }
+#point-auth-root .point-auth-field-error { color: #a63d2e; font-size: 11px; line-height: 1.5; margin-top: 5px; }
+.point-auth-field-error:empty { display: none; }
+#point-auth-root .point-auth-submit { width: 100%; min-height: 48px; padding: 12px 20px; background: var(--auth-ink); border: 1px solid var(--auth-ink); border-radius: 5px; color: #fff; font-size: 13px; font-weight: 600; margin-top: 5px; transition: background 120ms; }
+#point-auth-root .point-auth-submit:hover:not(:disabled) { background: #244a5f; }
+#point-auth-root .point-auth-switch-row { margin-top: 25px; text-align: center; color: var(--auth-muted); font-size: 12px; }
+#point-auth-root #point-auth-switch { border: 0; background: transparent; padding: 5px 3px; color: var(--auth-ink); font-size: 12px; font-weight: 600; text-decoration: underline; text-decoration-color: #a9bac3; text-underline-offset: 3px; }
+.point-auth-error { border: 1px solid #e2bbb2; border-radius: 5px; background: #fbefeb; color: #913a2d; padding: 12px 14px; margin-bottom: 18px; font-size: 12px; overflow-wrap: anywhere; }
+#point-auth-root .point-auth-retry { background: transparent; border: 1px solid #bdcbd1; color: var(--auth-ink); padding: 8px 12px; font-size: 12px; border-radius: 4px; margin: 0 0 22px; }
+#point-auth-root .point-auth-panel-footer { color: #7c898f; font-size: 10px; padding-top: 10px; }
+.point-auth-loading { display: flex; align-items: center; gap: 12px; margin: auto 0; min-height: 250px; color: var(--auth-muted); font-size: 13px; }
+.point-auth-spinner { width: 18px; height: 18px; border: 2px solid #d2dfe3; border-top-color: #365c70; border-radius: 50%; animation: point-auth-spin 800ms linear infinite; }
+@keyframes point-auth-spin { to { transform: rotate(360deg); } }
+@media (max-width: 800px) {
+    #point-auth-root { grid-template-columns: 1fr; }
+    .point-auth-story { padding: 24px 28px; min-height: auto; }
+    .point-auth-story-copy { padding: 35px 0 12px; }
+    .point-auth-story .point-auth-eyebrow { margin-bottom: 16px; }
+    #point-auth-root .point-auth-story h1 { font-size: 39px; letter-spacing: -1px; }
+    .point-auth-story h1 br { display: none; }
+    #point-auth-root .point-auth-story-copy > p, .point-auth-story-footer { display: none; }
+    .point-auth-panel { padding: 22px 28px 24px; }
+    .point-auth-content { padding: 34px 0; }
+    .point-auth-back { align-self: flex-start; }
+}
+@media (max-width: 380px) {
+    .point-auth-story, .point-auth-panel { padding-left: 20px; padding-right: 20px; }
+    #point-auth-root .point-auth-story h1 { font-size: 34px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    #point-auth-root * { animation: none !important; transition: none !important; }
+}
+
+</style>
 <script>
 window.__POINT_MACRO_EXTRAS__ = {"yieldCurve":[["3M","4.68%","bar"],["2Y","4.42%","bar"],["5Y","4.14%","bar"],["10Y","5.22%","bar"],["30Y","4.72%","bar"]],"cbCalendar":[["Tue 13 Oct","JPM/WFC/C report (bank credit read)"],["Wed 14 Oct","ECB · Lagarde speech 09:00"],["Thu 15 Oct","FOMC minutes 14:00 · UK CPI 02:00"],["Fri 16 Oct","BOJ minutes 00:50 · China GDP 22:00"],["Tue 20 Oct","Fed Chair speech · housing starts"],["Wed 28 Oct","FOMC decision · press conf 14:30"]],"kpis":[["10Y UST","5.22%","21d move: +26% bp"],["DXY","102.12","21d move: +2.5%"],["WTI","$94.56","21d move: -10.6%"],["VIX","15.3","21d move: -10.7%"]]};
 window.__POINT_AI_BRIEFS__ = {"research":"\n    <div class=\"memo\">\n      <div class=\"memo-head\">\n        <div class=\"memo-stamp\">RESEARCH MEMO · 2026-10-12</div>\n        <div class=\"memo-ref\">Universe: 10 names · ranked from 512 S&P 500 constituents</div>\n      </div>\n      <div class=\"memo-verdict\">\n        <span class=\"verd-tag\">VERDICT</span>\n        <span class=\"verd-txt\">Buy the semi + AI-compute cluster. Lead with <b>AMD, TER, PLTR</b>; sizing is a trade (top is a tight 0.11-point band near 0.68 — no high-conviction standout).</span>\n      </div>\n      <div class=\"memo-section\">\n        <div class=\"memo-s-head\">① &nbsp; TOP PICKS</div>\n        <table class=\"pick-tbl\">\n          <thead><tr><th>Ticker</th><th>Call</th><th>Score</th><th>Last</th><th>Target (upside)</th><th>Thesis</th><th>Next catalyst</th></tr></thead>\n          <tbody><tr>\n      <td class=\"pt-tick\">AMD</td>\n      <td><span class=\"pt-rate r-buy\">BUY</span></td>\n      <td class=\"pt-score\">0.71</td>\n      <td class=\"pt-px\">$605.53</td>\n      <td class=\"pt-tgt\">$636.21 <span class=\"pt-up\">(+5%)</span></td>\n      <td class=\"pt-thesis\">momentum + consensus up</td>\n      <td class=\"pt-cat\"><span class=\"pt-cat-kind\">Earnings</span><br/><span class=\"pt-cat-when\">Tue 03 Nov · T−21d</span></td>\n    </tr><tr>\n      <td class=\"pt-tick\">TER</td>\n      <td><span class=\"pt-rate r-buy\">BUY</span></td>\n      <td class=\"pt-score\">0.67</td>\n      <td class=\"pt-px\">$380.29</td>\n      <td class=\"pt-tgt\">$446.47 <span class=\"pt-up\">(+17%)</span></td>\n      <td class=\"pt-thesis\">momentum + consensus up</td>\n      <td class=\"pt-cat\"><span class=\"pt-cat-kind\">Earnings</span><br/><span class=\"pt-cat-when\">Tue 27 Oct · T−14d</span></td>\n    </tr><tr>\n      <td class=\"pt-tick\">PLTR</td>\n      <td><span class=\"pt-rate r-buy\">BUY</span></td>\n      <td class=\"pt-score\">0.66</td>\n      <td class=\"pt-px\">$208.67</td>\n      <td class=\"pt-tgt\">$205.27 <span class=\"pt-up\">(-2%)</span></td>\n      <td class=\"pt-thesis\">momentum + consensus up</td>\n      <td class=\"pt-cat\"><span class=\"pt-cat-kind\">Earnings</span><br/><span class=\"pt-cat-when\">Mon 02 Nov · T−20d</span></td>\n    </tr><tr>\n      <td class=\"pt-tick\">GEV</td>\n      <td><span class=\"pt-rate r-buy\">BUY</span></td>\n      <td class=\"pt-score\">0.66</td>\n      <td class=\"pt-px\">$1004.04</td>\n      <td class=\"pt-tgt\">$1224.89 <span class=\"pt-up\">(+22%)</span></td>\n      <td class=\"pt-thesis\">momentum + consensus up</td>\n      <td class=\"pt-cat\"><span class=\"pt-cat-kind\">Earnings</span><br/><span class=\"pt-cat-when\">Wed 28 Oct · T−14d</span></td>\n    </tr><tr>\n      <td class=\"pt-tick\">AVGO</td>\n      <td><span class=\"pt-rate r-buy\">BUY</span></td>\n      <td class=\"pt-score\">0.66</td>\n      <td class=\"pt-px\">$357.31</td>\n      <td class=\"pt-tgt\">$531.31 <span class=\"pt-up\">(+49%)</span></td>\n      <td class=\"pt-thesis\">revisions turning up</td>\n      <td class=\"pt-cat\"><span class=\"pt-cat-kind\">Earnings</span><br/><span class=\"pt-cat-when\">Wed 09 Dec · T−57d</span></td>\n    </tr></tbody>\n        </table>\n      </div>\n      <div class=\"memo-section\">\n        <div class=\"memo-s-head\">② &nbsp; FACTOR BREAKDOWN — what's driving the ranking</div>\n        <div class=\"factor-bars\">\n          <div class=\"fbar\"><span class=\"fbar-k\">Momentum</span><div class=\"fbar-track\"><div class=\"fbar-fill\" style=\"width:60%\"></div></div><span class=\"fbar-v\">6/10 positive · 4/10 negative</span></div>\n          <div class=\"fbar\"><span class=\"fbar-k\">Revisions</span><div class=\"fbar-track\"><div class=\"fbar-fill\" style=\"width:90%\"></div></div><span class=\"fbar-v\">9/10 upward · 0 total upgrades in 7d</span></div>\n          <div class=\"fbar\"><span class=\"fbar-k\">Sentiment</span><div class=\"fbar-track\"><div class=\"fbar-fill\" style=\"width:100%\"></div></div><span class=\"fbar-v\">10/10 buy-heavy · analyst mix skewed long</span></div>\n          <div class=\"fbar\"><span class=\"fbar-k\">Quality</span><div class=\"fbar-track\"><div class=\"fbar-fill\" style=\"width:60%\"></div></div><span class=\"fbar-v\">Mixed — ROE strong, FY-growth softer</span></div>\n        </div>\n      </div>\n      <div class=\"memo-section\">\n        <div class=\"memo-s-head\">③ &nbsp; 5-DAY TAPE — how the ranked names actually traded</div>\n        <div class=\"memo-cat\">\n          <b>PLTR +8.6%</b> leads the tape; <b>TER -11.6%</b> is the worst. <b>2 of 10</b> finished positive over the last 5 sessions — read as light risk-off beneath the surface. Confirm each pick against the 1-day / 5-day range in the table before adding.\n        </div>\n      </div>\n      <div class=\"memo-section memo-footer\">\n        <div class=\"memo-s-head\">④ &nbsp; CATALYST WATCH</div>\n        <div class=\"memo-cat\">\n          <b>Near-term:</b> COF Tue 20 Oct · WDC Thu 22 Oct · TER Tue 27 Oct · FOMC minutes <b>15 Oct</b>.\n          <br/>\n          <b>Caveat:</b> Model is quant-first; it will miss narrative risks (regulatory, management change, macro inflection) until they show up in price or revisions. Bottom-3 (<b>STX, WDC, APP</b>) are not shorts — just lower-conviction longs.\n        </div>\n      </div>\n    </div>\n  ","flows":"\n    <div class=\"posmap\">\n      <div class=\"posmap-head\">\n        <div class=\"pm-stamp\">POSITIONING MAP · 2026-10-12</div>\n        <div class=\"pm-sub\">Avg inst. ownership <b>82%</b> · avg short interest <b>3.2%</b> · 2 names flagged crowded</div>\n      </div>\n      <div class=\"posmap-spectrum\">\n        <div class=\"spec-zones\"><div class=\"spec-zone z-lonely\"><b>Lonely</b><span>0–54</span></div><div class=\"spec-zone z-balanced\"><b>Balanced</b><span>55–69</span></div><div class=\"spec-zone z-busy\"><b>Busy</b><span>70–84</span></div><div class=\"spec-zone z-crowded\"><b>Crowded</b><span>85–100</span></div></div><div class=\"spec-barwrap\"><div class=\"spec-grad\"></div><div class=\"spec-dot z-balanced\" style=\"left:62%\" title=\"PLTR 62\"></div><div class=\"spec-dot z-balanced\" style=\"left:68%\" title=\"AMD 68\"></div><div class=\"spec-dot z-balanced\" style=\"left:69%\" title=\"AVGO 69\"></div><div class=\"spec-dot z-busy\" style=\"left:70%\" title=\"APP 70\"></div><div class=\"spec-dot z-busy\" style=\"left:71%\" title=\"MU 71\"></div><div class=\"spec-dot z-busy\" style=\"left:72%\" title=\"GEV 72\"></div><div class=\"spec-dot z-busy\" style=\"left:75%\" title=\"STX 75\"></div><div class=\"spec-dot z-busy\" style=\"left:76%\" title=\"COF 76\"></div><div class=\"spec-dot z-busy\" style=\"left:80%\" title=\"WDC 80\"></div><div class=\"spec-dot z-crowded\" style=\"left:88%\" title=\"TER 88\"></div></div><div class=\"spec-axis\"><span style=\"left:0\">0</span><span style=\"left:25%\">25</span><span style=\"left:50%\">50</span><span style=\"left:75%\">75</span><span style=\"left:100%\">100</span></div><div class=\"spec-groups\"><div class=\"spec-group z-lonely\"><div class=\"spec-empty\">none</div></div><div class=\"spec-group z-balanced\"><div class=\"spec-name z-balanced\">PLTR 62</div><div class=\"spec-name z-balanced\">AMD 68</div><div class=\"spec-name z-balanced\">AVGO 69</div></div><div class=\"spec-group z-busy\"><div class=\"spec-name z-busy\">APP 70</div><div class=\"spec-name z-busy\">MU 71</div><div class=\"spec-name z-busy\">GEV 72</div><div class=\"spec-name z-busy\">STX 75</div><div class=\"spec-name z-busy\">COF 76</div><div class=\"spec-name z-busy\">WDC 80</div></div><div class=\"spec-group z-crowded\"><div class=\"spec-name z-crowded\">TER 88</div></div></div>\n      </div>\n      <div class=\"posmap-grid\">\n        <div class=\"posmap-col posmap-fade\">\n          <div class=\"pm-col-head\">FADE  <span class=\"pm-pill red\">de-gross risk</span></div>\n          <ul><li><b>TER</b> — crowding ≥ 80. Do not add; trim on strength.</li><li><b>WDC</b> — crowding ≥ 80. Do not add; trim on strength.</li></ul>\n        </div>\n        <div class=\"posmap-col posmap-follow\">\n          <div class=\"pm-col-head\">FOLLOW  <span class=\"pm-pill green\">under-owned + momentum</span></div>\n          <ul><li><b>AMD</b> — inst &lt;80% with 21d price up.</li><li><b>PLTR</b> — inst &lt;80% with 21d price up.</li></ul>\n        </div>\n      </div>\n      <div class=\"posmap-alerts\">\n        <div class=\"pm-alert\"><span class=\"pm-alt-tag\">RESEARCH ∩ FLOW</span><b>9 aligned</b> / 1 mixed / 0 divergent. Where research says long and revisions are rising, the flow signal is confirming the model — safer side of the trade. Divergent names are the ones to pressure-test.</div>\n        <div class=\"pm-alert\"><span class=\"pm-alt-tag\">5-DAY TAPE</span>Only <b>2 of 10</b> finished positive over the last week. <b>TER</b> at -11.6% is leading the pullback — crowding + weak tape is a de-grossing combination; size accordingly.</div>\n        <div class=\"pm-alert\"><span class=\"pm-alt-tag\">OPTIONS</span>3 put-skew (STX, WDC, APP) · 4 call-skew (AMD, PLTR, TER, GEV). Put-skew ≠ short — it's a hedging bid.</div>\n        <div class=\"pm-alert\"><span class=\"pm-alt-tag\">13F</span>Reporting cutoff <b>30 Jun 2026</b>. Any flow conclusion after that is price-action inference, not an actual holder report.</div>\n        <div class=\"pm-alert\"><span class=\"pm-alt-tag\">INSIDER</span>4 names with material insider ownership ≥1% — constructive but non-urgent signal.</div>\n      </div>\n    </div>\n  ","earnings":"\n    <div class=\"ernplay\">\n      <div class=\"ernplay-head\">\n        <div class=\"ep-stamp\">EARNINGS PLAYBOOK · 2026-10-12</div>\n        <div class=\"ep-sub\">10 prints over the next 30 days · 90% beat rate last cycle · avg surprise +7.1%</div>\n      </div>\n      <div class=\"ernplay-score\">\n        <div class=\"ep-stat\"><div class=\"ep-stat-v\">9/10</div><div class=\"ep-stat-k\">BEATS LAST Q</div></div>\n        <div class=\"ep-stat\"><div class=\"ep-stat-v\">+7.1%</div><div class=\"ep-stat-k\">AVG SURPRISE</div></div>\n        <div class=\"ep-stat\"><div class=\"ep-stat-v\">+13.7%</div><div class=\"ep-stat-k\">AVG MAX 1D POST</div></div>\n        <div class=\"ep-stat\"><div class=\"ep-stat-v\">10</div><div class=\"ep-stat-k\">PRINTS NEXT 30D</div></div>\n      </div>\n      <div class=\"ernplay-section\">\n        <div class=\"ep-s-head\">COUNTDOWN · next 7 prints  <span class=\"ep-s-note\">plan locks in T−3 sessions</span></div>\n        <div class=\"ern-list\"><div class=\"ern-row\">\n      <div class=\"ern-tick\">COF</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Tue 20 Oct</div><div class=\"ern-tminus\">T−7d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$5.50</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$16.2B</div></div>\n      <div class=\"ern-whisp\">+23.8% last Q · +2/−0 rev</div>\n      <div class=\"ern-plan ern-long\">LONG INTO PRINT</div>\n    </div><div class=\"ern-row\">\n      <div class=\"ern-tick\">WDC</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Thu 22 Oct</div><div class=\"ern-tminus\">T−9d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$4.08</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$4.1B</div></div>\n      <div class=\"ern-whisp\">+7.9% last Q · +9/−0 rev</div>\n      <div class=\"ern-plan ern-long\">LONG INTO PRINT</div>\n    </div><div class=\"ern-row\">\n      <div class=\"ern-tick\">TER</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Tue 27 Oct</div><div class=\"ern-tminus\">T−14d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$2.05</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$1.3B</div></div>\n      <div class=\"ern-whisp\">+20.3% last Q · +15/−0 rev</div>\n      <div class=\"ern-plan ern-long\">LONG INTO PRINT</div>\n    </div><div class=\"ern-row\">\n      <div class=\"ern-tick\">STX</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Tue 27 Oct</div><div class=\"ern-tminus\">T−14d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$7.38</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$4.1B</div></div>\n      <div class=\"ern-whisp\">+12.1% last Q · +15/−0 rev</div>\n      <div class=\"ern-plan ern-long\">LONG INTO PRINT</div>\n    </div><div class=\"ern-row\">\n      <div class=\"ern-tick\">GEV</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Wed 28 Oct</div><div class=\"ern-tminus\">T−14d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$4.00</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$12.0B</div></div>\n      <div class=\"ern-whisp\">-22.4% last Q · +1/−0 rev</div>\n      <div class=\"ern-plan ern-hedge\">HEDGE BEFORE PRINT</div>\n    </div><div class=\"ern-row\">\n      <div class=\"ern-tick\">PLTR</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Mon 02 Nov</div><div class=\"ern-tminus\">T−20d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$0.41</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$2.2B</div></div>\n      <div class=\"ern-whisp\">+18.5% last Q · +2/−0 rev</div>\n      <div class=\"ern-plan ern-long\">LONG INTO PRINT</div>\n    </div><div class=\"ern-row\">\n      <div class=\"ern-tick\">AMD</div>\n      <div class=\"ern-when\"><div class=\"ern-date\">Tue 03 Nov</div><div class=\"ern-tminus\">T−21d</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">EPS</div><div class=\"ern-c-v\">$1.93</div></div>\n      <div class=\"ern-cons\"><div class=\"ern-c-k\">Rev</div><div class=\"ern-c-v\">$13.1B</div></div>\n      <div class=\"ern-whisp\">+3.2% last Q · +1/−0 rev</div>\n      <div class=\"ern-plan ern-long\">LONG INTO PRINT</div>\n    </div></div>\n      </div>\n      <div class=\"ernplay-section ernplay-pattern\">\n        <div class=\"ep-s-head\">PATTERN READ</div>\n        <p>Last cycle the tape paid for beats — 90% hit rate with average +13.7% max 1-day post-earnings move. Standout was <b>COF +23.8%</b>. Standout miss was <b>GEV -22.4%</b> — guide-cut language usually rhymes next quarter, so plan to hedge.</p>\n        <p><b>Street sentiment:</b> <b>AVGO</b> 94% buy · <b>MU</b> 92% buy · <b>STX</b> 88% buy lead the universe on analyst buy-mix. <b>PLTR</b> is the laggard at 66% — pre-print setups work best where sentiment and revisions are both pointing up.</p>\n        <p><b>Watch:</b> Hedging-score (transcript language) &gt; 0.35 is cut-risk until proven otherwise. 4 names cluster in one week — size positions accordingly.</p>\n      </div>\n    </div>\n  ","macro":"\n    <div class=\"macronote\">\n      <div class=\"macronote-head\">\n        <div class=\"mn-stamp\">MACRO NOTE · 2026-10-12</div>\n        <div class=\"mn-regime\">\n          <span class=\"mn-light mn-green\"></span>\n          <span class=\"mn-regime-label\">RISK-ON</span>\n          <span class=\"mn-regime-desc\">rates-up · dollar-up · low-vol</span>\n        </div>\n      </div>\n      <div class=\"macronote-dash\">\n        <div class=\"mn-panel\">\n          <div class=\"mn-p-head\">RATES</div>\n          <div class=\"mn-p-val\">5.22%</div>\n          <div class=\"mn-p-sub\">21d move: +26% bp</div>\n          <div class=\"mn-p-txt\">Yields drifted higher — directional, not noise. 6 of 10 names in book benefit from rising rates.</div>\n        </div>\n        <div class=\"mn-panel\">\n          <div class=\"mn-p-head\">DOLLAR</div>\n          <div class=\"mn-p-val\">102.12</div>\n          <div class=\"mn-p-sub\">21d move: +2.5%</div>\n          <div class=\"mn-p-txt\">Book runs long dollar (avg β-DXY 0.79). Semi longs trade with the dollar on AI-capex $-flows — not the usual sign.</div>\n        </div>\n        <div class=\"mn-panel\">\n          <div class=\"mn-p-head\">VOLATILITY</div>\n          <div class=\"mn-p-val\">15.3</div>\n          <div class=\"mn-p-sub\">21d move: -10.7%</div>\n          <div class=\"mn-p-txt\">VIX well below panic line. Risk-off scenarios likely overstate P&L — betas are regime-dependent and would reset in a real sell-off.</div>\n        </div>\n      </div>\n      <div class=\"macronote-sens\">\n        <div class=\"mn-s-head\">BOOK SENSITIVITY · who wins / loses by factor</div>\n        <table class=\"sens-tbl\">\n          <tr><td class=\"sens-k\">Rates ↑</td><td class=\"sens-win\">WIN · AMD, TER, GEV, MU</td><td class=\"sens-lose\">LOSE · PLTR, COF, APP</td></tr>\n          <tr><td class=\"sens-k\">Dollar ↑</td><td class=\"sens-win\">WIN · AMD, PLTR, TER, GEV</td><td class=\"sens-lose\">LOSE · COF</td></tr>\n          <tr><td class=\"sens-k\">Hot CPI</td><td class=\"sens-win\">Book P&L <b>+$ 1.55 M</b></td><td class=\"sens-lose\">Comfortable with surprise</td></tr>\n          <tr><td class=\"sens-k\">Risk-off</td><td class=\"sens-win\">Scenario <b>+$ 10.42 M</b></td><td class=\"sens-lose\">Treat as upper-bound only</td></tr>\n        </table>\n      </div>\n      <div class=\"macronote-hedge\">\n        <div class=\"mn-h-head\">HEDGE RECOMMENDATION</div>\n        <div class=\"mn-h-body\">\n          <div class=\"mn-h-primary\"><span class=\"mn-h-tag\">PRIMARY</span>If 10Y breaks <b>5.32%</b> around FOMC minutes (Oct 15), trim DXY-long exposure by 25% and buy a 1-month put spread on <b>COF</b>.</div>\n          <div class=\"mn-h-secondary\"><span class=\"mn-h-tag\">SECONDARY</span>Hold a 5–8% cash buffer through the FOMC window. No additions to high-β-VIX positions before Oct 15.</div>\n          <div class=\"mn-h-watch\"><span class=\"mn-h-tag\">TAPE</span>Last 5 sessions: <b>TER -11.6%</b> worst, <b>PLTR +8.6%</b> best. Semis leading the pullback = macro turning; watch the DXY response at the Oct 15 print.</div>\n          <div class=\"mn-h-watch\"><span class=\"mn-h-tag\">WATCH</span>FOMC minutes <b>15 Oct 14:00</b> · China GDP <b>16 Oct 22:00</b>. Either print has the potential to invert the regime.</div>\n        </div>\n      </div>\n    </div>\n  "};
 </script>
 </head>
 <body data-theme="dark" data-tone="ws">
+<noscript>Please enable JavaScript to sign in to Point.</noscript>
 
 <!-- =============== APP SHELL =============== -->
 <div class="app">
@@ -1727,9 +1830,6 @@ window.__POINT_AI_BRIEFS__ = {"research":"\n    <div class=\"memo\">\n      <div
             <a class="pm-item" href="#profile" data-go="profile"><svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-5 0-9 2.5-9 6v2h18v-2c0-3.5-4-6-9-6Z"/></svg>My profile</a>
             <a class="pm-item" href="#settings" data-go="settings"><svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm9 4-2 .4-.5 1.3 1.1 1.7-1.5 1.5-1.7-1.1-1.3.5L14 20h-4l-.4-2-1.3-.5-1.7 1.1-1.5-1.5 1.1-1.7-.5-1.3L4 12l2-.4.5-1.3L5.4 8.6 6.9 7l1.7 1.1 1.3-.5L10 4h4l.4 2 1.3.5L17.4 5.4 18.9 7l-1.1 1.7.5 1.3L21 12Z"/></svg>Account settings</a>
             <a class="pm-item" href="#funds" data-go="funds"><svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M4 4h16v4H4V4Zm0 6h16v4H4v-4Zm0 6h16v4H4v-4Z"/></svg>Manage funds</a>
-            <div class="pm-sep"></div>
-            <div class="pm-lab">Switch account</div>
-            <div id="pm-accounts"></div>
             <div class="pm-sep"></div>
             <a class="pm-item danger" href="#signout" data-go="signout"><svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M10 2h4v10h-4V2Zm2 20a9 9 0 0 1-5-16.5l1.2 1.6a7 7 0 1 0 7.6 0l1.2-1.6A9 9 0 0 1 12 22Z"/></svg>Sign out</a>
           </div>
@@ -2977,23 +3077,6 @@ window.__POINT_AI_BRIEFS__ = {"research":"\n    <div class=\"memo\">\n      <div
   </main>
 </div>
 
-<div class="login-gate" id="login-gate" hidden>
-  <div class="login-card">
-    <div class="login-brand">
-      <div class="brand-mark">
-        <svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true"><path fill="#fff" d="M16 2C9 2 4 7 4 14c0 5 3 9 7 11v3c0 1 1 2 2 2h6c1 0 2-1 2-2v-3c4-2 7-6 7-11 0-7-5-12-12-12Zm-1 4h2v16h-2V6Z"/></svg>
-      </div>
-      <div>
-        <div class="brand-name">Point</div>
-        <div class="brand-sub">Agentic Solutions</div>
-      </div>
-    </div>
-    <h1 class="h2" style="margin:18px 0 6px">Sign in</h1>
-    <p class="login-lead">Two desks share this workspace. Pick the login that matches the access you want.</p>
-    <div class="acct-pick" id="login-picks"></div>
-  </div>
-</div>
-
 <!-- =============== CARD DETAIL DRAWER =============== -->
 <div class="ir-confirm-overlay" id="ir-confirm-overlay" hidden>
   <section class="ir-confirm-card" id="ir-confirm-card" role="dialog" aria-modal="true" aria-labelledby="ir-confirm-title" tabindex="-1">
@@ -3164,6 +3247,308 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
 
 </script>
 <script>
+(function () {
+    'use strict';
+
+    let currentUser = null;
+    let resolveReady;
+    let readyResolved = false;
+    let root;
+    let form;
+    let busy = false;
+    let checking = false;
+    let requestVersion = 0;
+    let sessionCheck = null;
+    let mode = new URLSearchParams(window.location.search).get('auth') === 'signup' ? 'signup' : 'login';
+    const ready = new Promise(function (resolve) { resolveReady = resolve; });
+    let channel = null;
+    try {
+        if (typeof window.BroadcastChannel === 'function') channel = new window.BroadcastChannel('point-auth');
+    } catch (error) { /* Cross-tab notifications are optional in restricted browser contexts. */ }
+
+    async function request(payload) {
+        let response;
+        const controller = new AbortController();
+        const timeout = window.setTimeout(function () { controller.abort(); }, 15000);
+        try {
+            response = await fetch('/api/auth', {
+                method: payload ? 'POST' : 'GET',
+                credentials: 'same-origin',
+                cache: 'no-store',
+                headers: payload ? { 'Content-Type': 'application/json', Accept: 'application/json' } : { Accept: 'application/json' },
+                body: payload ? JSON.stringify(payload) : undefined,
+                signal: controller.signal
+            });
+        } catch (error) {
+            throw new Error(error.name === 'AbortError' ? 'The connection is taking too long. Please try again.' : 'We could not connect. Check your connection and try again.');
+        } finally {
+            window.clearTimeout(timeout);
+        }
+
+        let data;
+        try {
+            data = await response.json();
+        } catch (error) {
+            throw new Error('Sign-in is temporarily unavailable. Please try again in a moment.');
+        }
+        if (!response.ok) {
+            const message = data && typeof data.error === 'string' && data.error.length <= 250 ? data.error : 'Unable to complete your request. Please try again.';
+            throw new Error(message);
+        }
+        if (!data || typeof data !== 'object' || Array.isArray(data)) {
+            throw new Error('Sign-in is temporarily unavailable. Please try again in a moment.');
+        }
+        return data;
+    }
+
+    function validUser(user) {
+        return user && typeof user === 'object' && typeof user.id === 'string' && typeof user.name === 'string' && typeof user.email === 'string';
+    }
+
+    function authenticate(user) {
+        if (!validUser(user)) throw new Error('We could not verify your account. Please try again.');
+        currentUser = user;
+        if (window.history?.replaceState) {
+            const url = new URL(window.location.href);
+            url.searchParams.delete('auth');
+            window.history.replaceState(null, '', url.pathname + url.search + url.hash);
+        }
+        if (form) form.reset();
+        if (root) root.remove();
+        document.documentElement.removeAttribute('data-auth-pending');
+        if (!readyResolved) {
+            readyResolved = true;
+            resolveReady(user);
+        }
+    }
+
+    function reloadForLogin() {
+        currentUser = null;
+        document.documentElement.setAttribute('data-auth-pending', '');
+        window.location.reload();
+    }
+
+    async function logout() {
+        await request({ action: 'logout' });
+        if (channel) {
+            try { channel.postMessage({ type: 'logout' }); } catch (error) { /* The server session is already invalidated. */ }
+        }
+        reloadForLogin();
+    }
+
+    function recheckSession() {
+        if (!currentUser || sessionCheck) return sessionCheck;
+        const previousUser = currentUser;
+        document.documentElement.setAttribute('data-auth-pending', '');
+        sessionCheck = request().then(function (data) {
+            if (!currentUser || currentUser.id !== previousUser.id) return;
+            const user = data.user;
+            if (!validUser(user) || user.id !== previousUser.id || user.role !== previousUser.role || JSON.stringify(user.funds) !== JSON.stringify(previousUser.funds)) {
+                reloadForLogin();
+                return;
+            }
+            currentUser = user;
+            document.documentElement.removeAttribute('data-auth-pending');
+        }).catch(reloadForLogin).finally(function () { sessionCheck = null; });
+        return sessionCheck;
+    }
+
+    window.PointAuth = {
+        ready: ready,
+        get user() { return currentUser; },
+        logout: logout,
+        requireLogin: reloadForLogin
+    };
+
+    if (channel) {
+        channel.addEventListener('message', function (event) {
+            if (event.data && event.data.type === 'logout' && currentUser) reloadForLogin();
+        });
+    }
+
+    document.addEventListener('visibilitychange', function () {
+        if (!currentUser) return;
+        if (document.visibilityState === 'hidden') document.documentElement.setAttribute('data-auth-pending', '');
+        else recheckSession();
+    });
+    window.addEventListener('pagehide', function (event) {
+        if (event.persisted && currentUser) document.documentElement.setAttribute('data-auth-pending', '');
+    });
+    window.addEventListener('pageshow', function (event) {
+        if (event.persisted) recheckSession();
+    });
+
+    function errorMessage(message, focus) {
+        const error = root.querySelector('#point-auth-error');
+        error.textContent = message || '';
+        error.hidden = !message;
+        if (message && focus) error.focus();
+    }
+
+    function clearFieldErrors() {
+        form.querySelectorAll('[aria-invalid]').forEach(function (input) { input.removeAttribute('aria-invalid'); });
+        root.querySelectorAll('.point-auth-field-error').forEach(function (field) { field.textContent = ''; });
+    }
+
+    function fieldError(name, message) {
+        const input = form.elements.namedItem(name);
+        input.setAttribute('aria-invalid', 'true');
+        root.querySelector('#point-auth-' + name + '-error').textContent = message;
+        return input;
+    }
+
+    function setBusy(value) {
+        busy = value;
+        form.setAttribute('aria-busy', String(value));
+        root.querySelectorAll('button').forEach(function (button) { button.disabled = value; });
+        root.querySelector('#point-auth-submit').textContent = value ? (mode === 'signup' ? 'Creating your account…' : 'Signing in…') : (mode === 'signup' ? 'Create account' : 'Sign in');
+    }
+
+    function renderMode() {
+        const signup = mode === 'signup';
+        root.querySelector('#point-auth-title').textContent = signup ? 'Make yourself at home.' : 'Welcome back.';
+        root.querySelector('#point-auth-description').textContent = signup ? 'Create your Point account to access your workspace.' : 'Sign in to continue to your Point workspace.';
+        root.querySelectorAll('[data-signup-only]').forEach(function (element) { element.hidden = !signup; });
+        form.elements.namedItem('name').disabled = !signup;
+        form.elements.namedItem('confirm').disabled = !signup;
+        form.elements.namedItem('password').autocomplete = signup ? 'new-password' : 'current-password';
+        form.elements.namedItem('password').setAttribute('aria-describedby', signup ? 'point-auth-password-hint point-auth-password-error' : 'point-auth-password-error');
+        root.querySelector('#point-auth-password-hint').hidden = !signup;
+        root.querySelector('#point-auth-switch-copy').textContent = signup ? 'Already have an account?' : 'New to Point?';
+        root.querySelector('#point-auth-switch').textContent = signup ? 'Sign in' : 'Create an account';
+        form.elements.namedItem('password').value = '';
+        form.elements.namedItem('confirm').value = '';
+        setPasswordVisible(false);
+        clearFieldErrors();
+        errorMessage('');
+        setBusy(false);
+    }
+
+    function setPasswordVisible(visible) {
+        form.elements.namedItem('password').type = visible ? 'text' : 'password';
+        form.elements.namedItem('confirm').type = visible ? 'text' : 'password';
+        const button = root.querySelector('#point-auth-password-toggle');
+        button.textContent = visible ? 'Hide' : 'Show';
+        button.setAttribute('aria-label', visible ? 'Hide password' : 'Show password');
+        button.setAttribute('aria-pressed', String(visible));
+    }
+
+    async function submit(event) {
+        event.preventDefault();
+        if (busy || checking) return;
+        clearFieldErrors();
+        errorMessage('');
+        const name = form.elements.namedItem('name').value.trim();
+        const email = form.elements.namedItem('email').value.trim();
+        const password = form.elements.namedItem('password').value;
+        const confirm = form.elements.namedItem('confirm').value;
+        const invalid = [];
+        if (mode === 'signup' && (name.length < 2 || name.length > 80)) invalid.push(fieldError('name', 'Enter your name using 2–80 characters.'));
+        if (!email || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) invalid.push(fieldError('email', 'Enter a valid email address.'));
+        if (!password || password.length > 128 || (mode === 'signup' && password.length < 12)) invalid.push(fieldError('password', mode === 'signup' ? 'Use a password with 12–128 characters.' : 'Enter your password (up to 128 characters).'));
+        if (mode === 'signup' && password !== confirm) invalid.push(fieldError('confirm', 'Your passwords do not match.'));
+        if (invalid.length) {
+            invalid[0].focus();
+            return;
+        }
+        const version = ++requestVersion;
+        setBusy(true);
+        try {
+            const payload = { action: mode, email: email, password: password };
+            if (mode === 'signup') payload.name = name;
+            const data = await request(payload);
+            if (version === requestVersion) authenticate(data.user);
+        } catch (error) {
+            if (version === requestVersion) errorMessage(error.message, true);
+        } finally {
+            if (version === requestVersion && !currentUser) setBusy(false);
+        }
+    }
+
+    async function checkSession() {
+        if (checking || busy) return;
+        checking = true;
+        const version = ++requestVersion;
+        const loading = root.querySelector('#point-auth-loading');
+        const content = root.querySelector('#point-auth-content');
+        loading.hidden = false;
+        content.hidden = true;
+        errorMessage('');
+        try {
+            const data = await request();
+            if (version !== requestVersion) return;
+            if (data.user === null) {
+                root.querySelector('#point-auth-retry').hidden = true;
+            } else {
+                authenticate(data.user);
+            }
+        } catch (error) {
+            if (version === requestVersion) {
+                errorMessage(error.message);
+                root.querySelector('#point-auth-retry').hidden = false;
+            }
+        } finally {
+            checking = false;
+            if (!currentUser) {
+                loading.hidden = true;
+                content.hidden = false;
+            }
+        }
+    }
+
+    function mount() {
+        document.documentElement.setAttribute('data-auth-pending', '');
+        root = document.createElement('main');
+        root.id = 'point-auth-root';
+        root.innerHTML = `
+            <section class="point-auth-story" aria-label="Point">
+                <a class="point-auth-brand" href="index.html" aria-label="Point home"><span class="point-auth-brand-symbol" aria-hidden="true">p.</span><span>Point</span></a>
+                <div class="point-auth-story-copy"><span class="point-auth-eyebrow">A clearer perspective</span><h1>A place for<br>your next move.</h1><p>Your portfolio, your opportunities, your Point of view.</p></div>
+                <div class="point-auth-story-footer"><span class="point-auth-line" aria-hidden="true"></span><span>Considered investing. Connected thinking.</span></div>
+            </section>
+            <section class="point-auth-panel" aria-label="Account access">
+                <a class="point-auth-back" href="index.html"><span aria-hidden="true">←</span> Back to Point</a>
+                <div id="point-auth-loading" class="point-auth-loading" role="status"><span class="point-auth-spinner" aria-hidden="true"></span>Checking your session…</div>
+                <div id="point-auth-content" class="point-auth-content" hidden>
+                    <p class="point-auth-eyebrow">Your Point account</p>
+                    <h2 id="point-auth-title">Welcome back.</h2>
+                    <p id="point-auth-description" class="point-auth-description">Sign in to continue to your Point workspace.</p>
+                    <div id="point-auth-error" class="point-auth-error" role="alert" tabindex="-1" hidden></div>
+                    <button id="point-auth-retry" class="point-auth-retry" type="button" hidden>Retry connection</button>
+                    <form id="point-auth-form" novalidate aria-labelledby="point-auth-title">
+                        <div class="point-auth-field" data-signup-only hidden><label for="point-auth-name">Full name</label><input id="point-auth-name" name="name" type="text" autocomplete="name" minlength="2" maxlength="80" aria-describedby="point-auth-name-error" required disabled><p id="point-auth-name-error" class="point-auth-field-error" aria-live="polite"></p></div>
+                        <div class="point-auth-field"><label for="point-auth-email">Email address</label><input id="point-auth-email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" autocapitalize="none" spellcheck="false" aria-describedby="point-auth-email-error" required><p id="point-auth-email-error" class="point-auth-field-error" aria-live="polite"></p></div>
+                        <div class="point-auth-field"><label for="point-auth-password">Password</label><div class="point-auth-password-wrap"><input id="point-auth-password" name="password" type="password" autocomplete="current-password" maxlength="128" aria-describedby="point-auth-password-error" required><button id="point-auth-password-toggle" type="button" aria-label="Show password" aria-pressed="false" aria-controls="point-auth-password point-auth-confirm">Show</button></div><p id="point-auth-password-hint" class="point-auth-hint" hidden>Use at least 12 characters. A memorable phrase works well.</p><p id="point-auth-password-error" class="point-auth-field-error" aria-live="polite"></p></div>
+                        <div class="point-auth-field" data-signup-only hidden><label for="point-auth-confirm">Confirm password</label><input id="point-auth-confirm" name="confirm" type="password" autocomplete="new-password" maxlength="128" aria-describedby="point-auth-confirm-error" required disabled><p id="point-auth-confirm-error" class="point-auth-field-error" aria-live="polite"></p></div>
+                        <button id="point-auth-submit" class="point-auth-submit" type="submit">Sign in</button>
+                    </form>
+                    <p class="point-auth-switch-row"><span id="point-auth-switch-copy">New to Point?</span> <button id="point-auth-switch" type="button">Create an account</button></p>
+                </div>
+                <p class="point-auth-panel-footer">Your perspective starts here.</p>
+            </section>`;
+        document.body.appendChild(root);
+        form = root.querySelector('#point-auth-form');
+        form.addEventListener('submit', submit);
+        root.querySelector('#point-auth-switch').addEventListener('click', function () {
+            if (busy || checking) return;
+            mode = mode === 'login' ? 'signup' : 'login';
+            renderMode();
+            form.elements.namedItem(mode === 'signup' ? 'name' : 'email').focus();
+        });
+        root.querySelector('#point-auth-password-toggle').addEventListener('click', function () {
+            setPasswordVisible(form.elements.namedItem('password').type === 'password');
+        });
+        root.querySelector('#point-auth-retry').addEventListener('click', checkSession);
+        renderMode();
+        checkSession();
+    }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount, { once: true });
+    else mount();
+})();
+
+</script>
+<script>
 /* Visitor chat: all OpenAI requests and credentials stay behind /api/chat. */
 (function(){
   'use strict';
@@ -3224,6 +3609,7 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
         const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',
           body:JSON.stringify({surface:snapshot.surface,fundId:snapshot.fundId,question,history:previous}),signal:current.signal});
         let reply;try{reply=await response.json();}catch{throw new Error('Portfolio Intelligence is unavailable. Please try again later.');}
+        if(response.status===401){histories.clear();window.PointAuth?.requireLogin();return;}
         if(!response.ok)throw new Error(reply.error||'Unable to complete the answer. Please retry.');
         if(typeof reply.text!=='string'||!reply.text.trim())throw new Error('No answer was returned. Please try again.');
         if(id!==requestId||active!==contextKey())return;
@@ -6389,8 +6775,10 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
 </script>
 <script>
 /* ============ Point — static app ============ */
-(function(){
+(async function(){
   'use strict';
+  const signedInUser = await window.PointAuth.ready;
+  const accountStorageKey='point-user-'+signedInUser.id;
   const perpetualMarkets = window.PointPerpetualMarkets;
 
   /* ---- view routing ---- */
@@ -8081,7 +8469,7 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
     const ir=document.getElementById('ir-letter');
     if(ir){
       ir.innerHTML=md.irLetter.map(p=>`<p>${p}</p>`).join('');
-      try{const saved=localStorage.getItem(`ir-draft:${fund}:dashboard`);if(saved)ir.innerHTML=saved;}catch(e){}
+      try{const saved=localStorage.getItem(`${accountStorageKey}:ir-draft:${fund}:dashboard`);if(saved)ir.innerHTML=saved;}catch(e){}
     }
     // what-if
     const sel=document.getElementById('risk-whatif-select');
@@ -9020,7 +9408,7 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
   const irMonths=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep'];
   const irKpis=(items,extra='')=>`<div class="tear-kpis ${extra}">${items.map(([label,value])=>`<div><span>${label}</span><b>${value}</b></div>`).join('')}</div>`;
   // Clear the old persistent demo queue state so the report returns to its original controls.
-  try{for(let i=localStorage.length-1;i>=0;i--){const key=localStorage.key(i);if(key&&key.startsWith('ir-compliance:'))localStorage.removeItem(key);}}catch(e){}
+  try{for(let i=localStorage.length-1;i>=0;i--){const key=localStorage.key(i);if(key&&key.startsWith(accountStorageKey+':ir-compliance:'))localStorage.removeItem(key);}}catch(e){}
   const irActions=(report,fund)=>{
     return `<div class="ir-actions" data-ir-report="${report}"><button class="btn primary" data-ir-action="submit">Send to compliance</button><button class="btn ghost" data-ir-action="edit">Edit</button><button class="btn ghost" data-ir-action="save" hidden>Save</button><button class="btn ghost" data-ir-action="cancel" hidden>Cancel</button><button class="btn dark" data-ir-action="export">Download PDF</button><span class="ir-action-message" data-ir-message role="status" aria-live="polite"></span></div>`;
   };
@@ -9045,7 +9433,7 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
     [['ir-template1','template1',monthly],['ir-template2','template2',exposure],['ir-template3','template3',performance]].forEach(([panelId,report,html])=>{
       const panel=document.getElementById(panelId); if(!panel) return;
       panel.innerHTML=html.replace('<article class="tear">',`<article class="tear" data-ir-doc="${report}">`)+irActions(report,id);
-      try{const saved=localStorage.getItem(`ir-draft:${id}:${report}`);const doc=panel.querySelector('[data-ir-doc]');if(saved&&doc)doc.innerHTML=saved;}catch(e){}
+      try{const saved=localStorage.getItem(`${accountStorageKey}:ir-draft:${id}:${report}`);const doc=panel.querySelector('[data-ir-doc]');if(saved&&doc)doc.innerHTML=saved;}catch(e){}
     });
   }
   function irDownload(blob,name){
@@ -9151,7 +9539,7 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
   const fundMenu=document.getElementById('fund-menu');
   const fundBtnName=document.getElementById('fund-btn-name');
   let activeFund='alpha';
-  let activeAccount='admin';
+  const activeAccount=signedInUser.role==='admin'?'admin':'user';
   const setText=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
 
   const ACCOUNTS={
@@ -9188,7 +9576,15 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
       ]
     }
   };
-  function account(){ return ACCOUNTS[activeAccount]||ACCOUNTS.admin; }
+  Object.assign(ACCOUNTS[activeAccount], {
+    name:signedInUser.name, email:signedInUser.email,
+    init:signedInUser.name.trim().split(/\s+/).slice(0,2).map(part=>part[0]).join('').toUpperCase(),
+    funds:signedInUser.funds.filter(id=>['alpha','global','neutral','digital'].includes(id)),
+    phone:'Not provided',emp:'Not assigned',
+    joined:new Date(signedInUser.createdAt).toLocaleDateString('en-US',{month:'long',year:'numeric'}),
+    activity:[['Now','Signed in','Your Point account session is active.']]
+  });
+  function account(){ return ACCOUNTS[activeAccount]; }
   function allowedFunds(){
     const a=ACCOUNTS[activeAccount];
     return a ? funds.filter(f=>a.funds.includes(f.id)) : funds;
@@ -9236,11 +9632,10 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
     renderDetail(id);
     renderSentiment(id);
     syncIRDashboardStatus(id);
-    try{ localStorage.setItem('point-fund', id); }catch(e){}
+    try{ localStorage.setItem(accountStorageKey+'-fund', id); }catch(e){}
     renderFundMenu();
     document.dispatchEvent(new Event('point:context'));
   }
-  try{ const sa=localStorage.getItem('point-account'); if(sa && ACCOUNTS[sa]) activeAccount=sa; }catch(e){}
   renderFundMenu();
   let _restored=false;
   function syncIRDashboardStatus(fund){
@@ -9271,7 +9666,7 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
   document.addEventListener('click',event=>{
     const button=event.target.closest('[data-ir-action]');if(!button)return;
     const bar=button.closest('[data-ir-report]');if(!bar)return;
-    const report=bar.dataset.irReport, action=button.dataset.irAction, key=`ir-draft:${activeFund}:${report}`;
+    const report=bar.dataset.irReport, action=button.dataset.irAction, key=`${accountStorageKey}:ir-draft:${activeFund}:${report}`;
     const target=report==='dashboard'?document.getElementById('ir-letter'):document.querySelector(`#ir-${report} [data-ir-doc]`);
     const message=bar.querySelector('[data-ir-message]'),status=bar.querySelector('[data-ir-status]');
     const say=text=>{if(message)message.textContent=text;};
@@ -9281,7 +9676,7 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
       button.hidden=true;bar.querySelector('[data-ir-action="save"]').hidden=false;bar.querySelector('[data-ir-action="cancel"]').hidden=false;bar.querySelector('[data-ir-action="submit"]').disabled=true;say('Edit the report, then save or cancel.');
     }else if(action==='save'){
       target.contentEditable='false';target.classList.remove('ir-editing');delete target.dataset.irBackup;
-      try{localStorage.setItem(key,target.innerHTML);localStorage.removeItem(`ir-compliance:${activeFund}:${report}`);}catch(e){say('Could not save this draft in browser storage.');return;}
+      try{localStorage.setItem(key,target.innerHTML);localStorage.removeItem(`${accountStorageKey}:ir-compliance:${activeFund}:${report}`);}catch(e){say('Could not save this draft in browser storage.');return;}
       bar.querySelector('[data-ir-action="edit"]').hidden=false;button.hidden=true;bar.querySelector('[data-ir-action="cancel"]').hidden=true;
       const submit=bar.querySelector('[data-ir-action="submit"]');submit.disabled=false;submit.textContent='Send to compliance';
       if(status){status.textContent='Draft saved';status.classList.remove('good');status.classList.add('ghost');}say('Draft saved on this device.');
@@ -9289,7 +9684,7 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
       if(target.dataset.irBackup!==undefined)target.innerHTML=target.dataset.irBackup;
       target.contentEditable='false';target.classList.remove('ir-editing');delete target.dataset.irBackup;
       bar.querySelector('[data-ir-action="edit"]').hidden=false;bar.querySelector('[data-ir-action="save"]').hidden=true;button.hidden=true;
-      const stillQueued=(()=>{try{return localStorage.getItem(`ir-compliance:${activeFund}:${report}`)==='queued';}catch(e){return false;}})();
+      const stillQueued=(()=>{try{return localStorage.getItem(`${accountStorageKey}:ir-compliance:${activeFund}:${report}`)==='queued';}catch(e){return false;}})();
       const submit=bar.querySelector('[data-ir-action="submit"]');submit.disabled=stillQueued;
       if(status){status.textContent=stillQueued?'Queued for compliance':'Draft';status.classList.toggle('good',stillQueued);status.classList.toggle('ghost',!stillQueued);}
       say('Edits canceled.');
@@ -9308,7 +9703,7 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
     }
   });
   try{
-    const sf=localStorage.getItem('point-fund');
+    const sf=localStorage.getItem(accountStorageKey+'-fund');
     if(sf && account().funds.includes(sf)){ selectFund(sf); _restored=true; }
   }catch(e){}
   if(!_restored) selectFund(account().funds.includes(activeFund)?activeFund:account().funds[0]);
@@ -9339,16 +9734,17 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
 
   const defaultPrefs=id=>({
     brief:true, crit:true, digest:id==='admin', email:id==='admin',
-    landing:id==='admin'?'dashboard':'brief', timeout:id==='admin'?'8 hours':'1 hour'
+    landing:id==='admin'?'dashboard':'brief'
   });
   function loadPrefs(){
-    try{ const raw=localStorage.getItem('point-prefs-'+activeAccount); if(raw) return Object.assign(defaultPrefs(activeAccount), JSON.parse(raw)); }catch(e){}
+    try{ const raw=localStorage.getItem(accountStorageKey+'-prefs'); if(raw) return Object.assign(defaultPrefs(activeAccount), JSON.parse(raw)); }catch(e){}
     return defaultPrefs(activeAccount);
   }
-  function savePrefs(p){ try{ localStorage.setItem('point-prefs-'+activeAccount, JSON.stringify(p)); }catch(e){} }
+  function savePrefs(p){ try{ localStorage.setItem(accountStorageKey+'-prefs', JSON.stringify(p)); }catch(e){} }
 
   function renderAccountPages(){
-    const a=account();
+    const escapeAccountText=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+    const a={...account(),name:escapeAccountText(account().name),email:escapeAccountText(account().email),init:escapeAccountText(account().init)};
     const prefs=loadPrefs();
     const avCls=a.id==='user'?'avatar user':'avatar';
     const fields=[
@@ -9390,10 +9786,8 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
           <div class="set-row"><div><b>Email as well as in-app</b><small>Sends to ${a.email}.</small></div>${tog('email',prefs.email)}</div>
         </div>
         <div class="card"><div class="card-head"><h3 class="card-title">Security</h3></div>
-          <div class="set-row"><div><b>Password</b><small>Last changed 12 Sep 2026. This demo does not store a password.</small></div><button class="btn ghost" type="button" id="pw-btn">Send reset link</button></div>
-          <div class="set-row"><div><b>Two-factor</b><small>${a.canApprove?'Authenticator app, required for CIO approval.':'Not required on the analyst login.'}</small></div><span class="pill ${a.canApprove?'good':'ghost'}">${a.canApprove?'On':'Off'}</span></div>
-          <div class="set-row"><div><b>Session timeout</b><small>Idle time before this browser is signed out.</small></div>
-            <select class="set-select" id="pref-timeout">${['30 minutes','1 hour','8 hours','Until I sign out'].map(t=>`<option ${prefs.timeout===t?'selected':''}>${t}</option>`).join('')}</select></div>
+          <div class="set-row"><div><b>Sign-in method</b><small>Email and password.</small></div><span class="pill ghost">Password</span></div>
+          <div class="set-row"><div><b>Session duration</b><small>Sign in again after seven days, or sign out at any time.</small></div><span class="pill ghost">7 days</span></div>
           <div class="set-row"><div><b>This browser</b><small>Signed in as ${a.name}. Theme is kept after sign-out.</small></div><span class="pill ghost">Current</span></div>
         </div>
       </div>
@@ -9432,20 +9826,21 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
             <span>Login</span><b>${a.name}</b>
             <span>Email</span><b>${a.email}</b>
             <span>Role</span><b>${a.role} · ${a.access}</b>
-            <span>Started</span><b>05:58 ET · this browser</b>
-            <span>Timeout</span><b>${prefs.timeout}</b>
+            <span>Browser</span><b>Current session</b>
+            <span>Duration</span><b>Up to 7 days</b>
             <span>Still open</span><b>${a.canApprove?'Critical cards stay in the queue for the next CIO sign-in.':'Nothing of yours is waiting on an approval.'}</b>
           </div>
           <div class="card-foot">
             <button class="btn ghost" type="button" id="stay-in">Stay signed in</button>
             <button class="btn primary" type="button" id="do-signout" style="background:#B91C1C">Sign out</button>
           </div>
+          <p id="signout-error" role="alert" style="padding:0 20px"></p>
         </div>
         <div class="card">
           <div class="card-head"><h3 class="card-title">What sign-out does</h3></div>
           <div class="act-row"><div><b>Ends</b><small>This login, the fund you had open, and any half-written approval.</small></div></div>
           <div class="act-row"><div><b>Stays</b><small>Theme, notification toggles and the default fund for ${a.name}. They are stored on this browser, per login.</small></div></div>
-          <div class="act-row"><div><b>Next</b><small>You land on the sign-in screen and can enter as Admin or as User.</small></div></div>
+          <div class="act-row"><div><b>Next</b><small>You return to the sign-in screen. Enter your email and password to sign in again.</small></div></div>
         </div>
       </div>`);
 
@@ -9461,8 +9856,6 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
     });
     const digestBtn=document.querySelector('#view-settings [data-pref="digest"]');
     if(digestBtn && !a.canApprove) digestBtn.disabled=true;
-    const timeout=document.getElementById('pref-timeout');
-    if(timeout) timeout.onchange=()=>{ const p=loadPrefs(); p.timeout=timeout.value; savePrefs(p); };
     const landing=document.getElementById('pref-landing');
     if(landing) landing.onchange=()=>{ const p=loadPrefs(); p.landing=landing.value; savePrefs(p); };
     const fundSel=document.getElementById('pref-fund');
@@ -9471,12 +9864,15 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
       fundSel.onchange=()=>{ const p=loadPrefs(); p.fund=fundSel.value; savePrefs(p); selectFund(fundSel.value); };
     }
     document.querySelectorAll('[data-theme-set]').forEach(b=>b.onclick=()=>{ applyTheme(b.dataset.themeSet); try{ localStorage.setItem('point-theme', b.dataset.themeSet); }catch(e){} });
-    const pw=document.getElementById('pw-btn');
-    if(pw) pw.onclick=function(){ this.textContent='Link sent'; };
     document.querySelectorAll('[data-open-fund]').forEach(b=>b.onclick=()=>{ selectFund(b.dataset.openFund); go('dashboard'); });
     document.querySelectorAll('[data-ask-fund]').forEach(b=>b.onclick=function(){ this.textContent='Requested'; this.disabled=true; });
     const stay=document.getElementById('stay-in'); if(stay) stay.onclick=()=>go('dashboard');
-    const out=document.getElementById('do-signout'); if(out) out.onclick=showLogin;
+    const out=document.getElementById('do-signout');
+    if(out) out.onclick=async()=>{
+      out.disabled=true;out.textContent='Signing out…';
+      try{await window.PointAuth.logout();}
+      catch(error){setText('signout-error',error.message);out.disabled=false;out.textContent='Sign out';}
+    };
   }
   function Qset(id, html){ const el=document.getElementById(id); if(el) el.innerHTML=html; }
 
@@ -9491,46 +9887,13 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
     setText('pm-mail', a.email);
     setText('pm-role', a.role+' · '+a.access);
     setText('hero-name', a.name);
-    const box=document.getElementById('pm-accounts');
-    if(box){
-      box.innerHTML=Object.values(ACCOUNTS).map(ac=>`<button type="button" class="pm-acct ${ac.id===activeAccount?'on':''}" data-account="${ac.id}">
-        <span class="avatar sm ${ac.id==='user'?'user':''}">${ac.init}</span>
-        <span><b>${ac.name}</b><small>${ac.role} · ${ac.access}</small></span>
-        ${ac.id===activeAccount?'<span class="pm-check">✓</span>':''}
-      </button>`).join('');
-      box.querySelectorAll('[data-account]').forEach(b=>b.onclick=e=>{
-        e.stopPropagation();
-        applyAccount(b.dataset.account);
-        profile.classList.remove('open');
-      });
-    }
+    const sidebarAvatar=document.querySelector('.user-chip .avatar');
+    const sidebarName=document.querySelector('.user-chip .user-name');
+    const sidebarRole=document.querySelector('.user-chip .user-role');
+    if(sidebarAvatar)sidebarAvatar.textContent=a.init;
+    if(sidebarName)sidebarName.textContent=a.name;
+    if(sidebarRole)sidebarRole.textContent=a.role+' · '+a.desk;
     renderAccountPages();
-  }
-  function applyAccount(id){
-    if(!ACCOUNTS[id]) return;
-    activeAccount=id;
-    try{ localStorage.setItem('point-account', id); }catch(e){}
-    if(!account().funds.includes(activeFund)) selectFund(account().funds[0]);
-    else renderFundMenu();
-    paintAccount();
-  }
-  function showLogin(){
-    const gate=document.getElementById('login-gate');
-    const picks=document.getElementById('login-picks');
-    if(!gate||!picks) return;
-    picks.innerHTML=Object.values(ACCOUNTS).map(a=>`<button type="button" class="acct-card" data-signin="${a.id}">
-      <span class="avatar ${a.id==='user'?'user':''}">${a.init}</span>
-      <b>${a.name}</b>
-      <div class="role">${a.email}<br/>${a.role} · ${a.access}</div>
-      <p>${a.blurb}</p>
-    </button>`).join('');
-    picks.querySelectorAll('[data-signin]').forEach(b=>b.onclick=()=>{
-      gate.hidden=true;
-      applyAccount(b.dataset.signin);
-      const landing=(loadPrefs().landing)||'dashboard';
-      go(ACCOUNTS[b.dataset.signin] && document.getElementById('view-'+landing) ? landing : 'dashboard');
-    });
-    gate.hidden=false;
   }
   paintAccount();
   /* close popovers on outside click / Esc */
@@ -9583,7 +9946,7 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
         Briefs:{decisionBriefs:decisionBriefs[id],morningBrief:briefs[id],actionCards:cardsByFund[id],activity:fundExtra[id].feed}
       }});
   }
-  const pointChat=window.PointChat.mount({surface:'platform',accountScope:()=>activeAccount,
+  const pointChat=window.PointChat.mount({surface:'platform',accountScope:()=>signedInUser.id,
     getSnapshot:()=>chatSnapshot(activeFund),getAllSnapshots:()=>allowedFunds().map(f=>chatSnapshot(f.id))});
   document.querySelectorAll('.btn').forEach(button=>{
     if(/ask portfolio intelligence/i.test(button.textContent)) button.addEventListener('click',event=>{event.preventDefault();pointChat.open();});

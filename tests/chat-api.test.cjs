@@ -1,6 +1,8 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
-const {createHandler}=require('../api/chat');
+const {createHandler:makeHandler}=require('../api/chat');
+const signedIn={getUser:async()=>({id:'test-admin',role:'admin',funds:['alpha','global','neutral','digital']})};
+const createHandler=options=>makeHandler({auth:signedIn,...options});
 const snapshots=require('../server/portfolio-data.json');
 const ok=value=>new Response(JSON.stringify(value),{status:200});
 const answer=text=>({status:'completed',output:[{type:'message',content:[{type:'output_text',text}]}]});
@@ -64,4 +66,23 @@ test('built snapshots cover all eight funds and preserve table labels and recomm
   assert.match(alpha.sections.Briefs.decisionBriefs.tech[0],/profit in NVDA/);
   assert.ok(alpha.sections.Technical.signals.columns.some(c=>c.includes('RSI')));
   for(const snapshot of snapshots){assert.ok(snapshot.sections.Overview);assert.ok(!JSON.stringify(snapshot).includes('undefined'));}
+});
+
+test('chat rejects missing sessions before making an upstream request',async()=>{
+  const handler=createHandler({env,auth:{getUser:async()=>null},fetcher:()=>{throw Error('must not call upstream');}});
+  const res=await invoke(handler);
+  assert.equal(res.statusCode,401);
+});
+
+test('chat enforces the signed-in account fund access, ignoring browser role claims',async()=>{
+  const handler=createHandler({env,auth:{getUser:async()=>({id:'analyst',role:'user',funds:['alpha','neutral']})},fetcher:()=>{throw Error('must not call upstream');}});
+  const res=await invoke(handler,{fundId:'digital',role:'admin',account:'admin'});
+  assert.equal(res.statusCode,403);
+});
+
+test('an unavailable session store fails closed without leaking backend errors',async()=>{
+  const handler=createHandler({env,auth:{getUser:async()=>{throw Error('secret-store-token');}},fetcher:()=>{throw Error('must not call upstream');}});
+  const res=await invoke(handler);
+  assert.equal(res.statusCode,503);
+  assert.ok(!JSON.stringify(res).includes('secret-store-token'));
 });

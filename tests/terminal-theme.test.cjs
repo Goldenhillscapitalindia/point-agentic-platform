@@ -53,7 +53,6 @@ test('institutional terminal uses the application fund roster', () => {
     assert.match(app, new RegExp(`name:'${name}'`));
     assert.match(terminal, new RegExp(`name:'${name}'`));
   }
-  assert.match(terminal, /let FUND='alpha'/);
 });
 
 test('institutional terminal sidebar uses the Point Agentic Solutions lockup', () => {
