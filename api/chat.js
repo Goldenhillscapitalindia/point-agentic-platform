@@ -1,8 +1,8 @@
-// The only public function. Credentials and resource IDs never come from the browser.
+// Authenticated chat. OpenAI credentials and resource IDs never come from the browser.
 const core = require('../chat-core');
 const snapshots = require('../server/portfolio-data.json');
 
-function createHandler({env=process.env, fetcher=globalThis.fetch, data=snapshots}={}) {
+function createHandler({env=process.env, fetcher=globalThis.fetch, data=snapshots, auth}={}) {
   return async function handler(req, res) {
     res.setHeader('Cache-Control', 'no-store');
     res.setHeader('X-Content-Type-Options', 'nosniff');
@@ -28,6 +28,11 @@ function createHandler({env=process.env, fetcher=globalThis.fetch, data=snapshot
       return send(400, {error:'Choose a valid fund and enter a question under 4,000 characters.'});
     if (/sk-[A-Za-z0-9_-]{12,}/.test(question + history.map(m=>m.content).join('')))
       return send(400, {error:'Remove credentials from your message.'});
+    let user;
+    try { user = await (auth || require('../server/auth').getDefaultAuth()).getUser(req); }
+    catch { return send(503, {error:'Sign-in is temporarily unavailable. Please try again later.'}); }
+    if (!user) return send(401, {error:'Your session has ended. Please sign in again.'});
+    if (!user.funds.includes(fundId)) return send(403, {error:'Your account does not have access to this fund.'});
     const key = env.OPENAI_API_KEY?.trim();
     if (!key) return send(503, {error:'Portfolio Intelligence is not configured yet. Please contact the site owner.'});
     const vectorStoreId = (surface==='terminal' ? env.OPENAI_TERMINAL_VECTOR_STORE_ID : env.OPENAI_VECTOR_STORE_ID)?.trim() || '';

@@ -57,6 +57,12 @@ function inlineChat(html) {
 }
 app = inlineChat(app);
 inst = inlineChat(inst);
+function inlineAuth(html) {
+  html = html.replace('<link rel="stylesheet" href="auth.css">', () => '<style>\n' + fs.readFileSync(r('auth.css'), 'utf8') + '\n</style>');
+  return html.replace('<script src="auth-ui.js"></script>', () => '<script>\n' + fs.readFileSync(r('auth-ui.js'), 'utf8') + '\n</script>');
+}
+app = inlineAuth(app);
+inst = inlineAuth(inst);
 
 // 3. Bundle the shared appearance picker on every entry point.
 function inlineAppearance(html) {

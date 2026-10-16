@@ -5,16 +5,59 @@ page and a fully-populated (dummy-data) platform app showcasing the ten speciali
 agents, the Point Conductor, Action Cards, risk/P&L/research views, the 24/7
 tokenized market, Point MCP and Point Execute.
 
-Pure HTML/CSS/JS — no framework, no backend, no build tooling beyond Node for
-bundling. Fonts load from Google Fonts; everything else is inline.
+Pure HTML/CSS/JS with small Node endpoints for authentication and portfolio chat.
+No frontend framework or build tooling beyond Node for bundling. Fonts load from
+Google Fonts; everything else is inline.
+
+## Login and sign-up
+
+Run `npm run dev`, then open `http://127.0.0.1:4178/app.html`. Choose **Create an
+account**, enter your name and email, and choose a password of 12–128 characters.
+Those are your login credentials; there is no shared default password. Sign-up
+signs you in immediately. The landing page also has **Log in** and **Sign up** links.
+
+New accounts have Analyst access to Alpha and Market Neutral. The platform and
+terminal share the same session and show the signed-in name and email. Sign out
+from the profile menu; this invalidates the server session. Sessions last up to
+seven days. Browser preferences are separated by user ID.
+
+Passwords are salted and hashed with scrypt on the server. Random session tokens
+use HttpOnly, SameSite cookies (Secure in production), and only token hashes are
+stored. Login and sign-up have server-side validation and rate limits. The chat
+endpoint checks the session and the user's fund access before calling OpenAI.
+
+### Account storage and deployment
+
+Local development stores accounts and sessions in ignored `.point-auth/`, outside
+the published `dist/`. Keep this directory to preserve local accounts; back it up
+privately if needed. `POINT_AUTH_DIR` can choose a different local directory.
+Use one local server process per directory; use Redis for multiple server instances.
+
+On Vercel or with `NODE_ENV=production`, configure `UPSTASH_REDIS_REST_URL` and
+`UPSTASH_REDIS_REST_TOKEN` (or `KV_REST_API_URL` and `KV_REST_API_TOKEN`) for a
+durable shared Redis store. Authentication returns an unavailable message if the
+store is not configured; it never falls back to temporary serverless files. Set
+`POINT_APP_ORIGIN` to your canonical site origin if desired. These values are
+server-only; the build never embeds them. Deploy the repository root, not only
+`dist/`, so both `/api/auth` and `/api/chat` are available.
+
+For an administrator with all four funds, set `POINT_ADMIN_EMAIL`,
+`POINT_ADMIN_PASSWORD` and optionally `POINT_ADMIN_NAME` before the first auth
+request. Use a unique password. An email that already signed up is not promoted
+automatically. Never commit these credentials or share them in browser code.
+
+The site still bundles illustrative portfolio data in static HTML. Authentication
+controls app entry and server chat access; the static sample data itself is public.
+Private portfolio data would need to move behind authenticated server endpoints.
+Email verification, password recovery and MFA are not part of this flow.
 
 ## Ask Portfolio Intelligence
 
-Visitors choose a fund and ask a question immediately. There is no API-key form,
+Signed-in users choose an allowed fund and ask a question. There is no API-key form,
 vector-store input, or indexing control in the visitor interface. Conversations
-stay in browser memory and are separated by fund and demo account.
+stay in browser memory and are separated by fund and user ID.
 
-The pages remain static. One Vercel Function, `api/chat.js`, calls OpenAI using
+The pages remain static. The Vercel Function `api/chat.js` calls OpenAI using
 server-only environment variables. It loads trusted fund snapshots generated
 from the same datasets and table headings as the UI. The browser sends only the
 fund, question and recent conversation. The server chooses the model and store;
@@ -51,12 +94,10 @@ Use build command `npm run build` and output directory `dist`; the root
 (or `.`), not `dist`, so Vercel includes `api/chat.js` and its data.
 Uploading only `dist` serves the pages but cannot run the chatbot.
 
-This is a shared, publicly callable demo endpoint; all visitors' questions use
-the configured OpenAI account. Request/history lengths and response tokens are
-bounded, but the route is not user authentication or a global rate limiter. Use
-Vercel Deployment Protection for a private demo or Firewall rate limits for a
-public rollout, and monitor OpenAI usage. The simulated account picker does not
-restrict access to confidential data. Only public illustrative data belongs here.
+All signed-in users' questions use the configured OpenAI account. Request/history
+lengths and response tokens are bounded. Authentication rate limits do not limit
+chat spending; use deployment Firewall limits and monitor OpenAI usage for a
+public rollout. Only public illustrative data belongs in the static pages.
 
 ### Knowledge base maintenance
 
@@ -128,7 +169,9 @@ Official references: [OpenAI authentication](https://developers.openai.com/api/r
 
 ## Quick start
 
-Open **`dist/index.html`** in any browser, or deploy the `dist/` folder (see below).
+Run **`npm run dev`** and open **`http://127.0.0.1:4178/`**. Login, sign-up and chat
+require the Node endpoints; opening HTML directly or using a static-only server
+cannot run authentication.
 
 To rebuild `dist/` after editing the sources:
 
@@ -183,24 +226,25 @@ Result: the landing page becomes `dist/index.html` (the file every static host
 serves by default), and the app sits beside it as `dist/app.html`.
 
 Navigation flows both ways:
-`index.html` → "Launch Platform" → `app.html` → "‹ Site" → `index.html`.
+`index.html` → "Log in" / "Sign up" → `app.html` → "‹ Site" → `index.html`.
 
 ---
 
 ## Deploy
 
-Upload the **contents of `dist/`** to any static host. The landing page loads
-automatically as `index.html`.
+Deploy the **repository root to Vercel** for the complete application, with the
+authentication storage variables above. Static-only hosts can serve the marketing
+page, but login and chat require the server endpoints.
 
 | Host | How |
 |------|-----|
 | **Netlify** | Drag the `dist` folder onto the Netlify dashboard |
-| **Vercel** | Deploy the repository root; root `vercel.json` builds `dist` plus the chat function |
+| **Vercel** | Deploy the repository root; root `vercel.json` builds `dist` plus auth and chat functions |
 | **GitHub Pages** | Commit `dist/` contents to the Pages branch/root |
 | **Cloudflare Pages** | Set the output directory to `dist` |
 | **S3 / any web server** | Copy both files to the web root |
 
-Static-only hosts serve the pages. The shared chatbot needs the Vercel function and server environment variables described above.
+Static-only hosts do not support login, sign-up or chat without equivalent server routes.
 
 ---
 

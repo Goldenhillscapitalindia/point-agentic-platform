@@ -1,9 +1,111 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-auth-pending>
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Point — Fund Intelligence Terminal</title>
+<style>
+/* Authentication owns the viewport until the server verifies the session. */
+html[data-auth-pending] body > :not(#point-auth-root):not(noscript) { display: none !important; }
+html[data-auth-pending], html[data-auth-pending] body { min-height: 100%; background: #f8f9f7; }
+html[data-auth-pending] body { margin: 0; overflow: auto; }
+#point-auth-root, #point-auth-root * { box-sizing: border-box; }
+#point-auth-root [hidden] { display: none !important; }
+#point-auth-root {
+    --auth-ink: #172d3b;
+    --auth-muted: #65727b;
+    --auth-accent: #c6e4ee;
+    display: grid;
+    grid-template-columns: minmax(320px, 0.95fr) minmax(440px, 1.05fr);
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    color: var(--auth-ink);
+    background: #f8f9f7;
+    font: 400 15px/1.55 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    text-align: left;
+    letter-spacing: normal;
+}
+#point-auth-root button, #point-auth-root input { font: inherit; }
+#point-auth-root button, #point-auth-root a { -webkit-tap-highlight-color: transparent; }
+#point-auth-root a { color: inherit; text-decoration: none; }
+#point-auth-root button { cursor: pointer; }
+#point-auth-root button:disabled { cursor: wait; opacity: 0.65; }
+#point-auth-root :focus-visible { outline: 3px solid #42839f; outline-offset: 4px; }
+#point-auth-root p, #point-auth-root h1, #point-auth-root h2 { margin: 0; }
+.point-auth-story {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(32px, 5vw, 76px);
+    background: #142b39;
+    color: #f2f7f6;
+    position: relative;
+    overflow: hidden;
+}
+.point-auth-brand { display: inline-flex; width: fit-content; gap: 12px; align-items: center; font-size: 22px; font-weight: 600; letter-spacing: -0.8px; }
+.point-auth-brand-symbol { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid #66808c; border-radius: 50%; font: 28px/1 Georgia, serif; padding-bottom: 4px; }
+.point-auth-story-copy { padding: 90px 0; position: relative; z-index: 1; }
+.point-auth-eyebrow { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
+.point-auth-story .point-auth-eyebrow { color: #b4d5e0; margin-bottom: 26px; }
+#point-auth-root .point-auth-story h1 { font-family: Fraunces, Georgia, serif; font-weight: 400; font-size: clamp(44px, 4.6vw, 72px); line-height: 1.08; letter-spacing: -2px; }
+#point-auth-root .point-auth-story-copy > p { color: #b8c7cf; max-width: 290px; font-size: 15px; line-height: 1.7; margin-top: 28px; }
+.point-auth-story-footer { display: flex; align-items: center; gap: 14px; color: #a5b9c3; font-size: 11px; }
+.point-auth-line { width: 30px; height: 1px; background: #7697a8; flex-shrink: 0; }
+.point-auth-panel { display: flex; flex-direction: column; align-items: center; padding: 38px clamp(28px, 6vw, 90px) 28px; }
+.point-auth-back { align-self: flex-end; font-size: 12px; color: var(--auth-muted) !important; display: inline-flex; gap: 8px; align-items: center; }
+.point-auth-back:hover { color: var(--auth-ink) !important; }
+.point-auth-content { width: 100%; max-width: 400px; margin: auto 0; padding: 52px 0; }
+.point-auth-content > .point-auth-eyebrow { color: var(--auth-muted); margin-bottom: 14px; }
+#point-auth-root .point-auth-content h2 { font: 400 clamp(31px, 3vw, 43px)/1.15 Fraunces, Georgia, serif; letter-spacing: -1.25px; }
+#point-auth-root .point-auth-description { margin: 14px 0 28px; color: var(--auth-muted); font-size: 13px; }
+.point-auth-field { margin-bottom: 18px; }
+.point-auth-field label { display: block; margin-bottom: 7px; font-size: 12px; font-weight: 600; color: var(--auth-ink); }
+#point-auth-root .point-auth-field input { display: block; width: 100%; min-width: 0; height: 48px; padding: 10px 13px; color: var(--auth-ink); background: #fff; border: 1px solid #cbd3d5; border-radius: 5px; box-shadow: none; outline-offset: 2px; transition: border-color 120ms; }
+#point-auth-root .point-auth-field input:hover { border-color: #93a4ad; }
+#point-auth-root .point-auth-field input:focus { border-color: #42839f; }
+#point-auth-root .point-auth-field input[aria-invalid="true"] { border-color: #ae4b3d; }
+.point-auth-password-wrap { position: relative; }
+#point-auth-root .point-auth-password-wrap input { padding-right: 68px; }
+#point-auth-root #point-auth-password-toggle { position: absolute; right: 4px; top: 4px; height: 40px; width: 57px; background: transparent; color: #4c6270; border: 0; border-radius: 3px; font-size: 11px; font-weight: 600; }
+#point-auth-root #point-auth-password-toggle:hover { background: #f1f5f5; }
+#point-auth-root .point-auth-hint { margin-top: 7px; font-size: 11px; line-height: 1.5; color: var(--auth-muted); }
+#point-auth-root .point-auth-field-error { color: #a63d2e; font-size: 11px; line-height: 1.5; margin-top: 5px; }
+.point-auth-field-error:empty { display: none; }
+#point-auth-root .point-auth-submit { width: 100%; min-height: 48px; padding: 12px 20px; background: var(--auth-ink); border: 1px solid var(--auth-ink); border-radius: 5px; color: #fff; font-size: 13px; font-weight: 600; margin-top: 5px; transition: background 120ms; }
+#point-auth-root .point-auth-submit:hover:not(:disabled) { background: #244a5f; }
+#point-auth-root .point-auth-switch-row { margin-top: 25px; text-align: center; color: var(--auth-muted); font-size: 12px; }
+#point-auth-root #point-auth-switch { border: 0; background: transparent; padding: 5px 3px; color: var(--auth-ink); font-size: 12px; font-weight: 600; text-decoration: underline; text-decoration-color: #a9bac3; text-underline-offset: 3px; }
+.point-auth-error { border: 1px solid #e2bbb2; border-radius: 5px; background: #fbefeb; color: #913a2d; padding: 12px 14px; margin-bottom: 18px; font-size: 12px; overflow-wrap: anywhere; }
+#point-auth-root .point-auth-retry { background: transparent; border: 1px solid #bdcbd1; color: var(--auth-ink); padding: 8px 12px; font-size: 12px; border-radius: 4px; margin: 0 0 22px; }
+#point-auth-root .point-auth-panel-footer { color: #7c898f; font-size: 10px; padding-top: 10px; }
+.point-auth-loading { display: flex; align-items: center; gap: 12px; margin: auto 0; min-height: 250px; color: var(--auth-muted); font-size: 13px; }
+.point-auth-spinner { width: 18px; height: 18px; border: 2px solid #d2dfe3; border-top-color: #365c70; border-radius: 50%; animation: point-auth-spin 800ms linear infinite; }
+@keyframes point-auth-spin { to { transform: rotate(360deg); } }
+@media (max-width: 800px) {
+    #point-auth-root { grid-template-columns: 1fr; }
+    .point-auth-story { padding: 24px 28px; min-height: auto; }
+    .point-auth-story-copy { padding: 35px 0 12px; }
+    .point-auth-story .point-auth-eyebrow { margin-bottom: 16px; }
+    #point-auth-root .point-auth-story h1 { font-size: 39px; letter-spacing: -1px; }
+    .point-auth-story h1 br { display: none; }
+    #point-auth-root .point-auth-story-copy > p, .point-auth-story-footer { display: none; }
+    .point-auth-panel { padding: 22px 28px 24px; }
+    .point-auth-content { padding: 34px 0; }
+    .point-auth-back { align-self: flex-start; }
+}
+@media (max-width: 380px) {
+    .point-auth-story, .point-auth-panel { padding-left: 20px; padding-right: 20px; }
+    #point-auth-root .point-auth-story h1 { font-size: 34px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    #point-auth-root * { animation: none !important; transition: none !important; }
+}
+
+</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -500,6 +602,7 @@ body[data-theme="light"] .ptp-panel{box-shadow:0 18px 54px rgba(35,48,68,.16)}
 </style>
 </head>
 <body data-theme="light" data-tone="ws">
+<noscript>Please enable JavaScript to sign in to Point.</noscript>
 <div class="app">
 
   <!-- SIDEBAR -->
@@ -585,7 +688,7 @@ body[data-theme="light"] .ptp-panel{box-shadow:0 18px 54px rgba(35,48,68,.16)}
             <button class="pm-item" type="button" role="menuitem" data-action="open-fund-menu">Manage funds</button>
             <button class="pm-item" type="button" role="menuitem" data-action="toggle-profile-theme">Toggle appearance</button>
             <div class="pm-sep"></div>
-            <button class="pm-item danger" type="button" role="menuitem" data-action="demo-signout">Sign out</button>
+            <button class="pm-item danger" type="button" role="menuitem" data-action="signout">Sign out</button>
           </div>
         </div>
       </div>
@@ -764,6 +867,308 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
 
 </script>
 <script>
+(function () {
+    'use strict';
+
+    let currentUser = null;
+    let resolveReady;
+    let readyResolved = false;
+    let root;
+    let form;
+    let busy = false;
+    let checking = false;
+    let requestVersion = 0;
+    let sessionCheck = null;
+    let mode = new URLSearchParams(window.location.search).get('auth') === 'signup' ? 'signup' : 'login';
+    const ready = new Promise(function (resolve) { resolveReady = resolve; });
+    let channel = null;
+    try {
+        if (typeof window.BroadcastChannel === 'function') channel = new window.BroadcastChannel('point-auth');
+    } catch (error) { /* Cross-tab notifications are optional in restricted browser contexts. */ }
+
+    async function request(payload) {
+        let response;
+        const controller = new AbortController();
+        const timeout = window.setTimeout(function () { controller.abort(); }, 15000);
+        try {
+            response = await fetch('/api/auth', {
+                method: payload ? 'POST' : 'GET',
+                credentials: 'same-origin',
+                cache: 'no-store',
+                headers: payload ? { 'Content-Type': 'application/json', Accept: 'application/json' } : { Accept: 'application/json' },
+                body: payload ? JSON.stringify(payload) : undefined,
+                signal: controller.signal
+            });
+        } catch (error) {
+            throw new Error(error.name === 'AbortError' ? 'The connection is taking too long. Please try again.' : 'We could not connect. Check your connection and try again.');
+        } finally {
+            window.clearTimeout(timeout);
+        }
+
+        let data;
+        try {
+            data = await response.json();
+        } catch (error) {
+            throw new Error('Sign-in is temporarily unavailable. Please try again in a moment.');
+        }
+        if (!response.ok) {
+            const message = data && typeof data.error === 'string' && data.error.length <= 250 ? data.error : 'Unable to complete your request. Please try again.';
+            throw new Error(message);
+        }
+        if (!data || typeof data !== 'object' || Array.isArray(data)) {
+            throw new Error('Sign-in is temporarily unavailable. Please try again in a moment.');
+        }
+        return data;
+    }
+
+    function validUser(user) {
+        return user && typeof user === 'object' && typeof user.id === 'string' && typeof user.name === 'string' && typeof user.email === 'string';
+    }
+
+    function authenticate(user) {
+        if (!validUser(user)) throw new Error('We could not verify your account. Please try again.');
+        currentUser = user;
+        if (window.history?.replaceState) {
+            const url = new URL(window.location.href);
+            url.searchParams.delete('auth');
+            window.history.replaceState(null, '', url.pathname + url.search + url.hash);
+        }
+        if (form) form.reset();
+        if (root) root.remove();
+        document.documentElement.removeAttribute('data-auth-pending');
+        if (!readyResolved) {
+            readyResolved = true;
+            resolveReady(user);
+        }
+    }
+
+    function reloadForLogin() {
+        currentUser = null;
+        document.documentElement.setAttribute('data-auth-pending', '');
+        window.location.reload();
+    }
+
+    async function logout() {
+        await request({ action: 'logout' });
+        if (channel) {
+            try { channel.postMessage({ type: 'logout' }); } catch (error) { /* The server session is already invalidated. */ }
+        }
+        reloadForLogin();
+    }
+
+    function recheckSession() {
+        if (!currentUser || sessionCheck) return sessionCheck;
+        const previousUser = currentUser;
+        document.documentElement.setAttribute('data-auth-pending', '');
+        sessionCheck = request().then(function (data) {
+            if (!currentUser || currentUser.id !== previousUser.id) return;
+            const user = data.user;
+            if (!validUser(user) || user.id !== previousUser.id || user.role !== previousUser.role || JSON.stringify(user.funds) !== JSON.stringify(previousUser.funds)) {
+                reloadForLogin();
+                return;
+            }
+            currentUser = user;
+            document.documentElement.removeAttribute('data-auth-pending');
+        }).catch(reloadForLogin).finally(function () { sessionCheck = null; });
+        return sessionCheck;
+    }
+
+    window.PointAuth = {
+        ready: ready,
+        get user() { return currentUser; },
+        logout: logout,
+        requireLogin: reloadForLogin
+    };
+
+    if (channel) {
+        channel.addEventListener('message', function (event) {
+            if (event.data && event.data.type === 'logout' && currentUser) reloadForLogin();
+        });
+    }
+
+    document.addEventListener('visibilitychange', function () {
+        if (!currentUser) return;
+        if (document.visibilityState === 'hidden') document.documentElement.setAttribute('data-auth-pending', '');
+        else recheckSession();
+    });
+    window.addEventListener('pagehide', function (event) {
+        if (event.persisted && currentUser) document.documentElement.setAttribute('data-auth-pending', '');
+    });
+    window.addEventListener('pageshow', function (event) {
+        if (event.persisted) recheckSession();
+    });
+
+    function errorMessage(message, focus) {
+        const error = root.querySelector('#point-auth-error');
+        error.textContent = message || '';
+        error.hidden = !message;
+        if (message && focus) error.focus();
+    }
+
+    function clearFieldErrors() {
+        form.querySelectorAll('[aria-invalid]').forEach(function (input) { input.removeAttribute('aria-invalid'); });
+        root.querySelectorAll('.point-auth-field-error').forEach(function (field) { field.textContent = ''; });
+    }
+
+    function fieldError(name, message) {
+        const input = form.elements.namedItem(name);
+        input.setAttribute('aria-invalid', 'true');
+        root.querySelector('#point-auth-' + name + '-error').textContent = message;
+        return input;
+    }
+
+    function setBusy(value) {
+        busy = value;
+        form.setAttribute('aria-busy', String(value));
+        root.querySelectorAll('button').forEach(function (button) { button.disabled = value; });
+        root.querySelector('#point-auth-submit').textContent = value ? (mode === 'signup' ? 'Creating your account…' : 'Signing in…') : (mode === 'signup' ? 'Create account' : 'Sign in');
+    }
+
+    function renderMode() {
+        const signup = mode === 'signup';
+        root.querySelector('#point-auth-title').textContent = signup ? 'Make yourself at home.' : 'Welcome back.';
+        root.querySelector('#point-auth-description').textContent = signup ? 'Create your Point account to access your workspace.' : 'Sign in to continue to your Point workspace.';
+        root.querySelectorAll('[data-signup-only]').forEach(function (element) { element.hidden = !signup; });
+        form.elements.namedItem('name').disabled = !signup;
+        form.elements.namedItem('confirm').disabled = !signup;
+        form.elements.namedItem('password').autocomplete = signup ? 'new-password' : 'current-password';
+        form.elements.namedItem('password').setAttribute('aria-describedby', signup ? 'point-auth-password-hint point-auth-password-error' : 'point-auth-password-error');
+        root.querySelector('#point-auth-password-hint').hidden = !signup;
+        root.querySelector('#point-auth-switch-copy').textContent = signup ? 'Already have an account?' : 'New to Point?';
+        root.querySelector('#point-auth-switch').textContent = signup ? 'Sign in' : 'Create an account';
+        form.elements.namedItem('password').value = '';
+        form.elements.namedItem('confirm').value = '';
+        setPasswordVisible(false);
+        clearFieldErrors();
+        errorMessage('');
+        setBusy(false);
+    }
+
+    function setPasswordVisible(visible) {
+        form.elements.namedItem('password').type = visible ? 'text' : 'password';
+        form.elements.namedItem('confirm').type = visible ? 'text' : 'password';
+        const button = root.querySelector('#point-auth-password-toggle');
+        button.textContent = visible ? 'Hide' : 'Show';
+        button.setAttribute('aria-label', visible ? 'Hide password' : 'Show password');
+        button.setAttribute('aria-pressed', String(visible));
+    }
+
+    async function submit(event) {
+        event.preventDefault();
+        if (busy || checking) return;
+        clearFieldErrors();
+        errorMessage('');
+        const name = form.elements.namedItem('name').value.trim();
+        const email = form.elements.namedItem('email').value.trim();
+        const password = form.elements.namedItem('password').value;
+        const confirm = form.elements.namedItem('confirm').value;
+        const invalid = [];
+        if (mode === 'signup' && (name.length < 2 || name.length > 80)) invalid.push(fieldError('name', 'Enter your name using 2–80 characters.'));
+        if (!email || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) invalid.push(fieldError('email', 'Enter a valid email address.'));
+        if (!password || password.length > 128 || (mode === 'signup' && password.length < 12)) invalid.push(fieldError('password', mode === 'signup' ? 'Use a password with 12–128 characters.' : 'Enter your password (up to 128 characters).'));
+        if (mode === 'signup' && password !== confirm) invalid.push(fieldError('confirm', 'Your passwords do not match.'));
+        if (invalid.length) {
+            invalid[0].focus();
+            return;
+        }
+        const version = ++requestVersion;
+        setBusy(true);
+        try {
+            const payload = { action: mode, email: email, password: password };
+            if (mode === 'signup') payload.name = name;
+            const data = await request(payload);
+            if (version === requestVersion) authenticate(data.user);
+        } catch (error) {
+            if (version === requestVersion) errorMessage(error.message, true);
+        } finally {
+            if (version === requestVersion && !currentUser) setBusy(false);
+        }
+    }
+
+    async function checkSession() {
+        if (checking || busy) return;
+        checking = true;
+        const version = ++requestVersion;
+        const loading = root.querySelector('#point-auth-loading');
+        const content = root.querySelector('#point-auth-content');
+        loading.hidden = false;
+        content.hidden = true;
+        errorMessage('');
+        try {
+            const data = await request();
+            if (version !== requestVersion) return;
+            if (data.user === null) {
+                root.querySelector('#point-auth-retry').hidden = true;
+            } else {
+                authenticate(data.user);
+            }
+        } catch (error) {
+            if (version === requestVersion) {
+                errorMessage(error.message);
+                root.querySelector('#point-auth-retry').hidden = false;
+            }
+        } finally {
+            checking = false;
+            if (!currentUser) {
+                loading.hidden = true;
+                content.hidden = false;
+            }
+        }
+    }
+
+    function mount() {
+        document.documentElement.setAttribute('data-auth-pending', '');
+        root = document.createElement('main');
+        root.id = 'point-auth-root';
+        root.innerHTML = `
+            <section class="point-auth-story" aria-label="Point">
+                <a class="point-auth-brand" href="index.html" aria-label="Point home"><span class="point-auth-brand-symbol" aria-hidden="true">p.</span><span>Point</span></a>
+                <div class="point-auth-story-copy"><span class="point-auth-eyebrow">A clearer perspective</span><h1>A place for<br>your next move.</h1><p>Your portfolio, your opportunities, your Point of view.</p></div>
+                <div class="point-auth-story-footer"><span class="point-auth-line" aria-hidden="true"></span><span>Considered investing. Connected thinking.</span></div>
+            </section>
+            <section class="point-auth-panel" aria-label="Account access">
+                <a class="point-auth-back" href="index.html"><span aria-hidden="true">←</span> Back to Point</a>
+                <div id="point-auth-loading" class="point-auth-loading" role="status"><span class="point-auth-spinner" aria-hidden="true"></span>Checking your session…</div>
+                <div id="point-auth-content" class="point-auth-content" hidden>
+                    <p class="point-auth-eyebrow">Your Point account</p>
+                    <h2 id="point-auth-title">Welcome back.</h2>
+                    <p id="point-auth-description" class="point-auth-description">Sign in to continue to your Point workspace.</p>
+                    <div id="point-auth-error" class="point-auth-error" role="alert" tabindex="-1" hidden></div>
+                    <button id="point-auth-retry" class="point-auth-retry" type="button" hidden>Retry connection</button>
+                    <form id="point-auth-form" novalidate aria-labelledby="point-auth-title">
+                        <div class="point-auth-field" data-signup-only hidden><label for="point-auth-name">Full name</label><input id="point-auth-name" name="name" type="text" autocomplete="name" minlength="2" maxlength="80" aria-describedby="point-auth-name-error" required disabled><p id="point-auth-name-error" class="point-auth-field-error" aria-live="polite"></p></div>
+                        <div class="point-auth-field"><label for="point-auth-email">Email address</label><input id="point-auth-email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" autocapitalize="none" spellcheck="false" aria-describedby="point-auth-email-error" required><p id="point-auth-email-error" class="point-auth-field-error" aria-live="polite"></p></div>
+                        <div class="point-auth-field"><label for="point-auth-password">Password</label><div class="point-auth-password-wrap"><input id="point-auth-password" name="password" type="password" autocomplete="current-password" maxlength="128" aria-describedby="point-auth-password-error" required><button id="point-auth-password-toggle" type="button" aria-label="Show password" aria-pressed="false" aria-controls="point-auth-password point-auth-confirm">Show</button></div><p id="point-auth-password-hint" class="point-auth-hint" hidden>Use at least 12 characters. A memorable phrase works well.</p><p id="point-auth-password-error" class="point-auth-field-error" aria-live="polite"></p></div>
+                        <div class="point-auth-field" data-signup-only hidden><label for="point-auth-confirm">Confirm password</label><input id="point-auth-confirm" name="confirm" type="password" autocomplete="new-password" maxlength="128" aria-describedby="point-auth-confirm-error" required disabled><p id="point-auth-confirm-error" class="point-auth-field-error" aria-live="polite"></p></div>
+                        <button id="point-auth-submit" class="point-auth-submit" type="submit">Sign in</button>
+                    </form>
+                    <p class="point-auth-switch-row"><span id="point-auth-switch-copy">New to Point?</span> <button id="point-auth-switch" type="button">Create an account</button></p>
+                </div>
+                <p class="point-auth-panel-footer">Your perspective starts here.</p>
+            </section>`;
+        document.body.appendChild(root);
+        form = root.querySelector('#point-auth-form');
+        form.addEventListener('submit', submit);
+        root.querySelector('#point-auth-switch').addEventListener('click', function () {
+            if (busy || checking) return;
+            mode = mode === 'login' ? 'signup' : 'login';
+            renderMode();
+            form.elements.namedItem(mode === 'signup' ? 'name' : 'email').focus();
+        });
+        root.querySelector('#point-auth-password-toggle').addEventListener('click', function () {
+            setPasswordVisible(form.elements.namedItem('password').type === 'password');
+        });
+        root.querySelector('#point-auth-retry').addEventListener('click', checkSession);
+        renderMode();
+        checkSession();
+    }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount, { once: true });
+    else mount();
+})();
+
+</script>
+<script>
 /* Visitor chat: all OpenAI requests and credentials stay behind /api/chat. */
 (function(){
   'use strict';
@@ -824,6 +1229,7 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
         const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',
           body:JSON.stringify({surface:snapshot.surface,fundId:snapshot.fundId,question,history:previous}),signal:current.signal});
         let reply;try{reply=await response.json();}catch{throw new Error('Portfolio Intelligence is unavailable. Please try again later.');}
+        if(response.status===401){histories.clear();window.PointAuth?.requireLogin();return;}
         if(!response.ok)throw new Error(reply.error||'Unable to complete the answer. Please retry.');
         if(typeof reply.text!=='string'||!reply.text.trim())throw new Error('No answer was returned. Please try again.');
         if(id!==requestId||active!==contextKey())return;
@@ -1173,8 +1579,10 @@ Use plain text, short paragraphs and simple bullets, no HTML or Markdown tables.
 </script>
 <script>
 /* ===================== Point — Fund Intelligence Terminal ===================== */
-(function(){
+(async function(){
 'use strict';
+const signedInUser=await window.PointAuth.ready;
+const userStorageKey='point-user-'+signedInUser.id+'-terminal-fund';
 const Q=s=>document.querySelector(s), QA=s=>[...document.querySelectorAll(s)];
 const fmt=n=>n.toLocaleString('en-US');
 const sgn=(v,suf='')=>(v>=0?'+':'')+v+suf;
@@ -1206,7 +1614,7 @@ const FUNDS={
     nav:'$318.4M',day:'−$6.80M',dayp:'−2.10%',dayPos:false,gross:'96%',net:'71%',var:'3.52%',cash:'4%',
     health:58,yhealth:67,type:'digital'}
 };
-let FUND='alpha';
+let FUND=signedInUser.funds[0];
 
 /* ---------- POSITIONS (Alpha) ---------- */
 /* tk, company, side, qty, mv($M), nav%, day$M, mtd$M, ytd$M, varc%, rbud%, rused%, sector, factor, crowd, liqDays, catalyst, health, beta, ret% */
@@ -1892,14 +2300,15 @@ function openPos(tk){
 /* ======================= FUND SWITCHER + ROUTING ======================= */
 function renderFundMenu(){
   const menu=Q('#fundsel-menu');
-  menu.innerHTML=`<div class="nav-lab" style="padding:6px 8px 4px">Switch fund · 4</div>`+Object.entries(FUNDS).map(([id,f])=>`<div class="fund-opt ${id===FUND?'on':''}" data-fund="${id}"><span class="fs-ic" style="background:${f.col}">${f.ic}</span><div><div class="fs-name">${f.name}</div><div class="fs-sub">${f.sub}</div></div><span class="fo-aum num">${f.aum}</span></div>`).join('');
+  menu.innerHTML=`<div class="nav-lab" style="padding:6px 8px 4px">Switch fund · ${signedInUser.funds.length}</div>`+Object.entries(FUNDS).filter(([id])=>signedInUser.funds.includes(id)).map(([id,f])=>`<div class="fund-opt ${id===FUND?'on':''}" data-fund="${id}"><span class="fs-ic" style="background:${f.col}">${f.ic}</span><div><div class="fs-name">${f.name}</div><div class="fs-sub">${f.sub}</div></div><span class="fo-aum num">${f.aum}</span></div>`).join('');
   menu.querySelectorAll('.fund-opt').forEach(o=>o.onclick=()=>{selectFund(o.dataset.fund);Q('#fundsel').classList.remove('open');});
 }
 function selectFund(id){
+  if(!signedInUser.funds.includes(id)||!FUNDS[id])return;
   FUND=id; const f=FUNDS[id];
   Q('#fs-ic').textContent=f.ic; Q('#fs-ic').style.background=f.col;
   Q('#fs-name').textContent=f.name; Q('#fs-sub').textContent=f.sub;
-  try{localStorage.setItem('point-inst-fund',id);}catch(e){}
+  try{localStorage.setItem(userStorageKey,id);}catch(e){}
   renderAll(); renderFundMenu();
   document.dispatchEvent(new Event('point:context'));
 }
@@ -1954,7 +2363,10 @@ function runAction(action,control){
   if(action==='submit-rule'){const input=Q('#rule-proposal');if(input?.value.trim()){closeDrw();toast('Guideline proposal sent to Compliance for review.');}else toast('Add a guideline before sending it for review.');return;}
   if(action==='open-fund-menu'){Q('#profile')?.classList.remove('open');Q('#fundsel-btn')?.click();return;}
   if(action==='toggle-profile-theme'){setTheme(document.body.dataset.theme==='light'?'dark':'light');return;}
-  if(action==='demo-signout'){toast('Demo mode keeps this workspace signed in.');return;}
+  if(action==='signout'){
+    if(control){control.disabled=true;control.textContent='Signing out…';}
+    window.PointAuth.logout().catch(error=>{toast(error.message);if(control){control.disabled=false;control.textContent='Sign out';}});return;
+  }
   if(action==='new-report'){openDrw('<div class="drw-h"><div class="drw-top"><span class="tag">Reporting center</span><button class="drw-x" id="drw-x">✕</button></div><div class="drw-ttl">New report</div></div><div class="drw-b"><p class="prov" style="color:var(--ink-2)">Choose a report from the approved template library. The new draft will use the selected fund context.</p><button class="btn pri" data-action="create-report">Create investor update</button></div>');return;}
   if(action==='create-report'){closeDrw();toast('Investor update draft created for review.');return;}
   if(action==='report-open'){openDrw(`<div class="drw-h"><div class="drw-top"><span class="tag">Report preview</span><button class="drw-x" id="drw-x">✕</button></div><div class="drw-ttl">${report}</div></div><div class="drw-b"><p class="prov" style="color:var(--ink-2)">Preview is scoped to ${FUNDS[FUND].name}. Values remain illustrative demo data until a reviewer approves the report.</p><button class="btn pri" data-action="report-export" data-report="${report}">Export PDF</button></div>`);return;}
@@ -1964,7 +2376,7 @@ function runAction(action,control){
 
 /* ======================= WIRE ======================= */
 renderFundMenu();
-try{const sf=localStorage.getItem('point-inst-fund'); if(sf&&FUNDS[sf])FUND=sf; const f=FUNDS[FUND]; Q('#fs-ic').textContent=f.ic;Q('#fs-ic').style.background=f.col;Q('#fs-name').textContent=f.name;Q('#fs-sub').textContent=f.sub;}catch(e){}
+try{const sf=localStorage.getItem(userStorageKey); if(sf&&FUNDS[sf]&&signedInUser.funds.includes(sf))FUND=sf; const f=FUNDS[FUND]; Q('#fs-ic').textContent=f.ic;Q('#fs-ic').style.background=f.col;Q('#fs-name').textContent=f.name;Q('#fs-sub').textContent=f.sub;}catch(e){}
 renderAll(); syncAlertBadges();
 renderMobileNav();
 try{setTheme(localStorage.getItem('point-inst-theme')||'light');}catch(e){setTheme('light');}
@@ -1975,7 +2387,7 @@ document.addEventListener('click',()=>{Q('#fundsel').classList.remove('open');Q(
 Q('#fundsel-menu').onclick=e=>e.stopPropagation();
 
 Q('#profile-btn')?.addEventListener('click',e=>{e.stopPropagation();Q('#fundsel').classList.remove('open');const profile=Q('#profile');const open=!profile.classList.contains('open');profile.classList.toggle('open',open);e.currentTarget.setAttribute('aria-expanded',String(open));});
-Q('#profile-menu')?.addEventListener('click',e=>e.stopPropagation());
+// Profile actions bubble to the shared action handler below (including sign out).
 Q('#mobile-nav-btn')?.addEventListener('click',()=>setMobileNav(!Q('#mobile-nav').classList.contains('open')));
 Q('#mobile-nav')?.addEventListener('click',e=>{if(e.target.closest('[data-mobile-close]'))setMobileNav(false);});
 
@@ -2021,10 +2433,12 @@ document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='ask-i
 Q('#ask-mini-in')?.addEventListener('keydown',e=>{if(e.key==='Enter'){const q=e.target.value.trim();e.target.value='';pointChat.open(q||undefined);}});
 Q('#ask-mini')?.addEventListener('click',()=>pointChat.open());
 
-/* role picker */
-const ROLES=[['PM · Alpha Fund','command'],['Head of Risk','risk'],['CIO','portfolio'],['Compliance','guidelines'],['Investor Relations','reports']];
-let roleI=0;
-Q('#role-pick').onclick=()=>{roleI=(roleI+1)%ROLES.length;Q('#rp-role').textContent=ROLES[roleI][0];go(ROLES[roleI][1]);};
+/* The signed-in identity is shared with the platform. */
+const initials=signedInUser.name.trim().split(/\s+/).slice(0,2).map(part=>part[0]).join('').toUpperCase();
+QA('.rp-av,.profile-avatar').forEach(el=>el.textContent=initials);
+QA('.rp-name,#profile-btn > span:nth-child(2),.pm-head b').forEach(el=>el.textContent=signedInUser.name);
+QA('.rp-role,.pm-head > span').forEach(el=>el.textContent=signedInUser.role==='admin'?'CIO · Full access':'Analyst · Limited access');
+Q('#role-pick').style.cursor='default';
 function terminalSnapshot(id){
   const full=id==='alpha';
   return PointChatCore.clean({surface:'terminal',fundId:id,fundName:FUNDS[id].name,
@@ -2039,8 +2453,8 @@ function terminalSnapshot(id){
       }:{})
     }});
 }
-const pointChat=window.PointChat.mount({surface:'terminal',accountScope:()=> 'demo',
-  getSnapshot:()=>terminalSnapshot(FUND),getAllSnapshots:()=>Object.keys(FUNDS).map(terminalSnapshot)});
+const pointChat=window.PointChat.mount({surface:'terminal',accountScope:()=>signedInUser.id,
+  getSnapshot:()=>terminalSnapshot(FUND),getAllSnapshots:()=>signedInUser.funds.map(terminalSnapshot)});
 })();
 
 </script>

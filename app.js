@@ -1,6 +1,8 @@
 /* ============ Point — static app ============ */
-(function(){
+(async function(){
   'use strict';
+  const signedInUser = await window.PointAuth.ready;
+  const accountStorageKey='point-user-'+signedInUser.id;
   const perpetualMarkets = window.PointPerpetualMarkets;
 
   /* ---- view routing ---- */
@@ -1691,7 +1693,7 @@
     const ir=document.getElementById('ir-letter');
     if(ir){
       ir.innerHTML=md.irLetter.map(p=>`<p>${p}</p>`).join('');
-      try{const saved=localStorage.getItem(`ir-draft:${fund}:dashboard`);if(saved)ir.innerHTML=saved;}catch(e){}
+      try{const saved=localStorage.getItem(`${accountStorageKey}:ir-draft:${fund}:dashboard`);if(saved)ir.innerHTML=saved;}catch(e){}
     }
     // what-if
     const sel=document.getElementById('risk-whatif-select');
@@ -2630,7 +2632,7 @@
   const irMonths=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep'];
   const irKpis=(items,extra='')=>`<div class="tear-kpis ${extra}">${items.map(([label,value])=>`<div><span>${label}</span><b>${value}</b></div>`).join('')}</div>`;
   // Clear the old persistent demo queue state so the report returns to its original controls.
-  try{for(let i=localStorage.length-1;i>=0;i--){const key=localStorage.key(i);if(key&&key.startsWith('ir-compliance:'))localStorage.removeItem(key);}}catch(e){}
+  try{for(let i=localStorage.length-1;i>=0;i--){const key=localStorage.key(i);if(key&&key.startsWith(accountStorageKey+':ir-compliance:'))localStorage.removeItem(key);}}catch(e){}
   const irActions=(report,fund)=>{
     return `<div class="ir-actions" data-ir-report="${report}"><button class="btn primary" data-ir-action="submit">Send to compliance</button><button class="btn ghost" data-ir-action="edit">Edit</button><button class="btn ghost" data-ir-action="save" hidden>Save</button><button class="btn ghost" data-ir-action="cancel" hidden>Cancel</button><button class="btn dark" data-ir-action="export">Download PDF</button><span class="ir-action-message" data-ir-message role="status" aria-live="polite"></span></div>`;
   };
@@ -2655,7 +2657,7 @@
     [['ir-template1','template1',monthly],['ir-template2','template2',exposure],['ir-template3','template3',performance]].forEach(([panelId,report,html])=>{
       const panel=document.getElementById(panelId); if(!panel) return;
       panel.innerHTML=html.replace('<article class="tear">',`<article class="tear" data-ir-doc="${report}">`)+irActions(report,id);
-      try{const saved=localStorage.getItem(`ir-draft:${id}:${report}`);const doc=panel.querySelector('[data-ir-doc]');if(saved&&doc)doc.innerHTML=saved;}catch(e){}
+      try{const saved=localStorage.getItem(`${accountStorageKey}:ir-draft:${id}:${report}`);const doc=panel.querySelector('[data-ir-doc]');if(saved&&doc)doc.innerHTML=saved;}catch(e){}
     });
   }
   function irDownload(blob,name){
@@ -2761,7 +2763,7 @@
   const fundMenu=document.getElementById('fund-menu');
   const fundBtnName=document.getElementById('fund-btn-name');
   let activeFund='alpha';
-  let activeAccount='admin';
+  const activeAccount=signedInUser.role==='admin'?'admin':'user';
   const setText=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
 
   const ACCOUNTS={
@@ -2798,7 +2800,15 @@
       ]
     }
   };
-  function account(){ return ACCOUNTS[activeAccount]||ACCOUNTS.admin; }
+  Object.assign(ACCOUNTS[activeAccount], {
+    name:signedInUser.name, email:signedInUser.email,
+    init:signedInUser.name.trim().split(/\s+/).slice(0,2).map(part=>part[0]).join('').toUpperCase(),
+    funds:signedInUser.funds.filter(id=>['alpha','global','neutral','digital'].includes(id)),
+    phone:'Not provided',emp:'Not assigned',
+    joined:new Date(signedInUser.createdAt).toLocaleDateString('en-US',{month:'long',year:'numeric'}),
+    activity:[['Now','Signed in','Your Point account session is active.']]
+  });
+  function account(){ return ACCOUNTS[activeAccount]; }
   function allowedFunds(){
     const a=ACCOUNTS[activeAccount];
     return a ? funds.filter(f=>a.funds.includes(f.id)) : funds;
@@ -2846,11 +2856,10 @@
     renderDetail(id);
     renderSentiment(id);
     syncIRDashboardStatus(id);
-    try{ localStorage.setItem('point-fund', id); }catch(e){}
+    try{ localStorage.setItem(accountStorageKey+'-fund', id); }catch(e){}
     renderFundMenu();
     document.dispatchEvent(new Event('point:context'));
   }
-  try{ const sa=localStorage.getItem('point-account'); if(sa && ACCOUNTS[sa]) activeAccount=sa; }catch(e){}
   renderFundMenu();
   let _restored=false;
   function syncIRDashboardStatus(fund){
@@ -2881,7 +2890,7 @@
   document.addEventListener('click',event=>{
     const button=event.target.closest('[data-ir-action]');if(!button)return;
     const bar=button.closest('[data-ir-report]');if(!bar)return;
-    const report=bar.dataset.irReport, action=button.dataset.irAction, key=`ir-draft:${activeFund}:${report}`;
+    const report=bar.dataset.irReport, action=button.dataset.irAction, key=`${accountStorageKey}:ir-draft:${activeFund}:${report}`;
     const target=report==='dashboard'?document.getElementById('ir-letter'):document.querySelector(`#ir-${report} [data-ir-doc]`);
     const message=bar.querySelector('[data-ir-message]'),status=bar.querySelector('[data-ir-status]');
     const say=text=>{if(message)message.textContent=text;};
@@ -2891,7 +2900,7 @@
       button.hidden=true;bar.querySelector('[data-ir-action="save"]').hidden=false;bar.querySelector('[data-ir-action="cancel"]').hidden=false;bar.querySelector('[data-ir-action="submit"]').disabled=true;say('Edit the report, then save or cancel.');
     }else if(action==='save'){
       target.contentEditable='false';target.classList.remove('ir-editing');delete target.dataset.irBackup;
-      try{localStorage.setItem(key,target.innerHTML);localStorage.removeItem(`ir-compliance:${activeFund}:${report}`);}catch(e){say('Could not save this draft in browser storage.');return;}
+      try{localStorage.setItem(key,target.innerHTML);localStorage.removeItem(`${accountStorageKey}:ir-compliance:${activeFund}:${report}`);}catch(e){say('Could not save this draft in browser storage.');return;}
       bar.querySelector('[data-ir-action="edit"]').hidden=false;button.hidden=true;bar.querySelector('[data-ir-action="cancel"]').hidden=true;
       const submit=bar.querySelector('[data-ir-action="submit"]');submit.disabled=false;submit.textContent='Send to compliance';
       if(status){status.textContent='Draft saved';status.classList.remove('good');status.classList.add('ghost');}say('Draft saved on this device.');
@@ -2899,7 +2908,7 @@
       if(target.dataset.irBackup!==undefined)target.innerHTML=target.dataset.irBackup;
       target.contentEditable='false';target.classList.remove('ir-editing');delete target.dataset.irBackup;
       bar.querySelector('[data-ir-action="edit"]').hidden=false;bar.querySelector('[data-ir-action="save"]').hidden=true;button.hidden=true;
-      const stillQueued=(()=>{try{return localStorage.getItem(`ir-compliance:${activeFund}:${report}`)==='queued';}catch(e){return false;}})();
+      const stillQueued=(()=>{try{return localStorage.getItem(`${accountStorageKey}:ir-compliance:${activeFund}:${report}`)==='queued';}catch(e){return false;}})();
       const submit=bar.querySelector('[data-ir-action="submit"]');submit.disabled=stillQueued;
       if(status){status.textContent=stillQueued?'Queued for compliance':'Draft';status.classList.toggle('good',stillQueued);status.classList.toggle('ghost',!stillQueued);}
       say('Edits canceled.');
@@ -2918,7 +2927,7 @@
     }
   });
   try{
-    const sf=localStorage.getItem('point-fund');
+    const sf=localStorage.getItem(accountStorageKey+'-fund');
     if(sf && account().funds.includes(sf)){ selectFund(sf); _restored=true; }
   }catch(e){}
   if(!_restored) selectFund(account().funds.includes(activeFund)?activeFund:account().funds[0]);
@@ -2949,16 +2958,17 @@
 
   const defaultPrefs=id=>({
     brief:true, crit:true, digest:id==='admin', email:id==='admin',
-    landing:id==='admin'?'dashboard':'brief', timeout:id==='admin'?'8 hours':'1 hour'
+    landing:id==='admin'?'dashboard':'brief'
   });
   function loadPrefs(){
-    try{ const raw=localStorage.getItem('point-prefs-'+activeAccount); if(raw) return Object.assign(defaultPrefs(activeAccount), JSON.parse(raw)); }catch(e){}
+    try{ const raw=localStorage.getItem(accountStorageKey+'-prefs'); if(raw) return Object.assign(defaultPrefs(activeAccount), JSON.parse(raw)); }catch(e){}
     return defaultPrefs(activeAccount);
   }
-  function savePrefs(p){ try{ localStorage.setItem('point-prefs-'+activeAccount, JSON.stringify(p)); }catch(e){} }
+  function savePrefs(p){ try{ localStorage.setItem(accountStorageKey+'-prefs', JSON.stringify(p)); }catch(e){} }
 
   function renderAccountPages(){
-    const a=account();
+    const escapeAccountText=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+    const a={...account(),name:escapeAccountText(account().name),email:escapeAccountText(account().email),init:escapeAccountText(account().init)};
     const prefs=loadPrefs();
     const avCls=a.id==='user'?'avatar user':'avatar';
     const fields=[
@@ -3000,10 +3010,8 @@
           <div class="set-row"><div><b>Email as well as in-app</b><small>Sends to ${a.email}.</small></div>${tog('email',prefs.email)}</div>
         </div>
         <div class="card"><div class="card-head"><h3 class="card-title">Security</h3></div>
-          <div class="set-row"><div><b>Password</b><small>Last changed 12 Sep 2026. This demo does not store a password.</small></div><button class="btn ghost" type="button" id="pw-btn">Send reset link</button></div>
-          <div class="set-row"><div><b>Two-factor</b><small>${a.canApprove?'Authenticator app, required for CIO approval.':'Not required on the analyst login.'}</small></div><span class="pill ${a.canApprove?'good':'ghost'}">${a.canApprove?'On':'Off'}</span></div>
-          <div class="set-row"><div><b>Session timeout</b><small>Idle time before this browser is signed out.</small></div>
-            <select class="set-select" id="pref-timeout">${['30 minutes','1 hour','8 hours','Until I sign out'].map(t=>`<option ${prefs.timeout===t?'selected':''}>${t}</option>`).join('')}</select></div>
+          <div class="set-row"><div><b>Sign-in method</b><small>Email and password.</small></div><span class="pill ghost">Password</span></div>
+          <div class="set-row"><div><b>Session duration</b><small>Sign in again after seven days, or sign out at any time.</small></div><span class="pill ghost">7 days</span></div>
           <div class="set-row"><div><b>This browser</b><small>Signed in as ${a.name}. Theme is kept after sign-out.</small></div><span class="pill ghost">Current</span></div>
         </div>
       </div>
@@ -3042,20 +3050,21 @@
             <span>Login</span><b>${a.name}</b>
             <span>Email</span><b>${a.email}</b>
             <span>Role</span><b>${a.role} · ${a.access}</b>
-            <span>Started</span><b>05:58 ET · this browser</b>
-            <span>Timeout</span><b>${prefs.timeout}</b>
+            <span>Browser</span><b>Current session</b>
+            <span>Duration</span><b>Up to 7 days</b>
             <span>Still open</span><b>${a.canApprove?'Critical cards stay in the queue for the next CIO sign-in.':'Nothing of yours is waiting on an approval.'}</b>
           </div>
           <div class="card-foot">
             <button class="btn ghost" type="button" id="stay-in">Stay signed in</button>
             <button class="btn primary" type="button" id="do-signout" style="background:#B91C1C">Sign out</button>
           </div>
+          <p id="signout-error" role="alert" style="padding:0 20px"></p>
         </div>
         <div class="card">
           <div class="card-head"><h3 class="card-title">What sign-out does</h3></div>
           <div class="act-row"><div><b>Ends</b><small>This login, the fund you had open, and any half-written approval.</small></div></div>
           <div class="act-row"><div><b>Stays</b><small>Theme, notification toggles and the default fund for ${a.name}. They are stored on this browser, per login.</small></div></div>
-          <div class="act-row"><div><b>Next</b><small>You land on the sign-in screen and can enter as Admin or as User.</small></div></div>
+          <div class="act-row"><div><b>Next</b><small>You return to the sign-in screen. Enter your email and password to sign in again.</small></div></div>
         </div>
       </div>`);
 
@@ -3071,8 +3080,6 @@
     });
     const digestBtn=document.querySelector('#view-settings [data-pref="digest"]');
     if(digestBtn && !a.canApprove) digestBtn.disabled=true;
-    const timeout=document.getElementById('pref-timeout');
-    if(timeout) timeout.onchange=()=>{ const p=loadPrefs(); p.timeout=timeout.value; savePrefs(p); };
     const landing=document.getElementById('pref-landing');
     if(landing) landing.onchange=()=>{ const p=loadPrefs(); p.landing=landing.value; savePrefs(p); };
     const fundSel=document.getElementById('pref-fund');
@@ -3081,12 +3088,15 @@
       fundSel.onchange=()=>{ const p=loadPrefs(); p.fund=fundSel.value; savePrefs(p); selectFund(fundSel.value); };
     }
     document.querySelectorAll('[data-theme-set]').forEach(b=>b.onclick=()=>{ applyTheme(b.dataset.themeSet); try{ localStorage.setItem('point-theme', b.dataset.themeSet); }catch(e){} });
-    const pw=document.getElementById('pw-btn');
-    if(pw) pw.onclick=function(){ this.textContent='Link sent'; };
     document.querySelectorAll('[data-open-fund]').forEach(b=>b.onclick=()=>{ selectFund(b.dataset.openFund); go('dashboard'); });
     document.querySelectorAll('[data-ask-fund]').forEach(b=>b.onclick=function(){ this.textContent='Requested'; this.disabled=true; });
     const stay=document.getElementById('stay-in'); if(stay) stay.onclick=()=>go('dashboard');
-    const out=document.getElementById('do-signout'); if(out) out.onclick=showLogin;
+    const out=document.getElementById('do-signout');
+    if(out) out.onclick=async()=>{
+      out.disabled=true;out.textContent='Signing out…';
+      try{await window.PointAuth.logout();}
+      catch(error){setText('signout-error',error.message);out.disabled=false;out.textContent='Sign out';}
+    };
   }
   function Qset(id, html){ const el=document.getElementById(id); if(el) el.innerHTML=html; }
 
@@ -3101,46 +3111,13 @@
     setText('pm-mail', a.email);
     setText('pm-role', a.role+' · '+a.access);
     setText('hero-name', a.name);
-    const box=document.getElementById('pm-accounts');
-    if(box){
-      box.innerHTML=Object.values(ACCOUNTS).map(ac=>`<button type="button" class="pm-acct ${ac.id===activeAccount?'on':''}" data-account="${ac.id}">
-        <span class="avatar sm ${ac.id==='user'?'user':''}">${ac.init}</span>
-        <span><b>${ac.name}</b><small>${ac.role} · ${ac.access}</small></span>
-        ${ac.id===activeAccount?'<span class="pm-check">✓</span>':''}
-      </button>`).join('');
-      box.querySelectorAll('[data-account]').forEach(b=>b.onclick=e=>{
-        e.stopPropagation();
-        applyAccount(b.dataset.account);
-        profile.classList.remove('open');
-      });
-    }
+    const sidebarAvatar=document.querySelector('.user-chip .avatar');
+    const sidebarName=document.querySelector('.user-chip .user-name');
+    const sidebarRole=document.querySelector('.user-chip .user-role');
+    if(sidebarAvatar)sidebarAvatar.textContent=a.init;
+    if(sidebarName)sidebarName.textContent=a.name;
+    if(sidebarRole)sidebarRole.textContent=a.role+' · '+a.desk;
     renderAccountPages();
-  }
-  function applyAccount(id){
-    if(!ACCOUNTS[id]) return;
-    activeAccount=id;
-    try{ localStorage.setItem('point-account', id); }catch(e){}
-    if(!account().funds.includes(activeFund)) selectFund(account().funds[0]);
-    else renderFundMenu();
-    paintAccount();
-  }
-  function showLogin(){
-    const gate=document.getElementById('login-gate');
-    const picks=document.getElementById('login-picks');
-    if(!gate||!picks) return;
-    picks.innerHTML=Object.values(ACCOUNTS).map(a=>`<button type="button" class="acct-card" data-signin="${a.id}">
-      <span class="avatar ${a.id==='user'?'user':''}">${a.init}</span>
-      <b>${a.name}</b>
-      <div class="role">${a.email}<br/>${a.role} · ${a.access}</div>
-      <p>${a.blurb}</p>
-    </button>`).join('');
-    picks.querySelectorAll('[data-signin]').forEach(b=>b.onclick=()=>{
-      gate.hidden=true;
-      applyAccount(b.dataset.signin);
-      const landing=(loadPrefs().landing)||'dashboard';
-      go(ACCOUNTS[b.dataset.signin] && document.getElementById('view-'+landing) ? landing : 'dashboard');
-    });
-    gate.hidden=false;
   }
   paintAccount();
   /* close popovers on outside click / Esc */
@@ -3193,7 +3170,7 @@
         Briefs:{decisionBriefs:decisionBriefs[id],morningBrief:briefs[id],actionCards:cardsByFund[id],activity:fundExtra[id].feed}
       }});
   }
-  const pointChat=window.PointChat.mount({surface:'platform',accountScope:()=>activeAccount,
+  const pointChat=window.PointChat.mount({surface:'platform',accountScope:()=>signedInUser.id,
     getSnapshot:()=>chatSnapshot(activeFund),getAllSnapshots:()=>allowedFunds().map(f=>chatSnapshot(f.id))});
   document.querySelectorAll('.btn').forEach(button=>{
     if(/ask portfolio intelligence/i.test(button.textContent)) button.addEventListener('click',event=>{event.preventDefault();pointChat.open();});

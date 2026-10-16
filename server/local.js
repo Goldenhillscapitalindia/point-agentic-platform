@@ -2,17 +2,23 @@
 const http=require('node:http');
 const fs=require('node:fs');
 const path=require('node:path');
-function createServer(handler){
+function createServer(handler,{authHandler}={}){
   return http.createServer(async(req,res)=>{
     const url=new URL(req.url,'http://localhost');
-    if(url.pathname==='/api/chat'){
-      let raw='';
+    if(url.pathname==='/api/chat'||url.pathname==='/api/auth'){
+      const chunks=[];
+      let size=0;
       try{
-        for await(const chunk of req){raw+=chunk;if(Buffer.byteLength(raw)>40000){res.writeHead(413);res.end(JSON.stringify({error:'Question is too large.'}));return;}}
-        req.body=raw;
+        for await(const chunk of req){
+          size+=chunk.length;
+          if(size>40000){res.writeHead(413,{'Content-Type':'application/json'});res.end(JSON.stringify({error:'Request is too large.'}));return;}
+          chunks.push(chunk);
+        }
+        req.body=Buffer.concat(chunks).toString('utf8');
         res.status=code=>{res.statusCode=code;return res;};
         res.json=body=>{res.setHeader('Content-Type','application/json');res.end(JSON.stringify(body));};
-        await handler(req,res);
+        const route=url.pathname==='/api/auth'?(authHandler||require('../api/auth')):handler;
+        await route(req,res);
       }catch{if(!res.headersSent)res.writeHead(500);res.end();}
       return;
     }
